@@ -1,0 +1,16 @@
+{% load static %}
+<header class="navbar">
+    <div class="logo">
+        <img src="{% static 'img/logo.svg' %}" alt="LinkedTrust Logo">
+        <span>LinkedTrust</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <a href="#" class="cta-button">Live Claims</a>
+</header>

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="banner">
+    <div class="banner-image">
+        <img src="{% static 'img/banner_img.png' %}" alt="Banner Image">
+    </div>
+    <div class="banner-text">
+        <h2>An open, decentralized trust ecosystem</h2>
+        <a href="#" class="cta-button">Get started</a>
+    </div>
+</section>
+
+<section class="partners">
+    <h3>Partners and Protocols</h3>
+    <div class="partner-row">
+        <div class="partner">
+            <img src="{% static 'img/imgplaceholder.png' %}" alt="WhatsCookin'">
+            <span>WhatsCookin'</span>
+        </div>
+        <div class="partner">
+            <img src="{% static 'img/imgplaceholder.png' %}" alt="Coupons for good">
+            <span>Coupons for good</span>
+        </div>
+        <div class="partner">
+            <img src="{% static 'img/imgplaceholder.png' %}" alt="cooperation.org">
+            <span>cooperation.org</span>
+        </div>
+    </div>
+</section>
+
+<section class="built-with">
+    <h3>Built With</h3>
+    <div class="built-with-row">
+        <div class="built-with-item">
+            <img src="{% static 'img/imgplaceholder.png' %}" alt="Human">
+            <span>Human</span>
+        </div>
+        <div class="built-with-item" style="margin-left: 5%;">
+            <img src="{% static 'img/imgplaceholder.png' %}" alt="Ceramic">
+            <span>Ceramic</span>
+        </div>
+    </div>
+</section>
+
+<section class="white-paper">
+    <div class="white-paper-text">
+        <h3>A WHITE PAPER from RWOT XI: The hague</h3>
+        <h4>Composing Credentials via LinkedClaims and Cryptographic Binding</h4>
+        <p>by Philip D. Long(T3 Innovation Network, Georgetown University & ASU), Dmitri Zagidulin (MIT Digital
+            Credentials Consortium) & Golda Velez</p>
+        <a href="#">(Cooperation.org)</a>
+        <a href="#" class="cta-button">Full Paper</a>
+    </div>
+    <div class="white-paper-image">
+        <img src="{% static 'img/rwot.png' %}" class="img-fluid" alt="White Paper Image">
+    </div>
+</section>
+
+<section class="about">
+    <h3>About</h3>
+    <div class="about-cards">
+        <div class="about-card">
+            <h4>Our team</h4>
+            <div class="carousel">
+                <img src="{% static 'img/imgplaceholder.png' %}" alt="Team member 1">
+                <img src="{% static 'img/imgplaceholder.png' %}" alt="Team member 2">
+                <img src="{% static 'img/imgplaceholder.png' %}" alt="Team member 3">
+                <img src="{% static 'img/imgplaceholder.png' %}" alt="Team member 4">
+                <img src="{% static 'img/imgplaceholder.png' %}" alt="Team member 5">
+            </div>
+            <button class="carousel-next">Next</button>
+        </div>
+        <div class="about-card">
+            <h4>Mission</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat...</p>
+        </div>
+        <div class="about-card">
+            <h4>Our services</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat...</p>
+        </div>
+        <div class="about-card">
+            <h4>Blog</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat...</p>
+        </div>
+    </div>
+</section>
+
+<section class="instructions">
+    <h3>Instructions</h3>
+    <p>Learn how to submit and validate claims easily on our platform</p>
+</section>
+{% endblock %}
