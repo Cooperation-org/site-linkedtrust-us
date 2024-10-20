@@ -2,11 +2,22 @@
 {% load static %}
 {% block content %}
 <section class="banner">
-    <div class="banner-image">
-        <img src="{% static 'img/banner_img.png' %}" alt="Banner Image">
+    <div class="video-background">
+        <iframe src="https://www.youtube.com/embed/L5uARHb0-mA?autoplay=1&mute=1&loop=1&playlist=L5uARHb0-mA"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
     </div>
-    <div class="banner-text">
-        <h2>An open, decentralized trust ecosystem</h2>
+    <div class="overlay"></div>
+    <div class="banner-image">
+        <img src="{% static 'img/Banner.png' %}" alt="Banner Image">
+    </div>
+</section>
+
+<section class="intro">
+    <div>
+        <h3>An open, decentralized trust ecosystem</h3>
         <a href="#" class="cta-button">Get started</a>
     </div>
 </section>
@@ -57,43 +68,9 @@
     </div>
 </section>
 
-<section class="about">
-    <h3>About</h3>
-    <div class="about-cards">
-        <div class="about-card">
-            <h4>Our team</h4>
-            <div class="carousel">
-                <img src="" alt="Team member 1">
-                <img src="{% static 'img/imgplaceholder.png' %}" alt="Team member 2">
-                <img src="{% static 'img/imgplaceholder.png' %}" alt="Team member 3">
-                <img src="{% static 'img/imgplaceholder.png' %}" alt="Team member 4">
-                <img src="{% static 'img/imgplaceholder.png' %}" alt="Team member 5">
-            </div>
-            <button class="carousel-next">Next</button>
-        </div>
-        <div class="about-card">
-            <h4>Mission</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat...</p>
-        </div>
-        <div class="about-card">
-            <h4>Our services</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat...</p>
-        </div>
-        <div class="about-card">
-            <h4>Blog</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat...</p>
-        </div>
-    </div>
-</section>
-
 <section class="instructions">
-    <h3>Instructions</h3>
-    <p>Learn how to submit and validate claims easily on our platform</p>
+    <h3>Getting Started</h3>
+    <p>Build trust through decentralized claims and attestations</p>
+    <a href="{% url 'getstarted' %}" class="cta-button">See More</a>
 </section>
 {% endblock %}

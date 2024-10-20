@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %}
 <header class="navbar">
     <div class="logo">
         <img src="{% static 'img/logo.svg' %}" alt="LinkedTrust Logo">
@@ -15,6 +15,52 @@
 
             
             
+        </ul>
+    </nav>
+    <a href="#" class="cta-button">Live Claims</a>
+</header>
+ -->
+
+{% load static %}
+<header class="navbar">
+    <div class="logo">
+        <a href="{% url 'home' %}" class="logo-link">
+            <img src="{% static 'img/logo.svg' %}" alt="LinkedTrust Logo">
+            <span>LinkedTrust</span>
+        </a>
+    </div>
+    <nav>
+        <ul>
+            <li class="dropdown">
+                <a href="#">About</a>
+                <ul class="dropdown-content">
+                    <li><a href="{% url 'about' %}">Team</a></li>
+                    <li><a href="#">Our Mission</a></li>
+                    <li><a href="#">Our Services</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Our Services</a></li>
+            <li class="dropdown">
+                <a href="#">LinkedClaims</a>
+                <ul class="dropdown-content">
+                    <li><a href="#">RFX</a></li>
+                    <li><a href="#">Npm libs</a></li>
+                    <li><a href="#">Architecture</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#">Use Cases</a>
+                <ul class="dropdown-content">
+                    <li><a href="#">T3-LinkedClaims</a></li>
+                    <li><a href="#">Resume Author</a></li>
+                    <li><a href="#">LinkedTrust</a></li>
+                    <li><a href="#">CE Fact</a></li>
+                    <li><a href="#">Side Hub</a></li>
+                    <li><a href="#">Human Protocol</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Contact Us</a></li>
         </ul>
     </nav>
     <a href="#" class="cta-button">Live Claims</a>
