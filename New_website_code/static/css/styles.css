@@ -48,6 +48,7 @@ body::-webkit-scrollbar {
     top: 0;
     background-color: white;
     z-index: 1000;
+    border-bottom: 1px solid #000;
 }
 
 .logo {
@@ -332,11 +333,11 @@ nav ul li a {
 .white-paper .cta-button {
     display: inline-block;
     width: auto;
-    max-width: 200px;
+    max-width: 150px;
     text-align: center;
     margin-top: 1rem;
     padding: 0.5rem 1rem;
-    background-color: #007bff; /* Adjust color as needed */
+    background-color: #007bff;
     color: white;
     text-decoration: none;
     border-radius: 4px;
@@ -392,7 +393,7 @@ nav ul li a {
 
 /* Footer */
 footer {
-    background-color: #f5f5f5;
+    background-color: #EEEEEE;
 }
 
 .footer-main,
@@ -421,9 +422,13 @@ footer {
 }
 
 .footer-logo img {
-    width: 70px;
-    height: 70px;
+    width: 40px;
+    height: 40px;
     margin-right: 1rem;
+}
+
+.footer-logo span{
+    font-weight: bolder;
 }
 
 .footer-links,
@@ -462,6 +467,7 @@ footer {
     height: 80px;
     border-radius: 50%;
     margin-right: 1rem;
+    background-color: #D9D9D9;
 }
 
 .subscribe {
@@ -486,6 +492,12 @@ footer {
     color: white;
     border: none;
     border-radius: 0 9px 9px 0px;
+}
+
+.social-icons img{
+    height: 30px;
+    width: 30px;
+    /* border-radius: 50px; */
 }
 
 .footer-copyright {
