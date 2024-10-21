@@ -7,4 +7,4 @@ This project contains both new and old code for the website update project:
 
 ## Installation
 
-To install the new Website-Update, follow these steps [here](https://github.com/Cooperation-org/website-update/blob/main/New_website_code/readme.md).
+To install the New website code, follow these steps [here](https://github.com/Cooperation-org/website-update/blob/main/New_website_code/readme.md).
