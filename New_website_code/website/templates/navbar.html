@@ -12,13 +12,13 @@
             <li class="dropdown">
                 <a href="#">About</a>
                 <ul class="dropdown-content">
-                    <li><a href="{% url 'about' %}">Team</a></li>
+                    <li><a href="{% url 'team' %}">Team</a></li>
                     <li><a href="#">Our Mission</a></li>
                     <li><a href="#">Our Services</a></li>
                     <li><a href="#">Blog</a></li>
                 </ul>
             </li>
-            <li><a href="#">Our Services</a></li>
+            <li><a href="{% url 'services' %}">Our Services</a></li>
             <li class="dropdown">
                 <a href="#">LinkedClaims</a>
                 <ul class="dropdown-content">
@@ -41,6 +41,6 @@
             <li><a href="https://whatscookin.us/contact-us/" target="_blank">Contact Us</a></li>
         </ul>
     </nav>
-    <a href="#" class="cta-button">Live Claims</a>
+    <a href="https://live.linkedtrust.us/" class="cta-button">Live Claims</a>
 </header>
 

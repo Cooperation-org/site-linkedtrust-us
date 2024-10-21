@@ -38,6 +38,11 @@ body::-webkit-scrollbar {
     text-align: center;
     margin-bottom: 2rem;
 }
+
+a {
+    text-decoration: none;
+}
+
 /* Navbar */
 .navbar {
     display: flex;
@@ -92,6 +97,10 @@ nav ul li a {
     padding: 10px 0;
 }
 
+nav ul li a:hover {
+    color: #007bff;
+}
+
 /* Dropdown styles */
 .dropdown {
     position: relative;
@@ -102,7 +111,7 @@ nav ul li a {
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
@@ -337,7 +346,6 @@ nav ul li a {
     text-align: center;
     margin-top: 1rem;
     padding: 0.5rem 1rem;
-    background-color: #007bff;
     color: white;
     text-decoration: none;
     border-radius: 4px;
@@ -380,6 +388,7 @@ nav ul li a {
         max-width: none;
     }
 }
+
 /* Instructions */
 .instructions {
     padding: 2rem;
@@ -427,7 +436,7 @@ footer {
     margin-right: 1rem;
 }
 
-.footer-logo span{
+.footer-logo span {
     font-weight: bolder;
 }
 
@@ -463,11 +472,16 @@ footer {
 }
 
 .ceramic-logo img {
-    width: 80px;
-    height: 80px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     margin-right: 1rem;
     background-color: #D9D9D9;
+}
+
+.ceramic-logo span {
+    font-size: 1.5rem;
+    font-weight: bolder;
 }
 
 .subscribe {
@@ -494,10 +508,9 @@ footer {
     border-radius: 0 9px 9px 0px;
 }
 
-.social-icons img{
+.social-icons img {
     height: 30px;
     width: 30px;
-    /* border-radius: 50px; */
 }
 
 .footer-copyright {
@@ -505,7 +518,7 @@ footer {
     color: white;
     text-align: center;
     padding: 1rem;
-    height: 15vh;
+    height: 10vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -516,3 +529,146 @@ footer {
 h4 {
     text-align: initial;
 }
+
+/* 
+=========================
+Get Started Page
+=========================
+*/
+
+.getstarted-container {
+    padding: 4rem;
+}
+
+.getstarted-container h3 {
+    text-align: center;
+}
+
+.getstarted-row {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.getstarted-holder {
+    flex: 1;
+    padding: 1rem;
+}
+
+.get-started-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.185);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+}
+
+.get-started-image {
+    width: 100%;
+    height: 200px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.get-started-details {
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.get-started-text {
+    margin-bottom: 1rem;
+}
+
+.get-started-card .cta-button {
+    align-self: flex-end;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.get-started-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+
+@media screen and (max-width: 768px) {
+    .getstarted-row {
+        flex-direction: column;
+        padding: 0 2rem;
+    }
+
+    .getstarted-holder {
+        margin-bottom: 1rem;
+    }
+}
+
+/* END */
+
+
+/* 
+=========================
+About Page
+=========================
+*/
+
+
+.about_intro_section {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding-top: 4rem;
+}
+
+.about_intro_container {
+    width: 50%;
+}
+
+.about_intro_section h2 {
+    font-weight: bold;
+}
+
+.person_section {
+    padding: 4rem;
+}
+
+.person_section .row {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+}
+
+.person_section .card {
+    width: 200px;
+}
+
+.person_section .card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #D9D9D9;
+}
+
+.person_section .card h3 {
+    font-weight: bold;
+    margin: 10px 0 5px;
+}
+
+.person_section .card p {
+    margin: 11px 0;
+    line-height: 1;
+}
+
+/* END */

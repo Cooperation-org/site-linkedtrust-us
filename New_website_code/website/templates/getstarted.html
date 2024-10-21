@@ -3,89 +3,59 @@
 {% block title %}Get Started with LinkedTrust{% endblock %}
 {% block content %}
 
-<style>
-    h3 {
-        color: #333;
-        font-weight: bold;
-        text-align: center;
-        margin-top: 5%;
-        margin-bottom: 5%;
-    }
 
-    .row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 30px;
-        padding-left: 5%;
-        padding-right: 5%;
-    }
+<div class="getstarted-container">
+    <h3>Getting started with LinkedTrust</h3>
 
-    .column {
-        flex: 1;
-        margin: 0 10px;
-    }
-
-    .card {
-        width: 100%;
-        background: #EEEEEE;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        display: grid;
-        text-align: initial;
-    }
-
-    .card img {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        float: left;
-        margin-right: 15px;
-        margin-bottom: 15px;
-        border-radius: 0;
-    }
-
-    .cta-button-getstarted {
-        display: block;
-        width: 200px;
-        margin: 0 auto;
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-        border-radius: 5px;
-        margin-bottom: 5%;
-        margin-top: 5%;
-    }
-</style>
-
-<h3>Getting started with LinkedTrust</h3>
-
-<div class="row">
-    <div class="column">
-        <div class="card">
-            <img src="{% static 'img/imgplaceholder.png' %}" alt="Step 1">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error veniam non cumque, qui quo iure.
-                Consectetur deserunt dolores eaque neque!</p>
+    <div class="getstarted-row">
+        <div class="getstarted-holder">
+            <div class="get-started-card">
+                <div class="get-started-image">
+                    <img src="{% static 'img/Media.png' %}" alt="Get started step 1">
+                </div>
+                <div class="get-started-details">
+                    <div class="get-started-text">
+                        <h4>Headline</h4>
+                        <span>Subhead</span>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, minima?</p>
+                    </div>
+                    <a href="#" class="cta-button">Button</a>
+                </div>
+            </div>
+        </div>
+        <div class="getstarted-holder">
+            <div class="get-started-card">
+                <div class="get-started-image">
+                    <img src="{% static 'img/Media.png' %}" alt="Get started step 2">
+                </div>
+                <div class="get-started-details">
+                    <div class="get-started-text">
+                        <h4>Headline</h4>
+                        <span>Subhead</span>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, minima?</p>
+                    </div>
+                    <a href="#" class="cta-button">Button</a>
+                </div>
+            </div>
+        </div>
+        <div class="getstarted-holder">
+            <div class="get-started-card">
+                <div class="get-started-image">
+                    <img src="{% static 'img/Media.png' %}" alt="Get started step 3">
+                </div>
+                <div class="get-started-details">
+                    <div class="get-started-text">
+                        <h4>Headline</h4>
+                        <span>Subhead</span>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, minima?</p>
+                    </div>
+                    <a href="#" class="cta-button">Button</a>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="column">
-        <div class="card">
-            <img src="{% static 'img/imgplaceholder.png' %}" alt="Step 2">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error veniam non cumque, qui quo iure.
-                Consectetur deserunt dolores eaque neque!</p>
-        </div>
-    </div>
-    <div class="column">
-        <div class="card">
-            <img src="{% static 'img/imgplaceholder.png' %}" alt="Step 3">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error veniam non cumque, qui quo iure.
-                Consectetur deserunt dolores eaque neque!</p>
-        </div>
-    </div>
+
 </div>
 
-<a href="#" class="cta-button-getstarted">Ready to build trust?</a>
 
 {% endblock %}
