@@ -15,7 +15,7 @@ img {
     max-width: 100%;
     height: auto;
     pointer-events: none;
-    filter: grayscale(100%);
+    background-repeat: no-repeat;
 }
 
 html {
@@ -50,12 +50,9 @@ button {
 
 section {
     margin-bottom: 10px;
-    border-radius: 10px;
 }
 
-.website-update-container {
-    padding: 10px 10px 10px 10px;
-}
+
 
 /* Navbar */
 .navbar {
@@ -63,13 +60,11 @@ section {
     justify-content: space-between;
     align-items: center;
     padding: 10px 30px;
-    position: relative;
+    position: sticky;
     top: 0;
     background-color: black;
     color: white;
     z-index: 1000;
-    margin-bottom: 10px;
-    border-radius: 10px;
 }
 
 .logo {
@@ -88,7 +83,6 @@ section {
     width: 35px;
     height: 35px;
     margin-right: 10px;
-    filter: grayscale(100%);
 }
 
 .logo span {
@@ -115,7 +109,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #007bff;
+    color: #00B2E5;
 }
 
 /* Dropdown styles */
@@ -186,7 +180,6 @@ nav ul li a:hover {
     position: relative;
     overflow: hidden;
     background-color: black;
-    border-radius: 10px;
 }
 
 .overlay {
@@ -223,6 +216,7 @@ nav ul li a:hover {
     height: 60vh;
     background-color: black;
     background-image: url('../img/banner_img1.png');
+    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -423,6 +417,7 @@ nav ul li a:hover {
     text-align: center;
     padding: 2rem;
     background-image: url('../img/banner_img2.png');
+    background-repeat: no-repeat;
     position: relative;
     overflow: hidden;
     border-radius: 10px;
@@ -556,6 +551,7 @@ nav ul li a:hover {
     width: 400px;
     height: 400px;
     background-image: url('../img/gitonga.png');
+    background-repeat: no-repeat;
     border-radius: 30px;
     overflow: hidden;
     object-fit: contain;
@@ -602,13 +598,12 @@ nav ul li a:hover {
 /* Footer */
 
 
-.footer-main {
+.footer-main,
+.footer-secondary,
+.copyright-section {
     padding: 1rem 4rem;
 }
 
-.footer-secondary {
-    padding: 0.5rem 4rem;
-}
 
 
 .footer-main {
