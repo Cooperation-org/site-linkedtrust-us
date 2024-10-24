@@ -2,54 +2,34 @@
 {% load static %}
 {% block content %}
 <section class="banner">
-    <div class="video-background">
-        <iframe src="https://www.youtube.com/embed/L5uARHb0-mA?autoplay=1&mute=1&loop=1&playlist=L5uARHb0-mA"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-        </iframe>
-    </div>
     <div class="overlay"></div>
     <div class="banner-image">
         <img src="{% static 'img/Banner.png' %}" alt="Banner Image">
     </div>
 </section>
 
-<section class="intro">
-    <div>
-        <h3>An open, decentralized trust ecosystem</h3>
-        <a href="#" class="cta-button">Get started</a>
+<section class="ecosystem">
+    <div class="ecosystem-container">
+        <h3>An open, decentralized<br>trust ecosystem</h3>
+        <button class="button">
+            <div>
+                <i class="fa-solid fa-play" id="play-icon"></i>
+            </div>
+            Watch Demo
+        </button>
     </div>
 </section>
 
-<section class="partners">
-    <h3>Partners and Protocols</h3>
-    <div class="partner-row">
-        <div class="partner">
-            <img src="{% static 'img/imgplaceholder.png' %}" alt="WhatsCookin'">
-            <span>WhatsCookin'</span>
+<section class="trusted-section">
+    <h2 class="trusted-heading">Trusted by</h2>
+    <div class="trusted-logo-container">
+        <div class="trusted-logo">
+            <img src="{% static 'img/un.png' %}" alt="United Nations Logo" class="un-logo">
+            <span class="trusted-logo-text">United Nations</span>
         </div>
-        <div class="partner">
-            <img src="{% static 'img/imgplaceholder.png' %}" alt="Coupons for good">
-            <span>Coupons for good</span>
-        </div>
-        <div class="partner">
-            <img src="{% static 'img/imgplaceholder.png' %}" alt="cooperation.org">
-            <span>cooperation.org</span>
-        </div>
-    </div>
-</section>
-
-<section class="built-with">
-    <h3>Built With</h3>
-    <div class="built-with-row">
-        <div class="built-with-item">
-            <img src="{% static 'img/imgplaceholder.png' %}" alt="Human">
-            <span>Human</span>
-        </div>
-        <div class="built-with-item" style="margin-left: 5%;">
-            <img src="{% static 'img/imgplaceholder.png' %}" alt="Ceramic">
-            <span>Ceramic</span>
+        <div class="trusted-logo">
+            <img src="{% static 'img/us.png' %}  " alt="US Chamber of Commerce Logo" class="us-chamber-logo">
+            <span class="trusted-logo-text">US chamber of commerce</span>
         </div>
     </div>
 </section>
@@ -68,9 +48,37 @@
     </div>
 </section>
 
-<section class="instructions">
-    <h3>Getting Started</h3>
-    <p>Build trust through decentralized claims and attestations</p>
-    <a href="{% url 'getstarted' %}" class="cta-button">See More</a>
+<section>
+    <div class="embark-container">
+        <h3>Embark on Your Path</h3>
+        <p>Build trust through decentralized claims and attestations.</p>
+        <a href="#" class="embark-button">
+            Get Started
+            <span class="embark-button-circle"></span>
+        </a>
+    </div>
 </section>
+
+<section>
+    <div class="Getstarted-section">
+        <div class="Getstarted-container">
+            <h3>Linked Trust In <br><span class="highlight">Action.</span></h3>
+            <p>Learn More about us and how we work.</p>
+            <a href="#about" class="Getstarted-btn">About Us</a>
+
+
+        </div>
+        <div class="Getstarted-video-container">
+            <div class="Getstarted-video-wrapper">
+                
+                <div class="box-play-icon">
+                    <i class="fa-solid fa-play" id="play-icon"></i>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
 {% endblock %}

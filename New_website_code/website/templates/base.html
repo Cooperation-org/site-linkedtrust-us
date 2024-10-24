@@ -6,7 +6,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}LinkedTrust{% endblock %}</title>
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'img/logo.svg' %}" type="image/x-icon">
+
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
     <script>
@@ -17,15 +21,40 @@
 </head>
 
 <body>
-    {% include 'navbar.html' %}
+    <div class="website-update-container">
+        {% include 'navbar.html' %}
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
 
-    {% include 'footer.html' %}
+        {% include 'footer.html' %}
 
-    
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+    <script>
+        feather.replace();
+
+
+        // Function to update the year
+        function updateCopyrightYear() {
+            const yearElement = document.getElementById('currentYear');
+            const currentYear = new Date().getFullYear();
+            yearElement.textContent = currentYear;
+        }
+
+        // Update year when page loads
+        updateCopyrightYear();
+
+        // Optional: Update year when tab becomes visible again
+        document.addEventListener('visibilitychange', function () {
+            if (document.visibilityState === 'visible') {
+                updateCopyrightYear();
+            }
+        });
+    </script>
+
 </body>
 
 </html>
