@@ -1,79 +1,134 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<main class="main_container">
 
 
-<section class="ecosystem">
-    <div class="ecosystem-container">
-        <h3>An open, decentralized<br>trust ecosystem</h3>
-        <button class="button">
-            <div>
-                <i class="fa-solid fa-play" id="play-icon"></i>
-            </div>
-            Watch Demo
-        </button>
-    </div>
-</section>
-
-<section class="trusted-section">
-    <h2 class="trusted-heading">Trusted by</h2>
-    <div class="trusted-logo-container">
-        <div class="trusted-logo">
-            <img src="{% static 'img/un.png' %}" alt="United Nations Logo" class="un-logo">
-            <span class="trusted-logo-text">United Nations</span>
-        </div>
-        <div class="trusted-logo">
-            <img src="{% static 'img/us.png' %}  " alt="US Chamber of Commerce Logo" class="us-chamber-logo">
-            <span class="trusted-logo-text">US chamber of commerce</span>
-        </div>
-    </div>
-</section>
-
-<section class="white-paper">
-    <div class="white-paper-text">
-        <h3>A WHITE PAPER from RWOT XI: The hague</h3>
-        <h4>Composing Credentials via LinkedClaims and Cryptographic Binding</h4>
-        <p>by Philip D. Long(T3 Innovation Network, Georgetown University & ASU), Dmitri Zagidulin (MIT Digital
-            Credentials Consortium) & Golda Velez</p>
-        <a href="#">(Cooperation.org)</a>
-        <a href="#" class="cta-button">Full Paper</a>
-    </div>
-    <div class="white-paper-image">
-        <img src="{% static 'img/rwot-logo.png' %}" class="img-fluid" alt="White Paper Image">
-    </div>
-</section>
-
-<section>
-    <div class="embark-container">
-        <h3>Embark on Your Path</h3>
-        <p>Build trust through decentralized claims and attestations.</p>
-        <a href="#" class="embark-button">
-            Get Started
-            <span class="embark-button-circle"></span>
-        </a>
-    </div>
-</section>
-
-<section>
-    <div class="Getstarted-section">
-        <div class="Getstarted-container">
-            <h3>Linked Trust In <br><span class="highlight">Action.</span></h3>
-            <p>Learn More about us and how we work.</p>
-            <a href="#about" class="Getstarted-btn">About Us</a>
-
-
-        </div>
-        <div class="Getstarted-video-container">
-            <div class="Getstarted-video-wrapper">
-                
-                <div class="box-play-icon">
+    <section class="ecosystem">
+        <div class="ecosystem-container">
+            <h3>An open, decentralized<br>trust ecosystem</h3>
+            <button class="button">
+                <div>
                     <i class="fa-solid fa-play" id="play-icon"></i>
                 </div>
+                Watch Demo
+            </button>
+        </div>
+    </section>
+
+    <!-- <section class="trusted-section">
+        <h2 class="trusted-heading">Trusted by</h2>
+        <div class="trusted-logo-container">
+            <div class="trusted-logo">
+                <img src="{% static 'img/un.png' %}" alt="United Nations Logo" class="un-logo">
+                <span class="trusted-logo-text">United Nations</span>
+            </div>
+            <div class="trusted-logo">
+                <img src="{% static 'img/us.png' %}  " alt="US Chamber of Commerce Logo" class="us-chamber-logo">
+                <span class="trusted-logo-text">US Chambers of Commerce Foundation</span>
+            </div>
+        </div>
+    </section> -->
+
+
+    <section class="trusted-by-section">
+        <h2 class="trusted-by-title">Trusted by</h2>
+        <div class="trusted-logo-grid">
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/UN.png' %} " alt="United Nations" />
+            </div>
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/US.png' %} " alt="US Chambers of Commerce Foundation" />
+            </div>
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/DIF.png' %} " alt="DIF" />
+            </div>
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/Human Protocal.png' %} " alt="HUMAN Protocol" />
+            </div>
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/candid.png' %} " alt="Candid" />
+            </div>
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/nlnet.png' %} " alt="NLnet" />
+            </div>
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/T3.png' %} " alt="T3 Innovation Network" />
+            </div>
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/BRITISH.png' %} " alt="British Columbia" />
+            </div>
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/aAries.png' %} " alt="Hyperledger ARIES" />
+            </div>
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/bloom.png' %} " alt="Bloomberg BETA" />
+            </div>
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/bluesky_logo.png' %} " alt="Bluesky" />
+            </div>
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/fairmint.png' %} " alt="Fairmint" />
+            </div>
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/labs.png' %} " alt="3 LABS" />
+            </div>
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/mandate.png' %} " alt="Mandate Democracy" />
+            </div>
+            <div class="trusted-logo-container">
+                <img class="trusted-logo" src="{% static 'img/intuit.png' %} " alt="Intuit" />
+            </div>
+        </div>
+    </section>
+
+
+    <section class="white-paper">
+        <div class="white-paper-text">
+            <h3>A WHITE PAPER from RWOT XI: The hague</h3>
+            <h4>Composing Credentials via LinkedClaims and Cryptographic Binding</h4>
+            <p>by Philip D. Long(T3 Innovation Network, Georgetown University & ASU), Dmitri Zagidulin (MIT Digital
+                Credentials Consortium) & Golda Velez</p>
+            <a href="http://cooperation.org/" target="_blank" style="text-decoration: underline;">(Cooperation.org)</a>
+            <a href="https://github.com/WebOfTrustInfo/rwot11-the-hague/blob/master/final-documents/composable-credentials.pdf"
+                target="_blank" class="cta-button">Full Paper</a>
+        </div>
+        <div class="white-paper-image">
+            <img src="{% static 'img/rwot-logo.png' %}" class="img-fluid" alt="White Paper Image">
+        </div>
+    </section>
+
+    <section>
+        <div class="embark-container">
+            <h3>Embark on Your Path</h3>
+            <p>Build trust through decentralized claims and attestations.</p>
+            <a href="#" class="embark-button">
+                Get Started
+                <span class="embark-button-circle"></span>
+            </a>
+        </div>
+    </section>
+
+    <section>
+        <div class="Getstarted-section">
+            <div class="Getstarted-container">
+                <h3>Linked Trust In <br><span class="highlight">Action.</span></h3>
+                <p>Learn More about us and how we work.</p>
+                <a href="#about" class="Getstarted-btn">About Us</a>
 
 
             </div>
-        </div>
-    </div>
-</section>
+            <div class="Getstarted-video-container">
+                <div class="Getstarted-video-wrapper">
 
+                    <div class="box-play-icon">
+                        <i class="fa-solid fa-play" id="play-icon"></i>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
 {% endblock %}

@@ -23,11 +23,12 @@
 
 <body>
     {% include 'navbar.html' %}
+    {% if show_banner %}
     {% include 'banner.html' %}
+    {% endif %}
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+    {% block content %}{% endblock %}
+
 
     {% include 'footer.html' %}
 

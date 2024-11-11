@@ -49,7 +49,9 @@ button {
 }
 
 section {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    border-radius: 24px;
+    overflow: hidden;
 }
 
 
@@ -59,7 +61,7 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 30px;
+    padding: 10px 70px;
     position: sticky;
     top: 0;
     background-color: black;
@@ -110,6 +112,16 @@ nav ul li a {
 
 nav ul li a:hover {
     color: #00B2E5;
+}
+
+.navbar .cta-button {
+    background-color: transparent;
+    border: 2px solid #00B2E5;
+    transition: all 0.5s ease;
+}
+
+.navbar .cta-button:hover {
+    background-color: #00B2E5;
 }
 
 /* Dropdown styles */
@@ -211,6 +223,14 @@ nav ul li a:hover {
     filter: grayscale(0%);
 }
 
+/* main container */
+.main_container {
+    padding-top: 6%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+
 /* eccosystem */
 .ecosystem {
     height: 60vh;
@@ -230,7 +250,7 @@ nav ul li a:hover {
 
 .ecosystem-container h3 {
     color: white;
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 600;
     line-height: 1.2;
     margin-bottom: 40px;
@@ -270,64 +290,74 @@ nav ul li a:hover {
 }
 
 /* Trusted by */
-
-
-.trusted-section {
+.trusted-by-section {
     background-color: #000000;
-    padding: 60px 20px;
-    width: 100%;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    padding: 64px 32px;
+    border-radius: 24px;
+    margin: 0 auto;
 }
 
-.trusted-heading {
-    color: #BEBEBE;
+.trusted-by-title {
+    color: #ffffff;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 24px;
     font-weight: 500;
-    margin-bottom: 40px;
-    text-align: center;
+    margin-bottom: 48px;
+}
+
+.trusted-logo-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 28px 2px;
+
+    margin: 0 auto;
 }
 
 .trusted-logo-container {
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 80px;
-    max-width: 1200px;
-    width: 100%;
+    justify-content: center;
+    filter: brightness(0) invert(1);
+    transition: opacity 0.2s ease;
 }
 
 .trusted-logo {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    color: #BEBEBE;
-}
-
-.trusted-logo img {
-    height: 40px;
-    width: auto;
+    max-width: 145px;
+    height: auto;
     object-fit: contain;
-    opacity: 0.5;
 }
 
-.trusted-logo-text {
-    font-size: 18px;
-    font-weight: 400;
-    white-space: nowrap;
-    color: #BEBEBE;
+@media (max-width: 1024px) {
+    .trusted-logo-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
-.un-logo {
-    filter: brightness(0) invert(1);
+@media (max-width: 768px) {
+    .trusted-logo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px 24px;
+    }
+
+    .trusted-logo {
+        max-width: 140px;
+    }
 }
 
-.us-chamber-logo {
-    filter: brightness(0) invert(1);
+@media (max-width: 480px) {
+    .trusted-by-section {
+        padding: 48px 16px;
+    }
+
+    .trusted-logo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px 16px;
+    }
+
+    .trusted-logo {
+        max-width: 120px;
+    }
 }
 
 /* White Paper */
@@ -337,7 +367,6 @@ nav ul li a:hover {
     justify-content: space-between;
     align-items: center;
     padding: 4rem;
-    border: 1px solid black;
 }
 
 .white-paper-text {
@@ -498,7 +527,6 @@ nav ul li a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 24px;
     overflow: hidden;
 }
 
@@ -597,14 +625,16 @@ nav ul li a:hover {
 
 /* Footer */
 
+footer {
+    margin-top: 7%;
+    margin-bottom: 1%;
+}
 
 .footer-main,
 .footer-secondary,
 .copyright-section {
-    padding: 1rem 4rem;
+    padding: 1rem 5rem;
 }
-
-
 
 .footer-main {
     display: flex;
@@ -622,7 +652,7 @@ nav ul li a:hover {
 }
 
 .footer-about p {
-    padding-right: 10px;
+    padding-right: 70px;
 }
 
 .footer-logo img {
@@ -654,6 +684,7 @@ nav ul li a:hover {
 .footer-secondary {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 2%;
 }
 
 .powered-by {
@@ -741,12 +772,24 @@ h4 {
     display: flex;
     gap: 20px;
     font-size: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
 .social-icons a {
-    color: #333;
+    color: #000;
     text-decoration: none;
     transition: color 0.3s ease;
+}
+
+#footer_social_icon_img {
+    width: 22px;
+    height: 22px;
+}
+
+#footer_social_icon_img img {
+    width: 100%;
+    height: 100%;
 }
 
 
@@ -854,7 +897,7 @@ About Page
     text-align: center;
     display: flex;
     justify-content: center;
-    padding-top: 4rem;
+
 }
 
 .about_intro_container {
