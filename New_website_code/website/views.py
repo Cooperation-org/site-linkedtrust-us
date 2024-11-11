@@ -21,3 +21,6 @@ def getstarted_view(request):
 
 def contact_view(request):
     return render(request, 'contact.html')
+
+def empty_view(request):
+    return render(request, 'empty.html')
