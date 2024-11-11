@@ -12,27 +12,36 @@
                 <a href="#">About</a>
                 <ul class="dropdown-content">
                     <li><a href="{% url 'team' %}">Team</a></li>
-                    <li><a href="#">Our Mission</a></li>
-                    <li><a href="#">Blog</a></li>
+                    <li><a href="{% url 'mission' %}">Our Mission</a></li>
+                    <li><a href="{% url 'press' %}">Press & Media</a></li>
                 </ul>
             </li>
             <li><a href="{% url 'services' %}">Our Services</a></li>
             <li class="dropdown">
                 <a href="#">LinkedClaims</a>
                 <ul class="dropdown-content">
-                    <li><a href="#">RFX</a></li>
-                    <li><a href="#">Npm libs</a></li>
-                    <li><a href="#">Architecture</a></li>
+                    <li><a href="{% url 'getstarted' %}>Getting Started</a></li>
+                    <li><a href="https://live.linkedtrust.us/api/docs">Documentation</a></li>
+                    <li><a href="https://github.com/Cooperation-org/LinkedClaims/blob/main/LinkedClaimsRFC.md">LinkedClaim RFC</a></li>
+                    <li class="nested-dropdown">
+                      <a href="#">Code</a>
+                      <ul class="nested-dropdown-content">
+                         <li><a href="https://github.com/Cooperation-org">GitHub</a></li>
+                         <li><a href="https://www.npmjs.com/org/cooperation">npm</a></li>
+                         <li><a href="https://pypi.org/project/linked-claims-extractor/">PyPI</a></li>
+                     </ul>
+                    </li>
+                    <li><a href="http://cooperation.org/credentials/v1/">Schema</a></li>
+                    <li><a href="http://cooperation.org/linked_trust/">Architecture</a></li>
                 </ul>
             </li>
             <li class="dropdown">
                 <a href="#">Use Cases</a>
                 <ul class="dropdown-content">
-                    <li><a href="#">T3-LinkedClaims</a></li>
-                    <li><a href="#">Resume Author</a></li>
-                    <li><a href="#">LinkedTrust</a></li>
-                    <li><a href="#">CE Fact</a></li>
-                    <li><a href="#">Side Hub</a></li>
+                    <li><a href="https://opencreds.net/">OpenCreds.net</a></li>
+                    <li><a href="#">Impact Validation</a></li>
+                    <li><a href="#">Regulatory Compliance</a></li>
+                    <li><a href="#">Progressive Trust</a></li>
                     <li><a href="#">Human Protocol</a></li>
                 </ul>
             </li>
