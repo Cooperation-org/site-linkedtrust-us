@@ -19,4 +19,5 @@ def services_view(request):
 def getstarted_view(request):
     return render(request, 'getstarted.html')
 
-# 
+def contact_view(request):
+    return render(request, 'contact.html')

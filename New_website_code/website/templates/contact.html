@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Contact - LinkedTrust{% endblock %}
+{% block content %}
+<div class="contact-container-body">
+    <div class="contact_header">
+        <h1>Contact Us</h1>
+    </div>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <h2>Thanks for your interest in LinkedTrust.</h2>
+            <p style="font-weight: 600;">Want to know more about us?</p>
+            <p>Submit this form and a real human will contact you soon!</p>
+
+            <div class="contact-detail">
+                <i class="fa-solid fa-envelope"></i>
+                <p>info@whatscookin.us</p>
+            </div>
+
+            <div class="contact-detail">
+                <i class="fa-solid fa-phone"></i>
+                <p>520-440-1420</p>
+            </div>
+
+            <div class="decoration"></div>
+        </div>
+
+        <div class="contact-form-section">
+            <form>
+                <div class="form-row">
+                    <div class="contact-form-group">
+                        <input type="text" required>
+                        <label>Full Name</label>
+                    </div>
+                    <div class="contact-form-group">
+                        <input type="email" required>
+                        <label>Your Email</label>
+                    </div>
+                </div>
+
+                <div class="contact-form-group">
+                    <input type="text" required>
+                    <label>Subject</label>
+                </div>
+
+                <div class="contact-form-group">
+                    <textarea rows="4" required></textarea>
+                    <label>Message</label>
+                </div>
+
+                <button type="submit" class="contact-send-button">Send Message</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
