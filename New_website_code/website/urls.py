@@ -3,8 +3,13 @@ from .views import *
 
 urlpatterns = [
     path('', home_view, name='home'),
-    path('team', team_view, name='team'),
-    path('services', services_view, name='services'),
-    path('getstarted', getstarted_view, name='getstarted'),
     path('contact', contact_view, name='contact'),
+    path('getstarted', getstarted_view, name='getstarted'),
+    path('press', press_view, name='press'),
+    path('services', services_view, name='services'),
+    path('team', team_view, name='team'),
+
+
+    # TBD views
+    path('mission', empty_view, name='mission'),
 ]

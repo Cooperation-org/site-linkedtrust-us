@@ -157,6 +157,33 @@ nav ul li a:hover {
     display: block;
 }
 
+.nested-dropdown {
+    position: relative;
+}
+.nested-dropdown-content {
+    display: none;
+    position: absolute;
+    left: 100%;  /* Positions the nested menu to the right of its parent */
+    top: 0;      /* Aligns with the top of the parent item */
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 2;  /* Higher than parent dropdown to ensure proper layering */
+}
+.nested-dropdown-content li {
+    margin: 0;
+}
+.nested-dropdown-content a {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    color: black;
+}
+.nested-dropdown:hover .nested-dropdown-content {
+    display: block;
+}
+
+
 /* Responsive design */
 @media (max-width: 768px) {
     .navbar {
@@ -1204,6 +1231,113 @@ About Page
 
     .container {
         padding: 20px;
+    }
+}
+
+/* Generic page sections */
+
+/* Generic reusable section styles */
+.page-container {    /* was press-container */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 32px;
+}
+
+.section-title {    /* was press-title */
+    color: black;
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 48px;
+    text-align: center;
+}
+
+.card-grid {    /* was press-grid */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 32px;
+    margin-top: 40px;
+}
+
+.card-item {    /* was press-item */
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.card-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.item-icon {    /* was press-type-icon */
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.content-date {    /* was press-date */
+    color: #666;   /* or any color that matches your design */
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.content-link {
+    text-decoration: none;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.content-link h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-top: 12px;
+    margin-bottom: 16px;
+    color: #2563eb;    /* blue color, or your brand's link color */
+    border-bottom: 1px solid transparent;  /* prepare for hover effect */
+}
+
+.content-link:hover h3 {
+    border-bottom: 1px solid #2563eb;  /* underline appears on hover */
+    color: #1d4ed8;    /* slightly darker on hover */
+}
+
+.content-meta {    /* was press-authors */
+   font-size: 0.9rem;
+   color: #666;   /* or your brand's secondary text color */
+   margin-bottom: 12px;
+}
+
+.content-tag {    /* was press-type */
+   display: inline-block;
+   padding: 4px 12px;
+   border-radius: 16px;
+   background: #f5f5f5;    /* or your brand's light accent color */
+   font-size: 0.8rem;
+   font-weight: 500;
+   color: #333;    /* or your brand's text color */
+}
+
+@media (max-width: 768px) {
+    .page-container {
+        padding: 32px 16px;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .card-grid {
+        grid-template-columns: 1fr;
     }
 }
 
