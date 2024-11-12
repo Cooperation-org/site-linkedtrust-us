@@ -2,229 +2,226 @@
 {% load static %}
 {% block title %}Press & Media - LinkedTrust{% endblock %}
 {% block content %}
-<div class="press-container">
-    <h1 class="press-title">Press & Media</h1>
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<div class="page-container">
+    <h1 class="section-title">Press & Media</h1>
     
-    <section class="press-section">
-        <h2>Blogs & Articles</h2>
-        <div class="press-grid">
-            <div class="press-item">
-                <div class="press-date">July 17, 2024</div>
-                <a href="https://archive.org/details/practical-inclusiveness-and-earned-governance-linkedtrust" class="press-link">
-                    <h3>Practical Inclusiveness and Earned Governance</h3>
-                </a>
-                <div class="press-authors">Gitonga Njeri, Kenechukwu Orjiene, Amos Mwangi, Golda Velez @ MetaGov</div>
+    <div class="card-grid">
+        <!-- 2024 -->
+        <div class="card-item">
+            <div class="item-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8"/><path d="M18 10h-8"/></svg>
             </div>
-
-            <div class="press-item">
-                <div class="press-date">June 2024</div>
-                <a href="https://archive.org/details/web-virtual-meetup-public-goods-june-2024" class="press-link">
-                    <h3>Sustaining and Measuring the Impact of Public Goods</h3>
-                </a>
-                <div class="press-authors">Gitonga Njeri @ Dweb</div>
-            </div>
-
-            <div class="press-item">
-                <div class="press-date">January 26, 2024</div>
-                <a href="https://www.techdirt.com/2024/01/26/how-to-bell-the-ai-cat/" class="press-link">
-                    <h3>Techdirt: How to Bell the AI Cat?</h3>
-                </a>
-                <div class="press-authors">Golda Velez & Ayush Bharadwaj</div>
-            </div>
-
-            <div class="press-item">
-                <div class="press-date">October 31, 2022</div>
-                <a href="https://mirror.xyz/0x3176Dd992793ae9C50b92fE09E1bb7CcCdFF8016/3b7qsIHd8QnFjL-CQnfCNjW-4mEaSvsvLtCQS7ecypU" class="press-link">
-                    <h3>After the Merge: Miner Changes</h3>
-                </a>
-            </div>
-
-            <div class="press-item">
-                <div class="press-date">July 15, 2022</div>
-                <a href="https://blog.fairmint.co/whats-cookin-does-equity-their-way-a5dff43b805" class="press-link">
-                    <h3>WhatsCookin' does Equity their way</h3>
-                </a>
-                <div class="press-type">Featured on the Fairmint Blog</div>
-            </div>
+            <div class="content-date">July 17, 2024</div>
+            <a href="https://archive.org/details/practical-inclusiveness-and-earned-governance-linkedtrust" class="content-link">
+                <h3>Practical Inclusiveness and Earned Governance</h3>
+            </a>
+            <div class="content-meta">Gitonga Njeri, Kenechukwu Orjiene, Amos Mwangi, Golda Velez @ MetaGov</div>
         </div>
-    </section>
 
-    <section class="press-section">
-        <h2>Podcasts</h2>
-        <div class="press-grid">
-            <div class="press-item">
-                <div class="press-date">July 5, 2023</div>
-                <a href="https://twit.tv/shows/floss-weekly/episodes/739?autostart=false" class="press-link">
-                    <h3>Whose AI is it Anyway?</h3>
-                </a>
-                <div class="press-type">FLOSS Weekly</div>
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8"/><path d="M18 10h-8"/></svg>
             </div>
-
-            <div class="press-item">
-                <div class="press-date">September 23, 2022</div>
-                <a href="https://podcasts.apple.com/us/podcast/episode-033-making-the-transition-from-web2-to-web3/id1609220378?i=1000580481359" class="press-link">
-                    <h3>Making the Transition from Web2 to Web3</h3>
-                </a>
-                <div class="press-authors">Golda Velez, Co-founder of What's Cookin and Former Uber and Postmates</div>
-                <div class="press-type">Ownership Economy Podcast</div>
-            </div>
-
-            <div class="press-item">
-                <div class="press-date">December 14, 2022</div>
-                <a href="https://thegreendivas.com/episode/the-christmas-tree-dilemma-other-holiday-season-fun/" class="press-link">
-                    <h3>The Christmas Tree Dilemma & Other Holiday Season Fun</h3>
-                </a>
-                <div class="press-type">The Green Divas</div>
-            </div>
+            <div class="content-date">June 2024</div>
+            <a href="https://archive.org/details/web-virtual-meetup-public-goods-june-2024" class="content-link">
+                <h3>Sustaining and Measuring the Impact of Public Goods</h3>
+            </a>
+            <div class="content-meta">Gitonga Njeri @ Dweb</div>
         </div>
-    </section>
 
-    <section class="press-section">
-        <h2>Videos</h2>
-        <div class="press-grid">
-            <div class="press-item">
-                <div class="press-date">March 1, 2024</div>
-                <a href="https://www.youtube.com/watch?v=gYOM91aa0DM" class="press-link">
-                    <h3>Decentralized Trust and AI</h3>
-                </a>
-                <div class="press-authors">Golda Velez at EthDenver</div>
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
             </div>
-
-            <div class="press-item">
-                <div class="press-date">February 29, 2024</div>
-                <a href="https://www.youtube.com/watch?v=APy0RvnqDB8" class="press-link">
-                    <h3>Supply Chain Traceability On and Off Chain</h3>
-                </a>
-                <div class="press-type">EthDenver</div>
-            </div>
-
-            <div class="press-item">
-                <div class="press-date">January 2024</div>
-                <a href="https://www.youtube.com/watch?v=L5uARHb0-mA" class="press-link">
-                    <h3>Gitonga at Fintech Dubai 2024</h3>
-                </a>
-            </div>
-
-            <div class="press-item">
-                <div class="press-date">August 26, 2022</div>
-                <a href="https://archive.org/details/26-09-30_-_ceramic_the_decentralized_network.qt" class="press-link">
-                    <h3>Ceramic: The Decentralized Network for Composable Data</h3>
-                </a>
-                <div class="press-authors">Golda Velez</div>
-            </div>
-
-            <div class="press-item">
-                <div class="press-date">August 26, 2022</div>
-                <a href="https://archive.org/details/26-12_15_decentralized_reputation_-_open_trust_claims.mp4" class="press-link">
-                    <h3>Decentralized Reputation - Open Trust Claims</h3>
-                </a>
-                <div class="press-authors">Golda Velez</div>
-            </div>
+            <div class="content-date">March 1, 2024</div>
+            <a href="https://www.youtube.com/watch?v=gYOM91aa0DM" class="content-link">
+                <h3>Decentralized Trust and AI</h3>
+            </a>
+            <div class="content-meta">Golda Velez at EthDenver</div>
         </div>
-    </section>
 
-    <section class="press-section">
-        <h2>News Coverage</h2>
-        <div class="press-grid">
-            <div class="press-item">
-                <div class="press-date">June 14, 2021</div>
-                <a href="https://thisistucson.com/eat/tucson-startups-platform-connects-people-through-home-cooked-meals/article_2a63d592-ca0c-11eb-994a-374baaf1e6e2.html" class="press-link">
-                    <h3>Tucson startup's platform connects people through home-cooked meals</h3>
-                </a>
-                <div class="press-type">This Is Tucson</div>
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
             </div>
+            <div class="content-date">February 29, 2024</div>
+            <a href="https://www.youtube.com/watch?v=APy0RvnqDB8" class="content-link">
+                <h3>Supply Chain Traceability On and Off Chain</h3>
+            </a>
+            <div class="content-meta">EthDenver</div>
         </div>
-    </section>
+
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+            </div>
+            <div class="content-date">January 2024</div>
+            <a href="https://www.youtube.com/watch?v=L5uARHb0-mA" class="content-link">
+                <h3>Gitonga at Fintech Dubai 2024</h3>
+            </a>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8"/><path d="M18 10h-8"/></svg>
+            </div>
+            <div class="content-date">January 26, 2024</div>
+            <a href="https://www.techdirt.com/2024/01/26/how-to-bell-the-ai-cat/" class="content-link">
+                <h3>Techdirt: How to Bell the AI Cat?</h3>
+            </a>
+            <div class="content-meta">Golda Velez & Ayush Bharadwaj</div>
+        </div>
+
+        <!-- 2023 -->
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 6.5a5 5 0 0 1 7.54.54l-3.49 3.49a13.45 13.45 0 0 1-6.1-3.1l2.05-.93Z"/><path d="M11.5 17.5a5 5 0 0 0 7.54-.54l-3.49-3.49a13.45 13.45 0 0 0-6.1 3.1l2.05.93Z"/><path d="M5 6.5a5 5 0 0 1 7.54.54L9.05 10.5a13.45 13.45 0 0 1-6.1-3.1L5 6.5Z"/><path d="M5 17.5a5 5 0 0 0 7.54-.54L9.05 13.5a13.45 13.45 0 0 0-6.1 3.1L5 17.5Z"/></svg>
+            </div>
+            <div class="content-date">July 5, 2023</div>
+            <a href="https://twit.tv/shows/floss-weekly/episodes/739?autostart=false" class="content-link">
+                <h3>Whose AI is it Anyway?</h3>
+            </a>
+            <div class="content-tag">FLOSS Weekly</div>
+        </div>
+
+        <!-- 2022 -->
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8"/><path d="M18 10h-8"/></svg>
+            </div>
+            <div class="content-date">December 14, 2022</div>
+            <a href="https://thegreendivas.com/episode/the-christmas-tree-dilemma-other-holiday-season-fun/" class="content-link">
+                <h3>The Christmas Tree Dilemma & Other Holiday Season Fun</h3>
+            </a>
+            <div class="content-tag">The Green Divas</div>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8"/><path d="M18 10h-8"/></svg>
+            </div>
+            <div class="content-date">October 31, 2022</div>
+            <a href="https://mirror.xyz/0x3176Dd992793ae9C50b92fE09E1bb7CcCdFF8016/3b7qsIHd8QnFjL-CQnfCNjW-4mEaSvsvLtCQS7ecypU" class="content-link">
+                <h3>After the Merge: Miner Changes</h3>
+            </a>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+            </div>
+            <div class="content-date">October 4, 2022</div>
+            <a href="https://www.youtube.com/watch?v=0YsnGkFG7o8" class="content-link">
+                <h3>Regulating the Online Public Sphere: From Decentralized Networks to Public Regulation Conference</h3>
+            </a>
+            <div class="content-meta">with Golda Velez</div>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 6.5a5 5 0 0 1 7.54.54l-3.49 3.49a13.45 13.45 0 0 1-6.1-3.1l2.05-.93Z"/><path d="M11.5 17.5a5 5 0 0 0 7.54-.54l-3.49-3.49a13.45 13.45 0 0 0-6.1 3.1l2.05.93Z"/><path d="M5 6.5a5 5 0 0 1 7.54.54L9.05 10.5a13.45 13.45 0 0 1-6.1-3.1L5 6.5Z"/><path d="M5 17.5a5 5 0 0 0 7.54-.54L9.05 13.5a13.45 13.45 0 0 0-6.1 3.1L5 17.5Z"/></svg>
+            </div>
+            <div class="content-date">September 23, 2022</div>
+            <a href="https://podcasts.apple.com/us/podcast/episode-033-making-the-transition-from-web2-to-web3/id1609220378?i=1000580481359" class="content-link">
+                <h3>Making the Transition from Web2 to Web3 as a Engineer and Operator</h3>
+            </a>
+            <div class="content-meta">Golda Velez, Co-founder of What's Cookin and Former Uber and Postmates</div>
+        </div>
+
+<div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+            </div>
+            <div class="content-date">August 27, 2022</div>
+            <a href="https://archive.org/details/27-10_30_transparency_not_permission__a_work-weighted_approach_to_dao_governance.mp4" class="content-link">
+                <h3>Transparency not Permission: a Work-weighted approach to DAO governance</h3>
+            </a>
+            <div class="content-meta">by Golda Velez</div>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+            </div>
+            <div class="content-date">August 26, 2022</div>
+            <a href="https://archive.org/details/26-09-30_-_ceramic_the_decentralized_network.qt" class="content-link">
+                <h3>Ceramic: The Decentralized Network for Composable Data</h3>
+            </a>
+            <div class="content-meta">by Golda Velez</div>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+            </div>
+            <div class="content-date">August 26, 2022</div>
+            <a href="https://archive.org/details/26-12_15_decentralized_reputation_-_open_trust_claims.mp4" class="content-link">
+                <h3>Decentralized Reputation - Open Trust Claims</h3>
+            </a>
+            <div class="content-meta">by Golda Velez</div>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8"/><path d="M18 10h-8"/></svg>
+            </div>
+            <div class="content-date">August 2, 2022</div>
+            <a href="https://medium.com/@dereksilva/ethcc-hack-2022-winners-3461e41c8b42" class="content-link">
+                <h3>EthCC Hack 2022 Winners</h3>
+            </a>
+            <div class="content-meta">Featuring Nishant Sharma and Arnob Choudry's 1st and 2nd place prizes</div>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8"/><path d="M18 10h-8"/></svg>
+            </div>
+            <div class="content-date">July 15, 2022</div>
+            <a href="https://blog.fairmint.co/whats-cookin-does-equity-their-way-a5dff43b805" class="content-link">
+                <h3>WhatsCookin' does Equity their way</h3>
+            </a>
+            <div class="content-tag">Featured on the Fairmint Blog</div>
+        </div>
+
+        <!-- WhatsCookin' Blog Posts -->
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8"/><path d="M18 10h-8"/></svg>
+            </div>
+            <div class="content-date">March 21, 2022</div>
+            <a href="https://whatscookin.us/perception-on-feminism-with-nandar/" class="content-link">
+                <h3>Perception on Feminism with Nandar</h3>
+            </a>
+            <div class="content-tag">WhatsCookin' Blog</div>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8"/><path d="M18 10h-8"/></svg>
+            </div>
+            <div class="content-date">February 8, 2022</div>
+            <a href="https://whatscookin.us/a-future-without-employees/" class="content-link">
+                <h3>A Future Without Employees</h3>
+            </a>
+            <div class="content-tag">WhatsCookin' Blog</div>
+        </div>
+
+        <div class="card-item">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8"/><path d="M18 10h-8"/></svg>
+            </div>
+            <div class="content-date">January 26, 2022</div>
+            <a href="https://whatscookin.us/just-because-we-agree-to-something-it-doesnt-mean-its-fair-things-change/" class="content-link">
+                <h3>Mike Moyer - "Just because we agree to something, it doesn't mean it's fair, Things Change"</h3>
+            </a>
+            <div class="content-tag">WhatsCookin' Blog</div>
+        </div>
+
+    </div>
+
 </div>
 
-<style>
-.press-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-}
 
-.press-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    font-weight: 600;
-}
-
-.press-section {
-    margin-bottom: 4rem;
-}
-
-.press-section h2 {
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #00b2ff;
-}
-
-.press-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.press-item {
-    background: #ffffff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.press-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.press-date {
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-}
-
-.press-link {
-    text-decoration: none;
-    color: inherit;
-}
-
-.press-link h3 {
-    font-size: 1.2rem;
-    margin: 0.5rem 0;
-    color: #00b2ff;
-    transition: color 0.2s ease;
-}
-
-.press-link:hover h3 {
-    color: #0095d9;
-}
-
-.press-authors, .press-type {
-    font-size: 0.9rem;
-    color: #444;
-    margin-top: 0.5rem;
-}
-
-@media screen and (max-width: 768px) {
-    .press-container {
-        padding: 2rem 1rem;
-    }
-
-    .press-title {
-        font-size: 2rem;
-    }
-
-    .press-section h2 {
-        font-size: 1.5rem;
-    }
-
-    .press-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
 {% endblock %}
