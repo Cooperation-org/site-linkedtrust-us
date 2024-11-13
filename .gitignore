@@ -1,11 +1,12 @@
 venv/
+.venv/
 *.pyc
 __pycache__/
 
 # Django static and media files
-/staticfiles/
-/static/
-/media/
+staticfiles/
+static/
+media/
 
 # more python
 *.so
