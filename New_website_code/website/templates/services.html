@@ -3,68 +3,143 @@
 {% block title %}Services - LinkedTrust{% endblock %}
 {% block content %}
 
+{% load static %}
+
+{% load static %}
+
+<div class="services-container">
+    <div class="services-grid">
+        <div class="service-card">
+            <h2>For Nonprofits</h2>
+            <div class="underline"></div>
+            <ul class="service-list">
+                <li><a href="#">Add Credible Validations to your Reports</a></li>
+                <li><a href="#">Turn Survey Results into Signed Credentials</a></li>
+                <li><a href="#">Capture Positive Endorsements from Visitors</a></li>
+            </ul>
+        </div>
+
+        <div class="service-card">
+            <h2>For Funders</h2>
+            <div class="underline"></div>
+            <ul class="service-list">
+                <li><a href="#">Request Lightweight Impact Validation from Grantees</a></li>
+                <li><a href="#">Parse Reports into Verifiable Claims</a></li>
+                <li><a href="#">Capture and Analyze Independent Observations</a></li>
+            </ul>
+        </div>
+
+        <div class="service-card">
+            <h2>For Employers</h2>
+            <div class="underline"></div>
+            <ul class="service-list">
+                <li><a href="#">Offer Skills Credentials to Employees</a></li>
+                <li><a href="#">Validate Volunteer Impacts</a></li>
+                <li><a href="#">Filter Resumes by Signed Credentials and Recommendations</a></li>
+            </ul>
+        </div>
+
+        <div class="service-card">
+            <h2>General Consulting</h2>
+            <div class="underline"></div>
+            <ul class="service-list">
+                <li><a href="#">Machine Learning/LLM/RAG Pipelines</a></li>
+                <li><a href="#">Verifiable Credentials and Standards Compliance</a></li>
+                <li><a href="#">Custom solution development</a></li>
+            </ul>
+        </div>
+
+        <div class="service-card">
+            <h2>Free for the Public</h2>
+            <div class="underline"></div>
+            <ul class="service-list">
+                <li><a href="#">Enter Any Claim and get Verification</a></li>
+                <li><a href="#">Share Report with Validations</a></li>
+                <li><a href="#">Open Source Libraries</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <style>
-    h3 {
-        color: #333;
+.services-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.service-card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 1.5rem;
+    height: 100%;
+}
+
+.service-card h2 {
+    color: #333;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.underline {
+    height: 2px;
+    background: #007bff;
+    width: 60px;
+    margin-bottom: 1rem;
+}
+
+.service-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.service-list li {
+    margin: 0.75rem 0;
+    padding-left: 1rem;
+    position: relative;
+    line-height: 1.4;
+}
+
+.service-list li::before {
+    content: "•";
+    color: #007bff;
+    position: absolute;
+    left: 0;
+}
+
+.service-list a {
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.service-list a:hover {
+    color: #007bff;
+}
+
+@media (max-width: 768px) {
+    .services-container {
+        padding: 1rem;
     }
-
-    ul {
-        padding-left: 20px;
+    
+    .services-grid {
+        gap: 1rem;
     }
-
-    #services {
-        padding: 5% 10%;
+    
+    .service-card {
+        padding: 1.25rem;
     }
-
-   .services-intro{
-    text-align: center;
-   }
-
-    #services ul p {
-        text-align: initial;
-    }
-
-    ul {
-
-        list-style-type: disc;
-    }
-
-    ul li::marker {
-        color: #00B2E5;
-        font-size: 3em;
-    }
+}
 </style>
 
-<section id="services">
-    <div class="services-intro">
-        <h3>Our Services</h3>
-        <p>Lorem ipsum dolor sit amet consectetur.</p>
-    </div>
-    <ul>
-        <li>
-            <h4>Service 1</h4>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At, hic.</p>
-
-        </li>
-        <li>
-
-            <h4>Service 2</h4>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At, hic.</p>
-
-        </li>
-        <li>
-
-            <h4>Service 3</h4>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At, hic.</p>
-
-        </li>
-        <li>
-
-            <h4>Service 4</h4>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At, hic.</p>
-
-        </li>
-    </ul>
-</section>
 
 {% endblock %}
