@@ -23,7 +23,7 @@
         <div class="footer-contact">
             <h3>Contact</h3>
             <ul>
-                <li><a href="https://whatscookin.us/contact-us/" target="_blank">Contact us</a></li>
+                <li><a href="{% url 'contact' %}" target="_blank">Contact us</a></li>
                 <li><a href="https://app.whatscookin.us/circle/whatscookin" target="_blank">Community</a></li>
                 <li><a href="#">Invest</a></li>
             </ul>
@@ -49,21 +49,18 @@
     <div class="copyright-section">
         <div class="copy-line"></div>
         <div class="social-icons">
-            <a href="#" aria-label="Instagram">
+            <a href="#" target="_blank" aria-label="Instagram">
                 <i class="fa-brands fa-instagram"></i>
             </a>
-            <a href="#" aria-label="YouTube">
-                <i class="fa-brands fa-youtube"></i>
-            </a>
-            <a href="#" aria-label="Bluesky">
+            <a href="#" target="_blank" aria-label="Bluesky">
                 <div id="footer_social_icon_img">
                     <img src="{% static 'img/bluesky.png' %}" alt="">
                 </div>
             </a>
-            <a href="#" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/linkedtrust" target="_blank" aria-label="LinkedIn">
                 <i class="fa-brands fa-linkedin-in"></i>
             </a>
-            <a href="#" aria-label="Fediverse">
+            <a href="#" target="_blank" aria-label="Fediverse">
                 <div id="footer_social_icon_img">
                     <img src="{% static 'img/fediverse.png' %}" alt="">
                 </div>

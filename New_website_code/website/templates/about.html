@@ -1,12 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Get Started with LinkedTrust{% endblock %}
+{% block title %}About - LinkedTrust{% endblock %}
 {% block content %}
-
-<section class="hero">
-    <div>
-        <h1>Our Legacy in the Making</h1>
-    </div>
+<section class="about_banner">
+    <h3>Who We Are</h3>
 </section>
 
 <section>
@@ -14,19 +11,19 @@
         <div class="about_row">
             <div class="about_column">
                 <div class="about_text-content">
-                    <p>LinkedTrust is pioneering decentralized verification systems to simplify and enhance trust in
+                    <p><strong>LinkedTrust</strong> is pioneering decentralized verification systems to simplify and enhance trust in
                         digital claims. Our innovative solutions empower individuals and businesses to validate
                         information securely and efficiently.</p>
                 </div>
             </div>
             <div class="about_column img1">
-                <img src="/New_website_code/static/img/p1.png" alt="LinkedTrust Verification System">
+                <img src="{% static 'img/p1.png' %}" alt="LinkedTrust Verification System">
             </div>
         </div>
 
         <div class="about_row">
             <div class="about_column">
-                <img src="/New_website_code/static/img/p2.png" alt="LinkedTrust Mission">
+                <img src="{% static 'img/p2.png' %}" alt="LinkedTrust Mission">
             </div>
             <div class="about_column">
                 <div class="about_text-content content2">
