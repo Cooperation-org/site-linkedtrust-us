@@ -2,8 +2,7 @@
 {% load static %}
 {% block title %}Press & Media - LinkedTrust{% endblock %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/styles.css' %}">
-
+<link rel="stylesheet" href="{% static 'css/styles.css' %}?{% now 'U' %}">
 <div class="page-container">
     <h1 class="section-title">Press & Media</h1>
     
