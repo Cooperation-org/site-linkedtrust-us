@@ -8,7 +8,7 @@ urlpatterns = [
     path('press', press_view, name='press'),
     path('services', services_view, name='services'),
     path('team', team_view, name='team'),
-
+    path('about', about_view, name='about'),
 
     # TBD views
     path('mission', empty_view, name='mission'),
