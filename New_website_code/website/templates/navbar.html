@@ -1,7 +1,7 @@
 {% load static %}
 <header class="navbar">
     <div class="logo">
-        <a href="{% url 'home' %}" class="logo-link">
+        <a href="{% url 'home' %}" class="nodec logo-link">
             <img src="{% static 'img/logo.svg' %}" alt="LinkedTrust Logo">
             <span>LinkedTrust</span>
         </a>
@@ -9,16 +9,17 @@
     <nav>
         <ul>
             <li class="dropdown">
-                <a href="{% url 'about' %}">About</a>
+                About
                 <ul class="dropdown-content">
                     <li><a href="{% url 'team' %}">Team</a></li>
                     <li><a href="{% url 'about' %}">Our Mission</a></li>
                     <li><a href="{% url 'press' %}">Press & Media</a></li>
+                    <li><a href="https://invest.linkedtrust.us">Invest</a></li>
                 </ul>
             </li>
-            <li><a href="{% url 'services' %}">Our Services</a></li>
+            <li><a class="nodec" href="{% url 'services' %}">Our Services</a></li>
             <li class="dropdown">
-                <a href="#">LinkedClaims</a>
+                LinkedClaims
                 <ul class="dropdown-content">
                     <li><a href="{% url 'getstarted' %}">Getting Started</a></li>
                     <li><a href="https://live.linkedtrust.us/api/docs" target="_blank">Documentation</a></li>
@@ -35,17 +36,7 @@
                     <li><a href="http://cooperation.org/linked_trust/" target="_blank">Architecture</a></li>
                 </ul>
             </li>
-            <li class="dropdown">
-                <a href="#">Use Cases</a>
-                <ul class="dropdown-content">
-                    <li><a href="https://opencreds.net/" target="_blank">OpenCreds.net</a></li>
-                    <li><a href="#">Impact Validation</a></li>
-                    <li><a href="#">Regulatory Compliance</a></li>
-                    <li><a href="#">Progressive Trust</a></li>
-                    <li><a href="#">Human Protocol</a></li>
-                </ul>
-            </li>
-            <li><a href="{% url 'contact' %}">Contact Us</a></li>
+            <li><a class="nodec" href="{% url 'contact' %}">Contact Us</a></li>
         </ul>
     </nav>
     <a href="https://live.linkedtrust.us/" target="_blank" class="cta-button">Live Claims</a>

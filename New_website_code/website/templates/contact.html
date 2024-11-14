@@ -3,19 +3,13 @@
 {% block title %}Contact - LinkedTrust{% endblock %}
 {% block content %}
 <div class="contact-container-body">
-    <div class="contact_header">
-        <h1>Contact Us</h1>
-    </div>
-
     <div class="contact-container">
         <div class="contact-info">
-            <h2>Thanks for your interest in LinkedTrust.</h2>
-            <p style="font-weight: 600;">Want to know more about us?</p>
-            <p>Submit this form and a real human will contact you soon!</p>
+            <h3>Talk to us!</h3>
 
             <div class="contact-detail">
                 <i class="fa-solid fa-envelope"></i>
-                <p>info@whatscookin.us</p>
+                <p>incoming@linkedtrust.us</p>
             </div>
 
             <div class="contact-detail">
@@ -23,34 +17,61 @@
                 <p>520-440-1420</p>
             </div>
 
-            <div class="decoration"></div>
+            <div class="contact-detail">
+                <i class="fa-solid fa-calendar"></i>
+            <p>Or, <a HREF="https://calendar.app.google/Qfb4bmuRyTfdtiRZ6">schedule a free 30-minute consulation with one of our principals</a></p>
+            </div>
+
         </div>
 
         <div class="contact-form-section">
-            <form>
-                <div class="form-row">
-                    <div class="contact-form-group">
-                        <input type="text" required>
-                        <label>Full Name</label>
-                    </div>
-                    <div class="contact-form-group">
-                        <input type="email" required>
-                        <label>Your Email</label>
-                    </div>
-                </div>
 
-                <div class="contact-form-group">
-                    <input type="text" required>
-                    <label>Subject</label>
-                </div>
+<form id="contactForm" onsubmit="submitToGoogleForm(event)" class="contact-form">
+    <div class="form-row">
+        <div class="contact-form-group">
+            <input type="text" name="entry.1868294240" required>
+            <label>Full Name</label>
+        </div>
+        <div class="contact-form-group">
+            <input type="email" name="entry.32965363" required>
+            <label>Your Email</label>
+        </div>
+    </div>
+    <div class="contact-form-group">
+        <input type="text" name="entry.1116434767" required>
+        <label>Subject</label>
+    </div>
+    <div class="contact-form-group">
+        <textarea rows="4" name="entry.751772707" required></textarea>
+        <label>Message</label>
+    </div>
+    <button type="submit" class="contact-send-button">Send Message</button>
 
-                <div class="contact-form-group">
-                    <textarea rows="4" required></textarea>
-                    <label>Message</label>
-                </div>
+    <!-- Hidden iframe for Google Forms submission -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+</form>
 
-                <button type="submit" class="contact-send-button">Send Message</button>
-            </form>
+<script>
+function submitToGoogleForm(e) {
+    e.preventDefault();
+    const form = document.getElementById('contactForm');
+    
+    // Replace with your Google Form URL
+    form.action = "https://docs.google.com/forms/d/e/1HuZD6r2u2eJWdh3qnY6sXYXgjkBJaLlcvdp0hNABkeE/formResponse";
+    form.method = "post";
+    form.target = "hidden_iframe";
+    
+    // Submit the form
+    form.submit();
+    
+    // Optional: Show success message
+    alert('Thank you! Your message has been sent.');
+    
+    // Optional: Clear the form
+    form.reset();
+}
+</script>
+
         </div>
     </div>
 </div>
