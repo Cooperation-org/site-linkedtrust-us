@@ -922,57 +922,85 @@ Get Started Page
 
 /* 
 =========================
-About Page
+Team Page
 =========================
 */
+.team-container {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
 
-
-.about_intro_section {
-    text-align: center;
+.team-member {
+    padding: 15px;
     display: flex;
-    justify-content: center;
-
+    flex-direction: column;
+    /* align-items: center; */
+    /* text-align: center; */
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.about_intro_container {
-    width: 50%;
-}
-
-.about_intro_section h2 {
-    font-weight: bold;
-}
-
-.person_section {
-    padding: 4rem;
-}
-
-.person_section .row {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 40px;
-}
-
-.person_section .card {
-    width: 200px;
-}
-
-.person_section .card img {
-    width: 150px;
-    height: 150px;
+.profile-image {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: #D9D9D9;
+    margin-bottom: 15px;
 }
 
-.person_section .card h3 {
-    font-weight: bold;
-    margin: 10px 0 5px;
+.name {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
 }
 
-.person_section .card p {
-    margin: 11px 0;
-    line-height: 1;
+.title {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 12px;
 }
+
+.description {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.read-more {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 20px;
+    background: #82CD47;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    width: 40%;
+    text-align: center;
+}
+
+@media (max-width: 1200px) {
+    .team-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .team-container {
+        grid-template-columns: 1fr;
+    }
+}
+
 
 /* END */
 
@@ -1380,6 +1408,7 @@ About Page
     margin-left: 7%;
     margin-right: 7%;
     margin-top: 3%;
+    /* flex-direction: column; */
     
 }
 

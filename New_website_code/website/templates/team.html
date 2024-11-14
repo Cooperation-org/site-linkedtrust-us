@@ -1,232 +1,332 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block title %}Team - LinkedTrust{% endblock %}
+
 {% block content %}
+<!-- Banner Section -->
+<section class="about_banner">
+    <h3>Our Team</h3>
+</section>
+
+<!-- Intro Section -->
 <section class="about_intro_section">
     <div class="about_intro_container">
-        <h2>Our Team</h2>
         <p>Meet our exceptional team of dedicated professionals, driven by a shared passion for innovation and
             collaboration, as we strive to make a positive impact in every project we undertake.</p>
     </div>
 </section>
 
-<section class="person_section">
-    <div class="row">
-        <div class="card">
-            <img src="{% static 'img/golda.png' %}" alt="">
-            <h3>Golda Velez</h3>
-            <p>Executive Advisor</p>
-            <p>More generally an Architect, Communicator and Sr Software Engineer interested in human rights advocacy,
-                advising startups, tech for good, politics, writing. Interested in chatting/writing about/collaborating
-                on any project that makes positive systemic change.</p>
-        </div>
+<!-- Team Grid -->
+<div class="team-container">
+    {% for member in team_members %}
+    <div class="team-member">
+        {% if member.image %}
+        <img src="{{ member.image.url }}" alt="{{ member.name }}" class="profile-image">
+        {% else %}
+        <img src="{% static 'img/default-profile.png' %}" alt="{{ member.name }}" class="profile-image">
+        {% endif %}
+        <h2 class="name">{{ member.name }}</h2>
+        <h3 class="title">{{ member.title }}</h3>
+        <p class="description">{{ member.truncated_description }}</p>
+        <button type="button" class="read-more" data-member-id="{{ member.id }}">Read More</button>
+    </div>
+    {% endfor %}
+</div>
 
-        <div class="card">
-            <img src="{% static 'img/gitonga.jpeg' %}" alt="">
-            <h3>Gitonga</h3>
-            <p>Chief Product Officer</p>
-            <p>
-                I love coming up with solutions to solve problems in society through IT as a Developer. I
-                Committed and results-driven full Stack Developer with high-level expertise in software development and
-                a deep understanding of the Software Development Life Cycle. I have a history of repeated success in
-                directing projects from inception to execution by strategically allocating resources and delegating
-                tasks to achieve on-time, on-budget delivery.
-                Through running our family business which provides office workers with clothing and accessories.
-                I acquired skills to enhance those that I learned in school.
-                I am becoming a valuable engineer.
-            </p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/peter.jpeg' %}" alt="">
-            <h3>Peter Benjamin Ani</h3>
-            <p>Full Stack</p>
-            <p>Adept at designing and implementing RESTful APIs and microservices architectures, building scalable
-                fullstack application and robust mobile backend development, as well as optimizing databases for high
-                performance and reliability. I also has expertise in cloud computing platforms such as AWS, Azure, and
-                GCP, and is experienced in deploying and managing applications.</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/spiderman.jpeg' %}" alt="">
-            <h3>Orjiene Kenechukwu</h3>
-            <p>Software Developer</p>
-            <p>I am a problem solver, with skills in frontend and backend. I enjoy integrating different components to
-                create seamless, efficient applications. I am particularly drawn to the company's emphasis on a CAN DO
-                attitude and taking on challenges head-on, as I thrive in environments that encourage continuous
-                learning and problem-solving. </p>
+<!-- Modal -->
+<div id="teamModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modal-body">
+            <div class="modal-image">
+                <img src="" alt="" id="modalImage">
+            </div>
+            <div class="modal-info">
+                <h2 id="modalName"></h2>
+                <h3 id="modalTitle"></h3>
+                <div class="rate-badge" id="modalRate"></div>
+                <p id="modalDescription"></p>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="card">
-            <img src="{% static 'img/rishabh.jpeg' %}" alt="">
-            <h3>Rishabh Bhandari</h3>
-            <p>UI/UX Desígner</p>
-            <p>Driven by a love for innovation and continuous learning, I stay up to date with the latest web
-                technologies and design trends. I’m dedicated to building visually appealing, interactive, and
-                performance-optimized websites and applications that enhance usability and meet business objectives.</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/amos.jpeg' %}" alt="">
-            <h3>Amos Mwangi</h3>
-            <p>Full Stack</p>
-            <p>I am a web developer with expertise in Node.js,
-                PostgreSQL and React. I am also skilled in
-                WordPress development and UI/UX design. With a
-                background in graphic design, social media
-                management,and data entry, I’m passionate about tech
-                innovation.</p>
-        </div>
+</div>
 
-        <div class="card">
-            <img src="{% static 'img/romeo.jpeg' %}" alt="">
-            <h3>Ezeugwu Romanus</h3>
-            <p>Frontend Developer</p>
-            <p>As a Front-end Engineer with extensive experience, a keen interest in technology is complemented by a
-                specialized skill set in designing and developing contemporary web interfaces. Leveraging the latest
-                front-end technologies, including Next.js, and incorporating Rust for system development, the focus is
-                on creating intuitive and engaging digital experiences for users.</p>
-        </div>
+<style>
+    .team-container {
+        max-width: 1400px;
+        margin: 40px auto;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
 
-        <div class="card">
-            <img src="{% static 'img/ahmed.jpeg' %}" alt="">
-            <h3>Ahmed Abdelmenam</h3>
-            <p>Full-Stack </p>
-            <p>I have three years of hands-on experience efficiently coding websites and applications using modern
-                HTML, CSS, JavaScript, react, Next, NodeJs, firebase, Redux, and material UI.
-                Building state-of-the-art, easy-to-use, user-friendly websites, and applications is truly a passion of
-                mine. In addition to my knowledge base, I actively seek out new technologies and stay up-to-date on
-                industry trends and advancements. This has allowed me to stay ahead of the curve and deliver exceptional
-                work to all of my employers</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="card">
-            <img src="{% static 'img/moka.jpeg' %}" alt="">
-            <h3>Moka</h3>
-            <p>Frontend Developer</p>
-            <p>As a passionate front-end developer, I specialize in creating dynamic, user-friendly web interfaces that
-                deliver exceptional user experiences. With a strong foundation in HTML, CSS, and JavaScript, I bring
-                designs to life with seamless responsiveness and functionality across devices. I have experience working
-                with modern frameworks like React, Vue.js, and have a keen eye for clean, efficient code.</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/marwan.jpeg' %}" alt="">
-            <h3>Marwan Fouz</h3>
-            <p>Full-Stack</p>
-            <p>I'm a fast learner with good work ethics, I have developed proficiency in HTML, CSS, JavaScript, python,
-                oop, c, React, redux and SQL. I have applied my knowledge and skills to complete several successful
-                projects. my ability to quickly acquire new skills and effectively apply them to real-world scenarios
-                sets me apart from other candidates. my passion for web development and willingness to continuously
-                learn and grow make me an asset to any team. Employers seeking a motivated and dynamic individual with a
-                strong technical foundation in web development should definitely consider me for a position on their
-                team.</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/molly.jpeg' %}" alt="">
-            <h3>Ahlam Sayed</h3>
-            <p>UI UX Designer</p>
-            <p>A passionate designer aspiring to pursue an endless learning opportunities experienced in UI/UX
-                development with interest in all fields of technologies, also I have 2 years of experience as an UI UX
-                Designer and 6 months of them as a project manager.</p>
-        </div>
+    .team-member {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-        <div class="card">
-            <img src="{% static 'img/amr.jpeg' %}" alt="">
-            <h3>Amr Nabel</h3>
-            <p>Frontend developer</p>
-            <p>I am a Software Engineer experienced in Frontend Development I have experience working with HTML, CSS,
-                JavaScript, TypeScript, React, Redux and Material UI and I have one year of experience working remotely
-                with tech companies as a Frontend Engineer.</p>
-        </div>
+    .profile-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 15px;
+    }
 
+    .name {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #333;
+    }
 
-    </div>
+    .title {
+        font-size: 16px;
+        color: #444;
+        margin-bottom: 12px;
+    }
 
-    <div class="row">
-        <div class="card">
-            <img src="{% static 'img/Kholoud.jpeg' %}" alt="">
-            <h3>Kholoud Fattem</h3>
-            <p>Backend Developer</p>
-            <p>Skilled in developing web applications and systems, profficient in JavaScript,
-                TypeScript, Nodejs, and Express.js and Nestjs frameworks. Expreienced in full-stack development
-                including React and NextJs, with a strong understanding of software design principles and databases,
-                Data structures, and Algorithms.</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/muhammad.jpg' %}" alt="">
-            <h3>Muhammad Hany</h3>
-            <p>Frontend developer</p>
-            <p>Dynamic and driven Full-Stack Developer with a solid 1-2 years of hands-on experience in crafting
-                high-quality, scalable web solutions. Expert in utilizing a diverse tech stack including React, HTML,
-                CSS, JavaScript, Firebase, Cloudflare, Material-UI (MUI), and Node.js. Demonstrates a keen aptitude for
-                creating responsive and user-friendly interfaces, coupled with robust back-end functionalities. Adept at
-                leveraging Firebase for seamless back-end services and Cloudflare for enhanced performance and security.
-                Proficient in integrating Material-UI for a polished and intuitive user interface. Exhibits a strong
-                problem-solving mindset, thriving on tackling complex challenges in web development. Committed to
-                producing clean, efficient, and maintainable code. An enthusiastic team collaborator, always seeking to
-                contribute to project success while continuing to grow and evolve in the dynamic landscape of full-stack
-                web development.</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/emmanuel.jpeg' %}" alt="">
-            <h3>Emmanuel Umoren</h3>
-            <p>UI/UX Desígner</p>
-            <p>Senior UI/UX Designer with 4+ years of experience designing and developing user-friendly and visually
-                appealing digital products and 1 year in Product Management with a solid background in frontend
-                development. My design philosophy is rooted in user centricity, aimed to enhance user experiences while
-                driving business goals. Proven ability to lead and mentor cross-functional teams to deliver high quality
-                products on time and within a reasonable budget. An expertise in user-research, wireframing,
-                prototyping, Ul design, UX design and responsive web app designs.</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/anuja.jpeg' %}" alt="">
-            <h3>Anuja Chivate</h3>
-            <p>Software Engineer</p>
-            <p>I have 4+ years of hands-on industry experience efficiently coding websites and applications using modern
-                HTML, CSS, JavaScript, React.js, Next.js, Node.js. I actively seek out new technologies and stay
-                up-to-date on industry trends and advancements.</p>
-        </div>
-    </div>
+    .description {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.4;
+        margin-bottom: 20px;
+        height: 40px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
-    <div class="row">
-        <div class="card">
-            <img src="{% static 'img/omar.jpeg' %}" alt="">
-            <h3>Omar Salah</h3>
-            <p>Full-stack</p>
-            <p>Developer with 2+ years of experience building modern web applications. Adept at both
-                front-end development using React.js and Next.js, and back-end development with Node.js and
-                TypeScript.Eager to leverage my full-stack skills in a collaborative team environment to create
-                innovative web solutions.</p>
-        </div>
+    .read-more {
+        display: inline-block;
+        padding: 8px 20px;
+        border-radius: 20px;
+        background: #82CD47;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 14px;
+        width: 40%;
+        text-align: center;
+        transition: background-color 0.3s ease;
+    }
 
+    .read-more:hover {
+        background: #6baf3a;
+    }
 
-        <div class="card">
-            <img src="{% static 'img/caro.png' %}" alt="">
-            <h3>Carolina Sanchez</h3>
-            <p>UX/UI Designer </p>
-            <p>I am an audacious visionary and creative problem solver with a deep interest in behavioral sciences,
-                neuroscience, and how technology is changing everything.</p>
+    .rate-badge {
+        display: inline-block;
+        background-color: #82CD47;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        margin-bottom: 15px;
+        font-weight: 500;
+        font-size: 14px;
+    }
 
-        </div>
+    .modal {
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        overflow-y: auto;
+    }
 
+    .modal-content {
+        background-color: #fff;
+        margin: 5% auto;
+        padding: 20px;
+        width: 80%;
+        max-width: 800px;
+        border-radius: 8px;
+        position: relative;
+    }
 
-        <div class="card">
-            <img src="{% static 'img/omareloui.jpeg' %}" alt="">
-            <h3>Omar Eloui</h3>
-            <p>Frontend developer</p>
-            <p>I am an experienced Full-Stack Software Engineer with a proven track record in designing and building
-                highly scalable, fault-tolerant distributed systems. With a strong foundation in system design
-                principles, I excel at crafting robust and efficient solutions that meet the demands of complex
-                applications. My expertise extends to both backend and frontend development, allowing me to contribute
-                to the full development lifecycle. Additionally, I have hands-on experience as a frontend developer,
-                further enhancing my ability to create comprehensive and user-friendly software solutions. My skills in
-                DevOps practices enable me to streamline software delivery and maintenance processes.</p>
-        </div>
+    .close {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 1001;
+    }
 
-        <div class="card">
-            <img src="{% static 'img/Hedra.jpeg' %}" alt="">
-            <h3>Hedra Atef</h3>
-            <p>Frontend developer</p>
-        </div>
-    </div>
-</section>
+    .modal-body {
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .modal-image {
+        flex: 0 0 300px;
+    }
+
+    .modal-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .modal-info {
+        flex: 1;
+    }
+
+    .modal-info h2 {
+        margin-bottom: 10px;
+        color: #333;
+        font-size: 24px;
+    }
+
+    .modal-info h3 {
+        margin-bottom: 10px;
+        color: #666;
+        font-size: 18px;
+    }
+
+    .modal-info p {
+        line-height: 1.6;
+        color: #444;
+    }
+
+    @media (max-width: 1200px) {
+        .team-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .team-container {
+            grid-template-columns: 1fr;
+        }
+
+        .modal-body {
+            flex-direction: column;
+        }
+
+        .modal-image {
+            flex: 0 0 auto;
+        }
+
+        .modal-content {
+            width: 95%;
+            margin: 10% auto;
+        }
+    }
+</style>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get DOM elements
+        const modal = document.getElementById('teamModal');
+        const closeBtn = document.querySelector('.close');
+        const readMoreButtons = document.querySelectorAll('.read-more');
+
+        // Check if elements exist
+        if (!modal || !closeBtn || !readMoreButtons.length) {
+            console.error('Required modal elements not found');
+            return;
+        }
+
+        // Debug log
+        console.log('Found ' + readMoreButtons.length + ' read more buttons');
+
+        // Add click event to each Read More button
+        readMoreButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const memberId = this.getAttribute('data-member-id');
+
+                // Debug log
+                console.log('Button clicked for member ID:', memberId);
+
+                // Show loading state
+                modal.style.display = 'block';
+                document.getElementById('modalDescription').textContent = 'Loading...';
+
+                // Get the current path and construct URL
+                const basePath = window.location.pathname.endsWith('/') ?
+                    window.location.pathname.slice(0, -1) : window.location.pathname;
+                const url = `${basePath}/member/${memberId}/`;
+
+                console.log('Fetching from URL:', url);
+
+                // Fetch member data
+                fetch(url)
+                    .then(response => {
+                        console.log('Response status:', response.status);
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Received data:', data);
+
+                        // Update modal content
+                        const modalImage = document.getElementById('modalImage');
+                        const modalName = document.getElementById('modalName');
+                        const modalTitle = document.getElementById('modalTitle');
+                        const modalRate = document.getElementById('modalRate');
+                        const modalDescription = document.getElementById('modalDescription');
+
+                        if (modalImage) modalImage.src = data.image_url || '';
+                        if (modalName) modalName.textContent = data.name || '';
+                        if (modalTitle) modalTitle.textContent = data.title || '';
+                        if (modalRate) modalRate.textContent = data.hourly_rate ? `$${data.hourly_rate}/hr` : '';
+                        if (modalDescription) modalDescription.textContent = data.description || '';
+
+                        // Show modal
+                        modal.style.display = 'block';
+                        document.body.style.overflow = 'hidden'; // Prevent scrolling
+                    })
+                    .catch(error => {
+                        console.error('Error fetching member data:', error);
+                        const modalDescription = document.getElementById('modalDescription');
+                        if (modalDescription) {
+                            modalDescription.textContent = 'Error loading member data. Please try again.';
+                        }
+                    });
+            });
+        });
+
+        // Close modal function
+        const closeModal = () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = ''; // Restore scrolling
+        };
+
+        // Close button click event
+        closeBtn.addEventListener('click', closeModal);
+
+        // Close on click outside modal
+        window.addEventListener('click', function (event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close on Escape key press
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && modal.style.display === 'block') {
+                closeModal();
+            }
+        });
+    });
+</script>
 {% endblock %}
