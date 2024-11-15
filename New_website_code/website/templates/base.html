@@ -6,14 +6,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}LinkedTrust{% endblock %}</title>
+    
+    <!-- Favicon -->
     <link rel="shortcut icon" href="{% static 'img/logo.svg' %}" type="image/x-icon">
-
+    
+    <!-- CSS Dependencies -->
     <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    
+    <!-- Site CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-
+    {% block extra_css %}{% endblock %}
+    
+    <!-- Prevent Right Click -->
     <script>
         document.addEventListener('contextmenu', function (e) {
             e.preventDefault();
@@ -22,83 +28,25 @@
 </head>
 
 <body>
+    <!-- Navigation -->
     {% include 'navbar.html' %}
+    
+    <!-- Banner -->
     {% if show_banner %}
-    {% include 'banner.html' %}
+        {% include 'banner.html' %}
     {% endif %}
-
+    
+    <!-- Main Content -->
     {% block content %}{% endblock %}
-
-
+    
+    <!-- Footer -->
     {% include 'footer.html' %}
 
-
+    <!-- Core Dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
-    <script>
-        feather.replace();
-
-
-        // Function to update the year
-        function updateCopyrightYear() {
-            const yearElement = document.getElementById('currentYear');
-            const currentYear = new Date().getFullYear();
-            yearElement.textContent = currentYear;
-        }
-
-        // Update year when page loads
-        updateCopyrightYear();
-
-        // Optional: Update year when tab becomes visible again
-        document.addEventListener('visibilitychange', function () {
-            if (document.visibilityState === 'visible') {
-                updateCopyrightYear();
-            }
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const modal = document.getElementById('videoModal');
-            const playBtn = document.querySelector('.box-play-icon');
-            const closeBtn = document.querySelector('.close-modal');
-            const videoFrame = document.getElementById('videoFrame');
-
-            // Open modal
-            playBtn.addEventListener('click', () => {
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden'; // Prevent background scrolling
-            });
-
-            // Close modal
-            closeBtn.addEventListener('click', () => {
-                closeModal();
-            });
-
-            // Close modal when clicking outside
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-
-            // Close modal with Escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeModal();
-                }
-            });
-
-            function closeModal() {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-                // Reset video when closing
-                const videoSrc = videoFrame.src;
-                videoFrame.src = '';
-                videoFrame.src = videoSrc;
-            }
-        });
-    </script>
-
+    
+    <!-- Site JavaScript -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
 </body>
-
 </html>

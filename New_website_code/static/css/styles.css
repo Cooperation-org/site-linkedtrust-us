@@ -57,13 +57,16 @@ body::-webkit-scrollbar {
 a {
     color: #00B2E5;
     text-decoration: none;
-    border-bottom: 1px solid rgba(0, 178, 229, 0.3); /* your blue but transparent */
+    border-bottom: 1px solid rgba(0, 178, 229, 0.3);
+    /* your blue but transparent */
     transition: all 0.2s ease;
 }
 
 a:hover {
-    border-bottom-color: #00B2E5; /* solid on hover */
-    background-color: rgba(0, 178, 229, 0.05); /* very subtle background */
+    border-bottom-color: #00B2E5;
+    /* solid on hover */
+    background-color: rgba(0, 178, 229, 0.05);
+    /* very subtle background */
 }
 
 button {
@@ -307,7 +310,9 @@ nav ul li a:hover {
     justify-content: center;
     align-items: center;
     position: relative;
+    background-size: cover;
 }
+
 
 /* ecosystem */
 .ecosystem {
@@ -921,12 +926,14 @@ Get Started Page
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;  /* Add this */
-    position: relative;  /* Add this */
+    overflow: hidden;
+    /* Add this */
+    position: relative;
+    /* Add this */
 
     border: 1px solid #ccc;
-    box-shadow: inset 1px 1px 2px rgba(255,255,255,0.7),
-                inset -1px -1px 2px rgba(0,0,0,0.1);
+    box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.7),
+        inset -1px -1px 2px rgba(0, 0, 0, 0.1);
     margin: 10px 0;
     border-radius: 2px;
 }
@@ -954,7 +961,8 @@ Get Started Page
     font-size: 1.1rem;
     margin: 0;
     padding-bottom: 0.15rem;
-    border-bottom: 1px solid rgba(0, 123, 255, 0.5); /* Light blue underline */
+    border-bottom: 1px solid rgba(0, 123, 255, 0.5);
+    /* Light blue underline */
     margin-bottom: 0.5rem;
 }
 
@@ -966,21 +974,30 @@ Get Started Page
 .get-started-card .cta-button {
     align-self: flex-end;
     color: #fff;
-    padding: 0.25rem 0.5rem;    /* Even smaller padding */
+    padding: 0.25rem 0.5rem;
+    /* Even smaller padding */
     text-decoration: none;
-    border-radius: 3px;         /* Slightly reduced radius */
+    border-radius: 3px;
+    /* Slightly reduced radius */
     transition: all 0.2s ease;
-    font-size: 0.875rem;        /* Smaller font size */
-    line-height: 1.1;          /* Tighter line height */
-    letter-spacing: 0.01em;     /* Slight letter spacing for readability */
-    font-weight: 500;           /* Medium weight instead of bold */
-    opacity: 0.9;               /* Slightly softer appearance */
+    font-size: 0.875rem;
+    /* Smaller font size */
+    line-height: 1.1;
+    /* Tighter line height */
+    letter-spacing: 0.01em;
+    /* Slight letter spacing for readability */
+    font-weight: 500;
+    /* Medium weight instead of bold */
+    opacity: 0.9;
+    /* Slightly softer appearance */
 }
 
 .get-started-card .cta-button:hover {
     opacity: 1;
-    transform: translateY(-1px);  /* Subtle lift effect */
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);  /* Very subtle shadow on hover */
+    transform: translateY(-1px);
+    /* Subtle lift effect */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    /* Very subtle shadow on hover */
 }
 
 .get-started-image img {
@@ -1006,57 +1023,296 @@ Get Started Page
 
 /* 
 =========================
-About Page
+Team Page
 =========================
 */
-
-
-.about_intro_section {
-    text-align: center;
+.team-container {
+    max-width: 1400px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 5% 7%;
+}
+.team-member {
+    padding: 15px;
     display: flex;
-    justify-content: center;
-
+    flex-direction: column;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.about_intro_container {
-    width: 50%;
-}
-
-.about_intro_section h2 {
-    font-weight: bold;
-}
-
-.person_section {
-    padding: 4rem;
-}
-
-.person_section .row {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 40px;
-}
-
-.person_section .card {
-    width: 200px;
-}
-
-.person_section .card img {
-    width: 150px;
-    height: 150px;
+.profile-image {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: #D9D9D9;
+    margin-bottom: 15px;
 }
 
-.person_section .card h3 {
+.name {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.title {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 12px;
+}
+
+.description {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.read-more {
+    display: inline-block;
+    padding: 4px 0px;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #00BFFF, #9ACD32);
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    width: 42%;
+}
+
+@media (max-width: 1200px) {
+    .team-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .team-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Team modal */
+.teammodal {
+    -ms-overflow-style: none;
+
+    scrollbar-width: none;
+
+}
+
+.teammodal::-webkit-scrollbar {
+    display: none;
+
+}
+
+.teammodal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.teammodal-content {
+    position: relative;
+    background-color: #fff;
+    margin: 5% auto;
+    width: 85%;
+    max-width: 1000px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.teammodal .close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 28px;
     font-weight: bold;
-    margin: 10px 0 5px;
+    color: #333;
+    cursor: pointer;
+    z-index: 1;
 }
 
-.person_section .card p {
-    margin: 11px 0;
-    line-height: 1;
+.teammodal .close:hover {
+    color: #000;
 }
+
+.teammodal-body {
+    display: flex;
+    padding: 30px;
+    gap: 30px;
+}
+
+@media (max-width: 768px) {
+    .teammodal-body {
+        flex-direction: column;
+    }
+}
+
+.teammodal-image {
+    /* flex: 0 0 40%; */
+    max-width: 40%;
+    height: 80vh;
+}
+
+@media (max-width: 768px) {
+    .teammodal-image {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+.teammodal-image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.teammodal-info {
+    max-width: 60%;
+    padding: 0px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .teammodal-info {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+.teammodal-info h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.teammodal-info h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.teammodal-info p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #444;
+}
+
+.rate-badge {
+    margin-top: 20px;
+}
+
+.teammodal-badge {
+    display: inline-block;
+    border-radius: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.rate-badge {
+    margin-top: 20px;
+}
+
+.teammodal-badge {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+}
+
+.rate-amount {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.rate-unit {
+    font-size: 16px;
+    color: #666;
+}
+
+
+.request-teammate-container {
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.request-form-wrapper {
+    display: flex;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.email-input-wrapper {
+    position: relative;
+    flex-grow: 1;
+}
+
+.email-label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+    color: #666;
+    pointer-events: none;
+}
+
+.email-input-wrapper.focused .email-label {
+    top: -10px;
+    font-size: 12px;
+    color: #2563eb;
+}
+
+.email-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.email-input:focus {
+    border-color: #2563eb;
+    outline: none;
+}
+
+.request-service-btn {
+    white-space: nowrap;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 12px 20px;
+}
+
+.success-message {
+    width: 100%;
+    padding: 12px;
+    color: #059669;
+    font-weight: 500;
+    text-align: center;
+}
+
+
 
 /* END */
 
@@ -1464,7 +1720,8 @@ About Page
     margin-left: 7%;
     margin-right: 7%;
     margin-top: 3%;
-    
+    /* flex-direction: column; */
+
 }
 
 
@@ -1506,7 +1763,7 @@ About Page
     color: #333;
 }
 
-.about_text-content h3{
+.about_text-content h3 {
     font-weight: bold;
 }
 
