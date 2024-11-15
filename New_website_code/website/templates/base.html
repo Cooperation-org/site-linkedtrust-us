@@ -7,13 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}LinkedTrust{% endblock %}</title>
     <link rel="shortcut icon" href="{% static 'img/logo.svg' %}" type="image/x-icon">
-
     <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-
+    {% block extra_css %}{% endblock %}
     <script>
         document.addEventListener('contextmenu', function (e) {
             e.preventDefault();
@@ -26,79 +24,130 @@
     {% if show_banner %}
     {% include 'banner.html' %}
     {% endif %}
-
     {% block content %}{% endblock %}
-
-
     {% include 'footer.html' %}
 
-
+    <!-- Core Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
     <script>
-        feather.replace();
-
-
-        // Function to update the year
-        function updateCopyrightYear() {
-            const yearElement = document.getElementById('currentYear');
-            const currentYear = new Date().getFullYear();
-            yearElement.textContent = currentYear;
-        }
-
-        // Update year when page loads
-        updateCopyrightYear();
-
-        // Optional: Update year when tab becomes visible again
-        document.addEventListener('visibilitychange', function () {
-            if (document.visibilityState === 'visible') {
-                updateCopyrightYear();
-            }
-        });
-    </script>
-
-    <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const modal = document.getElementById('videoModal');
+            // Feather Icons
+            feather.replace();
+
+            // Copyright Year Update
+            function updateCopyrightYear() {
+                const yearElement = document.getElementById('currentYear');
+                if (yearElement) {
+                    const currentYear = new Date().getFullYear();
+                    yearElement.textContent = currentYear;
+                }
+            }
+            updateCopyrightYear();
+
+            // Update year when tab becomes visible
+            document.addEventListener('visibilitychange', function () {
+                if (document.visibilityState === 'visible') {
+                    updateCopyrightYear();
+                }
+            });
+
+            // Video Modal Functionality
+            const videoModal = document.getElementById('videoModal');
             const playBtn = document.querySelector('.box-play-icon');
-            const closeBtn = document.querySelector('.close-modal');
+            const closeVideoBtn = document.querySelector('.close-modal');
             const videoFrame = document.getElementById('videoFrame');
 
-            // Open modal
-            playBtn.addEventListener('click', () => {
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden'; // Prevent background scrolling
-            });
+            if (playBtn && videoModal && closeVideoBtn && videoFrame) {
+                playBtn.addEventListener('click', () => {
+                    videoModal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
 
-            // Close modal
-            closeBtn.addEventListener('click', () => {
-                closeModal();
-            });
-
-            // Close modal when clicking outside
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
+                function closeVideoModal() {
+                    videoModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    const videoSrc = videoFrame.src;
+                    videoFrame.src = '';
+                    videoFrame.src = videoSrc;
                 }
-            });
 
-            // Close modal with Escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeModal();
-                }
-            });
-
-            function closeModal() {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-                // Reset video when closing
-                const videoSrc = videoFrame.src;
-                videoFrame.src = '';
-                videoFrame.src = videoSrc;
+                closeVideoBtn.addEventListener('click', closeVideoModal);
+                videoModal.addEventListener('click', (e) => {
+                    if (e.target === videoModal) closeVideoModal();
+                });
             }
+
+            // Team Modal Functionality
+            const teamModal = document.getElementById('teamModal');
+            if (teamModal) {
+                const modalImage = document.getElementById('modalImage');
+                const modalName = document.getElementById('modalName');
+                const modalTitle = document.getElementById('modalTitle');
+                const modalDescription = document.getElementById('modalDescription');
+                const modalRate = document.getElementById('modalRate');
+                const closeTeamBtn = teamModal.querySelector('.close');
+                const readMoreButtons = document.querySelectorAll('.read-more');
+
+                // Read More Button Click Handlers
+                readMoreButtons.forEach(button => {
+                    button.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const memberId = this.getAttribute('data-member-id');
+
+                        // Fetch member details including rate from the server
+                        fetch(`/team/member/${memberId}/`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (modalImage) {
+                                    modalImage.src = data.image_url;
+                                    modalImage.alt = data.name;
+                                }
+                                if (modalName) modalName.textContent = data.name;
+                                if (modalTitle) modalTitle.textContent = data.title;
+                                if (modalDescription) modalDescription.textContent = data.description;
+                                if (modalRate) modalRate.textContent = `$${Math.floor(data.hourly_rate)}`;
+
+                                teamModal.style.display = 'block';
+                                document.body.style.overflow = 'hidden';
+                            })
+                            .catch(error => console.error('Error:', error));
+                    });
+                });
+
+
+                // Close Button Handler
+                if (closeTeamBtn) {
+                    closeTeamBtn.addEventListener('click', function () {
+                        teamModal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    });
+                }
+
+                // Click Outside Modal Handler
+                window.addEventListener('click', function (event) {
+                    if (event.target === teamModal) {
+                        teamModal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+
+            // Global ESC key handler for all modals
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') {
+                    // Close video modal
+                    if (videoModal && videoModal.style.display === 'block') {
+                        closeVideoModal();
+                    }
+                    // Close team modal
+                    if (teamModal && teamModal.style.display === 'block') {
+                        teamModal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            });
         });
     </script>
-
 </body>
 
 </html>

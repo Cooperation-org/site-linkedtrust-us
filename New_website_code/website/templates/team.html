@@ -1,24 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}Team - LinkedTrust{% endblock %}
-
 {% block content %}
 <!-- Banner Section -->
 <section class="about_banner">
     <h3>Our Team</h3>
 </section>
 
-<!-- Intro Section -->
-<section class="about_intro_section">
-    <div class="about_intro_container">
-        <p>Meet our exceptional team of dedicated professionals, driven by a shared passion for innovation and
-            collaboration, as we strive to make a positive impact in every project we undertake.</p>
-    </div>
-</section>
-
 <!-- Team Grid -->
-<div class="team-container">
+<section class="team-container">
     {% for member in team_members %}
     <div class="team-member">
         {% if member.image %}
@@ -28,305 +18,205 @@
         {% endif %}
         <h2 class="name">{{ member.name }}</h2>
         <h3 class="title">{{ member.title }}</h3>
-        <p class="description">{{ member.truncated_description }}</p>
+        <p class="description" data-full-description="{{ member.description }}">{{ member.truncated_description }}</p>
         <button type="button" class="read-more" data-member-id="{{ member.id }}">Read More</button>
     </div>
     {% endfor %}
-</div>
-
-<!-- Modal -->
-<div id="teamModal" class="modal" style="display: none;">
-    <div class="modal-content">
+</section>
+<!-- Team Modal -->
+<div id="teamModal" class="teammodal">
+    <div class="teammodal-content">
         <span class="close">&times;</span>
-        <div class="modal-body">
-            <div class="modal-image">
+        <div class="teammodal-body">
+            <div class="teammodal-image">
                 <img src="" alt="" id="modalImage">
             </div>
-            <div class="modal-info">
+            <div class="teammodal-info">
                 <h2 id="modalName"></h2>
                 <h3 id="modalTitle"></h3>
-                <div class="rate-badge" id="modalRate"></div>
                 <p id="modalDescription"></p>
+                <div class="rate-badge">
+                    <p class="teammodal-badge">
+                        <span class="rate-amount" id="modalRate"></span>
+                        <span class="rate-unit">/hr</span>
+                    </p>
+                </div>
+
+
+
+                <div class="request-teammate-container">
+                    <div class="request-form-wrapper">
+                        <div class="email-input-wrapper" style="display: none;">
+                            <label for="userEmail" class="email-label">Enter your email</label>
+                            <input type="email" id="userEmail" class="email-input" required>
+                        </div>
+                        <button class="request-service-btn">Request for my services</button>
+                    </div>
+                    <div class="success-message" style="display: none;">
+                        Thank you for requesting my services. I will reach out soon!
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>
 </div>
 
+
+
 <style>
-    .team-container {
-        max-width: 1400px;
-        margin: 40px auto;
-        padding: 20px;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
+    .request-teammate-container {
+        position: relative;
+        width: 100%;
+        margin-top: 20px;
     }
 
-    .team-member {
-        padding: 15px;
+    .request-form-wrapper {
         display: flex;
-        flex-direction: column;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        gap: 10px;
+        transition: all 0.3s ease;
     }
 
-    .profile-image {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-bottom: 15px;
+    .email-input-wrapper {
+        position: relative;
+        flex-grow: 1;
     }
 
-    .name {
-        font-size: 20px;
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: #333;
-    }
-
-    .title {
-        font-size: 16px;
-        color: #444;
-        margin-bottom: 12px;
-    }
-
-    .description {
-        font-size: 14px;
+    .email-label {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: all 0.3s ease;
         color: #666;
-        line-height: 1.4;
-        margin-bottom: 20px;
-        height: 40px;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        pointer-events: none;
     }
 
-    .read-more {
-        display: inline-block;
-        padding: 8px 20px;
-        border-radius: 20px;
-        background: #82CD47;
+    .email-input-wrapper.focused .email-label {
+        top: -10px;
+        font-size: 12px;
+        color: #2563eb;
+    }
+
+    .email-input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .email-input:focus {
+        border-color: #2563eb;
+        outline: none;
+    }
+
+    .request-service-btn {
+        white-space: nowrap;
+        background-color: #000;
         color: white;
         border: none;
+        border-radius: 5px;
         cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 12px 20px;
+    }
+
+    .success-message {
+        width: 100%;
+        padding: 12px;
+        color: #059669;
         font-weight: 500;
-        font-size: 14px;
-        width: 40%;
         text-align: center;
-        transition: background-color 0.3s ease;
-    }
-
-    .read-more:hover {
-        background: #6baf3a;
-    }
-
-    .rate-badge {
-        display: inline-block;
-        background-color: #82CD47;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
-        margin-bottom: 15px;
-        font-weight: 500;
-        font-size: 14px;
-    }
-
-    .modal {
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        overflow-y: auto;
-    }
-
-    .modal-content {
-        background-color: #fff;
-        margin: 5% auto;
-        padding: 20px;
-        width: 80%;
-        max-width: 800px;
-        border-radius: 8px;
-        position: relative;
-    }
-
-    .close {
-        position: absolute;
-        right: 20px;
-        top: 10px;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-        z-index: 1001;
-    }
-
-    .modal-body {
-        display: flex;
-        gap: 20px;
-        padding: 20px;
-    }
-
-    .modal-image {
-        flex: 0 0 300px;
-    }
-
-    .modal-image img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        object-fit: cover;
-    }
-
-    .modal-info {
-        flex: 1;
-    }
-
-    .modal-info h2 {
-        margin-bottom: 10px;
-        color: #333;
-        font-size: 24px;
-    }
-
-    .modal-info h3 {
-        margin-bottom: 10px;
-        color: #666;
-        font-size: 18px;
-    }
-
-    .modal-info p {
-        line-height: 1.6;
-        color: #444;
-    }
-
-    @media (max-width: 1200px) {
-        .team-container {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .team-container {
-            grid-template-columns: 1fr;
-        }
-
-        .modal-body {
-            flex-direction: column;
-        }
-
-        .modal-image {
-            flex: 0 0 auto;
-        }
-
-        .modal-content {
-            width: 95%;
-            margin: 10% auto;
-        }
     }
 </style>
 
-{% endblock %}
-
-{% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Get DOM elements
-        const modal = document.getElementById('teamModal');
-        const closeBtn = document.querySelector('.close');
-        const readMoreButtons = document.querySelectorAll('.read-more');
+        const requestButtons = document.querySelectorAll('.request-service-btn');
 
-        // Check if elements exist
-        if (!modal || !closeBtn || !readMoreButtons.length) {
-            console.error('Required modal elements not found');
-            return;
-        }
+        requestButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const container = this.closest('.request-teammate-container');
+                const wrapper = this.closest('.request-form-wrapper');
+                const emailWrapper = wrapper.querySelector('.email-input-wrapper');
+                const successMessage = container.querySelector('.success-message');
 
-        // Debug log
-        console.log('Found ' + readMoreButtons.length + ' read more buttons');
+                if (emailWrapper.style.display === 'none') {
+                    // Show email input
+                    emailWrapper.style.display = 'block';
+                    this.textContent = 'Request';
+                    wrapper.style.justifyContent = 'flex-end';
 
-        // Add click event to each Read More button
-        readMoreButtons.forEach(button => {
-            button.addEventListener('click', function (e) {
-                e.preventDefault();
-                const memberId = this.getAttribute('data-member-id');
+                    // Setup email input animations
+                    const emailInput = emailWrapper.querySelector('.email-input');
+                    const emailLabel = emailWrapper.querySelector('.email-label');
 
-                // Debug log
-                console.log('Button clicked for member ID:', memberId);
+                    emailInput.addEventListener('focus', () => {
+                        emailWrapper.classList.add('focused');
+                    });
 
-                // Show loading state
-                modal.style.display = 'block';
-                document.getElementById('modalDescription').textContent = 'Loading...';
-
-                // Get the current path and construct URL
-                const basePath = window.location.pathname.endsWith('/') ?
-                    window.location.pathname.slice(0, -1) : window.location.pathname;
-                const url = `${basePath}/member/${memberId}/`;
-
-                console.log('Fetching from URL:', url);
-
-                // Fetch member data
-                fetch(url)
-                    .then(response => {
-                        console.log('Response status:', response.status);
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Received data:', data);
-
-                        // Update modal content
-                        const modalImage = document.getElementById('modalImage');
-                        const modalName = document.getElementById('modalName');
-                        const modalTitle = document.getElementById('modalTitle');
-                        const modalRate = document.getElementById('modalRate');
-                        const modalDescription = document.getElementById('modalDescription');
-
-                        if (modalImage) modalImage.src = data.image_url || '';
-                        if (modalName) modalName.textContent = data.name || '';
-                        if (modalTitle) modalTitle.textContent = data.title || '';
-                        if (modalRate) modalRate.textContent = data.hourly_rate ? `$${data.hourly_rate}/hr` : '';
-                        if (modalDescription) modalDescription.textContent = data.description || '';
-
-                        // Show modal
-                        modal.style.display = 'block';
-                        document.body.style.overflow = 'hidden'; // Prevent scrolling
-                    })
-                    .catch(error => {
-                        console.error('Error fetching member data:', error);
-                        const modalDescription = document.getElementById('modalDescription');
-                        if (modalDescription) {
-                            modalDescription.textContent = 'Error loading member data. Please try again.';
+                    emailInput.addEventListener('blur', () => {
+                        if (!emailInput.value) {
+                            emailWrapper.classList.remove('focused');
                         }
                     });
+                } else {
+                    // Handle form submission
+                    const emailInput = wrapper.querySelector('.email-input');
+                    if (!emailInput.value) {
+                        alert('Please enter your email');
+                        return;
+                    }
+
+                    // Get member details from modal
+                    const modalName = document.getElementById('modalName').textContent;
+                    const modalTitle = document.getElementById('modalTitle').textContent;
+
+                    // Send email using fetch
+                    fetch('/send-request-email/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify({
+                            email: emailInput.value,
+                            memberName: modalName,
+                            memberTitle: modalTitle
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            wrapper.style.display = 'none';
+                            successMessage.style.display = 'block';
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('There was an error sending your request. Please try again.');
+                        });
+                }
             });
         });
 
-        // Close modal function
-        const closeModal = () => {
-            modal.style.display = 'none';
-            document.body.style.overflow = ''; // Restore scrolling
-        };
-
-        // Close button click event
-        closeBtn.addEventListener('click', closeModal);
-
-        // Close on click outside modal
-        window.addEventListener('click', function (event) {
-            if (event.target === modal) {
-                closeModal();
+        // Helper function to get CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
             }
-        });
-
-        // Close on Escape key press
-        document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape' && modal.style.display === 'block') {
-                closeModal();
-            }
-        });
+            return cookieValue;
+        }
     });
 </script>
+
 {% endblock %}

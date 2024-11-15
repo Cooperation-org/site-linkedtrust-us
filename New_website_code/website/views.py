@@ -51,3 +51,50 @@ def team_member_detail_view(request, member_id):
 
 def empty_view(request):
     return render(request, 'empty.html')
+
+
+
+# Add to your views.py
+from django.core.mail import send_mail
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_protect
+import json
+
+@csrf_protect
+def send_request_email(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            user_email = data.get('email')
+            member_name = data.get('memberName')
+            member_title = data.get('memberTitle')
+            
+            # Compose email message
+            subject = f"New Service Request for {member_name}"
+            message = f"""
+Dear LinkedTrust Team,
+
+A new service request has been received:
+
+Requested Team Member: {member_name}
+Service Type: {member_title}
+Requester's Email: {user_email}
+
+Best regards,
+LinkedTrust Automated System
+            """
+            
+            # Send email
+            send_mail(
+                subject,
+                message,
+                'noreply@linkedtrust.us',  # From email
+                ['amos@linkedtrust.us'],    # To email
+                fail_silently=False,
+            )
+            
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+    
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)

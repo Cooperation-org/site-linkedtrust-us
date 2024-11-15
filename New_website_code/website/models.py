@@ -10,11 +10,12 @@ class TeamMember(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
     def truncated_description(self):
         return Truncator(self.description).words(15, truncate='...')
 
     def formatted_hourly_rate(self):
-        return f"${self.hourly_rate}/hr"
+        return int(self.hourly_rate)
 
     def __str__(self):
         return self.name
