@@ -1,0 +1,3 @@
+web: gunicorn linkedtrust.wsgi:application --workers=3 --bind 0.0.0.0:8000 
+livereload: python manage.py livereload 
+#nginx: nginx -g "daemon off;"
