@@ -23,7 +23,6 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'website',
-    'livereload',
 ]
 
 MIDDLEWARE = [
@@ -34,7 +33,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'livereload.middleware.LiveReloadScript',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 

@@ -247,7 +247,7 @@ nav ul li a:hover {
 
 /* Banner */
 .banner {
-    height: 100vh;
+    height: 20vh;
     position: relative;
     overflow: hidden;
     background-color: black;
@@ -1710,7 +1710,7 @@ Team Page
 /* MISSION PAGE DESIGN */
 .about_banner {
     color: white;
-    height: 35vh;
+    height: 15vh;
     background-color: black;
     background-image: url('../img/banner_img1.png');
     background-repeat: no-repeat;
