@@ -78,12 +78,12 @@ STATIC_URL = '/static/'
 
 ## Process Management
 
-1. Configure Supervisor:
+Configure Supervisor:
 ```bash
 # Create supervisor configuration
 sudo tee /etc/supervisor/conf.d/linkedtrust.conf << EOL
 [program:linkedtrust]
-command=/linkedtrust/site-linkedtrust-us/.venv/bin/honcho start
+command=gunicorn linkedtrust.wsgi:application --workers=3 --bind 0.0.0.0:8000
 directory=/linkedtrust/site-linkedtrust-us/New_website_code
 user=root
 autostart=true
@@ -92,15 +92,6 @@ redirect_stderr=true
 stdout_logfile=/var/log/supervisor/linkedtrust.log
 stderr_logfile=/var/log/supervisor/linkedtrust.err.log
 environment=DJANGO_SETTINGS_MODULE="linkedtrust.settings",PYTHONUNBUFFERED="true"
-EOL
-```
-
-2. Setup Procfile:
-```bash
-# Create Procfile
-cat > Procfile << EOL
-web: /linkedtrust/site-linkedtrust-us/New_website_code/.venv/bin/gunicorn linkedtrust.wsgi:application --bind 0.0.0.0:8000 --workers=3
-livereload: /linkedtrust/site-linkedtrust-us/New_website_code/.venv/bin/python manage.py livereload
 EOL
 ```
 
@@ -160,7 +151,7 @@ pip install --upgrade -r requirements.txt
 
 3. Collect static files:
 ```bash
-python manage.py collectstatic --noinput
+python manage.py collectstatic
 ```
 
 4. Restart services:
