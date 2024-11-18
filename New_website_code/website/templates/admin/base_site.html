@@ -1,0 +1,123 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Linkedtrust Admin') }}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    :root {
+        --primary-color: #04b3e4;
+        --secondary-color: #04ceda;
+        --accent-color: #8cc541;
+        --warning-color: #ffcd51;
+        --danger-color: #f05f68;
+    }
+
+    #header {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    #branding h1 {
+        color: white;
+    }
+
+    .module h2, .module caption, .inline-group h2 {
+        background: var(--secondary-color);
+    }
+
+    div.breadcrumbs {
+        background: var(--secondary-color);
+    }
+
+    .button, input[type=submit], input[type=button], .submit-row input, a.button {
+        background: var(--primary-color);
+    }
+
+    .button:hover, input[type=submit]:hover, input[type=button]:hover {
+        background: var(--accent-color);
+    }
+
+    .object-tools a {
+        background: var(--accent-color);
+    }
+
+    .object-tools a:hover {
+        background: var(--secondary-color);
+    }
+
+    .delete-button {
+        background: var(--danger-color) !important;
+    }
+
+    .delete-button:hover {
+        background: #d95057 !important;
+    }
+
+    /* Dashboard cards */
+    .dashboard-card {
+        border-top: 3px solid var(--primary-color);
+    }
+
+    .stat-value {
+        color: var(--primary-color);
+    }
+
+    .action-button {
+        background: var(--accent-color);
+    }
+
+    .action-button:hover {
+        background: var(--secondary-color);
+    }
+
+    /* Table styling */
+    thead th {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    tbody tr:hover {
+        background-color: rgba(4, 179, 228, 0.1);
+    }
+
+    /* Form styling */
+    .form-row.errors {
+        border-color: var(--danger-color);
+    }
+
+    .errornote {
+        background: var(--danger-color);
+    }
+
+    /* Success messages */
+    .success {
+        background: var(--accent-color);
+    }
+
+    /* Warning messages */
+    .warning {
+        background: var(--warning-color);
+    }
+
+    /* Links */
+    a:link, a:visited {
+        color: var(--primary-color);
+    }
+
+    a:hover {
+        color: var(--secondary-color);
+    }
+</style>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+        Linkedtrust Administration
+    </a>
+</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
