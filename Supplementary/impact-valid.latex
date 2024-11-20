@@ -1,0 +1,121 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=0.8in]{geometry}  % Slightly reduced margins
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+
+% Custom colors
+\definecolor{primary}{RGB}{0,67,167}
+\definecolor{secondary}{RGB}{100,100,100}
+
+% Tighter spacing
+\setlength{\parskip}{0.5em}
+\setlength{\parsep}{0pt}
+\setlength{\headsep}{0.2em}
+\setlength{\topskip}{0pt}
+
+% Custom formatting
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+
+\begin{center}
+\textcolor{primary}{\LARGE\textbf{Portable, Credible Verification of Impact}}
+\\\vspace{0.2em}
+\end{center}
+
+\section*{Revolutionizing Impact Measurement}
+\vspace{-0.2em}
+LinkedTrust.us is introducing a groundbreaking approach that transforms how nonprofits demonstrate their impact, enabling donors to trust and verify every claim of positive change. Our platform converts traditional impact reports into discrete, verifiable statements that can be independently validated by beneficiaries, auditors, and stakeholders.
+
+% Image placement with caption
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.6\textwidth]{untitled (12).png}  % Reduced to 60% width
+\caption{\small\textit{Transform an annual report into specific, verifiable claims with AI-powered extraction and enable beneficiaries and auditors to independently attest}}
+\end{figure}
+
+
+\section*{Why This Matters for Philanthropy}
+\vspace{-0.2em}
+
+\begin{multicols}{2}
+\subsection*{The Current Challenge}
+\begin{itemize}[leftmargin=*,topsep=0pt,itemsep=0pt]
+    \item Impact reports often contain valuable information buried in narrative form
+    \item Donors struggle to compare impacts across different programs
+    \item Beneficiaries lack voice in verification
+    \item Manual audit processes are costly and time-consuming
+\end{itemize}
+
+\columnbreak
+
+\subsection*{Our Solution}
+Transform complex impact narratives into clear, verifiable statements that can be independently validated:
+\begin{itemize}[leftmargin=*,topsep=0pt,itemsep=0pt]
+    \item Convert narrative reports into specific, measurable claims
+    \item Enable direct beneficiary verification
+    \item Generate portable, reusable impact credentials
+    \item Streamline third-party audits
+\end{itemize}
+\end{multicols}
+
+\vspace{-0.3em}
+\section*{Key Benefits}
+\vspace{-0.2em}
+
+\begin{multicols}{3}
+\subsection*{For Foundations \& Donors}
+\begin{itemize}[leftmargin=*,topsep=0pt,itemsep=0pt]
+    \item Verify impact claims directly
+    \item Compare program effectiveness
+    \item Reduce verification costs
+    \item Make data-driven decisions
+\end{itemize}
+
+\columnbreak
+
+\subsection*{For Nonprofits}
+\begin{itemize}[leftmargin=*,topsep=0pt,itemsep=0pt]
+    \item Automate report processing
+    \item Build trust through verification
+    \item Empower beneficiaries
+    \item Streamline audits
+    \item Create portable credentials
+\end{itemize}
+
+\columnbreak
+
+\subsection*{For Beneficiaries}
+\begin{itemize}[leftmargin=*,topsep=0pt,itemsep=0pt]
+    \item Participate in verification
+    \item Own impact stories
+    \item Share verified outcomes
+    \item Build portable proof
+\end{itemize}
+\end{multicols}
+
+\vspace{-0.2em}
+\section*{Ready for Implementation}
+\begin{itemize}[leftmargin=*,topsep=0pt,itemsep=0pt]
+    \item Pilot programs starting Q1 2025
+    \item Built on open standards supported by major digital identity foundations
+    \item Compatible with existing nonprofit impact measurement frameworks
+    \item Designed for global scale
+\end{itemize}
+
+\vspace{0.5em}
+\begin{center}
+\textit{Bringing truth, transparency, and trust to philanthropy impact measurement}
+\end{center}
+
+\end{document}
