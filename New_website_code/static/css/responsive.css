@@ -1,0 +1,210 @@
+/* Big Tablets */
+@media screen and (max-width: 825px) {
+    #banner_container {
+        height: 75vh;
+    }
+
+    .md\:h-\[80vh\] {
+        height: 50vh;
+    }
+
+    .getstarted {
+        height: auto;
+    }
+
+    .white-paper {
+        height: 50vh;
+    }
+
+    .Getstarted-container {
+        flex: none;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .Getstarted-container {
+        flex: none;
+    }
+}
+
+/* iPad Mini */
+@media screen and (max-width: 768px) {
+    #banner_container {
+        height: 85vh;
+    }
+
+    .tagline-class {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .tagline {
+        width: 80%;
+    }
+
+    .getstarted {
+        height: 100vh;
+    }
+
+    .getstarted-row {
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 0 2rem;
+    }
+
+    .getstarted-holder {
+        flex: 0 0 50%;
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+    }
+
+    .trusted-logo-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px 24px;
+    }
+
+    .trusted-logo {
+        max-width: 140px;
+    }
+
+    .white-paper {
+        height: auto;
+    }
+
+    .white-paper-image img {
+        max-width: 50%;
+        max-height: 50%;
+        object-fit: contain;
+    }
+
+    .Getstarted-section {
+        display: block;
+    }
+
+    .Getstarted-container {
+        max-width: 100%;
+        margin-bottom: 15%;
+    }
+
+    .Getstarted-video-container {
+        position: relative;
+        width: 100%;
+        background-position: center;
+        background-size: cover;
+        /* background: red; */
+    }
+}
+
+/* Large phones */
+@media (max-width: 576px) {
+    /* Google Pixel 5: 393px */
+
+}
+
+@media screen and (max-width: 360px) {
+    #banner_container {
+        height: 100vh;
+    }
+
+    .text-3xl {
+        font-size: 1.23rem;
+    }
+
+    .tagline {
+        font-size: 1rem;
+    }
+
+    .Getstarted-container h3 {
+        font-size: 2rem;
+    }
+
+    .getstarted {
+        height: auto;
+        padding: 30px 0px;
+    }
+
+    .getstarted-row {
+        flex-direction: column;
+    }
+
+
+}
+
+/* 
+
+iPad Air = 820px
+
+KIndle Fire HDX, Nexus 10 = 800px by 1280px
+
+Galaxy Tab S4 = 712px
+
+MIcrosoft Lumia 550 = 640px by 360px
+
+Blackberry, Nexus 7 = 600px
+
+Nokia N9 = 480px
+
+iphone 14 pro Max = 430px
+
+iphone XR = 414px
+
+Moto G Power, Nexus5X, Nexus6, Nexus 6P,
+Pixel 7, Samsung Galaxy = 412px
+
+Pixel 3, Pixel 3 XL = 393px
+
+iphone 12 Pro = 390px
+
+LG Optimus L70, Nexus 4 = 384px
+
+iphone SE = 375px
+
+
+
+Pixel 4 = 353px
+
+Galaxy S9+, Nokia Lumia 520 = 320px
+
+
+JioPhone 2 = 240px
+
+*/
+
+
+
+
+
+
+
+
+
+
+/* Large tablets and small laptops */
+@media (max-width: 1024px) {}
+
+/* Tablets */
+@media (max-width: 768px) {}
+
+/* Large phones */
+@media (max-width: 576px) {}
+
+/* Small phones */
+@media (max-width: 375px) {}
+
+/* Large phones (576px and below) */
+
+/*
+Google Pixel 5: 393px
+iPhone 12/13/14: 390px
+iPhone 8/SE 2020: 375px
+Samsung Galaxy S20: 360px
+*/
+
+/* Small phones (375px and below) */
+/* 
+Galaxy S5 mini: 360px
+Small Android phones: 320-360px 
+iPhone SE (1st gen): 320px
+iPhone 5/5S: 320px
+*/

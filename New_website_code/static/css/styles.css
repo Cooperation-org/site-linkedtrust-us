@@ -81,169 +81,6 @@ section {
 
 
 
-/* Navbar */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 70px;
-    position: sticky;
-    top: 0;
-    background-color: black;
-    color: white;
-    z-index: 1000;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-}
-
-.logo-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
-}
-
-.logo img {
-    width: 35px;
-    height: 35px;
-    margin-right: 10px;
-}
-
-.logo span {
-    font-weight: bolder;
-}
-
-nav ul {
-    display: flex;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-nav ul li {
-    margin: 0 15px;
-    position: relative;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: white;
-    display: block;
-    padding: 10px 0;
-}
-
-nav ul li a:hover {
-    color: #00B2E5;
-}
-
-.navbar .cta-button {
-    background-color: transparent;
-    border: 2px solid #00B2E5;
-    transition: all 0.5s ease;
-}
-
-.navbar .cta-button:hover {
-    background-color: #00B2E5;
-}
-
-/* Dropdown styles */
-.dropdown {
-    position: relative;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-.dropdown-content li {
-    margin: 0;
-}
-
-.dropdown-content a {
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    color: black;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.nested-dropdown {
-    position: relative;
-}
-
-.nested-dropdown-content {
-    display: none;
-    position: absolute;
-    left: 100%;
-    /* Positions the nested menu to the right of its parent */
-    top: 0;
-    /* Aligns with the top of the parent item */
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 2;
-    /* Higher than parent dropdown to ensure proper layering */
-}
-
-.nested-dropdown-content li {
-    margin: 0;
-}
-
-.nested-dropdown-content a {
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    color: black;
-}
-
-.nested-dropdown:hover .nested-dropdown-content {
-    display: block;
-}
-
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    nav ul {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    nav ul li {
-        margin: 0;
-        width: 100%;
-    }
-
-    .dropdown-content {
-        position: static;
-        display: none;
-        width: 100%;
-        box-shadow: none;
-    }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-}
 
 /* Banner */
 .banner {
@@ -605,7 +442,6 @@ nav ul li a:hover {
     background-color: #000;
     padding: 60px;
     color: white;
-    font-family: system-ui, -apple-system, sans-serif;
     min-height: 400px;
     display: flex;
     justify-content: space-between;
@@ -1895,3 +1731,37 @@ Team Page
 }
 
 /* END */
+
+
+/* Blackberry Z30, Galaxy Note3, 
+Galaxy Note II, Galaxy S III,
+Galaxy S8, MIcrosoft Lumia 950,
+Moto G4, Nexus 5, Samsung Galaxy S8+  = 360px */
+@media screen and (max-width: 360px) {
+    #banner_container {
+        height: 100vh;
+    }
+
+    .text-3xl {
+        font-size: 1.23rem;
+    }
+
+    .tagline {
+        font-size: 1rem;
+    }
+
+    .Getstarted-container h3 {
+        font-size: 2rem;
+    }
+
+    .getstarted {
+        height: auto;
+        padding: 30px 0px;
+    }
+
+    .getstarted-row {
+        flex-direction: column;
+    }
+
+
+}
