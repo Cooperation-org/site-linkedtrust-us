@@ -102,9 +102,16 @@
 
 }
 
-@media screen and (max-width: 360px) {
+
+
+/* Blackberry Z30, Galaxy Note3, 
+Galaxy Note II, Galaxy S III,
+Galaxy S8, MIcrosoft Lumia 950,
+Moto G4, Nexus 5, Samsung Galaxy S8+  = 360px */
+
+@media screen and (max-width: 361px) {
     #banner_container {
-        height: 100vh;
+        height: 90vh;
     }
 
     .text-3xl {
@@ -128,6 +135,78 @@
         flex-direction: column;
     }
 
+    .trusted-logo-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px 18px;
+    }
+
+    .trusted-logo {
+        max-width: 80px;
+    }
+
+    .white-paper-image img {
+        max-width: 100%;
+    }
+
+    .Getstarted-section {
+        padding: 60px 25px;
+        height: auto;
+    }
+
+    .Getstarted-container p {
+        font-size: 20px;
+    }
+
+    .Getstarted-btn {
+        padding: 0px 13px;
+    }
+
+
+    .Getstarted-video-container {
+        height: 300px;
+    }
+
+    .box-play-icon {
+        left: 50%;
+    }
+
+    .footer-main {
+        display: block;
+        padding: 10px 20px;
+    }
+
+    .footer-about {
+        width: 100%;
+    }
+
+    .footer-about p {
+        padding-right: 0px;
+    }
+
+    .footer-links {
+        width: 100%;
+        padding: 20px 0px
+    }
+
+
+    .copyright-section {
+        padding: 0px 10px;
+    }
+
+
+    .copy-line {
+        margin-bottom: 0%;
+        transform: translate(9px, -23px);
+    }
+
+    .social-icons {
+        gap: 12px;
+        font-size: 20px;
+    }
+    #footer_social_icon_img {
+        width: 20px;
+        height: auto;
+    }
 
 }
 

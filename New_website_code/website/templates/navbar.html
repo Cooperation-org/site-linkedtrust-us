@@ -1,65 +1,62 @@
 {% load static %}
-<header class="navbar">
-    <div class="logo">
-        <a href="{% url 'home' %}" class="nodec logo-link">
-            <img src="{% static 'img/logo.svg' %}" alt="LinkedTrust Logo">
-            <span>LinkedTrust</span>
-        </a>
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <a href="{% url 'home' %}" class="nodec logo-link">
+                <img src="{% static 'img/logo.svg' %}" alt="LinkedTrust Logo">
+                <span>LinkedTrust</span>
+            </a>
+        </div>
+        <div class="mobile-menu">
+            <ul class="nav-links">
+
+                <li class="dropdown">
+                    <a href="#About">About</a>
+                    <div class="dropdown-content">
+                        <a href="{% url 'team' %}">Team</a>
+                        <a href="{% url 'about' %}">Our Mission</a>
+                        <a href="{% url 'press' %}">Press & Media</a>
+                        <a href="https://invest.linkedtrust.us">Invest</a>
+                    </div>
+                </li>
+                <a class="nodec" href="{% url 'services' %}">Our Services</a>
+                <li class="dropdown">
+                    <a href="#LinkedClaims">LinkedClaims</a>
+                    <div class="dropdown-content">
+                        <a href="{% url 'getstarted' %}">Getting Started</a>
+                        <a href="https://live.linkedtrust.us/api/docs" target="_blank">Documentation</a>
+                        <a href="https://github.com/Cooperation-org/LinkedClaims/blob/main/LinkedClaimsRFC.md"
+                            target="_blank">LinkedClaim RFC</a>
+                        <div class="nested-dropdown">
+                            <a href="#" class="nested-trigger">Code</a>
+                            <div class="nested-dropdown-content">
+                                <a href="https://github.com/Cooperation-org" target="_blank">GitHub</a>
+                                <a href="https://www.npmjs.com/org/cooperation" target="_blank">npm</a>
+                                <a href="https://pypi.org/project/linked-claims-extractor/" target="_blank">PyPI</a>
+                            </div>
+                            <a href="http://cooperation.org/credentials/v1/" target="_blank">Schema</a>
+                            <a href="http://cooperation.org/linked_trust/" target="_blank">Architecture</a>
+                        </div>
+                    </div>
+
+                </li>
+
+                <li> <a class="nodec" href="{% url 'contact' %}">Contact Us</a></li>
+            </ul>
+            <a href="https://live.linkedtrust.us/" target="_blank" class="cta-button">Live Claims</a>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <a href="https://live.linkedtrust.us/" target="_blank" class="cta-button">Live Claims</a>
     </div>
-    <button class="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-    <nav class="nav-menu">
-        <ul>
-            <li class="dropdown">
-                <span class="dropdown-title">About</span>
-                <ul class="dropdown-content">
-                    <li><a href="{% url 'team' %}">Team</a></li>
-                    <li><a href="{% url 'about' %}">Our Mission</a></li>
-                    <li><a href="{% url 'press' %}">Press & Media</a></li>
-                    <li><a href="https://invest.linkedtrust.us">Invest</a></li>
-                </ul>
-            </li>
-            <li><a class="nodec" href="{% url 'services' %}">Our Services</a></li>
-            <li class="dropdown">
-                <span class="dropdown-title">LinkedClaims</span>
-                <ul class="dropdown-content">
-                    <li><a href="{% url 'getstarted' %}">Getting Started</a></li>
-                    <li><a href="https://live.linkedtrust.us/api/docs" target="_blank">Documentation</a></li>
-                    <li><a href="https://github.com/Cooperation-org/LinkedClaims/blob/main/LinkedClaimsRFC.md"
-                            target="_blank">LinkedClaim RFC</a></li>
-                    <li class="nested-dropdown">
-                        <span class="dropdown-title">Code</span>
-                        <ul class="nested-dropdown-content">
-                            <li><a href="https://github.com/Cooperation-org" target="_blank">GitHub</a></li>
-                            <li><a href="https://www.npmjs.com/org/cooperation" target="_blank">npm</a></li>
-                            <li><a href="https://pypi.org/project/linked-claims-extractor/" target="_blank">PyPI</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="http://cooperation.org/credentials/v1/" target="_blank">Schema</a></li>
-                    <li><a href="http://cooperation.org/linked_trust/" target="_blank">Architecture</a></li>
-                </ul>
-            </li>
-            <li><a class="nodec" href="{% url 'contact' %}">Contact Us</a></li>
-        </ul>
-    </nav>
-    <a href="https://live.linkedtrust.us/" target="_blank" class="cta-button">Live Claims</a>
-</header>
+</nav>
 
 <style>
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 70px;
-        position: sticky;
-        top: 0;
-        background-color: black;
-        color: white;
-        z-index: 1000;
+    a {
+        text-decoration: none;
     }
 
     .logo {
@@ -81,78 +78,76 @@
     }
 
     .logo span {
-        font-weight: bolder;
+        color: #fff;
+        font-size: 1rem;
     }
 
-    .hamburger {
-        display: none;
-        flex-direction: column;
-        justify-content: space-around;
-        width: 30px;
-        height: 25px;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-        z-index: 10;
+    .navbar {
+        background: #000;
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        position: relative;
+        color: #fff;
     }
 
-    .hamburger span {
-        width: 100%;
-        height: 2px;
-        background: white;
-        transition: all 0.3s linear;
-    }
-
-    nav ul {
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
         display: flex;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
+        justify-content: space-between;
+        align-items: center;
     }
 
-    nav ul li {
-        margin: 0 15px;
+    .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+    }
+
+    .nav-links li {
         position: relative;
     }
 
-    nav ul li a {
+    .nav-links a {
         text-decoration: none;
-        color: white;
-        display: block;
-        padding: 10px 0;
+        color: #ffff;
+        font-size: 1rem;
+        transition: color 0.3s;
     }
 
-    nav ul li a:hover {
-        color: #00B2E5;
-    }
-
-    .dropdown-title {
+    .dropdown {
+        position: relative;
         cursor: pointer;
     }
 
     .dropdown-content {
         display: none;
         position: absolute;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
-
-    .dropdown-content li {
-        margin: 0;
+        top: 100%;
+        left: 0;
+        background-color: #fff;
+        min-width: 200px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        padding: 0.5rem 0;
+        z-index: 20;
     }
 
     .dropdown-content a {
-        padding: 12px 16px;
-        text-decoration: none;
         display: block;
-        color: black;
+        padding: 0.7rem 1rem;
+        color: #000;
+        position: relative;
     }
 
     .dropdown-content a:hover {
-        background-color: #f1f1f1;
+        color: #00B2E5;
     }
 
     .dropdown:hover .dropdown-content {
@@ -163,15 +158,24 @@
         position: relative;
     }
 
+    .nested-trigger::after {
+        content: '►';
+        position: absolute;
+        right: 1rem;
+        font-size: 0.8em;
+    }
+
     .nested-dropdown-content {
         display: none;
         position: absolute;
         left: 100%;
         top: 0;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 2;
+        background-color: #fff;
+        min-width: 200px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        padding: 0.5rem 0;
+        z-index: 21;
     }
 
     .nested-dropdown:hover .nested-dropdown-content {
@@ -183,86 +187,156 @@
         border: 2px solid #00B2E5;
         transition: all 0.5s ease;
         text-decoration: none;
-        color: white;
         padding: 8px 16px;
         border-radius: 4px;
+        color: #fff;
     }
 
     .navbar .cta-button:hover {
         background-color: #00B2E5;
     }
 
-    @media screen and (max-width: 825px) {
-        .navbar {
-            padding: 10px 20px;
+    .mobile-menu .cta-button {
+        display: none;
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        padding: 4px;
+    }
+
+    .hamburger span {
+        width: 25px;
+        height: 3px;
+        background-color: #fff;
+        margin: 2px 0;
+        transition: all 0.3s ease;
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .nav-container {
+            flex-wrap: wrap;
+        }
+
+        .nav-links {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            padding: 1rem 0;
+            gap: 1rem;
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .dropdown-content {
+            position: static;
+            box-shadow: none;
+            padding-left: 1rem;
+        }
+
+        .nested-dropdown-content {
+            position: static;
+            box-shadow: none;
+            padding-left: 1rem;
+            background-color: transparent;
+        }
+
+        .nested-trigger::after {
+            transform: rotate(90deg);
+        }
+
+        .nav-container>.cta-button {
+            display: none;
+        }
+
+        .mobile-menu .cta-button.active {
+            display: block;
+            width: 100%;
+            margin-top: 1rem;
+            text-align: center;
         }
 
         .hamburger {
             display: flex;
+            order: 1;
         }
 
-        .nav-menu {
+        .mobile-menu {
             display: none;
-            position: absolute;
-            top: 60px;
-            left: 0;
-            right: 0;
-            background-color: black;
-            padding: 20px;
+            width: 100%;
+            order: 3;
         }
 
-        .nav-menu.active {
+        .mobile-menu.active {
             display: block;
         }
 
-        nav ul {
-            flex-direction: column;
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
         }
 
-        nav ul li {
-            margin: 10px 0;
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
         }
 
-        .dropdown-content,
-        .nested-dropdown-content {
-            position: static;
-            background-color: transparent;
-            box-shadow: none;
-            padding-left: 20px;
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
         }
 
-        .dropdown-content a,
-        .nested-dropdown-content a {
-            color: white;
-        }
-
-        .dropdown:hover .dropdown-content,
-        .nested-dropdown:hover .nested-dropdown-content {
-            display: none;
-        }
-
-        .dropdown.active .dropdown-content,
         .nested-dropdown.active .nested-dropdown-content {
             display: block;
         }
     }
 </style>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
-        const dropdowns = document.querySelectorAll('.dropdown');
 
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
+<script>
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+    const ctaButton = document.querySelector('.mobile-menu .cta-button');
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        ctaButton.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            navLinks.classList.remove('active');
+            ctaButton.classList.remove('active');
+        }
+    });
+
+    // For mobile: Handle dropdown and nested dropdown clicks
+    if (window.innerWidth <= 768) {
+        const dropdowns = document.querySelectorAll('.dropdown');
+        const nestedDropdowns = document.querySelectorAll('.nested-dropdown');
 
         dropdowns.forEach(dropdown => {
-            const title = dropdown.querySelector('.dropdown-title');
-            title.addEventListener('click', (e) => {
-                e.preventDefault();
-                dropdown.classList.toggle('active');
+            dropdown.addEventListener('click', (e) => {
+                const content = dropdown.querySelector('.dropdown-content');
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                e.stopPropagation();
             });
         });
-    });
+
+        nestedDropdowns.forEach(nested => {
+            const trigger = nested.querySelector('.nested-trigger');
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                nested.classList.toggle('active');
+            });
+        });
+    }
 </script>
