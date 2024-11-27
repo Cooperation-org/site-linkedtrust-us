@@ -7,6 +7,16 @@
 {{ block.super }}
 <!-- Favicon -->
 <link rel="shortcut icon" href="{% static 'img/logo.svg' %}?v=2" type="image/x-icon">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1WJCFQ4RQ"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-G1WJCFQ4RQ');
+</script>
+
 <script src="{% static 'js/custom_admin.js' %}"></script>
 {% endblock %}
 
@@ -32,7 +42,9 @@
         color: white;
     }
 
-    .module h2, .module caption, .inline-group h2 {
+    .module h2,
+    .module caption,
+    .inline-group h2 {
         background: var(--secondary-color);
     }
 
@@ -40,11 +52,17 @@
         background: var(--secondary-color);
     }
 
-    .button, input[type=submit], input[type=button], .submit-row input, a.button {
+    .button,
+    input[type=submit],
+    input[type=button],
+    .submit-row input,
+    a.button {
         background: var(--primary-color);
     }
 
-    .button:hover, input[type=submit]:hover, input[type=button]:hover {
+    .button:hover,
+    input[type=submit]:hover,
+    input[type=button]:hover {
         background: var(--accent-color);
     }
 
@@ -111,7 +129,8 @@
     }
 
     /* Links */
-    a:link, a:visited {
+    a:link,
+    a:visited {
         color: var(--primary-color);
     }
 
@@ -135,14 +154,14 @@
     .dashboard-card {
         background: white;
         border-radius: 12px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         padding: 20px;
         transition: transform 0.2s;
     }
 
     .dashboard-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .dashboard-card h2 {
@@ -238,7 +257,8 @@
         border-collapse: collapse;
     }
 
-    .model-list th, .model-list td {
+    .model-list th,
+    .model-list td {
         padding: 12px;
         text-align: left;
         border-bottom: 1px solid #eee;
@@ -248,7 +268,8 @@
         background: #f8f9fa;
     }
 
-    .addlink, .viewlink {
+    .addlink,
+    .viewlink {
         padding: 4px 8px;
         border-radius: 4px;
         text-decoration: none;
@@ -266,7 +287,8 @@
         color: white;
     }
 
-    .addlink:hover, .viewlink:hover {
+    .addlink:hover,
+    .viewlink:hover {
         opacity: 0.9;
         color: white;
         text-decoration: none;
