@@ -124,14 +124,17 @@ section {
 }
 
 .tagline {
-    width: 100%;
-    text-align: center;
-    color: #f5bb51;
+    width: 50%;
+    text-align: left;
+    /* color: #f5bb51; */
+    color: white;
     font-size: 2rem;
     font-weight: 300;
     z-index: 2;
     background-color: black;
     padding: 0;
+    display: block;
+    gap: 20px;
 }
 
 /* getstarted on main page */
