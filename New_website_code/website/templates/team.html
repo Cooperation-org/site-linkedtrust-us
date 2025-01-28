@@ -1,99 +1,63 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}About(team) - LinkedTrust{% endblock %}
+{% block title %}Team - LinkedTrust{% endblock %}
 {% block content %}
-<section class="about_intro_section">
-    <div class="about_intro_container">
-        <h2>Our Team</h2>
-        <p>Meet our exceptional team of dedicated professionals, driven by a shared passion for innovation and
-            collaboration, as we strive to make a positive impact in every project we undertake.</p>
-    </div>
+<!-- Banner Section -->
+<section class="about_banner">
+    <h3>Our Team</h3>
 </section>
 
-<section class="person_section">
-    <div class="row">
-        <div class="card">
-            <img src="{% static 'img/golda.png' %}" alt="">
-            <h3>Golda Velez</h3>
-            <p>Lead Moderator/Policy & Training Expert</p>
-            <p>6+ Years of Experience in Content and Community Moderation</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/ailin.jpeg' %}" alt="">
-            <h3>Ailín</h3>
-            <p>Cooperation.org General Project Manager</p>
-            <p>International Relations BA student</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/caro.png' %}" alt="">
-            <h3>Caro</h3>
-            <p>Co-Founder of Coupons for Good</p>
-            <p>People’s person, an analyst, and a creative problem solver.</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/gitonga.jpeg' %}" alt="">
-            <h3>Gitonga</h3>
-            <p>Software Developer</p>
-            <p>Powerhouse in the Room</p>
-        </div>
+<!-- Team Grid -->
+<section class="team-container">
+    {% for member in team_members %}
+    <div class="team-member">
+        {% if member.image %}
+        <img src="{{ member.image.url }}" alt="{{ member.name }}" class="profile-image">
+        {% else %}
+        <img src="{% static 'img/default-profile.png' %}" alt="{{ member.name }}" class="profile-image">
+        {% endif %}
+        <h2 class="name">{{ member.name }}</h2>
+        <h3 class="title">{{ member.title }}</h3>
+        <p class="description" data-full-description="{{ member.description }}">{{ member.truncated_description }}</p>
+        <button type="button" class="read-more" data-member-id="{{ member.id }}">Read More</button>
     </div>
-    <div class="row">
-        <div class="card">
-            <img src="{% static 'img/peter.jpeg' %}" alt="">
-            <h3>Peter B. A.</h3>
-            <p>Cloud Engineer</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/romeo.jpeg' %}" alt="">
-            <h3>Romeo</h3>
-            <p>Frontend Developer</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/rishabh.jpeg' %}" alt="">
-            <h3>Rishabh</h3>
-            <p>Full Stack Web Developer</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/ahmed.jpeg' %}" alt="">
-            <h3>Ahmed Abdelmenam</h3>
-            <p>Back End Web Developer</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="card">
-            <img src="{% static 'img/moka.jpeg' %}" alt="">
-            <h3>Moka</h3>
-            <p>Frontend Software Engineer</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/marwan.jpeg' %}" alt="">
-            <h3>Marwan Fouz</h3>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam.</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/spiderman.jpeg' %}" alt="">
-            <h3>Orjiene Kenechukwu</h3>
-            <p>Lorem, ipsum dolor.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam.</p>
-        </div>
-        <div class="card">
-            <img src="{% static 'img/amir.jpeg' %}" alt="">
-            <h3>Amr Nabel</h3>
-            <p>Frontend developer</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam.</p>
-        </div>
-
-
-    </div>
-
-    <div class="row">
-        <div class="card">
-            <img src="{% static 'img/Kholoud.jpeg' %}" alt="">
-            <h3>Kholoud Fattem</h3>
-            <p>Frontend developer</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam.</p>
-        </div>
-    </div>
+    {% endfor %}
 </section>
+
+<!-- Team Modal -->
+<div id="teamModal" class="teammodal">
+    <div class="teammodal-content">
+        <span class="close">&times;</span>
+        <div class="teammodal-body">
+            <div class="teammodal-image">
+                <img src="" alt="" id="modalImage">
+            </div>
+            <div class="teammodal-info">
+                <h2 id="modalName"></h2>
+                <h3 id="modalTitle"></h3>
+                <p id="modalDescription"></p>
+                <div class="rate-badge">
+                    <p class="teammodal-badge">
+                        <span class="rate-amount" id="modalRate"></span>
+                        <span class="rate-unit">/hr</span>
+                    </p>
+                </div>
+
+                <div class="request-teammate-container">
+                    <div class="request-form-wrapper">
+                        <div class="email-input-wrapper" style="display: none;">
+                            <label for="userEmail" class="email-label">Enter your email</label>
+                            <input type="email" id="userEmail" class="email-input" required>
+                        </div>
+                        <button class="request-service-btn">Request for my services</button>
+                    </div>
+                    <div class="success-message" style="display: none;">
+                        Thank you for requesting my services. I will reach out soon!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
