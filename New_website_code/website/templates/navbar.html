@@ -3,12 +3,9 @@
     <div class="nav-container">
         <div class="logo">
             <button class="logo-button" style="background: none; border: none; padding: 0; cursor: pointer;">
-                <img id="logo-img" 
-                     style="z-index: 100;" 
-                     src="{% static 'img/logo.svg' %}" 
-                     alt="LinkedTrust Logo">
+                <img id="logo-img" style="z-index: 100;" src="{% static 'img/logo.svg' %}" alt="LinkedTrust Logo">
             </button>
-                <a href="{% url 'home' %}" class="nodec logo-link" id="logo-link">
+            <a href="{% url 'home' %}" class="nodec logo-link" id="logo-link">
                 <span style="cursor: pointer;">LinkedTrust</span>
             </a>
         </div>
@@ -25,7 +22,7 @@
                     </div>
                 </li>
                 <li class="dropdown">
-                   <a href="{% url 'services' %}">Our Services</a>
+                    <a href="{% url 'services' %}">Our Services</a>
                 </li>
                 <li class="dropdown">
                     <a href="#LinkedClaims">LinkedClaims</a>
@@ -48,7 +45,7 @@
 
                 </li>
 
-                <li> <a class="nodec" href="{% url 'contact' %}">Contact Us</a></li>
+                <li class="dropdown"> <a href="{% url 'contact' %}">Contact Us</a></li>
             </ul>
             <a href="https://live.linkedtrust.us/" target="_blank" class="cta-button">Live Claims</a>
         </div>
@@ -361,13 +358,13 @@
             });
         });
     }
-    document.addEventListener('DOMContentLoaded', function() {
-    const logoImg = document.getElementById('logo-img');
-    const logoButton = logoImg.parentElement;
-    
-    logoButton.addEventListener('click', function() {
-        const isSvg = logoImg.src.includes('logo.svg');
-        logoImg.src = isSvg ? "{% static 'img/logo2.gif' %}" : "{% static 'img/logo.svg' %}";
+    document.addEventListener('DOMContentLoaded', function () {
+        const logoImg = document.getElementById('logo-img');
+        const logoButton = logoImg.parentElement;
+
+        logoButton.addEventListener('click', function () {
+            const isSvg = logoImg.src.includes('logo.svg');
+            logoImg.src = isSvg ? "{% static 'img/logo2.gif' %}" : "{% static 'img/logo.svg' %}";
+        });
     });
-});
 </script>
