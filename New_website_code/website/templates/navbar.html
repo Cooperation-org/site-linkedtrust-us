@@ -225,6 +225,7 @@
         .navbar {
             position: absolute;
             width: 100%;
+            z-index: 100;
         }
 
         .nav-container {
@@ -242,6 +243,13 @@
 
         .nav-links.active {
             display: flex;
+        }
+
+        .navbar .cta-button {
+            border: none;
+            border-radius: 94px;
+            background: #00B2E5;
+            font-weight: bold;
         }
 
         .dropdown-content {
@@ -284,7 +292,10 @@
         }
 
         .mobile-menu.active {
-            display: block;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: space-evenly;
         }
 
         .hamburger.active span:nth-child(1) {
