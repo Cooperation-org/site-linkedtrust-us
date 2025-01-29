@@ -1,7 +1,41 @@
-venv/
-.venv/
-*.pyc
+# Python
 __pycache__/
+*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+static/
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.env
+.venv
+.env.*
 
 # Django static and media files
 staticfiles/
@@ -33,13 +67,48 @@ db.sqlite3
 db.sqlite3-journal
 
 ENV/
+>>>>>>> 05ba65300b09c41986c3965c2a658486e71993c2
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
+<<<<<<< HEAD
+.DS_Store
+
+# Coverage and Test
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff
+*.log
+local_settings.py
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Node
+node_modules/
+=======
 
 # OS
 .DS_Store
 Thumbs.db
+>>>>>>> 05ba65300b09c41986c3965c2a658486e71993c2
