@@ -11,7 +11,6 @@
         </div>
         <div class="mobile-menu">
             <ul class="nav-links">
-
                 <li class="dropdown">
                     <a href="#About">About</a>
                     <div class="dropdown-content">
@@ -42,10 +41,10 @@
                             <a href="http://cooperation.org/linked_trust/" target="_blank">Architecture</a>
                         </div>
                     </div>
-
                 </li>
-
-                <li class="dropdown"> <a href="{% url 'contact' %}">Contact Us</a></li>
+                <li class="dropdown">
+                    <a href="{% url 'contact' %}">Contact Us</a>
+                </li>
             </ul>
             <a href="https://live.linkedtrust.us/" target="_blank" class="cta-button">Live Claims</a>
         </div>
@@ -60,7 +59,6 @@
 
 <style>
     /* Navbar */
-
     .logo {
         display: flex;
         align-items: center;
@@ -152,8 +150,15 @@
         color: #00B2E5;
     }
 
-    .dropdown:hover .dropdown-content {
-        display: block;
+    /* Only apply hover effect on desktop */
+    @media (min-width: 822px) {
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .nested-dropdown:hover .nested-dropdown-content {
+            display: block;
+        }
     }
 
     .nested-dropdown {
@@ -178,10 +183,6 @@
         border-radius: 4px;
         padding: 0.5rem 0;
         z-index: 21;
-    }
-
-    .nested-dropdown:hover .nested-dropdown-content {
-        display: block;
     }
 
     .navbar .cta-button {
@@ -315,51 +316,89 @@
 </style>
 
 <script>
-    const hamburger = document.querySelector('.hamburger');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const navLinks = document.querySelector('.nav-links');
-    const ctaButton = document.querySelector('.mobile-menu .cta-button');
+    document.addEventListener('DOMContentLoaded', () => {
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        const ctaButton = document.querySelector('.mobile-menu .cta-button');
 
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-        navLinks.classList.toggle('active');
-        ctaButton.classList.toggle('active');
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
-            hamburger.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            navLinks.classList.remove('active');
-            ctaButton.classList.remove('active');
-        }
-    });
-
-    // For mobile: Handle dropdown and nested dropdown clicks
-    if (window.innerWidth <= 768) {
-        const dropdowns = document.querySelectorAll('.dropdown');
-        const nestedDropdowns = document.querySelectorAll('.nested-dropdown');
-
-        dropdowns.forEach(dropdown => {
-            dropdown.addEventListener('click', (e) => {
-                const content = dropdown.querySelector('.dropdown-content');
-                content.style.display = content.style.display === 'block' ? 'none' : 'block';
-                e.stopPropagation();
-            });
+        // Hamburger menu toggle
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            ctaButton.classList.toggle('active');
         });
 
-        nestedDropdowns.forEach(nested => {
-            const trigger = nested.querySelector('.nested-trigger');
-            trigger.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                nested.classList.toggle('active');
-            });
+        // Handle dropdowns differently based on screen size
+        const handleDropdowns = () => {
+            const dropdowns = document.querySelectorAll('.dropdown');
+            const nestedDropdowns = document.querySelectorAll('.nested-dropdown');
+
+            if (window.innerWidth <= 821) {
+                // Mobile behavior
+                dropdowns.forEach(dropdown => {
+                    const link = dropdown.querySelector('a');
+                    const content = dropdown.querySelector('.dropdown-content');
+                    
+                    if (link && content) {
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            
+                            // Close other dropdowns
+                            dropdowns.forEach(other => {
+                                if (other !== dropdown) {
+                                    const otherContent = other.querySelector('.dropdown-content');
+                                    if (otherContent) otherContent.style.display = 'none';
+                                }
+                            });
+                            
+                            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                        });
+                    }
+                });
+
+                nestedDropdowns.forEach(nested => {
+                    const trigger = nested.querySelector('.nested-trigger');
+                    if (trigger) {
+                        trigger.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            nested.classList.toggle('active');
+                        });
+                    }
+                });
+            }
+        };
+
+        // Initialize dropdowns
+        handleDropdowns();
+
+        // Update behavior on resize
+        window.addEventListener('resize', () => {
+            handleDropdowns();
         });
-    }
-    document.addEventListener('DOMContentLoaded', function () {
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                navLinks.classList.remove('active');
+                ctaButton.classList.remove('active');
+
+                // Close all dropdowns
+                if (window.innerWidth <= 821) {
+                    const dropdowns = document.querySelectorAll('.dropdown-content');
+                    dropdowns.forEach(dropdown => {
+                        dropdown.style.display = 'none';
+                    });
+                }
+            }
+        });
+
+        // Logo toggle functionality
         const logoImg = document.getElementById('logo-img');
         const logoButton = logoImg.parentElement;
 
