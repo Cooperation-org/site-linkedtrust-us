@@ -286,6 +286,29 @@
     .success-message {
         padding: 0px;
     }
+
+    .contact-info, .contact-form-section {
+        padding: 0px;
+    }
+
+
+    .contact-container {
+        flex-direction: column-reverse;
+        margin-top: 20%;
+        padding: 40px 20px;
+        height: auto;
+    }
+
+    .contact-info {
+        height: auto;
+        margin-top: 15%;
+        padding: 10px;
+    }
+
+
+    .contact-detail {
+        margin: 0;
+    }
 }
 
 /* iphone XR, iphone6/7/8 Plus */
