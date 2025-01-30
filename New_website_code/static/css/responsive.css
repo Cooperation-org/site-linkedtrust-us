@@ -270,6 +270,22 @@
     .Getstarted-container {
         margin-bottom: 25%;
     }
+
+    .teammodal .close {
+        top: 0px !important;
+    }
+
+    .teammodal-info {
+        padding: 0;
+    }
+
+    .request-form-wrapper {
+        flex-direction: column;
+    }
+
+    .success-message {
+        padding: 0px;
+    }
 }
 
 /* iphone XR, iphone6/7/8 Plus */
