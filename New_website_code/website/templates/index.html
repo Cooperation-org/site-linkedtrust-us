@@ -572,6 +572,8 @@
 
 <script>
   let currentSlide = 0;
+  let autoAdvanceInterval = null;
+  let isAutoAdvancing = true;
   const slides = document.querySelectorAll('.hero-slide');
   const indicators = document.querySelectorAll('.carousel-indicator');
   const slidesContainer = document.querySelector('.hero-slides');
@@ -587,20 +589,48 @@
   }
 
   function changeSlide(direction) {
+    // Using arrows also stops auto-advance
+    stopAutoAdvance();
     currentSlide += direction;
     showSlide(currentSlide);
   }
 
   function goToSlide(index) {
+    // Clicking indicators stops auto-advance
+    stopAutoAdvance();
     currentSlide = index;
     showSlide(currentSlide);
   }
 
-  // Auto-advance carousel every 8 seconds
-  setInterval(() => {
-    currentSlide++;
-    showSlide(currentSlide);
-  }, 8000);
+  function startAutoAdvance() {
+    if (!isAutoAdvancing) return;
+    
+    autoAdvanceInterval = setInterval(() => {
+      currentSlide++;
+      showSlide(currentSlide);
+    }, 8000);
+  }
+
+  function stopAutoAdvance() {
+    isAutoAdvancing = false;
+    if (autoAdvanceInterval) {
+      clearInterval(autoAdvanceInterval);
+      autoAdvanceInterval = null;
+    }
+    
+    // Optional: Show a visual indicator that auto-advance is stopped
+    console.log('Auto-advance stopped. Manual control active.');
+  }
+
+  // Start auto-advance on page load
+  startAutoAdvance();
+
+  // Optional: Double-click anywhere on the carousel to restart auto-advance
+  document.querySelector('.hero-carousel').addEventListener('dblclick', () => {
+    isAutoAdvancing = true;
+    startAutoAdvance();
+    console.log('Auto-advance restarted.');
+  });
 </script>
 
 <main class="main_container">
