@@ -47,6 +47,12 @@ def press_view(request):
     """
     return render(request, 'press.html')
 
+def privacy_view(request):
+    """
+    Render the privacy policy page.
+    """
+    return render(request, 'privacy.html')
+
 def team_view(request):
     """
     Render the team page with all team members.

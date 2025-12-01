@@ -6,6 +6,7 @@ urlpatterns = [
     path('contact', contact_view, name='contact'),
     path('getstarted', getstarted_view, name='getstarted'),
     path('press', press_view, name='press'),
+    path('privacy', privacy_view, name='privacy'),
     path('services', services_view, name='services'),
     path('about', about_view, name='about'),
     path('team/', team_view, name='team'),
