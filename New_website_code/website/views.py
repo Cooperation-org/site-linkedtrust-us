@@ -181,3 +181,9 @@ def empty_view(request):
     Render the empty template page.
     """
     return render(request, 'empty.html')
+
+def interns_view(request):
+    """
+    Render the internships page.
+    """
+    return render(request, 'interns.html')

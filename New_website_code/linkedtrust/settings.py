@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-h-sr3w1qhe3pbbgl34lz)_au%yt^5gw^8+^jo!^x9lkb-cj+ls')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['linkedtrust.us', 'www.linkedtrust.us', '127.0.0.1']
 
@@ -20,10 +20,13 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'website',
 ]
+
+# Only use whitenoise.runserver_nostatic in production
+if not DEBUG:
+    INSTALLED_APPS.insert(6, 'whitenoise.runserver_nostatic')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -97,17 +100,16 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# WhiteNoise Configuration
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# WhiteNoise Compression and Caching Settings
-WHITENOISE_AUTOREFRESH = True
-WHITENOISE_USE_FINDERS = False
-WHITENOISE_MANIFEST_STRICT = False
-WHITENOISE_ALLOW_ALL_ORIGINS = True
-
-# Maximum age for static files (30 days )
-WHITENOISE_MAX_AGE = 30 * 24 * 60 * 60
+# WhiteNoise Configuration (only for production)
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # WhiteNoise Compression and Caching Settings
+    WHITENOISE_AUTOREFRESH = True
+    WHITENOISE_USE_FINDERS = False
+    WHITENOISE_MANIFEST_STRICT = False
+    WHITENOISE_ALLOW_ALL_ORIGINS = True
+    # Maximum age for static files (30 days )
+    WHITENOISE_MAX_AGE = 30 * 24 * 60 * 60
 
 
 # Default primary key field type

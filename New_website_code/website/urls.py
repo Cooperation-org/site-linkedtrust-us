@@ -12,6 +12,7 @@ urlpatterns = [
     path('team/', team_view, name='team'),
     path('team/member/<int:member_id>/', team_member_detail_view, name='team_member_detail'),
     path('send-request-email/', send_request_email, name='send_request_email'),
+    path('interns', interns_view, name='interns'),
     # TBD views
     path('mission', empty_view, name='mission'),
 ]
