@@ -1,145 +1,274 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Services - LinkedTrust{% endblock %}
 {% block content %}
 
-{% load static %}
 
-{% load static %}
+<div class="hero-banner">
+    <div class="hero-content">
+        <p class="subtitle">Innovation in digital trust and verification</p>
+    </div>
+</div>
 
-<div class="services-container">
-    <div class="services-grid">
-        <div class="service-card">
-            <h2>For Nonprofits</h2>
-            <div class="underline"></div>
-            <ul class="service-list">
-                <li>Add Credible Validations to your Reports</li>
-                <li>Turn Survey Results into Signed Credentials</li>
-                <li>Capture Positive Endorsements from Visitors</li>
-            </ul>
+<div class="case-studies-container">
+    <div class="case-study-card">
+        <div class="case-image">
+            <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=1000&auto=format&fit=crop" alt="Supply Chain Verification">
         </div>
-
-        <div class="service-card">
-            <h2>For Funders</h2>
-            <div class="underline"></div>
-            <ul class="service-list">
-                <li>Request Lightweight Impact Validation from Grantees</li>
-                <li>Parse Reports into Verifiable Claims</li>
-                <li>Capture and Analyze Independent Observations</li>
-            </ul>
+        <div class="case-content">
+            <h2 style="font-weight: bold;">Supply Chain Verification</h2>
+            <p>Digital verification for bills of lading and maritime documentation</p>
+            <div class="service-card">
+                <div class="service-content">
+                    <ul class="service-list">
+                        <li>Digital bills of lading</li>
+                        <li>Maritime documentation (mDocs)</li>
+                        <li>Supply chain credential verification</li>
+                    </ul>
+                    <a href="/contact" class="learn-more">Learn More</a>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <div class="service-card">
-            <h2>For Employers</h2>
-            <div class="underline"></div>
-            <ul class="service-list">
-                <li>Offer Skills Credentials to Employees</li>
-                <li>Validate Volunteer Impacts</li>
-                <li>Filter Resumes by Signed Credentials and Recommendations</li>
-            </ul>
+    <div class="case-study-card">
+
+        <div class="case-image">
+            <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1000&auto=format&fit=crop" alt="ESG Reporting">
         </div>
-
-        <div class="service-card">
-            <h2>General Consulting</h2>
-            <div class="underline"></div>
-            <ul class="service-list">
-                <li>Machine Learning/LLM/RAG Pipelines</li>
-                <li>Verifiable Credentials and Standards Compliance</li>
-                <li>Custom solution development</li>
-            </ul>
+        <div class="case-content">
+            <h2 style="font-weight: bold;">ESG Impact Tracking</h2>
+            <p>Verifiable environmental and social impact reporting</p>
+            <div class="service-card">
+                <div class="service-content">
+                    <ul class="service-list">
+                        <li>Environmental impact metrics</li>
+                        <li>Social responsibility tracking</li>
+                        <li>Governance compliance verification</li>
+                    </ul>
+                    <a href="/contact" class="learn-more">Learn More</a>
+                </div>
+            </div>
         </div>
+    </div>
 
+    <div class="case-study-card">
+        <div class="case-image">
+            <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1000&auto=format&fit=crop" alt="AMURT Case Study">
+        </div>
+        <div class="case-content">
+            <h2 style="font-weight: bold;">Humanitarian Aid Verification</h2>
+            <p>Building trust networks for development initiatives with high confidence rating</p>
+            <div class="service-card">
+                <div class="service-content">
+                    <ul class="service-list">
+                        <li>Multi-stakeholder verification</li>
+                        <li>Impact documentation</li>
+                        <li>Community validation networks</li>
+                    </ul>
+                    <a href="/contact" class="learn-more">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="case-study-card">
+        <div class="case-image">
+            <img src="{% static 'img/opencreds.png' %}" alt="Skills Verification">
+        </div>
+        <div class="case-content">
+            <h2 style="font-weight: bold;">Professional Skills Verification</h2>
+            <p>Document and verify professional development with third-party validations</p>
+            <div class="service-card">
+                <div class="service-content">
+                    <ul class="service-list">
+                        <li>Skills documentation</li>
+                        <li>Peer validation systems</li>
+                        <li>Portable credentials</li>
+                    </ul>
+                    <a href="/contact" class="learn-more">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <div class="services-section" >
+        <h2 style="text-align: center; font-weight: bold;">Free Public Services</h2>
         <div class="service-card">
-            <h2>Free for the Public</h2>
-            <div class="underline"></div>
-            <ul class="service-list">
-                <li>Enter Any Claim and get Verification</li>
-                <li>Share Report with Validations</li>
-                <li>Open Source Libraries</li>
-            </ul>
+            <div class="service-content">
+                <ul class="service-list">
+                    <li>Enter Any Claim and get Verification</li>
+                    <li>Share Report with Validations</li>
+                    <li>Open Source Libraries</li>
+                </ul>
+                <a href="https://live.linkedtrust.us/" class="cta-button">Try Now</a>
+            </div>
         </div>
     </div>
 </div>
 
+
+
 <style>
-.services-container {
+
+
+.hero-banner {
+    background-color: #1a2942;
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+ 
+.hero-content span {
+    color: #00B2E5;
+}
+
+.case-studies-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
 }
 
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    align-items: start;
+.case-study-card {
+    display: flex;
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.case-study-card:hover {
+    transform: translateY(-5px);
+}
+
+.case-image {
+    width: 40%;
+    min-height: 300px;
+    background: #f8f9fa;
+}
+
+.case-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.case-content {
+    padding: 2rem;
+    width: 60%;
 }
 
 .service-card {
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
+    background: white;
+    border-radius: 12px;
     padding: 1.5rem;
-    height: 100%;
-}
-
-.service-card h2 {
-    color: #333;
-    margin: 0 0 0.5rem 0;
-    font-size: 1.25rem;
-    font-weight: 600;
-}
-
-.underline {
-    height: 2px;
-    background: #007bff;
-    width: 60px;
-    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-top: 1rem;
 }
 
 .service-list {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin-bottom: 1.5rem;
 }
 
 .service-list li {
-    margin: 0.75rem 0;
-    padding-left: 1rem;
+    padding-left: 1.5rem;
     position: relative;
-    line-height: 1.4;
+    margin-bottom: 0.75rem;
 }
 
 .service-list li::before {
-    content: "•";
-    color: #007bff;
+    content: "→";
     position: absolute;
     left: 0;
+    color: #00B2E5;
 }
 
-.service-list a {
-    color: #555;
+.service-categories {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.service-category {
+    background: #111827;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.service-category:hover {
+    background-color: #092326;
+}
+
+.service-category h3 {
+    color: #00B2E5;
+    font-weight: 600;
+}
+
+.learn-more {
+    display: inline-block;
+    color: #00B2E5;
     text-decoration: none;
-    transition: color 0.2s ease;
+    margin-top: 1rem;
+    font-weight: 500;
 }
 
-.service-list a:hover {
-    color: #007bff;
+.cta-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #00B2E5;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+.getstarted {
+    height: 90vh;
+    background-color: black;
+    background-image: url('../img/banner_img1.png');
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-size: cover;
+}
+
+.getstarted-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
 @media (max-width: 768px) {
-    .services-container {
-        padding: 1rem;
+    .case-study-card {
+        flex-direction: column;
     }
     
-    .services-grid {
-        gap: 1rem;
+    .case-image,
+    .case-content {
+        width: 100%;
     }
     
-    .service-card {
-        padding: 1.25rem;
+    .service-categories {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .getstarted-row {
+        grid-template-columns: 1fr;
     }
 }
 </style>
-
 
 {% endblock %}
