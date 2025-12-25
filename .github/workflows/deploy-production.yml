@@ -1,0 +1,82 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # Allows manual triggering from GitHub UI
+
+jobs:
+  deploy:
+    name: Deploy to LinkedTrust Production Server
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            set -e  # Exit on error
+            
+            echo "🚀 Starting deployment..."
+            
+            # Navigate to project directory
+            cd /linkedtrust/site-linkedtrust-us
+            
+            # Stash any local changes
+            echo "📦 Stashing local changes..."
+            git stash
+            
+            # Fetch and pull latest code
+            echo "⬇️  Pulling latest code from GitHub..."
+            git fetch origin
+            git pull origin main
+            
+            # Navigate to Django project
+            cd New_website_code
+            
+            # Activate virtual environment and install dependencies
+            echo "📚 Installing dependencies..."
+            source /linkedtrust/site-linkedtrust-us/.venv/bin/activate
+            pip install -r requirements.txt --quiet
+            
+            # Run Django migrations
+            echo "🗄️  Running database migrations..."
+            python manage.py migrate --noinput
+            
+            # Collect static files
+            echo "📁 Collecting static files..."
+            python manage.py collectstatic --noinput
+            
+            # Restart the application
+            echo "🔄 Restarting application..."
+            sudo supervisorctl restart linkedtrust
+            
+            # Wait for service to start
+            sleep 5
+            
+            # Check if service is running
+            echo "✅ Checking service status..."
+            sudo supervisorctl status linkedtrust
+            
+            # Test if application responds
+            echo "🧪 Testing application..."
+            curl -f -s -o /dev/null -w "%{http_code}" http://localhost:8000 || echo "Note: Got expected 400 (Bad Request without Host header)"
+            
+            echo "✨ Deployment completed successfully!"
+            
+      - name: Notify Deployment Status
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ Deployment succeeded!"
+          else
+            echo "❌ Deployment failed!"
+          fi
