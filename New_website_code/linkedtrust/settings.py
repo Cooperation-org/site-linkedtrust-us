@@ -11,7 +11,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-h-sr3w1qhe3pbbgl34lz)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['linkedtrust.us', 'www.linkedtrust.us', '127.0.0.1']
+ALLOWED_HOSTS = ['linkedtrust.us', 'www.linkedtrust.us', '127.0.0.1', 'localhost']
 
 # Application definition
 INSTALLED_APPS = [
