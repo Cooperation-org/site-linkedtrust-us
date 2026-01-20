@@ -34,51 +34,7 @@
 
         <div class="contact-form-section">
 
-<form id="contactForm" onsubmit="submitToGoogleForm(event)" class="contact-form">
-    <div class="form-row">
-        <div class="contact-form-group">
-            <input type="text" name="entry.1868294240" required>
-            <label>Full Name</label>
-        </div>
-        <div class="contact-form-group">
-            <input type="email" name="entry.32965363" required>
-            <label>Your Email</label>
-        </div>
-    </div>
-    <div class="contact-form-group">
-        <input type="text" name="entry.1116434767" required>
-        <label>Subject</label>
-    </div>
-    <div class="contact-form-group">
-        <textarea rows="4" name="entry.751772707" required></textarea>
-        <label>Message</label>
-    </div>
-    <button type="submit" class="contact-send-button">Send Message</button>
-
-    <!-- Hidden iframe for Google Forms submission -->
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-</form>
-
-<script>
-function submitToGoogleForm(e) {
-    e.preventDefault();
-    const form = document.getElementById('contactForm');
-    
-    // Replace with your Google Form URL
-    form.action = "https://docs.google.com/forms/d/e/1FAIpQLSe7RTFJrBjuHifkwA_hldmmlOlzlH0BGnNWZ8LbxDiSCJe5Jg/formResponse";
-    form.method = "post";
-    form.target = "hidden_iframe";
-    
-    // Submit the form
-    form.submit();
-    
-    // Optional: Show success message
-    alert('Thank you! Your message has been sent.');
-    
-    // Optional: Clear the form
-    form.reset();
-}
-</script>
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe7RTFJrBjuHifkwA_hldmmlOlzlH0BGnNWZ8LbxDiSCJe5Jg/viewform?embedded=true" width="100%" height="879" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 
         </div>
     </div>
