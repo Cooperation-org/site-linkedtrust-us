@@ -4,45 +4,56 @@
 {% block content %}
 
 <div class="services-container">
-    <div class="services-intro">
-        <p>Software development and consulting. Global team shares equity and governance: affordable prices, real ownership.</p>
-    </div>
+    <h1 class="services-headline">Global team. Shared equity and governance. Affordable rates.</h1>
 
     <div class="services-grid">
         <div class="service-card">
             <h2>Python / Django / FastAPI</h2>
             <div class="underline"></div>
-            <p>Web apps, APIs, backend systems.</p>
+            <p>Web apps, APIs, backend systems, fullstack.</p>
+            <div class="example-divider"></div>
+            <a href="https://live.linkedtrust.us" class="example-link">live.linkedtrust.us</a>
         </div>
 
         <div class="service-card">
             <h2>MVP</h2>
             <div class="underline"></div>
-            <p>First version, working, deployed. Weeks not months.</p>
+            <p>Working first version. Weeks not months.</p>
+            <div class="example-divider"></div>
+            <a href="https://opencreds.net" class="example-link">opencreds.net</a>
         </div>
 
         <div class="service-card">
             <h2>Agentic AI</h2>
             <div class="underline"></div>
-            <p>Your domain knowledge, automated. Extraction, RAG, LLM in the loop. Context is key.</p>
+            <p>Your domain knowledge, automated. Extraction, RAG, LLM in the loop. Context matters.</p>
+            <div class="example-divider"></div>
+            <a href="https://pypi.org/project/linked-claims-extractor/" class="example-link">linked-claims-extractor</a>
         </div>
 
         <div class="service-card">
             <h2>Verifiable Credentials</h2>
             <div class="underline"></div>
-            <p>W3C standards, ACA-py, production systems. We've written specs and shipped to government.</p>
+            <p>W3C standards, ACA-py, production systems. Spec work and implementation.</p>
+            <div class="example-divider"></div>
+            <a href="https://github.com/hyperledger/aries-cloudagent-python" class="example-link">aries-cloudagent-python</a>
+            <a href="https://identity.foundation/labs-linkedclaims/" class="example-link">LinkedClaims at DIF</a>
         </div>
 
         <div class="service-card">
             <h2>Team Augmentation</h2>
             <div class="underline"></div>
-            <p>Senior devs joining your team. We know how to land on a moving project.</p>
+            <p>Senior devs joining your team. We know how to hit the ground running.</p>
+            <div class="example-divider"></div>
+            <a href="https://www.whatscookin.us/how-to-jump-on-a-moving-project/" class="example-link">How to Jump on a Moving Project</a>
         </div>
 
         <div class="service-card">
             <h2>Equity Sharing Solutions</h2>
             <div class="underline"></div>
-            <p>Fairmint setup, governance docs, contribution tracking. We're structured this way ourselves.</p>
+            <p>Fairmint setup, governance docs, contribution tracking. We run this way ourselves.</p>
+            <div class="example-divider"></div>
+            <a href="https://docs.google.com/presentation/d/19zoJlOcEnPe1HKNckI_iD3pqQYCCMRo8O4SxLwyuArg" class="example-link">Earned Governance in Action</a>
         </div>
     </div>
 
@@ -60,15 +71,11 @@
     padding: 2rem;
 }
 
-.services-intro {
-    margin-bottom: 2rem;
-}
-
-.services-intro p {
+.services-headline {
+    font-size: 1.75rem;
+    font-weight: 600;
     color: #333;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    max-width: 700px;
+    margin: 0 0 2rem 0;
 }
 
 .services-grid {
@@ -83,6 +90,8 @@
     border: 1px solid #e0e0e0;
     padding: 1.5rem;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .service-card h2 {
@@ -103,6 +112,25 @@
     color: #555;
     line-height: 1.5;
     margin: 0;
+    flex-grow: 1;
+}
+
+.example-divider {
+    height: 1px;
+    background: #e0e0e0;
+    margin: 1rem 0;
+}
+
+.example-link {
+    color: #00B2E5;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.example-link:hover {
+    color: #0090b8;
+    text-decoration: underline;
 }
 
 .services-cta {
@@ -134,6 +162,10 @@
 @media (max-width: 600px) {
     .services-container {
         padding: 1rem;
+    }
+
+    .services-headline {
+        font-size: 1.5rem;
     }
 
     .services-grid {
