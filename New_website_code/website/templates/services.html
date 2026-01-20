@@ -3,61 +3,53 @@
 {% block title %}Services - LinkedTrust{% endblock %}
 {% block content %}
 
-{% load static %}
-
-{% load static %}
-
 <div class="services-container">
+    <div class="services-intro">
+        <p>Software development and consulting. Global team shares equity and governance: affordable prices, real ownership.</p>
+    </div>
+
     <div class="services-grid">
         <div class="service-card">
-            <h2>For Nonprofits</h2>
+            <h2>Python / Django / FastAPI</h2>
             <div class="underline"></div>
-            <ul class="service-list">
-                <li>Add Credible Validations to your Reports</li>
-                <li>Turn Survey Results into Signed Credentials</li>
-                <li>Capture Positive Endorsements from Visitors</li>
-            </ul>
+            <p>Web apps, APIs, backend systems.</p>
         </div>
 
         <div class="service-card">
-            <h2>For Funders</h2>
+            <h2>MVP</h2>
             <div class="underline"></div>
-            <ul class="service-list">
-                <li>Request Lightweight Impact Validation from Grantees</li>
-                <li>Parse Reports into Verifiable Claims</li>
-                <li>Capture and Analyze Independent Observations</li>
-            </ul>
+            <p>First version, working, deployed. Weeks not months.</p>
         </div>
 
         <div class="service-card">
-            <h2>For Employers</h2>
+            <h2>Agentic AI</h2>
             <div class="underline"></div>
-            <ul class="service-list">
-                <li>Offer Skills Credentials to Employees</li>
-                <li>Validate Volunteer Impacts</li>
-                <li>Filter Resumes by Signed Credentials and Recommendations</li>
-            </ul>
+            <p>Your domain knowledge, automated. Extraction, RAG, LLM in the loop. Context is key.</p>
         </div>
 
         <div class="service-card">
-            <h2>General Consulting</h2>
+            <h2>Verifiable Credentials</h2>
             <div class="underline"></div>
-            <ul class="service-list">
-                <li>Machine Learning/LLM/RAG Pipelines</li>
-                <li>Verifiable Credentials and Standards Compliance</li>
-                <li>Custom solution development</li>
-            </ul>
+            <p>W3C standards, ACA-py, production systems. We've written specs and shipped to government.</p>
         </div>
 
         <div class="service-card">
-            <h2>Free for the Public</h2>
+            <h2>Team Augmentation</h2>
             <div class="underline"></div>
-            <ul class="service-list">
-                <li>Enter Any Claim and get Verification</li>
-                <li>Share Report with Validations</li>
-                <li>Open Source Libraries</li>
-            </ul>
+            <p>Senior devs joining your team. We know how to land on a moving project.</p>
         </div>
+
+        <div class="service-card">
+            <h2>Equity Sharing Solutions</h2>
+            <div class="underline"></div>
+            <p>Fairmint setup, governance docs, contribution tracking. We're structured this way ourselves.</p>
+        </div>
+    </div>
+
+    <!-- TODO: Add testimonials section here -->
+
+    <div class="services-cta">
+        <a href="/contact" class="cta-button">Get in touch</a>
     </div>
 </div>
 
@@ -68,9 +60,20 @@
     padding: 2rem;
 }
 
+.services-intro {
+    margin-bottom: 2rem;
+}
+
+.services-intro p {
+    color: #333;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 700px;
+}
+
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
     align-items: start;
 }
@@ -91,55 +94,57 @@
 
 .underline {
     height: 2px;
-    background: #007bff;
+    background: #00B2E5;
     width: 60px;
     margin-bottom: 1rem;
 }
 
-.service-list {
-    list-style: none;
-    padding: 0;
+.service-card p {
+    color: #555;
+    line-height: 1.5;
     margin: 0;
 }
 
-.service-list li {
-    margin: 0.75rem 0;
-    padding-left: 1rem;
-    position: relative;
-    line-height: 1.4;
+.services-cta {
+    text-align: center;
+    margin-top: 3rem;
 }
 
-.service-list li::before {
-    content: "•";
-    color: #007bff;
-    position: absolute;
-    left: 0;
-}
-
-.service-list a {
-    color: #555;
+.services-cta .cta-button {
+    display: inline-block;
+    background: #00B2E5;
+    color: #fff;
+    padding: 12px 28px;
     text-decoration: none;
-    transition: color 0.2s ease;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background 0.2s ease;
 }
 
-.service-list a:hover {
-    color: #007bff;
+.services-cta .cta-button:hover {
+    background: #0090b8;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
     .services-container {
         padding: 1rem;
     }
-    
+
     .services-grid {
+        grid-template-columns: 1fr;
         gap: 1rem;
     }
-    
+
     .service-card {
         padding: 1.25rem;
     }
 }
 </style>
-
 
 {% endblock %}
