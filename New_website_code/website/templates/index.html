@@ -1,826 +1,244 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block title %}LinkedTrust — Deep Tech. Human Trust.{% endblock %}
+
 {% block content %}
 
-<style>
-  .hero-section {
-    background-color: black;
-    color: white;
-    padding: 6% 5% 2% 5%;
-    margin: 0;
-    width: 100%;
-    position: relative;
-  }
-
-  .hero-container {
-    max-width: 72rem;
-    margin: 0 auto;
-  }
-
-  /* Carousel wrapper */
-  .hero-carousel {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-slides {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-  }
-
-  .hero-slide {
-    min-width: 100%;
-    flex-shrink: 0;
-  }
-
-  /* Navigation arrows */
-  .carousel-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 178, 229, 0.8);
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s;
-    z-index: 10;
-  }
-
-  .carousel-nav:hover {
-    background-color: rgba(0, 178, 229, 1);
-  }
-
-  .carousel-nav.prev {
-    left: 20px;
-  }
-
-  .carousel-nav.next {
-    right: 20px;
-  }
-
-  /* Carousel indicators */
-  .carousel-indicators {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    z-index: 10;
-  }
-
-  .carousel-indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  .carousel-indicator.active {
-    background-color: #00B2E5;
-  }
-
-  .hero-title {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-
-  .hero-title h1 {
-    font-size: 2.25rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-
-  .hero-title span {
-    color: #00B2E5;
-  }
-
-  .hero-title p {
-    font-size: 1.25rem;
-    color: #9ca3af;
-    max-width: 48rem;
-    margin: 0 auto;
-  }
-
-  .service-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    text-align: center;
-    margin-top: 4rem;
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-
-  @media (min-width: 768px) {
-    .service-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  .service-item {
-    background-color: #111827;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    transition: background-color 0.3s;
-  }
-
-  .service-item:hover {
-    background-color: #092326;
-  }
-
-  .service-item h3 {
-    color: #00B2E5;
-    font-weight: 600;
-  }
-
-  /* Animation for the extracting effect */
-  @keyframes pulse {
-    0% {
-      opacity: 0.4;
-    }
-
-    50% {
-      opacity: 0.8;
-    }
-
-    100% {
-      opacity: 0.4;
-    }
-  }
-
-  .animate-pulse {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-</style>
-
-<div class="hero-section">
-  <div class="hero-container">
-    <div class="hero-carousel">
-      <!-- Navigation arrows -->
-      <button class="carousel-nav prev" onclick="changeSlide(-1)">❮</button>
-      <button class="carousel-nav next" onclick="changeSlide(1)">❯</button>
-      
-      <!-- Carousel indicators -->
-      <div class="carousel-indicators">
-        <span class="carousel-indicator active" onclick="goToSlide(0)"></span>
-        <span class="carousel-indicator" onclick="goToSlide(1)"></span>
-        <span class="carousel-indicator" onclick="goToSlide(2)"></span>
-        <span class="carousel-indicator" onclick="goToSlide(3)"></span>
-        <span class="carousel-indicator" onclick="goToSlide(4)"></span>
-      </div>
-
-      <div class="hero-slides">
-        <!-- Slide 1: Original Business Documents -->
-        <div class="hero-slide">
-          <div class="hero-title">
-            <h1>Transform Business Documents into <span>LinkedClaims</span></h1>
-            <p>Our AI-powered pipeline extracts, validates, and tracks compliance data through independent verification</p>
-          </div>
-
-          <!-- Process Flow SVG -->
-          <svg class="w-full" style="height: 20rem;" viewBox="0 0 800 240">
-            <!-- Document Group -->
-            <g transform="translate(50,40)">
-              <text x="80" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">Raw Documents</text>
-              <rect x="0" y="0" width="160" height="120" rx="4" fill="#1e293b" />
-              <rect x="20" y="20" width="100" height="10" rx="2" fill="#475569" />
-              <rect x="20" y="40" width="120" height="10" rx="2" fill="#475569" />
-              <rect x="20" y="60" width="80" height="10" rx="2" fill="#475569" />
-              <rect class="animate-pulse" x="20" y="80" width="90" height="10" rx="2" fill="#00B2E5" opacity="0.6" />
-            </g>
-
-            <!-- First Arrow with AI label -->
-            <g transform="translate(220,100)">
-              <path d="M 0,0 L 80,0" stroke="#00B2E5" stroke-width="2" marker-end="url(#arrowhead)" />
-              <text x="40" y="-10" fill="#00B2E5" text-anchor="middle" font-size="12">AI Extraction</text>
-            </g>
-
-            <!-- Structured Claims in center -->
-            <g transform="translate(320,40)">
-              <text x="100" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">Structured Claims</text>
-              <rect x="0" y="0" width="200" height="120" rx="8" fill="#1e293b" />
-
-              <!-- Claim items -->
-              <g transform="translate(20,20)">
-                <circle cx="15" cy="15" r="8" fill="#00B2E5" opacity="0.8" />
-                <rect x="35" y="10" width="120" height="10" rx="2" fill="#475569" />
-              </g>
-              <g transform="translate(20,50)">
-                <circle cx="15" cy="15" r="8" fill="#00B2E5" opacity="0.8" />
-                <rect x="35" y="10" width="120" height="10" rx="2" fill="#475569" />
-              </g>
-              <g transform="translate(20,80)">
-                <circle cx="15" cy="15" r="8" fill="#00B2E5" opacity="0.8" />
-                <rect x="35" y="10" width="120" height="10" rx="2" fill="#475569" />
-              </g>
-            </g>
-
-            <!-- Validation Process -->
-            <g transform="translate(320,170)">
-              <rect x="0" y="0" width="200" height="60" rx="4" fill="#0f172a" />
-              <text x="100" y="35" fill="#cbd5e1" text-anchor="middle" font-size="12">Stakeholder Validation</text>
-              <path d="M 100,-10 L 100,0" stroke="#00B2E5" stroke-width="2" />
-            </g>
-
-            <!-- Second Arrow -->
-            <g transform="translate(530,100)">
-              <path d="M 0,0 L 80,0" stroke="#00B2E5" stroke-width="2" marker-end="url(#arrowhead)" />
-              <text x="40" y="-10" fill="#00B2E5" text-anchor="middle" font-size="12">Verification</text>
-            </g>
-
-            <!-- Trust Graph on right -->
-            <g transform="translate(620,40)">
-              <text x="80" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">Web of Trust</text>
-              <rect x="0" y="0" width="160" height="120" rx="8" fill="#1e293b" />
-
-              <!-- Graph nodes and edges -->
-              <circle cx="40" cy="40" r="15" fill="#00B2E5" opacity="0.8" />
-              <circle cx="120" cy="60" r="15" fill="#00B2E5" opacity="0.8" />
-              <circle cx="50" cy="90" r="15" fill="#00B2E5" opacity="0.8" />
-              <circle cx="100" cy="100" r="15" fill="#00B2E5" opacity="0.8" />
-
-              <path d="M 40,40 L 120,60" stroke="#00B2E5" stroke-width="2" opacity="0.6" />
-              <path d="M 50,90 L 100,100" stroke="#00B2E5" stroke-width="2" opacity="0.6" />
-              <path d="M 120,60 L 100,100" stroke="#00B2E5" stroke-width="2" opacity="0.6" />
-            </g>
-
-            <!-- Arrow Marker Definition -->
-            <defs>
-              <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                <polygon points="0 0, 10 3.5, 0 7" fill="#00B2E5" />
-              </marker>
-            </defs>
-          </svg>
+<!-- HERO: split layout — text left, featured trust badge right -->
+<section class="hero">
+    <div class="hero-text">
+        <h1>Deep tech.<br><span class="gradient-text">Human trust.</span></h1>
+        <p>We build verified trust systems, civic tech platforms, and AI-powered tools for organizations that care about doing things right. Real projects, real impact, all verifiable on our own platform.</p>
+        <div class="hero-ctas">
+            <a href="{% url 'work_list' %}" class="btn btn-gradient">See Our Work</a>
+            <a href="{% url 'contact' %}" class="btn btn-outline">Schedule a Call</a>
         </div>
-
-        <!-- Slide 2: Skills Credentials -->
-        <div class="hero-slide">
-          <div class="hero-title">
-            <h1>Build Your Professional <span>Skills Portfolio</span></h1>
-            <p>Create verifiable credentials for your skills, get them endorsed by peers, and showcase them on your resume</p>
-          </div>
-
-          <!-- Skills Credentials Flow SVG -->
-          <svg class="w-full" style="height: 20rem;" viewBox="0 0 800 240">
-            <!-- Self Issue -->
-            <g transform="translate(50,60)">
-              <text x="80" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">Self Issue</text>
-              <rect x="0" y="0" width="160" height="100" rx="8" fill="#1e293b" />
-              <!-- Person icon -->
-              <circle cx="80" cy="35" r="15" fill="#00B2E5" opacity="0.8" />
-              <path d="M 65,55 Q 80,50 95,55 L 95,75 L 65,75 Z" fill="#00B2E5" opacity="0.8" />
-              <text x="80" y="95" fill="#9ca3af" text-anchor="middle" font-size="11">Create Credential</text>
-            </g>
-
-            <!-- First Arrow -->
-            <g transform="translate(220,110)">
-              <path d="M 0,0 L 80,0" stroke="#00B2E5" stroke-width="2" marker-end="url(#arrowhead2)" />
-            </g>
-
-            <!-- Ask for Endorsement -->
-            <g transform="translate(320,60)">
-              <text x="100" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">Request Endorsements</text>
-              <rect x="0" y="0" width="200" height="100" rx="8" fill="#1e293b" />
-              <!-- Multiple people -->
-              <circle cx="60" cy="40" r="12" fill="#00B2E5" opacity="0.6" />
-              <circle cx="100" cy="40" r="12" fill="#00B2E5" opacity="0.6" />
-              <circle cx="140" cy="40" r="12" fill="#00B2E5" opacity="0.6" />
-              <!-- Checkmarks -->
-              <path d="M 55,40 L 58,43 L 65,36" stroke="white" stroke-width="2" fill="none" />
-              <path d="M 95,40 L 98,43 L 105,36" stroke="white" stroke-width="2" fill="none" />
-              <path d="M 135,40 L 138,43 L 145,36" stroke="white" stroke-width="2" fill="none" />
-              <text x="100" y="85" fill="#9ca3af" text-anchor="middle" font-size="11">Peer Validation</text>
-            </g>
-
-            <!-- Second Arrow -->
-            <g transform="translate(530,110)">
-              <path d="M 0,0 L 80,0" stroke="#00B2E5" stroke-width="2" marker-end="url(#arrowhead2)" />
-            </g>
-
-            <!-- Add to Resume -->
-            <g transform="translate(620,60)">
-              <text x="80" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">Verified Resume</text>
-              <rect x="0" y="0" width="160" height="100" rx="8" fill="#1e293b" />
-              <!-- Document with badge -->
-              <rect x="40" y="25" width="80" height="60" rx="2" fill="#475569" />
-              <rect x="50" y="35" width="60" height="5" rx="1" fill="#9ca3af" />
-              <rect x="50" y="45" width="60" height="3" rx="1" fill="#9ca3af" />
-              <rect x="50" y="52" width="40" height="3" rx="1" fill="#9ca3af" />
-              <!-- Verified badge -->
-              <circle cx="100" cy="65" r="15" fill="#00B2E5" />
-              <path d="M 92,65 L 97,70 L 108,59" stroke="white" stroke-width="3" fill="none" />
-            </g>
-
-            <!-- Arrow Marker Definition -->
-            <defs>
-              <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                <polygon points="0 0, 10 3.5, 0 7" fill="#00B2E5" />
-              </marker>
-            </defs>
-          </svg>
-        </div>
-
-        <!-- Slide 3: Achievement Badges -->
-        <div class="hero-slide">
-          <div class="hero-title">
-            <h1>Recognize Excellence with <span>Achievement Badges</span></h1>
-            <p>Organizations issue verifiable badges for volunteer work, accomplishments, and professional achievements</p>
-          </div>
-
-          <!-- Achievement Badges Flow SVG -->
-          <svg class="w-full" style="height: 20rem;" viewBox="0 0 800 240">
-            <!-- Organization -->
-            <g transform="translate(50,60)">
-              <text x="80" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">Organization</text>
-              <rect x="0" y="0" width="160" height="100" rx="8" fill="#1e293b" />
-              <!-- Building icon -->
-              <rect x="50" y="30" width="60" height="50" rx="2" fill="#00B2E5" opacity="0.8" />
-              <rect x="60" y="40" width="10" height="10" rx="1" fill="#1e293b" />
-              <rect x="80" y="40" width="10" height="10" rx="1" fill="#1e293b" />
-              <rect x="60" y="60" width="10" height="10" rx="1" fill="#1e293b" />
-              <rect x="80" y="60" width="10" height="10" rx="1" fill="#1e293b" />
-              <rect x="70" y="70" width="20" height="10" fill="#1e293b" />
-            </g>
-
-            <!-- Issues Badge Arrow -->
-            <g transform="translate(220,110)">
-              <path d="M 0,0 L 80,0" stroke="#00B2E5" stroke-width="2" marker-end="url(#arrowhead3)" />
-              <text x="40" y="-10" fill="#00B2E5" text-anchor="middle" font-size="12">Issues Badge</text>
-            </g>
-
-            <!-- Badge Display -->
-            <g transform="translate(320,60)">
-              <text x="100" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">Achievement Badge</text>
-              <rect x="0" y="0" width="200" height="100" rx="8" fill="#1e293b" />
-              <!-- Hexagon badge -->
-              <g transform="translate(100,50)">
-                <path d="M -30,0 L -15,-26 L 15,-26 L 30,0 L 15,26 L -15,26 Z" fill="#00B2E5" />
-                <text y="5" fill="white" text-anchor="middle" font-size="10" font-weight="bold">VERIFIED</text>
-              </g>
-              <text x="100" y="95" fill="#9ca3af" text-anchor="middle" font-size="11">Volunteer Excellence</text>
-            </g>
-
-            <!-- To Employee Arrow -->
-            <g transform="translate(530,110)">
-              <path d="M 0,0 L 80,0" stroke="#00B2E5" stroke-width="2" marker-end="url(#arrowhead3)" />
-              <text x="40" y="-10" fill="#00B2E5" text-anchor="middle" font-size="12">Awards To</text>
-            </g>
-
-            <!-- Employee/Recipient -->
-            <g transform="translate(620,60)">
-              <text x="80" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">Badge Holder</text>
-              <rect x="0" y="0" width="160" height="100" rx="8" fill="#1e293b" />
-              <!-- Person with badge -->
-              <circle cx="80" cy="35" r="15" fill="#475569" />
-              <path d="M 65,55 Q 80,50 95,55 L 95,75 L 65,75 Z" fill="#475569" />
-              <!-- Small badge on person -->
-              <g transform="translate(105,25)">
-                <path d="M -8,0 L -4,-7 L 4,-7 L 8,0 L 4,7 L -4,7 Z" fill="#00B2E5" />
-                <circle cx="0" cy="0" r="3" fill="white" />
-              </g>
-              <text x="80" y="95" fill="#9ca3af" text-anchor="middle" font-size="11">Portable Credential</text>
-            </g>
-
-            <!-- Arrow Marker Definition -->
-            <defs>
-              <marker id="arrowhead3" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                <polygon points="0 0, 10 3.5, 0 7" fill="#00B2E5" />
-              </marker>
-            </defs>
-          </svg>
-        </div>
-
-        <!-- Slide 4: Earned Equity and Governance -->
-        <div class="hero-slide">
-          <div class="hero-title">
-            <h1>Distribute <span>Equity & Governance</span> Fairly</h1>
-            <p>Use Fairmint to grant tokenized equity to co-founders based on peer-reviewed contributions</p>
-          </div>
-
-          <!-- Earned Equity Flow SVG -->
-          <svg class="w-full" style="height: 20rem;" viewBox="0 0 800 240">
-            <!-- Peer Review -->
-            <g transform="translate(50,60)">
-              <text x="80" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">Peer Review</text>
-              <rect x="0" y="0" width="160" height="100" rx="8" fill="#1e293b" />
-              <!-- Task checklist -->
-              <rect x="30" y="25" width="100" height="60" rx="2" fill="#475569" />
-              <circle cx="45" cy="40" r="5" fill="#00B2E5" />
-              <path d="M 42,40 L 44,42 L 48,38" stroke="white" stroke-width="2" fill="none" />
-              <rect x="60" y="37" width="60" height="6" rx="1" fill="#9ca3af" />
-              <circle cx="45" cy="55" r="5" fill="#00B2E5" />
-              <path d="M 42,55 L 44,57 L 48,53" stroke="white" stroke-width="2" fill="none" />
-              <rect x="60" y="52" width="60" height="6" rx="1" fill="#9ca3af" />
-              <circle cx="45" cy="70" r="5" fill="#00B2E5" />
-              <rect x="60" y="67" width="60" height="6" rx="1" fill="#9ca3af" />
-            </g>
-
-            <!-- Arrow to Fairmint -->
-            <g transform="translate(220,110)">
-              <path d="M 0,0 L 80,0" stroke="#00B2E5" stroke-width="2" marker-end="url(#arrowhead4)" />
-              <text x="40" y="-10" fill="#00B2E5" text-anchor="middle" font-size="12">Validated Work</text>
-            </g>
-
-            <!-- Fairmint Integration -->
-            <g transform="translate(320,60)">
-              <text x="100" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">Fairmint Platform</text>
-              <rect x="0" y="0" width="200" height="100" rx="8" fill="#1e293b" />
-              <!-- Token symbol -->
-              <circle cx="100" cy="50" r="25" fill="#00B2E5" opacity="0.8" />
-              <text x="100" y="45" fill="white" text-anchor="middle" font-size="16" font-weight="bold">$COOK</text>
-              <text x="100" y="60" fill="white" text-anchor="middle" font-size="10">EQUITY TOKEN</text>
-              <text x="100" y="85" fill="#9ca3af" text-anchor="middle" font-size="11">Automated Distribution</text>
-            </g>
-
-            <!-- Arrow to Co-founders -->
-            <g transform="translate(530,110)">
-              <path d="M 0,0 L 80,0" stroke="#00B2E5" stroke-width="2" marker-end="url(#arrowhead4)" />
-              <text x="40" y="-10" fill="#00B2E5" text-anchor="middle" font-size="12">Grants Equity</text>
-            </g>
-
-            <!-- Co-founders -->
-            <g transform="translate(620,60)">
-              <text x="80" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">Co-founders</text>
-              <rect x="0" y="0" width="160" height="100" rx="8" fill="#1e293b" />
-              <!-- Multiple people with tokens -->
-              <g transform="translate(30,30)">
-                <circle cx="0" cy="0" r="10" fill="#475569" />
-                <circle cx="0" cy="-20" r="8" fill="#00B2E5" opacity="0.8" />
-                <text x="0" y="-19" fill="white" text-anchor="middle" font-size="8">25%</text>
-              </g>
-              <g transform="translate(80,30)">
-                <circle cx="0" cy="0" r="10" fill="#475569" />
-                <circle cx="0" cy="-20" r="8" fill="#00B2E5" opacity="0.8" />
-                <text x="0" y="-19" fill="white" text-anchor="middle" font-size="8">35%</text>
-              </g>
-              <g transform="translate(130,30)">
-                <circle cx="0" cy="0" r="10" fill="#475569" />
-                <circle cx="0" cy="-20" r="8" fill="#00B2E5" opacity="0.8" />
-                <text x="0" y="-19" fill="white" text-anchor="middle" font-size="8">40%</text>
-              </g>
-              <text x="80" y="85" fill="#9ca3af" text-anchor="middle" font-size="11">Governance Rights</text>
-            </g>
-
-            <!-- Arrow Marker Definition -->
-            <defs>
-              <marker id="arrowhead4" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                <polygon points="0 0, 10 3.5, 0 7" fill="#00B2E5" />
-              </marker>
-            </defs>
-          </svg>
-        </div>
-
-        <!-- Slide 5: AI as Team Mentor -->
-        <div class="hero-slide">
-          <div class="hero-title">
-            <h1>AI-Powered <span>Team Alignment</span></h1>
-            <p>Wire up your favorite LLM into team channels to drive alignment according to your own best practices</p>
-          </div>
-
-          <!-- AI Mentor Flow SVG -->
-          <svg class="w-full" style="height: 20rem;" viewBox="0 0 800 240">
-            <!-- Best Practices -->
-            <g transform="translate(50,60)">
-              <text x="80" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">Best Practices</text>
-              <rect x="0" y="0" width="160" height="100" rx="8" fill="#1e293b" />
-              <!-- Document stack -->
-              <rect x="40" y="25" width="80" height="10" rx="2" fill="#475569" />
-              <text x="80" y="32" fill="#9ca3af" text-anchor="middle" font-size="8">Team Mission</text>
-              <rect x="40" y="40" width="80" height="10" rx="2" fill="#475569" />
-              <text x="80" y="47" fill="#9ca3af" text-anchor="middle" font-size="8">Templates</text>
-              <rect x="40" y="55" width="80" height="10" rx="2" fill="#475569" />
-              <text x="80" y="62" fill="#9ca3af" text-anchor="middle" font-size="8">Guidelines</text>
-              <rect x="40" y="70" width="80" height="10" rx="2" fill="#00B2E5" opacity="0.8" />
-              <text x="80" y="77" fill="white" text-anchor="middle" font-size="8">Workflows</text>
-            </g>
-
-            <!-- Arrow to AI Hub -->
-            <g transform="translate(220,110)">
-              <path d="M 0,0 L 80,0" stroke="#00B2E5" stroke-width="2" marker-end="url(#arrowhead5)" />
-              <text x="40" y="-10" fill="#00B2E5" text-anchor="middle" font-size="12">Load to ChromaDB</text>
-            </g>
-
-            <!-- AI Hub -->
-            <g transform="translate(320,60)">
-              <text x="100" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">AI Hub</text>
-              <rect x="0" y="0" width="200" height="100" rx="8" fill="#1e293b" />
-              <!-- AI Brain icon -->
-              <circle cx="100" cy="50" r="30" fill="#00B2E5" opacity="0.2" />
-              <circle cx="100" cy="50" r="25" fill="#00B2E5" opacity="0.4" />
-              <circle cx="100" cy="50" r="20" fill="#00B2E5" opacity="0.6" />
-              <circle cx="100" cy="50" r="15" fill="#00B2E5" opacity="0.8" />
-              <text x="100" y="54" fill="white" text-anchor="middle" font-size="12" font-weight="bold">AI</text>
-              <text x="100" y="85" fill="#9ca3af" text-anchor="middle" font-size="11">Context-Aware LLM</text>
-            </g>
-
-            <!-- Arrow to Team Channels -->
-            <g transform="translate(530,110)">
-              <path d="M 0,0 L 80,0" stroke="#00B2E5" stroke-width="2" marker-end="url(#arrowhead5)" />
-              <text x="40" y="-10" fill="#00B2E5" text-anchor="middle" font-size="12">Engages In</text>
-            </g>
-
-            <!-- Team Channels -->
-            <g transform="translate(620,60)">
-              <text x="80" y="-10" fill="#cbd5e1" text-anchor="middle" class="text-sm">Team Channels</text>
-              <rect x="0" y="0" width="160" height="100" rx="8" fill="#1e293b" />
-              <!-- Chat bubbles -->
-              <rect x="20" y="25" width="70" height="15" rx="7" fill="#475569" />
-              <text x="55" y="35" fill="#9ca3af" text-anchor="middle" font-size="9">Slack</text>
-              <rect x="70" y="45" width="70" height="15" rx="7" fill="#00B2E5" opacity="0.8" />
-              <text x="105" y="55" fill="white" text-anchor="middle" font-size="9">AI: Best practice...</text>
-              <rect x="20" y="65" width="70" height="15" rx="7" fill="#475569" />
-              <text x="55" y="75" fill="#9ca3af" text-anchor="middle" font-size="9">Discord</text>
-            </g>
-
-            <!-- Arrow Marker Definition -->
-            <defs>
-              <marker id="arrowhead5" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                <polygon points="0 0, 10 3.5, 0 7" fill="#00B2E5" />
-              </marker>
-            </defs>
-          </svg>
-        </div>
-      </div>
     </div>
 
-    <!-- Service Areas Grid -->
-    <div class="service-grid">
-      <a href="/services" class="service-item">
-        <h3>Supply Chain</h3>
-      </a>
-      <a href="/services" class="service-item">
-        <h3>ESG</h3>
-      </a>
-      <a href="/services" class="service-item">
-        <h3>Philanthropy</h3>
-      </a>
-      <a href="/services" class="service-item">
-        <h3>Skills Credentialing</h3>
-      </a>
-    </div>
-  </div>
-</div>
-
-<script>
-  let currentSlide = 0;
-  let autoAdvanceInterval = null;
-  let isAutoAdvancing = true;
-  const slides = document.querySelectorAll('.hero-slide');
-  const indicators = document.querySelectorAll('.carousel-indicator');
-  const slidesContainer = document.querySelector('.hero-slides');
-
-  function showSlide(index) {
-    if (index >= slides.length) currentSlide = 0;
-    if (index < 0) currentSlide = slides.length - 1;
-    
-    slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
-    
-    indicators.forEach(ind => ind.classList.remove('active'));
-    indicators[currentSlide].classList.add('active');
-  }
-
-  function changeSlide(direction) {
-    // Using arrows also stops auto-advance
-    stopAutoAdvance();
-    currentSlide += direction;
-    showSlide(currentSlide);
-  }
-
-  function goToSlide(index) {
-    // Clicking indicators stops auto-advance
-    stopAutoAdvance();
-    currentSlide = index;
-    showSlide(currentSlide);
-  }
-
-  function startAutoAdvance() {
-    if (!isAutoAdvancing) return;
-    
-    autoAdvanceInterval = setInterval(() => {
-      currentSlide++;
-      showSlide(currentSlide);
-    }, 8000);
-  }
-
-  function stopAutoAdvance() {
-    isAutoAdvancing = false;
-    if (autoAdvanceInterval) {
-      clearInterval(autoAdvanceInterval);
-      autoAdvanceInterval = null;
-    }
-    
-    // Optional: Show a visual indicator that auto-advance is stopped
-    console.log('Auto-advance stopped. Manual control active.');
-  }
-
-  // Start auto-advance on page load
-  startAutoAdvance();
-
-  // Optional: Double-click anywhere on the carousel to restart auto-advance
-  document.querySelector('.hero-carousel').addEventListener('dblclick', () => {
-    isAutoAdvancing = true;
-    startAutoAdvance();
-    console.log('Auto-advance restarted.');
-  });
-</script>
-
-<main class="main_container">
-  <div class="Getstarted-container" id="Getstarted-container" style="padding-top:15px">
-    <h3>Try it <span class="highlight">Out.</span></h3>
-  </div>
-  <section class="getstarted">
-    <div class="getstarted-row">
-      <div class="getstarted-holder">
-        <div class="get-started-card">
-          <div class="get-started-image">
-            <img src="{% static 'img/linkedtrust-app.png' %}" alt="Use the app">
-          </div>
-          <div class="get-started-details">
-            <div class="get-started-text">
-              <H4>Have Something to Share?</H4>
-              <p>Make a Claim</p>
-              <p>Ask for Validation</p>
-              <p>Share the Report</p>
-            </div>
-            <a href="https://live.linkedtrust.us/login" class="cta-button">Login Now</a>
-          </div>
-        </div>
-      </div>
-      <div class="getstarted-holder">
-        <div class="get-started-card">
-          <div class="get-started-image">
-            <img src="{% static 'img/investigate.png' %}" alt="investigate">
-          </div>
-          <div class="get-started-details">
-            <div class="get-started-text">
-              <h4>Investigating?</h4>
-              <p>Search</p>
-              <p>View a Report</p>
-              <p>Dig Into the Graph</p>
-            </div>
-            <a href="https://live.linkedtrust.us/" class="cta-button">Live App</a>
-          </div>
-        </div>
-      </div>
-      <div class="getstarted-holder">
-        <div class="get-started-card">
-          <div class="get-started-image">
-            <img src="{% static 'img/opencreds.png' %}" alt="OpenCreds.net">
-          </div>
-          <div class="get-started-details">
-            <div class="get-started-text">
-              <h4>Accomplish Something?</h4>
-              <p>Describe a Skill</p>
-              <p>Ask for Recommendations</p>
-              <p>Share Your Credential</a>
-            </div>
-            <a href="https://opencreds.net" class="cta-button">OpenCreds</a>
-          </div>
-        </div>
-      </div>
-
-      <!--
-        <div class="getstarted-holder">
-            <div class="get-started-card">
-                <div class="get-started-image">
-                    <img src="{% static 'img/Media.png' %}" alt="">
-                </div>
-                <div class="get-started-details">
-                    <div class="get-started-text">
-                        <h4>Research Assistant: TrustClip</h4>
-                        <p>Install the Bookmarklet</p>
-                        <p>Highlight Text</p>
-                        <p>See Instructions</p>
+    <!-- Featured trust badge — above the fold, show-not-tell -->
+    <div class="hero-badge">
+        {% if featured_testimonials %}
+            {% with t=featured_testimonials.0 %}
+                {% if t.linked_claim_id %}
+                    <linked-badge claim-id="{{ t.linked_claim_id }}" theme="dark"></linked-badge>
+                {% else %}
+                    <div class="hero-badge-video">
+                        <div class="play-btn"></div>
                     </div>
-                    <a href="https://opencreds.net" class="cta-button">Drag Me To The Bar</a>
+                    <div class="badge-content">
+                        <div class="badge-header">
+                            <span class="verified-icon"></span>
+                            <span class="badge-label">Verified Testimonial</span>
+                        </div>
+                        <p class="badge-quote">"{{ t.quote_text }}"</p>
+                        <div class="badge-meta">
+                            <div>
+                                <div class="badge-author">{{ t.person_name }}</div>
+                                <div class="badge-org">{{ t.person_title }}</div>
+                            </div>
+                            <a href="https://live.linkedtrust.us" class="badge-link" target="_blank">View on trust graph &rarr;</a>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endwith %}
+        {% else %}
+            <!-- Placeholder until testimonials are added -->
+            <div class="hero-badge-video">
+                <div class="play-btn"></div>
+            </div>
+            <div class="badge-content">
+                <div class="badge-header">
+                    <span class="verified-icon"></span>
+                    <span class="badge-label">Verified Testimonial</span>
+                </div>
+                <p class="badge-quote">"LinkedTrust helped us build systems where trust is earned, verified, and visible."</p>
+                <div class="badge-meta">
+                    <div>
+                        <div class="badge-author">Our Clients</div>
+                        <div class="badge-org">Verified on LinkedTrust</div>
+                    </div>
+                    <a href="https://live.linkedtrust.us" class="badge-link" target="_blank">View trust graph &rarr;</a>
                 </div>
             </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- MORE BADGES — secondary testimonials below hero -->
+{% if featured_testimonials.count > 1 %}
+<section class="more-badges">
+    {% for t in featured_testimonials %}
+        {% if not forloop.first %}
+            {% if t.linked_claim_id %}
+                <linked-badge claim-id="{{ t.linked_claim_id }}" theme="light" compact></linked-badge>
+            {% else %}
+                <div class="mini-badge">
+                    <div class="badge-header">
+                        <span class="verified-icon"></span>
+                        <span class="badge-label">Verified</span>
+                    </div>
+                    <p class="badge-quote">"{{ t.quote_text }}"</p>
+                    <div class="badge-meta">
+                        <div>
+                            <div class="badge-author">{{ t.person_name }}</div>
+                            <div class="badge-org">{{ t.person_title }}</div>
+                        </div>
+                        {% if t.linked_claim_id %}
+                            <a href="https://live.linkedtrust.us/claims/{{ t.linked_claim_id }}" class="badge-link" target="_blank">Trust graph &rarr;</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</section>
+{% endif %}
+
+<!-- GRADIENT BAR — visual separator -->
+<div class="gradient-bar"></div>
+
+<!-- SERVICES -->
+<section class="services-section">
+    <div class="section-label mono">// services</div>
+    <h2 class="section-title">What we build</h2>
+    <div class="services-grid">
+        {% for service in services %}
+        <a href="{% url 'service_detail' service.slug %}" class="service-card">
+            {% if service.icon %}<div class="service-icon">{{ service.icon }}</div>{% endif %}
+            <h3>{{ service.title }}</h3>
+            <p>{{ service.short_description }}</p>
+        </a>
+        {% empty %}
+        <!-- Default services until admin populates them -->
+        <div class="service-card">
+            <div class="service-icon">&#9881;</div>
+            <h3>Baremetal Migration</h3>
+            <p>Move off Amazon. Save money. 128GB bare metal infrastructure.</p>
         </div>
--->
-      <div class="getstarted-holder">
-        <div class="get-started-card">
-          <div class="get-started-image">
-            <img src="{% static 'img/devs.png' %}" alt="Developers">
-          </div>
-          <div class="get-started-details">
-            <div class="get-started-text">
-              <h4>For Developers</h4>
-              <p><a class="nodec" href="https://live.linkedtrust.us/api/docs/">Send Claims via API</a></p>
-              <p><a class="nodec" href="https://www.npmjs.com/package/@cooperation/vc-storage">Store
-                  Credentials to Google Drive</a></p>
-              <p><a class="nodec" href="https://pypi.org/project/linked-claims-extractor/">Use LLM to
-                  Extract Claims</a></p>
+        <div class="service-card">
+            <div class="service-icon">&#129302;</div>
+            <h3>AI Integration</h3>
+            <p>Add RAG search, document extraction, or agentic AI to your existing systems.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">&#127891;</div>
+            <h3>Credentials &amp; Badges</h3>
+            <p>Issue verifiable credentials to employees, volunteers, and partners. Open Badges v3.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">&#128640;</div>
+            <h3>MVP Development</h3>
+            <p>Full-stack prototypes in weeks, not months. React, Django, Next.js, FastAPI.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- PORTFOLIO — dark tech showcase section -->
+<section class="portfolio-dark">
+    <div class="container">
+        <div class="section-label mono">// portfolio</div>
+        <h2 class="section-title">Selected work</h2>
+        <div class="portfolio-grid">
+            {% for project in featured_projects %}
+            <a href="{% url 'work_detail' project.slug %}" class="project-card">
+                <div class="project-thumb" {% if project.thumbnail_image %}style="background:#1a1d27;"{% else %}style="background: linear-gradient(135deg, rgba(0,178,229,0.15), rgba(102,126,234,0.15));"{% endif %}>
+                    {% if project.thumbnail_image %}
+                        <img src="{{ project.thumbnail_image.url }}" alt="{{ project.title }}">
+                    {% endif %}
+                </div>
+                <div class="project-body">
+                    <div class="project-client">{{ project.client_name }}</div>
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.short_description }}</p>
+                    <div class="tech-tags">
+                        {% for tag in project.get_tech_list %}
+                        <span class="tech-tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+            <!-- Placeholder projects until admin populates -->
+            <div class="project-card">
+                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(0,178,229,0.15), rgba(102,126,234,0.15));">&#128200;</div>
+                <div class="project-body">
+                    <div class="project-client">Rising LLC</div>
+                    <h3>StreetWell</h3>
+                    <p>Double-entry bookkeeping for construction cooperatives.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                    </div>
+                </div>
             </div>
-            <a href="https://github.com/Cooperation-org" class="cta-button">Github</a>
-          </div>
+            <div class="project-card">
+                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(102,126,234,0.15), rgba(147,51,234,0.15));">&#127758;</div>
+                <div class="project-body">
+                    <div class="project-client">Ben Armentrout</div>
+                    <h3>AZ-Sunshine</h3>
+                    <p>Political transparency tool for Arizona elections.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">React</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(0,178,229,0.15));">&#129302;</div>
+                <div class="project-body">
+                    <div class="project-client">AZ Tender Hands</div>
+                    <h3>Accentrics</h3>
+                    <p>AI-powered automation for home health care.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">Claude AI</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(234,179,8,0.15), rgba(239,68,68,0.1));">&#128218;</div>
+                <div class="project-body">
+                    <div class="project-client">George Polisner</div>
+                    <h3>CivicSky</h3>
+                    <p>Ghost CMS to Bluesky bridge with civic action cards.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Next.js</span>
+                        <span class="tech-tag">ATProto</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="trusted-by-section">
-    <h2 class="trusted-by-title">Trusted by</h2>
-    <div class="trusted-logo-grid">
-      <div class="trusted-logo-container">
-        <img class="trusted-logo" src="{% static 'img/un.png' %} " alt="United Nations" />
-      </div>
-      <div class="trusted-logo-container">
-        <img class="trusted-logo" src="{% static 'img/DIF.png' %} " alt="DIF" />
-      </div>
-      <div class="trusted-logo-container">
-        <img class="trusted-logo" src="{% static 'img/Human Protocal.png' %} " alt="HUMAN Protocol" />
-      </div>
-      <div class="trusted-logo-container">
-        <img class="trusted-logo" src="{% static 'img/candid.png' %} " alt="Candid" />
-      </div>
-      <div class="trusted-logo-container">
-        <img class="trusted-logo" src="{% static 'img/nlnet.png' %} " alt="NLnet" />
-      </div>
-      <div class="trusted-logo-container">
-        <img class="trusted-logo" src="{% static 'img/BRITISH.png' %} " alt="British Columbia" />
-      </div>
-      <div class="trusted-logo-container">
-        <img class="trusted-logo" src="{% static 'img/aAries.png' %} " alt="Hyperledger ARIES" />
-      </div>
-      <div class="trusted-logo-container">
-        <img class="trusted-logo" src="{% static 'img/bloom.png' %} " alt="Bloomberg BETA" />
-      </div>
-      <div class="trusted-logo-container">
-        <img class="trusted-logo" src="{% static 'img/bluesky_logo.png' %} " alt="Bluesky" />
-      </div>
-      <div class="trusted-logo-container">
-        <img class="trusted-logo" src="{% static 'img/fairmint.png' %} " alt="Fairmint" />
-      </div>
-      <div class="trusted-logo-container">
-        <img class="trusted-logo" src="{% static 'img/labs.png' %} " alt="3 LABS" />
-      </div>
-      <div class="trusted-logo-container">
-        <img class="trusted-logo" src="{% static 'img/mandate.png' %} " alt="Mandate Democracy" />
-      </div>
-      <div class="trusted-logo-container">
-        <img class="trusted-logo" src="{% static 'img/intuit.png' %} " alt="Intuit" />
-      </div>
-    </div>
-  </section>
-
-
-  <section class="white-paper">
-    <div class="white-paper-text">
-      <h3>A WHITE PAPER from RWOT XI: The hague</h3>
-      <h4>Composing Credentials via LinkedClaims and Cryptographic Binding</h4>
-      <p>by Philip D. Long(T3 Innovation Network, Georgetown University & ASU), Dmitri Zagidulin (MIT Digital
-        Credentials Consortium) & Golda Velez (LinkedTrust)</p>
-      <a href="https://github.com/WebOfTrustInfo/rwot11-the-hague/blob/master/final-documents/composable-credentials.pdf"
-        target="_blank" class="full_paper_button">Full Paper</a>
-    </div>
-    <div class="white-paper-image">
-      <img src="{% static 'img/rwot-logo.png' %}" class="img-fluid" alt="White Paper Image">
-    </div>
-  </section>
-
-
-  <section>
-    <div class="Getstarted-section">
-      <div class="Getstarted-container">
-        <h3>Linked Trust In <br><span class="highlight">Action.</span></h3>
-        <p>Learn more about us and how we work.</p>
-        <a href="/about" class="Getstarted-btn">About Us</a>
-
-
-      </div>
-      <div class="Getstarted-video-container">
-        <div class="Getstarted-video-wrapper">
-
-          <div class="box-play-icon">
-            <i class="fa-solid fa-play" id="play-icon"></i>
-          </div>
-
-
+        <div class="view-all">
+            <a href="{% url 'work_list' %}">View all projects &rarr;</a>
         </div>
-      </div>
     </div>
+</section>
 
-
-    <div class="video-modal" id="videoModal">
-      <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        <div class="video-container">
-          <iframe id="videoFrame" src="https://www.youtube.com/embed/L5uARHb0-mA" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
-        </div>
-      </div>
+<!-- TRUSTED BY -->
+<section class="trusted-section">
+    <div class="trusted-label">Trusted by &amp; built with</div>
+    <div class="logo-grid">
+        {% comment %}Replace with actual logo images from static/img/ {% endcomment %}
+        <span>United Nations</span>
+        <span>DIF</span>
+        <span>NLnet</span>
+        <span>Candid</span>
+        <span>Human Protocol</span>
+        <span>Bloomberg BETA</span>
+        <span>Hyperledger</span>
+        <span>Bluesky</span>
+        <span>BC Gov</span>
     </div>
-  </section>
-</main>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+    <h2>Ready to build something real?</h2>
+    <p>Free 30-minute call. We listen first, then tell you what we can do.</p>
+    <a href="{% url 'contact' %}" class="btn btn-white">Schedule a Call</a>
+</section>
+
 {% endblock %}

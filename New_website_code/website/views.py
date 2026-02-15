@@ -4,7 +4,7 @@ from django.core.mail import EmailMessage
 from django.views.decorators.csrf import csrf_protect
 from django.conf import settings
 from django.views.decorators.http import require_http_methods
-from .models import TeamMember
+from .models import TeamMember, PortfolioProject, CaseStudy, Testimonial, ServicePackage
 import json
 import logging
 
@@ -13,9 +13,15 @@ logger = logging.getLogger(__name__)
 
 def home_view(request):
     """
-    Render the home page with banner.
+    Render the home page: hero + trust badges + featured work + services + trusted by.
     """
-    return render(request, 'index.html', {'show_banner': True})
+    context = {
+        'featured_projects': PortfolioProject.objects.filter(featured=True)[:4],
+        'featured_testimonials': Testimonial.objects.filter(featured=True)[:3],
+        'services': ServicePackage.objects.filter(is_active=True)[:4],
+        'show_banner': True,
+    }
+    return render(request, 'index.html', context)
 
 def about_view(request):
     """
@@ -25,9 +31,12 @@ def about_view(request):
 
 def services_view(request):
     """
-    Render the services page.
+    Render the services overview page with all active service packages.
     """
-    return render(request, 'services.html')
+    context = {
+        'services': ServicePackage.objects.filter(is_active=True),
+    }
+    return render(request, 'services.html', context)
 
 def getstarted_view(request):
     """
@@ -187,3 +196,51 @@ def interns_view(request):
     Render the internships page.
     """
     return render(request, 'interns.html')
+
+
+# --- New portfolio & service views ---
+
+def work_list_view(request):
+    """Portfolio grid — all projects, optionally filtered by category."""
+    category = request.GET.get('category')
+    projects = PortfolioProject.objects.all()
+    if category:
+        projects = projects.filter(category=category)
+    context = {
+        'projects': projects,
+        'categories': PortfolioProject.CATEGORY_CHOICES,
+        'active_category': category,
+    }
+    return render(request, 'work_list.html', context)
+
+
+def work_detail_view(request, slug):
+    """Individual project detail page — the deep link you hand to a prospect."""
+    project = get_object_or_404(PortfolioProject, slug=slug)
+    context = {
+        'project': project,
+        'testimonials': project.testimonials.all(),
+        'case_study': getattr(project, 'case_study', None),
+    }
+    return render(request, 'work_detail.html', context)
+
+
+def case_study_view(request, slug):
+    """Case study for a project — Problem → Solution → Result."""
+    project = get_object_or_404(PortfolioProject, slug=slug)
+    case_study = get_object_or_404(CaseStudy, project=project)
+    context = {
+        'project': project,
+        'case_study': case_study,
+    }
+    return render(request, 'case_study.html', context)
+
+
+def service_detail_view(request, slug):
+    """Individual service detail page — deep link for a specific offering."""
+    service = get_object_or_404(ServicePackage, slug=slug, is_active=True)
+    context = {
+        'service': service,
+        'example_projects': service.example_projects.all(),
+    }
+    return render(request, 'service_detail.html', context)

@@ -11,7 +11,13 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-h-sr3w1qhe3pbbgl34lz)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['linkedtrust.us', 'www.linkedtrust.us', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['linkedtrust.us', 'www.linkedtrust.us', 'demos.linkedtrust.us', '127.0.0.1', 'localhost']
+
+# When proxied under a subdir (e.g. demos.linkedtrust.us/site-dev/)
+# set SCRIPT_NAME=/site-dev to fix URL generation
+FORCE_SCRIPT_NAME = config('SCRIPT_NAME', default=None)
+if FORCE_SCRIPT_NAME == '':
+    FORCE_SCRIPT_NAME = None
 
 # Application definition
 INSTALLED_APPS = [
@@ -59,11 +65,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'linkedtrust.wsgi.application'
 
-# Database
+# Database — shared PostgreSQL instance, namespaced by environment
+# Set DJANGO_ENV=prod to use linkedtrust_site_prod
+DJANGO_ENV = config('DJANGO_ENV', default='dev')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': f'linkedtrust_site_{DJANGO_ENV}',
+        'USER': config('PG_USER', default='cobox'),
+        'PASSWORD': config('PG_PASSWORD', default=''),
+        'HOST': config('PG_HOST', default='10.0.0.100'),
+        'PORT': config('PG_PORT', default='5432'),
     }
 }
 
@@ -90,14 +103,16 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
+# Static URL — prefixed when behind subdir proxy
+_script = FORCE_SCRIPT_NAME or ''
+STATIC_URL = f'{_script}/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Media files
-MEDIA_URL = '/media/'
+MEDIA_URL = f'{_script}/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # WhiteNoise Configuration (only for production)

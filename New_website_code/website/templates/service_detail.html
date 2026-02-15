@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ service.title }} — LinkedTrust Services{% endblock %}
+
+{% block content %}
+
+<section class="container service-detail-hero">
+    <div class="section-label mono">// services</div>
+    {% if service.icon %}<div style="font-size:2.5rem;margin-bottom:1rem;">{{ service.icon }}</div>{% endif %}
+    <h1>{{ service.title }}</h1>
+    <p class="description">{{ service.short_description }}</p>
+    {% if service.price_range %}
+    <p class="mono" style="color:var(--brand-primary);font-weight:600;margin-top:0.5rem;">{{ service.price_range }}</p>
+    {% endif %}
+</section>
+
+{% if service.full_description %}
+<section class="container service-detail-content">
+    {{ service.full_description|linebreaks }}
+</section>
+{% endif %}
+
+{% if example_projects %}
+<div class="gradient-bar"></div>
+<section class="portfolio-dark">
+    <div class="container">
+        <div class="section-label mono">// related work</div>
+        <h2 class="section-title">Projects using this service</h2>
+        <div class="portfolio-grid">
+            {% for project in example_projects %}
+            <a href="{% url 'work_detail' project.slug %}" class="project-card">
+                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(0,178,229,0.15), rgba(102,126,234,0.15));">
+                    {% if project.thumbnail_image %}
+                        <img src="{{ project.thumbnail_image.url }}" alt="{{ project.title }}">
+                    {% endif %}
+                </div>
+                <div class="project-body">
+                    <div class="project-client">{{ project.client_name }}</div>
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.short_description }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="cta-banner">
+    <h2>Interested in {{ service.title|lower }}?</h2>
+    <p>Let's talk about what you need.</p>
+    <a href="{% url 'contact' %}" class="btn btn-white">Schedule a Call</a>
+</section>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Work — LinkedTrust{% endblock %}
+
+{% block content %}
+
+<section class="container" style="padding-top:3rem;padding-bottom:1rem;">
+    <div class="section-label mono">// portfolio</div>
+    <h1 class="section-title">Our Work</h1>
+    <p style="color:var(--text-secondary);max-width:600px;margin-bottom:2rem;">
+        Real projects for real organizations. From civic transparency to AI automation, each project is a deep-linkable story.
+    </p>
+
+    <div class="filter-tabs">
+        <a href="{% url 'work_list' %}" class="filter-tab {% if not active_category %}active{% endif %}">All</a>
+        {% for value, label in categories %}
+        <a href="{% url 'work_list' %}?category={{ value }}" class="filter-tab {% if active_category == value %}active{% endif %}">{{ label }}</a>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="container portfolio-light" style="padding-bottom:4rem;">
+    <div class="portfolio-grid">
+        {% for project in projects %}
+        <a href="{% url 'work_detail' project.slug %}" class="project-card">
+            <div class="project-thumb" {% if project.thumbnail_image %}style="background:var(--bg-primary);"{% else %}style="background: linear-gradient(135deg, rgba(0,178,229,0.1), rgba(102,126,234,0.1));"{% endif %}>
+                {% if project.thumbnail_image %}
+                    <img src="{{ project.thumbnail_image.url }}" alt="{{ project.title }}">
+                {% endif %}
+            </div>
+            <div class="project-body">
+                <div class="project-client">{{ project.client_name }}</div>
+                <h3>{{ project.title }}</h3>
+                <p>{{ project.short_description }}</p>
+                <div class="tech-tags">
+                    {% for tag in project.get_tech_list %}
+                    <span class="tech-tag">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </a>
+        {% empty %}
+        <p style="color:var(--text-muted);grid-column:1/-1;">Projects coming soon. Check back or <a href="{% url 'contact' %}" style="color:var(--brand-primary);">get in touch</a>.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="cta-banner">
+    <h2>Have a project in mind?</h2>
+    <p>Let's talk about what you need.</p>
+    <a href="{% url 'contact' %}" class="btn btn-white">Schedule a Call</a>
+</section>
+
+{% endblock %}

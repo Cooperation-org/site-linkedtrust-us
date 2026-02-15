@@ -1,27 +1,230 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Team - LinkedTrust{% endblock %}
+
+{% block title %}Team — LinkedTrust{% endblock %}
+
+{% block extra_css %}
+<style>
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+.team-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+.team-card:hover {
+    border-color: var(--brand-primary);
+    box-shadow: var(--shadow-md);
+}
+.team-card-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+.team-card-body {
+    padding: 1.25rem;
+}
+.team-card-body h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+.team-card-body .team-title {
+    font-size: 0.8rem;
+    color: var(--brand-primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.team-card-body p {
+    font-size: 0.83rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Modal styling for new design */
+.teammodal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    padding: 2rem;
+    overflow-y: auto;
+}
+.teammodal-content {
+    max-width: 700px;
+    margin: 3rem auto;
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+}
+.teammodal .close {
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    z-index: 10;
+    line-height: 1;
+    background: var(--bg-white);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.teammodal-body {
+    display: flex;
+    gap: 0;
+}
+.teammodal-image {
+    width: 280px;
+    flex-shrink: 0;
+}
+.teammodal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.teammodal-info {
+    padding: 2rem;
+    flex: 1;
+}
+.teammodal-info h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+.teammodal-info h3 {
+    font-size: 0.9rem;
+    color: var(--brand-primary);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+.teammodal-info p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+.rate-badge {
+    margin-bottom: 1.5rem;
+}
+.teammodal-badge {
+    display: inline-block;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+    color: var(--brand-primary);
+}
+.rate-unit {
+    font-weight: 400;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+.request-teammate-container {
+    margin-top: 1rem;
+}
+.request-form-wrapper {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-end;
+}
+.email-input-wrapper {
+    flex: 1;
+}
+.email-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+.email-input {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.email-input:focus {
+    border-color: var(--brand-primary);
+}
+.request-service-btn {
+    background: var(--gradient);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: inherit;
+}
+.request-service-btn:hover { opacity: 0.9; }
+.success-message {
+    color: var(--success);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 1rem 0;
+}
+
+@media (max-width: 768px) {
+    .teammodal-body { flex-direction: column; }
+    .teammodal-image { width: 100%; height: 240px; }
+    .team-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+}
+</style>
+{% endblock %}
+
 {% block content %}
-<!-- Banner Section -->
-<section class="about_banner">
-    <h3>Our Team</h3>
+
+<section class="container" style="padding-top:3rem;">
+    <div class="section-label mono">// team</div>
+    <h1 class="section-title">Our Team</h1>
+    <p style="color:var(--text-secondary);max-width:600px;margin-bottom:2.5rem;">
+        Builders across four continents. Everyone ships code. Shared equity, shared purpose.
+    </p>
 </section>
 
-<!-- Team Grid -->
-<section class="team-container">
-    {% for member in team_members %}
-    <div class="team-member">
-        {% if member.image %}
-        <img src="{{ member.image.url }}" alt="{{ member.name }}" class="profile-image">
-        {% else %}
-        <img src="{% static 'img/default-profile.png' %}" alt="{{ member.name }}" class="profile-image">
-        {% endif %}
-        <h2 class="name">{{ member.name }}</h2>
-        <h3 class="title">{{ member.title }}</h3>
-        <p class="description" data-full-description="{{ member.description }}">{{ member.truncated_description }}</p>
-        <button type="button" class="read-more" data-member-id="{{ member.id }}">Read More</button>
+<section class="container" style="padding-top:0;padding-bottom:3rem;">
+    <div class="team-grid">
+        {% for member in team_members %}
+        <div class="team-card" data-member-id="{{ member.id }}">
+            {% if member.image %}
+            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="team-card-image">
+            {% else %}
+            <div class="team-card-image" style="background:linear-gradient(135deg, rgba(0,178,229,0.1), rgba(102,126,234,0.1));"></div>
+            {% endif %}
+            <div class="team-card-body">
+                <h3>{{ member.name }}</h3>
+                <div class="team-title">{{ member.title }}</div>
+                <p>{{ member.truncated_description }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p style="color:var(--text-muted);grid-column:1/-1;">Team profiles coming soon.</p>
+        {% endfor %}
     </div>
-    {% endfor %}
 </section>
 
 <!-- Team Modal -->
@@ -60,4 +263,47 @@
     </div>
 </div>
 
+<section class="cta-banner">
+    <h2>Want to join the team?</h2>
+    <p>We're always looking for builders who care about trust and craft.</p>
+    <a href="{% url 'contact' %}" class="btn btn-white">Get in Touch</a>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Make team cards clickable (replaces old read-more buttons)
+document.querySelectorAll('.team-card[data-member-id]').forEach(card => {
+    card.addEventListener('click', function() {
+        const btn = document.createElement('button');
+        btn.classList.add('read-more');
+        btn.setAttribute('data-member-id', this.dataset.memberId);
+        btn.click = function() {};
+        // Trigger the existing modal logic
+        const memberId = this.dataset.memberId;
+        const teamModal = document.getElementById('teamModal');
+        if (!teamModal) return;
+
+        fetch(`/team/member/${memberId}/`)
+            .then(r => r.json())
+            .then(data => {
+                const img = document.getElementById('modalImage');
+                if (img) { img.src = data.image_url; img.alt = data.name; }
+                const n = document.getElementById('modalName');
+                if (n) n.textContent = data.name;
+                const t = document.getElementById('modalTitle');
+                if (t) t.textContent = data.title;
+                const d = document.getElementById('modalDescription');
+                if (d) d.textContent = data.description;
+                const r2 = document.getElementById('modalRate');
+                if (r2) r2.textContent = `$${Math.floor(data.hourly_rate)}`;
+                teamModal.setAttribute('data-current-member', memberId);
+                teamModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            })
+            .catch(err => console.error('Error:', err));
+    });
+});
+</script>
 {% endblock %}

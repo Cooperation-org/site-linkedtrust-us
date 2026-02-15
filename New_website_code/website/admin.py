@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.utils.html import format_html
-from django.db.models import Avg, Sum  # Add Sum here
+from django.db.models import Avg, Sum
 from django.utils import timezone
 from datetime import timedelta
-from .models import TeamMember
+from .models import TeamMember, PortfolioProject, CaseStudy, Testimonial, ServicePackage
 
 class LinkedtrustAdminSite(AdminSite):
     site_header = 'Linkedtrust Administration'
@@ -71,5 +71,76 @@ class TeamMemberAdmin(admin.ModelAdmin):
         queryset.update(hourly_rate=0)
     reset_hourly_rate.short_description = "Reset hourly rate to 0"
 
+# --- PortfolioProject ---
+class CaseStudyInline(admin.StackedInline):
+    model = CaseStudy
+    extra = 0
+
+class TestimonialInline(admin.TabularInline):
+    model = Testimonial
+    extra = 0
+    fields = ['person_name', 'person_title', 'quote_text', 'linked_claim_id', 'featured']
+
+class PortfolioProjectAdmin(admin.ModelAdmin):
+    list_display = ['title', 'client_name', 'category', 'featured', 'sort_order', 'display_thumb']
+    list_filter = ['category', 'featured']
+    list_editable = ['featured', 'sort_order']
+    search_fields = ['title', 'client_name', 'short_description', 'tech_tags']
+    prepopulated_fields = {'slug': ('title',)}
+    inlines = [CaseStudyInline, TestimonialInline]
+
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'slug', 'client_name', 'category', 'featured', 'sort_order')
+        }),
+        ('Content', {
+            'fields': ('short_description', 'full_description', 'tech_tags')
+        }),
+        ('Images', {
+            'fields': ('hero_image', 'thumbnail_image')
+        }),
+        ('Links', {
+            'fields': ('demo_url', 'repo_url')
+        }),
+    )
+
+    def display_thumb(self, obj):
+        if obj.thumbnail_image:
+            return format_html('<img src="{}" width="60" height="40" style="border-radius:4px;object-fit:cover;" />', obj.thumbnail_image.url)
+        return "—"
+    display_thumb.short_description = 'Thumbnail'
+
+
+# --- CaseStudy ---
+class CaseStudyAdmin(admin.ModelAdmin):
+    list_display = ['title', 'project', 'featured', 'sort_order']
+    list_filter = ['featured']
+    list_editable = ['featured', 'sort_order']
+    search_fields = ['title', 'problem_text', 'solution_text', 'result_text']
+    prepopulated_fields = {'slug': ('title',)}
+
+
+# --- Testimonial ---
+class TestimonialAdmin(admin.ModelAdmin):
+    list_display = ['person_name', 'person_title', 'project', 'linked_claim_id', 'has_video', 'featured', 'sort_order']
+    list_filter = ['featured', 'has_video']
+    list_editable = ['featured', 'sort_order']
+    search_fields = ['person_name', 'quote_text']
+
+
+# --- ServicePackage ---
+class ServicePackageAdmin(admin.ModelAdmin):
+    list_display = ['title', 'price_range', 'is_active', 'sort_order']
+    list_filter = ['is_active']
+    list_editable = ['is_active', 'sort_order']
+    search_fields = ['title', 'short_description']
+    prepopulated_fields = {'slug': ('title',)}
+    filter_horizontal = ['example_projects']
+
+
 # Register with custom admin site
 admin_site.register(TeamMember, TeamMemberAdmin)
+admin_site.register(PortfolioProject, PortfolioProjectAdmin)
+admin_site.register(CaseStudy, CaseStudyAdmin)
+admin_site.register(Testimonial, TestimonialAdmin)
+admin_site.register(ServicePackage, ServicePackageAdmin)

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} — LinkedTrust{% endblock %}
+
+{% block content %}
+
+<section class="container project-detail-hero">
+    <div class="project-client">{{ project.client_name }}</div>
+    <h1>{{ project.title }}</h1>
+    <p class="description">{{ project.short_description }}</p>
+
+    <div class="project-links">
+        {% if project.demo_url %}
+        <a href="{{ project.demo_url }}" class="btn btn-gradient" target="_blank" rel="noopener">Live Demo</a>
+        {% endif %}
+        {% if project.repo_url %}
+        <a href="{{ project.repo_url }}" class="btn btn-outline" target="_blank" rel="noopener">Source Code</a>
+        {% endif %}
+    </div>
+
+    <div class="tech-tags" style="margin-bottom:2rem;">
+        {% for tag in project.get_tech_list %}
+        <span class="tech-tag" style="background:var(--bg-primary);color:var(--text-muted);padding:0.3rem 0.75rem;font-size:0.75rem;">{{ tag }}</span>
+        {% endfor %}
+    </div>
+
+    {% if project.hero_image %}
+    <div class="project-hero-image">
+        <img src="{{ project.hero_image.url }}" alt="{{ project.title }}">
+    </div>
+    {% endif %}
+</section>
+
+{% if project.full_description %}
+<section class="container project-detail-content">
+    <h2>About This Project</h2>
+    {{ project.full_description|linebreaks }}
+</section>
+{% endif %}
+
+{% if case_study %}
+<div class="gradient-bar"></div>
+<section class="container case-study-section">
+    <div class="section-label mono">// case study</div>
+
+    <h2>The Problem</h2>
+    {{ case_study.problem_text|linebreaks }}
+
+    <h2>Our Solution</h2>
+    {{ case_study.solution_text|linebreaks }}
+
+    <h2>The Result</h2>
+    {{ case_study.result_text|linebreaks }}
+
+    {% if case_study.metrics %}
+    <div style="margin-top:1.5rem;">
+        {% for key, value in case_study.metrics.items %}
+        <div class="metric">
+            <div class="metric-value">{{ value }}</div>
+            <div class="metric-label">{{ key }}</div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if case_study.client_quote %}
+    <div class="client-quote">
+        <blockquote>"{{ case_study.client_quote }}"</blockquote>
+        <cite>— {{ case_study.client_name }}{% if case_study.client_title %}, {{ case_study.client_title }}{% endif %}</cite>
+    </div>
+    {% endif %}
+</section>
+{% endif %}
+
+{% if testimonials %}
+<section class="container" style="padding:2rem 2rem 3rem;">
+    <div class="section-label mono">// testimonials</div>
+    <h2 class="section-title" style="margin-bottom:1.5rem;">What they say</h2>
+    <div class="more-badges" style="padding:0;">
+        {% for t in testimonials %}
+            {% if t.linked_claim_id %}
+                <linked-badge claim-id="{{ t.linked_claim_id }}" theme="light" compact></linked-badge>
+            {% else %}
+                <div class="mini-badge">
+                    <div class="badge-header">
+                        <span class="verified-icon"></span>
+                        <span class="badge-label">Verified</span>
+                    </div>
+                    <p class="badge-quote">"{{ t.quote_text }}"</p>
+                    <div class="badge-meta">
+                        <div>
+                            <div class="badge-author">{{ t.person_name }}</div>
+                            <div class="badge-org">{{ t.person_title }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<section class="cta-banner">
+    <h2>Want something like this?</h2>
+    <p>Let's talk about your project.</p>
+    <a href="{% url 'contact' %}" class="btn btn-white">Schedule a Call</a>
+</section>
+
+{% endblock %}
