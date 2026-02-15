@@ -116,6 +116,19 @@ python3 manage.py seed_portfolio --clear  # Clear and re-seed
 4. Set up gunicorn + systemd service
 5. Point linkedtrust.us DNS/nginx at the new site
 
+## Landing Pages (Future — Not Yet Built)
+Golda wants dedicated landing pages with unique sub-branding:
+- `/unblocked` — "Is your dev team running in 19 directions?"
+- `/co-create` — Cooperative development pitch
+- Other campaign/audience-specific pages
+
+**Architecture decision**: The base template frame (nav + footer) should be **thin** so landing pages
+can inject their own branding (colors, hero imagery, messaging) while keeping the main menu.
+Use `{% block brand_css %}` or similar to let each landing page override the color palette.
+Each landing page should feel like its own microsite but share the nav.
+Some landing pages may get their own domain names (e.g. unblocked.dev, co-create.co) —
+Django ALLOWED_HOSTS and nginx will need to handle multiple domains pointing at the same app.
+
 ## Design Gallery
 Static mockups at `/var/www/html/site-gallery/` (demos.linkedtrust.us/site-gallery/)
 Current direction: Option C "Tech Meets Human" — light base with dark tech sections.
