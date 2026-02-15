@@ -33,7 +33,7 @@ sudo apt install python3 python3-venv python3-pip nginx supervisor git
 ```bash
 cd /linkedtrust
 git clone [repository-url] site-linkedtrust-us
-cd site-linkedtrust-us/New_website_code
+cd site-linkedtrust-us
 ```
 
 2. Set up virtual environment:
@@ -53,8 +53,8 @@ pip install gunicorn honcho whitenoise django-livereload-server
 
 1. Create necessary directories:
 ```bash
-mkdir -p /linkedtrust/site-linkedtrust-us/New_website_code/static
-mkdir -p /linkedtrust/site-linkedtrust-us/New_website_code/media
+mkdir -p /linkedtrust/site-linkedtrust-us/static
+mkdir -p /linkedtrust/site-linkedtrust-us/media
 ```
 
 2. Set up environment variables:
@@ -84,7 +84,7 @@ Configure Supervisor:
 sudo tee /etc/supervisor/conf.d/linkedtrust.conf << EOL
 [program:linkedtrust]
 command=gunicorn linkedtrust.wsgi:application --workers=3 --bind 0.0.0.0:8000
-directory=/linkedtrust/site-linkedtrust-us/New_website_code
+directory=/linkedtrust/site-linkedtrust-us
 user=root
 autostart=true
 autorestart=true
@@ -110,12 +110,12 @@ server {
     }
 
     location /static/ {
-        alias /linkedtrust/site-linkedtrust-us/New_website_code/static/;
+        alias /linkedtrust/site-linkedtrust-us/static/;
         expires 30d;
     }
 
     location /media/ {
-        alias /linkedtrust/site-linkedtrust-us/New_website_code/media/;
+        alias /linkedtrust/site-linkedtrust-us/media/;
         expires 30d;
     }
 
@@ -202,8 +202,8 @@ sudo systemctl restart nginx
 
 3. Permission issues:
 ```bash
-sudo chown -R www-data:www-data /linkedtrust/site-linkedtrust-us/New_website_code/static
-sudo chown -R www-data:www-data /linkedtrust/site-linkedtrust-us/New_website_code/media
+sudo chown -R www-data:www-data /linkedtrust/site-linkedtrust-us/static
+sudo chown -R www-data:www-data /linkedtrust/site-linkedtrust-us/media
 ```
 
 
@@ -239,10 +239,10 @@ sudo supervisorctl status
 
 ### Important Paths
 
-- Project directory: `/linkedtrust/site-linkedtrust-us/New_website_code`
+- Project directory: `/linkedtrust/site-linkedtrust-us`
 - Virtual environment: `/linkedtrust/site-linkedtrust-us/.venv`
-- Static files: `/linkedtrust/site-linkedtrust-us/New_website_code/static`
-- Media files: `/linkedtrust/site-linkedtrust-us/New_website_code/media`
+- Static files: `/linkedtrust/site-linkedtrust-us/static`
+- Media files: `/linkedtrust/site-linkedtrust-us/media`
 - Logs: `/var/log/supervisor/linkedtrust.log`
 
 Server Key: [Vault Key](https://vault.whatscookin.us/app/passwords/view/6f63a442-d3aa-400d-b730-d2c42480c086)

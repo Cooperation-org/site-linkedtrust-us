@@ -6,16 +6,16 @@ The site showcases LinkedTrust's services, portfolio of real projects, and verif
 
 ## Quick Start
 ```bash
-cd /opt/shared/repos/site-linkedtrust-us/New_website_code
+cd /opt/shared/repos/site-linkedtrust-us
 python3 manage.py runserver 0.0.0.0:8000
 ```
 Admin: http://localhost:8000/admin/ (admin/admin123)
 
-### Serve under demos.linkedtrust.us/site-dev/
+### Serve under demos.linkedtrust.us/newsite/
 ```bash
-SCRIPT_NAME=/site-dev python3 manage.py runserver 0.0.0.0:8001
+SCRIPT_NAME=/newsite python3 manage.py runserver 0.0.0.0:8010
 ```
-nginx is already configured to proxy `/site-dev/` to port 8001.
+nginx is configured to proxy `/newsite/` to port 8010.
 
 ## Architecture
 
