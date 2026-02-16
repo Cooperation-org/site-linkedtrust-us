@@ -4,91 +4,19 @@
 
 {% block extra_css %}
 <style>
-/* Cohort announcement banner */
-.cohort-banner {
-    background: var(--gradient);
-    border-radius: var(--radius-lg);
-    padding: 2.5rem;
-    margin-bottom: 3rem;
-    color: #fff;
-    position: relative;
-    overflow: hidden;
-}
-.cohort-banner h2 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-.cohort-badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.2);
-    padding: 0.4rem 1rem;
-    border-radius: 100px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    border: 1px solid rgba(255,255,255,0.3);
-}
-.cohort-details {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-.cohort-detail {
-    background: rgba(255,255,255,0.15);
-    padding: 1rem;
-    border-radius: var(--radius);
-    border: 1px solid rgba(255,255,255,0.2);
-}
-.cohort-detail strong {
-    display: block;
-    margin-bottom: 0.2rem;
-}
-.cohort-tracks {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-.cohort-track {
-    background: rgba(255,255,255,0.15);
-    padding: 1.25rem;
-    border-radius: var(--radius);
-    text-align: center;
-    border: 1px solid rgba(255,255,255,0.2);
-}
-.cohort-track strong {
-    display: block;
+/* Next cohort teaser at top */
+.cohort-teaser {
+    margin-bottom: 2.5rem;
     font-size: 1.1rem;
-    margin-bottom: 0.25rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
 }
-.cohort-track span {
-    font-size: 0.9rem;
-    opacity: 0.9;
-}
-.cohort-cta {
-    text-align: center;
-    margin-top: 1.5rem;
-}
-.apply-button {
-    display: inline-block;
-    background: #fff;
+.cohort-teaser a {
     color: var(--brand-primary);
-    padding: 0.85rem 2rem;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 1rem;
+    font-weight: 600;
 }
-.apply-button:hover {
-    opacity: 0.9;
-}
-.cohort-note {
-    margin-top: 0.75rem;
-    font-size: 0.9rem;
-    opacity: 0.9;
-    font-style: italic;
+.cohort-teaser a:hover {
+    color: var(--brand-dark);
 }
 
 /* Intro bar */
@@ -209,21 +137,112 @@
     color: var(--text-primary);
 }
 
+/* Cohort detail section (bottom) */
+.cohort-section {
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+}
+.cohort-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    border-top: 4px solid var(--brand-primary);
+}
+.cohort-card:hover {
+    border-color: var(--brand-primary);
+}
+.cohort-card h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
+.cohort-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.cohort-detail {
+    background: var(--bg-primary);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+.cohort-detail strong {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+.cohort-detail span {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.cohort-tracks-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.75rem;
+}
+.cohort-tracks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.cohort-track {
+    background: var(--bg-primary);
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+.cohort-track strong {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.15rem;
+}
+.cohort-track span {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+.cohort-apply {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+.cohort-apply .btn-gradient {
+    padding: 0.75rem 2rem;
+}
+.cohort-apply-note {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-    .cohort-banner { padding: 1.75rem; }
-    .cohort-banner h2 { font-size: 1.5rem; }
-    .cohort-details { grid-template-columns: 1fr; }
-    .cohort-tracks { grid-template-columns: 1fr; }
     .intern-section-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
     .intern-section-header h2 { font-size: 1.4rem; }
     .intern-content-card { padding: 1.5rem; }
+    .cohort-card { padding: 1.5rem; }
+    .cohort-details { grid-template-columns: 1fr; }
+    .cohort-tracks { grid-template-columns: 1fr; }
+    .cohort-apply { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width: 480px) {
-    .cohort-banner { padding: 1.25rem; }
-    .cohort-banner h2 { font-size: 1.3rem; }
     .intern-content-card { padding: 1.25rem; }
     .intern-content-card h3 { font-size: 1.1rem; }
+    .cohort-card { padding: 1.25rem; }
 }
 </style>
 {% endblock %}
@@ -234,39 +253,7 @@
     <div class="section-label mono">// internships</div>
     <h1 class="section-title">Internships at LinkedTrust</h1>
 
-    <!-- Cohort announcement -->
-    <div class="cohort-banner">
-        <div style="text-align:center;"><span class="cohort-badge">Now Accepting Applications</span></div>
-        <h2>Internship Cohort</h2>
-        <div class="cohort-details">
-            <div class="cohort-detail">
-                <strong>Duration:</strong> 1-3 months
-            </div>
-            <div class="cohort-detail">
-                <strong>Time Commitment:</strong> ~10 hours/week
-            </div>
-            <div class="cohort-detail">
-                <strong>Format:</strong> Remote, async-friendly
-            </div>
-        </div>
-        <h3 style="font-size:1.25rem;text-align:center;margin-bottom:1rem;">Tracks</h3>
-        <div class="cohort-tracks">
-            <div class="cohort-track">
-                <strong>Technical</strong>
-                <span>Frontend / Backend / QA / DevOps</span>
-            </div>
-            <div class="cohort-track">
-                <strong>Non-Technical</strong>
-                <span>Marketing / Sales &amp; Partnerships</span>
-            </div>
-        </div>
-        <div class="cohort-cta">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfE242xfEABf6KF1dIYcazumV6N-UF32krxkyCc2K7vT99X9g/viewform"
-               target="_blank" rel="noopener noreferrer"
-               class="apply-button">Apply Here</a>
-            <p class="cohort-note">Selected applicants will be contacted for a short interview.</p>
-        </div>
-    </div>
+    <p class="cohort-teaser">Next cohort beginning in March. <a href="#apply">Details &amp; application &darr;</a></p>
 
     <!-- Intro -->
     <div class="interns-intro-bar">
@@ -386,10 +373,51 @@
             </ul>
         </div>
     </div>
+
+    <!-- Cohort details at bottom -->
+    <div class="cohort-section" id="apply">
+        <div class="intern-section-header">
+            <div class="intern-section-icon icon-hr">&#128197;</div>
+            <h2>March Cohort</h2>
+        </div>
+        <div class="cohort-card">
+            <div class="cohort-details">
+                <div class="cohort-detail">
+                    <strong>Duration</strong>
+                    <span>1-3 months</span>
+                </div>
+                <div class="cohort-detail">
+                    <strong>Commitment</strong>
+                    <span>~10 hours/week</span>
+                </div>
+                <div class="cohort-detail">
+                    <strong>Format</strong>
+                    <span>Remote, async-friendly</span>
+                </div>
+            </div>
+            <p class="cohort-tracks-label">Tracks</p>
+            <div class="cohort-tracks">
+                <div class="cohort-track">
+                    <strong>Technical</strong>
+                    <span>Frontend / Backend / QA / DevOps</span>
+                </div>
+                <div class="cohort-track">
+                    <strong>Non-Technical</strong>
+                    <span>Marketing / Sales &amp; Partnerships</span>
+                </div>
+            </div>
+            <div class="cohort-apply">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfE242xfEABf6KF1dIYcazumV6N-UF32krxkyCc2K7vT99X9g/viewform"
+                   target="_blank" rel="noopener noreferrer"
+                   class="btn btn-gradient">Apply Here</a>
+                <span class="cohort-apply-note">Selected applicants will be contacted for a short interview.</span>
+            </div>
+        </div>
+    </div>
 </section>
 
 <section class="cta-banner">
-    <h2>Interested?</h2>
+    <h2>Questions?</h2>
     <p>Reach out to discuss hosting an intern or applying for an internship position.</p>
     <a href="{% url 'contact' %}" class="btn btn-white">Contact Us</a>
 </section>
