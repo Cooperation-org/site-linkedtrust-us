@@ -4,174 +4,255 @@
 
 {% block extra_css %}
 <style>
-/* Next cohort teaser at top */
-.cohort-teaser {
-    margin-bottom: 2.5rem;
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
-}
-.cohort-teaser a {
-    color: var(--brand-primary);
-    font-weight: 600;
-}
-.cohort-teaser a:hover {
-    color: var(--brand-dark);
-}
+/* ---- INTERNSHIPS PAGE ---- */
 
-/* Intro bar */
-.interns-intro-bar {
-    text-align: center;
-    margin-bottom: 3rem;
-    padding: 1.5rem 2rem;
-    background: var(--bg-white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    border-top: 4px solid var(--brand-primary);
+/* Hero */
+.intern-hero {
+    padding: 4rem 2rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
 }
-.interns-intro-bar p {
+.intern-hero-text .section-label { margin-bottom: 1rem; }
+.intern-hero-text h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+}
+.intern-hero-text p {
     font-size: 1.05rem;
     color: var(--text-secondary);
     line-height: 1.7;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-/* Section blocks */
-.intern-section-block {
-    margin-bottom: 3rem;
-}
-.intern-section-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
     margin-bottom: 1.5rem;
+    max-width: 520px;
 }
-.intern-section-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: var(--radius);
+.intern-hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+.intern-hero-visual {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
-    color: #fff;
-    flex-shrink: 0;
 }
-.icon-hr { background: var(--gradient); }
-.icon-intern { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-
-.intern-section-header h2 {
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: var(--text-primary);
-    margin: 0;
+.intern-hero-visual svg {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
 }
 
-/* Content card */
-.intern-content-card {
+/* Stats bar */
+.intern-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+    padding: 0 2rem;
+}
+.intern-stat {
+    text-align: center;
+    padding: 1.5rem 1rem;
     background: var(--bg-white);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 2rem;
 }
-.intern-content-card:hover {
-    border-color: var(--brand-primary);
+.intern-stat .stat-icon {
+    font-size: 1.5rem;
+    color: var(--brand-primary);
+    margin-bottom: 0.5rem;
+}
+.intern-stat .stat-value {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+.intern-stat .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.intern-content-card .card-header {
+/* Audience sections */
+.intern-audience {
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+    padding: 0 2rem;
+}
+.intern-audience-header {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin: 1.5rem 0 0.75rem;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
-.intern-content-card .card-header:first-child {
-    margin-top: 0;
-}
-.intern-content-card .card-icon {
-    width: 36px;
-    height: 36px;
+.intern-audience-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 178, 229, 0.1);
-    border-radius: 8px;
+    font-size: 1.2rem;
+    color: #fff;
+    flex-shrink: 0;
+}
+.intern-audience-icon.icon-org { background: var(--gradient); }
+.intern-audience-icon.icon-student { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.intern-audience-header h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+/* Feature cards grid */
+.intern-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+.intern-feature {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+}
+.intern-feature:hover {
+    border-color: var(--brand-primary);
+}
+.intern-feature-top {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+.intern-feature-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 178, 229, 0.08);
+    border-radius: 10px;
+    color: var(--brand-primary);
     font-size: 1rem;
     flex-shrink: 0;
 }
-.intern-content-card h3 {
-    font-size: 1.25rem;
+.intern-feature h3 {
+    font-size: 1.1rem;
     font-weight: 700;
-    color: var(--text-primary);
     margin: 0;
 }
-.intern-content-card p {
-    font-size: 0.95rem;
+.intern-feature p {
+    font-size: 0.9rem;
     color: var(--text-secondary);
-    line-height: 1.7;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Process steps */
+.intern-process {
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+    padding: 0 2rem;
+}
+.intern-process-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+.intern-process-header h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+}
+.intern-process-header p {
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin: 0.5rem auto 0;
+}
+.intern-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+.intern-step {
+    position: relative;
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem 1.75rem;
+    text-align: center;
+}
+.intern-step:hover {
+    border-color: var(--brand-primary);
+}
+.intern-step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--gradient);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1rem;
     margin-bottom: 1rem;
 }
-
-/* List styling */
-.intern-list {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0 1.5rem;
-}
-.intern-list li {
-    padding: 0.4rem 0 0.4rem 1.75rem;
-    position: relative;
-    line-height: 1.7;
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-}
-.intern-list li::before {
-    content: "\2713";
-    color: var(--brand-primary);
+.intern-step h3 {
+    font-size: 1.05rem;
     font-weight: 700;
-    position: absolute;
-    left: 0;
-    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
 }
-.intern-list li strong {
-    color: var(--text-primary);
+.intern-step p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
 }
 
-/* Cohort detail section (bottom) */
-.cohort-section {
-    margin-top: 1rem;
-    margin-bottom: 3rem;
+/* Cohort section */
+.intern-cohort {
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+    padding: 0 2rem;
 }
 .cohort-card {
     background: var(--bg-white);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 2rem;
+    padding: 2.5rem;
     border-top: 4px solid var(--brand-primary);
 }
 .cohort-card:hover {
     border-color: var(--brand-primary);
 }
-.cohort-card h2 {
+.cohort-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.cohort-card-header h2 {
     font-size: 1.5rem;
     font-weight: 800;
-    margin-bottom: 1.5rem;
+    margin: 0;
 }
 .cohort-details {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 .cohort-detail {
     background: var(--bg-primary);
-    padding: 1rem;
+    padding: 1.25rem;
     border-radius: 8px;
     border: 1px solid var(--border);
 }
 .cohort-detail strong {
     display: block;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 700;
     color: var(--text-muted);
     text-transform: uppercase;
@@ -179,12 +260,12 @@
     margin-bottom: 0.25rem;
 }
 .cohort-detail span {
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 600;
     color: var(--text-primary);
 }
 .cohort-tracks-label {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 700;
     color: var(--text-muted);
     text-transform: uppercase;
@@ -195,11 +276,11 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 .cohort-track {
     background: var(--bg-primary);
-    padding: 1rem 1.25rem;
+    padding: 1.25rem;
     border-radius: 8px;
     border: 1px solid var(--border);
 }
@@ -220,9 +301,7 @@
     gap: 1.5rem;
     flex-wrap: wrap;
 }
-.cohort-apply .btn-gradient {
-    padding: 0.75rem 2rem;
-}
+.cohort-apply .btn-gradient { padding: 0.75rem 2rem; }
 .cohort-apply-note {
     font-size: 0.85rem;
     color: var(--text-muted);
@@ -231,187 +310,255 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-    .intern-section-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-    .intern-section-header h2 { font-size: 1.4rem; }
-    .intern-content-card { padding: 1.5rem; }
-    .cohort-card { padding: 1.5rem; }
+    .intern-hero { grid-template-columns: 1fr; padding: 2.5rem 1.5rem 2rem; }
+    .intern-hero-text h1 { font-size: 2rem; }
+    .intern-hero-visual { display: none; }
+    .intern-stats { grid-template-columns: repeat(2, 1fr); }
+    .intern-features { grid-template-columns: 1fr; }
+    .intern-steps { grid-template-columns: 1fr; }
     .cohort-details { grid-template-columns: 1fr; }
     .cohort-tracks { grid-template-columns: 1fr; }
     .cohort-apply { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width: 480px) {
-    .intern-content-card { padding: 1.25rem; }
-    .intern-content-card h3 { font-size: 1.1rem; }
-    .cohort-card { padding: 1.25rem; }
+    .intern-hero-text h1 { font-size: 1.75rem; }
+    .intern-stats { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 }
 </style>
 {% endblock %}
 
 {% block content %}
 
-<section class="container" style="padding-top:3rem;">
-    <div class="section-label mono">// internships</div>
-    <h1 class="section-title">Internships at LinkedTrust</h1>
-
-    <p class="cohort-teaser">Next cohort beginning in March. <a href="#apply">Details &amp; application &darr;</a></p>
-
-    <!-- Intro -->
-    <div class="interns-intro-bar">
-        <p>LinkedTrust offers structured internship programs that provide real-world experience in software development,
-        team collaboration, and professional growth. Our internships benefit both organizations looking to host talented
-        interns and students seeking meaningful development experience.</p>
-    </div>
-
-    <!-- For HR & Hiring Managers -->
-    <div class="intern-section-block">
-        <div class="intern-section-header">
-            <div class="intern-section-icon icon-hr">&#128101;</div>
-            <h2>For HR &amp; Hiring Managers</h2>
-        </div>
-        <div class="intern-content-card">
-            <div class="card-header">
-                <div class="card-icon">&#11088;</div>
-                <h3>Benefits of Our Interns</h3>
-            </div>
-            <p>Our internship program prepares students with practical skills that translate directly to productive work.
-            Interns come to you with foundational knowledge and professional habits already in place.</p>
-            <ul class="intern-list">
-                <li><strong>Trained in development practices:</strong> Interns understand Git workflows, pull request processes,
-                code review etiquette, and collaborative development patterns.</li>
-                <li><strong>Team collaboration skills:</strong> They know how to work in teams, communicate effectively in
-                async and distributed environments, and contribute to shared codebases.</li>
-                <li><strong>Developer relations capabilities:</strong> Interns can assist with documentation, demos, internal
-                tooling, and small improvements that free up senior engineers for critical work.</li>
-            </ul>
-
-            <div class="card-header">
-                <div class="card-icon">&#9881;</div>
-                <h3>How the Internship Works</h3>
-            </div>
-            <p>We provide a structured onboarding process and work plan for each intern. They receive guidance on real projects
-            but are not thrown directly into critical production systems. This approach ensures both safety and learning.</p>
-            <ul class="intern-list">
-                <li>Comprehensive onboarding process with clear expectations and documentation</li>
-                <li>Structured work plans that align with your organization's needs</li>
-                <li>Regular check-ins and progress reviews to ensure quality and alignment</li>
-                <li>Gradual responsibility increase as interns demonstrate competence</li>
-            </ul>
-
-            <div class="card-header">
-                <div class="card-icon">&#128737;</div>
-                <h3>Why This Is Low-Risk and High-Value</h3>
-            </div>
-            <p>Our internship program is designed to minimize risk while maximizing value for your organization.</p>
-            <ul class="intern-list">
-                <li><strong>Prepared candidates:</strong> Interns arrive with foundational skills and professional habits,
-                not starting from zero.</li>
-                <li><strong>Well-scoped contributions:</strong> They work on small, clearly defined tasks that add value
-                without risking critical systems.</li>
-                <li><strong>Time savings:</strong> Interns handle documentation, demos, and incremental improvements that
-                would otherwise consume senior engineer time.</li>
-                <li><strong>Pipeline for hiring:</strong> Successful internships can serve as a pipeline for future full-time
-                hires who already understand your codebase and culture.</li>
-            </ul>
+<!-- HERO — split layout with illustration -->
+<section class="intern-hero">
+    <div class="intern-hero-text">
+        <div class="section-label mono">// internships</div>
+        <h1>Build real things.<br>Learn real skills.</h1>
+        <p>Structured internship programs with hands-on work on production systems,
+        professional mentorship, and a global remote team. For organizations looking
+        to host talent and students ready to grow.</p>
+        <div class="intern-hero-ctas">
+            <a href="#apply" class="btn btn-gradient">Apply Now</a>
+            <a href="{% url 'contact' %}" class="btn btn-outline">Ask a Question</a>
         </div>
     </div>
+    <div class="intern-hero-visual">
+        <!-- Team collaboration illustration -->
+        <svg viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Desk/workspace -->
+            <rect x="100" y="220" width="300" height="8" rx="4" fill="#E8E8E8"/>
+            <rect x="120" y="228" width="8" height="80" rx="2" fill="#D4D4D4"/>
+            <rect x="372" y="228" width="8" height="80" rx="2" fill="#D4D4D4"/>
+            <!-- Laptop -->
+            <rect x="175" y="165" width="150" height="55" rx="6" fill="#1a1d27"/>
+            <rect x="182" y="172" width="136" height="41" rx="3" fill="#0f1117"/>
+            <!-- Code lines on screen -->
+            <rect x="190" y="180" width="50" height="3" rx="1.5" fill="#00B2E5" opacity="0.8"/>
+            <rect x="190" y="188" width="70" height="3" rx="1.5" fill="#667eea" opacity="0.6"/>
+            <rect x="190" y="196" width="40" height="3" rx="1.5" fill="#10B981" opacity="0.7"/>
+            <rect x="190" y="204" width="60" height="3" rx="1.5" fill="#00B2E5" opacity="0.5"/>
+            <!-- Laptop base -->
+            <rect x="160" y="220" width="180" height="6" rx="3" fill="#2a2d37"/>
+            <!-- Person 1 (mentor) - left -->
+            <circle cx="190" cy="130" r="22" fill="#00B2E5" opacity="0.15"/>
+            <circle cx="190" cy="125" r="12" fill="#667eea"/>
+            <path d="M170 160 C170 145, 210 145, 210 160" fill="#667eea" opacity="0.8"/>
+            <!-- Person 2 (intern) - right -->
+            <circle cx="310" cy="130" r="22" fill="#667eea" opacity="0.15"/>
+            <circle cx="310" cy="125" r="12" fill="#00B2E5"/>
+            <path d="M290 160 C290 145, 330 145, 330 160" fill="#00B2E5" opacity="0.8"/>
+            <!-- Floating elements -->
+            <!-- Git branch -->
+            <circle cx="80" cy="100" r="6" fill="#10B981" opacity="0.6"/>
+            <circle cx="80" cy="130" r="6" fill="#10B981" opacity="0.6"/>
+            <line x1="80" y1="106" x2="80" y2="124" stroke="#10B981" stroke-width="2" opacity="0.4"/>
+            <circle cx="100" cy="115" r="6" fill="#10B981" opacity="0.6"/>
+            <line x1="86" y1="106" x2="100" y2="110" stroke="#10B981" stroke-width="2" opacity="0.4"/>
+            <!-- Badge/certificate -->
+            <rect x="380" y="90" width="50" height="60" rx="6" fill="#00B2E5" opacity="0.1"/>
+            <circle cx="405" cy="110" r="10" fill="#00B2E5" opacity="0.3"/>
+            <rect x="392" y="107" width="26" height="3" rx="1.5" fill="#00B2E5" opacity="0.5"/>
+            <rect x="388" y="130" width="34" height="3" rx="1.5" fill="#667eea" opacity="0.3"/>
+            <rect x="393" y="138" width="24" height="3" rx="1.5" fill="#667eea" opacity="0.3"/>
+            <!-- Chat bubbles -->
+            <rect x="60" y="200" width="60" height="24" rx="12" fill="#667eea" opacity="0.12"/>
+            <rect x="68" y="208" width="30" height="3" rx="1.5" fill="#667eea" opacity="0.4"/>
+            <rect x="68" y="214" width="20" height="3" rx="1.5" fill="#667eea" opacity="0.3"/>
+            <rect x="380" y="180" width="60" height="24" rx="12" fill="#00B2E5" opacity="0.12"/>
+            <rect x="388" y="188" width="30" height="3" rx="1.5" fill="#00B2E5" opacity="0.4"/>
+            <rect x="388" y="194" width="22" height="3" rx="1.5" fill="#00B2E5" opacity="0.3"/>
+            <!-- Stars/dots decoration -->
+            <circle cx="140" cy="80" r="3" fill="#00B2E5" opacity="0.3"/>
+            <circle cx="360" cy="70" r="3" fill="#667eea" opacity="0.3"/>
+            <circle cx="420" cy="160" r="3" fill="#10B981" opacity="0.3"/>
+            <circle cx="60" cy="160" r="3" fill="#00B2E5" opacity="0.3"/>
+        </svg>
+    </div>
+</section>
 
-    <!-- For Interns -->
-    <div class="intern-section-block">
-        <div class="intern-section-header">
-            <div class="intern-section-icon icon-intern">&#127891;</div>
-            <h2>For Interns</h2>
+<!-- STATS BAR -->
+<section class="intern-stats">
+    <div class="intern-stat">
+        <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
+        <span class="stat-value">1-3 mo</span>
+        <span class="stat-label">Duration</span>
+    </div>
+    <div class="intern-stat">
+        <div class="stat-icon"><i class="fa-solid fa-laptop-code"></i></div>
+        <span class="stat-value">~10 hrs</span>
+        <span class="stat-label">Per week</span>
+    </div>
+    <div class="intern-stat">
+        <div class="stat-icon"><i class="fa-solid fa-wifi"></i></div>
+        <span class="stat-value">Remote</span>
+        <span class="stat-label">Async-friendly</span>
+    </div>
+    <div class="intern-stat">
+        <div class="stat-icon"><i class="fa-solid fa-code-branch"></i></div>
+        <span class="stat-value">Real</span>
+        <span class="stat-label">Open source projects</span>
+    </div>
+</section>
+
+<!-- FOR ORGANIZATIONS — feature cards -->
+<section class="intern-audience">
+    <div class="intern-audience-header">
+        <div class="intern-audience-icon icon-org"><i class="fa-solid fa-building"></i></div>
+        <h2>For Organizations</h2>
+    </div>
+    <div class="intern-features">
+        <div class="intern-feature">
+            <div class="intern-feature-top">
+                <div class="intern-feature-icon"><i class="fa-solid fa-star"></i></div>
+                <h3>Pre-trained Candidates</h3>
+            </div>
+            <p>Interns arrive with Git workflows, PR processes, code review etiquette, and collaborative development patterns already in place. Not starting from zero.</p>
         </div>
-        <div class="intern-content-card">
-            <p>If you're a student or junior developer looking to gain real-world experience,
-            our internship program offers hands-on work with real projects, professional mentorship, and the opportunity
-            to build a strong portfolio.</p>
-
-            <div class="card-header">
-                <div class="card-icon">&#128214;</div>
-                <h3>What You'll Learn</h3>
+        <div class="intern-feature">
+            <div class="intern-feature-top">
+                <div class="intern-feature-icon"><i class="fa-solid fa-users"></i></div>
+                <h3>Team-ready Skills</h3>
             </div>
-            <p>Our internship program focuses on practical, industry-relevant skills that will serve you throughout your career.</p>
-            <ul class="intern-list">
-                <li><strong>Git and GitHub workflows:</strong> Master branches, pull requests, code review processes, and
-                collaborative version control practices.</li>
-                <li><strong>Real project collaboration:</strong> Work on actual, existing codebases — not toy examples — learning
-                how to navigate, understand, and contribute to production systems.</li>
-                <li><strong>Documentation and communication:</strong> Develop skills in writing clear documentation, communicating
-                progress, and explaining technical decisions.</li>
-                <li><strong>Team collaboration:</strong> Learn professional team skills including standups, async updates,
-                respecting review processes, and working effectively in distributed environments.</li>
-            </ul>
-
-            <div class="card-header">
-                <div class="card-icon">&#128736;</div>
-                <h3>How It Works</h3>
+            <p>They know how to work in teams, communicate in async and distributed environments, and contribute to shared codebases without hand-holding.</p>
+        </div>
+        <div class="intern-feature">
+            <div class="intern-feature-top">
+                <div class="intern-feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3>Low-risk, High-value</h3>
             </div>
-            <p>The internship is structured to provide gradual learning and increasing responsibility.</p>
-            <ul class="intern-list">
-                <li><strong>Onboarding phase:</strong> Start with reading materials, understanding the codebase, and initial
-                small tasks to get oriented.</li>
-                <li><strong>Gradual progression:</strong> Begin with small, well-defined tasks and gradually take on more
-                responsibility as you demonstrate competence.</li>
-                <li><strong>Regular feedback:</strong> Receive ongoing feedback and reviews to help you grow and ensure your
-                contributions align with project goals.</li>
-            </ul>
-
-            <div class="card-header">
-                <div class="card-icon">&#127942;</div>
-                <h3>What You Get Out of It</h3>
+            <p>Interns work on well-scoped tasks — documentation, demos, incremental improvements — freeing senior engineers for critical work without risking production systems.</p>
+        </div>
+        <div class="intern-feature">
+            <div class="intern-feature-top">
+                <div class="intern-feature-icon"><i class="fa-solid fa-user-plus"></i></div>
+                <h3>Hiring Pipeline</h3>
             </div>
-            <p>Beyond learning technical skills, our internship program provides tangible career benefits.</p>
-            <ul class="intern-list">
-                <li><strong>Stronger portfolio:</strong> Build a portfolio with real contributions to actual projects,
-                demonstrating your ability to work in professional environments.</li>
-                <li><strong>Remote collaboration experience:</strong> Gain experience working with existing codebases and
-                collaborating in remote, distributed teams — skills highly valued in today's job market.</li>
-                <li><strong>Professional references:</strong> Build relationships that can lead to strong references and
-                recommendations for future opportunities.</li>
-                <li><strong>Future opportunities:</strong> Exceptional performance can lead to continued collaboration,
-                recommendations, or even full-time opportunities.</li>
-            </ul>
+            <p>Successful internships serve as a pipeline for future full-time hires who already understand your codebase and culture.</p>
         </div>
     </div>
+</section>
 
-    <!-- Cohort details at bottom -->
-    <div class="cohort-section" id="apply">
-        <div class="intern-section-header">
-            <div class="intern-section-icon icon-hr">&#128197;</div>
-            <h2>March Cohort</h2>
+<!-- FOR INTERNS — feature cards -->
+<section class="intern-audience">
+    <div class="intern-audience-header">
+        <div class="intern-audience-icon icon-student"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h2>For Interns</h2>
+    </div>
+    <div class="intern-features">
+        <div class="intern-feature">
+            <div class="intern-feature-top">
+                <div class="intern-feature-icon"><i class="fa-solid fa-code-branch"></i></div>
+                <h3>Git &amp; GitHub Workflows</h3>
+            </div>
+            <p>Master branches, pull requests, code review processes, and collaborative version control — the skills every employer expects.</p>
         </div>
-        <div class="cohort-card">
-            <div class="cohort-details">
-                <div class="cohort-detail">
-                    <strong>Duration</strong>
-                    <span>1-3 months</span>
-                </div>
-                <div class="cohort-detail">
-                    <strong>Commitment</strong>
-                    <span>~10 hours/week</span>
-                </div>
-                <div class="cohort-detail">
-                    <strong>Format</strong>
-                    <span>Remote, async-friendly</span>
-                </div>
+        <div class="intern-feature">
+            <div class="intern-feature-top">
+                <div class="intern-feature-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                <h3>Real Project Work</h3>
             </div>
-            <p class="cohort-tracks-label">Tracks</p>
-            <div class="cohort-tracks">
-                <div class="cohort-track">
-                    <strong>Technical</strong>
-                    <span>Frontend / Backend / QA / DevOps</span>
-                </div>
-                <div class="cohort-track">
-                    <strong>Non-Technical</strong>
-                    <span>Marketing / Sales &amp; Partnerships</span>
-                </div>
+            <p>Contribute to actual production codebases — not toy examples. Navigate, understand, and ship code on real open source systems.</p>
+        </div>
+        <div class="intern-feature">
+            <div class="intern-feature-top">
+                <div class="intern-feature-icon"><i class="fa-solid fa-globe"></i></div>
+                <h3>Remote Collaboration</h3>
             </div>
-            <div class="cohort-apply">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfE242xfEABf6KF1dIYcazumV6N-UF32krxkyCc2K7vT99X9g/viewform"
-                   target="_blank" rel="noopener noreferrer"
-                   class="btn btn-gradient">Apply Here</a>
-                <span class="cohort-apply-note">Selected applicants will be contacted for a short interview.</span>
+            <p>Gain experience in standups, async updates, and distributed team workflows — skills highly valued in today's job market.</p>
+        </div>
+        <div class="intern-feature">
+            <div class="intern-feature-top">
+                <div class="intern-feature-icon"><i class="fa-solid fa-trophy"></i></div>
+                <h3>Portfolio &amp; References</h3>
             </div>
+            <p>Build a portfolio with real contributions. Exceptional performance leads to references, recommendations, and future opportunities.</p>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS — process steps -->
+<section class="intern-process">
+    <div class="intern-process-header">
+        <div class="section-label mono">// how it works</div>
+        <h2>Three phases to grow</h2>
+        <p>Structured progression from onboarding to ownership.</p>
+    </div>
+    <div class="intern-steps">
+        <div class="intern-step">
+            <div class="intern-step-number">1</div>
+            <h3>Onboard</h3>
+            <p>Reading materials, codebase orientation, dev environment setup, and your first small tasks to get comfortable.</p>
+        </div>
+        <div class="intern-step">
+            <div class="intern-step-number">2</div>
+            <h3>Build</h3>
+            <p>Take on real issues — bug fixes, documentation, small features. Regular check-ins and code reviews to guide your growth.</p>
+        </div>
+        <div class="intern-step">
+            <div class="intern-step-number">3</div>
+            <h3>Own</h3>
+            <p>Increasing responsibility on meaningful work. Demonstrate competence and build the track record that opens doors.</p>
+        </div>
+    </div>
+</section>
+
+<!-- COHORT — apply section -->
+<section class="intern-cohort" id="apply">
+    <div class="intern-audience-header">
+        <div class="intern-audience-icon icon-org"><i class="fa-solid fa-calendar"></i></div>
+        <h2>March Cohort</h2>
+    </div>
+    <div class="cohort-card">
+        <div class="cohort-details">
+            <div class="cohort-detail">
+                <strong>Duration</strong>
+                <span>1-3 months</span>
+            </div>
+            <div class="cohort-detail">
+                <strong>Commitment</strong>
+                <span>~10 hours/week</span>
+            </div>
+            <div class="cohort-detail">
+                <strong>Format</strong>
+                <span>Remote, async-friendly</span>
+            </div>
+        </div>
+        <p class="cohort-tracks-label">Tracks</p>
+        <div class="cohort-tracks">
+            <div class="cohort-track">
+                <strong>Technical</strong>
+                <span>Frontend / Backend / QA / DevOps</span>
+            </div>
+            <div class="cohort-track">
+                <strong>Non-Technical</strong>
+                <span>Marketing / Sales &amp; Partnerships</span>
+            </div>
+        </div>
+        <div class="cohort-apply">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfE242xfEABf6KF1dIYcazumV6N-UF32krxkyCc2K7vT99X9g/viewform"
+               target="_blank" rel="noopener noreferrer"
+               class="btn btn-gradient">Apply Here</a>
+            <span class="cohort-apply-note">Selected applicants will be contacted for a short interview.</span>
         </div>
     </div>
 </section>

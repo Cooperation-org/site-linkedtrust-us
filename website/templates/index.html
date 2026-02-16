@@ -49,29 +49,29 @@
     <div class="services-grid">
         {% for service in services %}
         <a href="{% url 'service_detail' service.slug %}" class="service-card">
-            {% if service.icon %}<div class="service-icon">{{ service.icon }}</div>{% endif %}
+            {% if service.icon %}<div class="service-icon"><i class="{{ service.icon }}"></i></div>{% endif %}
             <h3>{{ service.title }}</h3>
             <p>{{ service.short_description }}</p>
         </a>
         {% empty %}
         <!-- Default services until admin populates them -->
         <div class="service-card">
-            <div class="service-icon">&#9881;</div>
+            <div class="service-icon"><i class="fa-solid fa-server"></i></div>
             <h3>Baremetal Migration</h3>
             <p>Move off Amazon. Save money. 128GB bare metal infrastructure.</p>
         </div>
         <div class="service-card">
-            <div class="service-icon">&#129302;</div>
+            <div class="service-icon"><i class="fa-solid fa-brain"></i></div>
             <h3>AI Integration</h3>
             <p>RAG search, document extraction, agentic AI for your systems.</p>
         </div>
         <div class="service-card">
-            <div class="service-icon">&#127891;</div>
+            <div class="service-icon"><i class="fa-solid fa-certificate"></i></div>
             <h3>Credentials &amp; Badges</h3>
             <p>Verifiable credentials for employees and partners. Open Badges v3.</p>
         </div>
         <div class="service-card">
-            <div class="service-icon">&#128640;</div>
+            <div class="service-icon"><i class="fa-solid fa-rocket"></i></div>
             <h3>MVP Development</h3>
             <p>Full-stack prototypes in weeks. React, Django, Next.js, FastAPI.</p>
         </div>
@@ -91,7 +91,7 @@
                     {% if project.thumbnail_image %}
                         <img src="{{ project.thumbnail_image.url }}" alt="{{ project.title }}">
                     {% else %}
-                        {% cycle '&#128200;' '&#127758;' '&#129302;' '&#128218;' %}
+                        <i class="{% cycle 'fa-solid fa-chart-line' 'fa-solid fa-globe' 'fa-solid fa-brain' 'fa-solid fa-book' %}" style="font-size:2.5rem;color:var(--text-on-dark-muted);"></i>
                     {% endif %}
                 </div>
                 <div class="project-body">
@@ -108,7 +108,7 @@
             {% empty %}
             <!-- Placeholder projects until admin populates -->
             <div class="project-card">
-                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(0,178,229,0.15) 0%, rgba(102,126,234,0.15) 100%);">&#128200;</div>
+                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(0,178,229,0.15) 0%, rgba(102,126,234,0.15) 100%);display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-chart-line" style="font-size:2.5rem;color:var(--text-on-dark-muted);"></i></div>
                 <div class="project-body">
                     <div class="project-client">Rising LLC</div>
                     <h3>StreetWell</h3>
@@ -121,7 +121,7 @@
                 </div>
             </div>
             <div class="project-card">
-                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(102,126,234,0.15) 0%, rgba(147,51,234,0.15) 100%);">&#127758;</div>
+                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(102,126,234,0.15) 0%, rgba(147,51,234,0.15) 100%);display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-globe" style="font-size:2.5rem;color:var(--text-on-dark-muted);"></i></div>
                 <div class="project-body">
                     <div class="project-client">Ben Armentrout</div>
                     <h3>AZ-Sunshine</h3>
@@ -134,10 +134,10 @@
                 </div>
             </div>
             <div class="project-card">
-                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(0,178,229,0.15) 100%);">&#129302;</div>
+                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(0,178,229,0.15) 100%);display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-brain" style="font-size:2.5rem;color:var(--text-on-dark-muted);"></i></div>
                 <div class="project-body">
-                    <div class="project-client">AZ Tender Hands</div>
-                    <h3>Accentrics</h3>
+                    <div class="project-client">Stealth Client</div>
+                    <h3>Home Health Automation</h3>
                     <p>AI-powered automation for home health care. Scheduling, billing, hiring.</p>
                     <div class="tech-tags">
                         <span class="tech-tag">FastAPI</span>
@@ -147,7 +147,7 @@
                 </div>
             </div>
             <div class="project-card">
-                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(234,179,8,0.15) 0%, rgba(239,68,68,0.1) 100%);">&#128218;</div>
+                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(234,179,8,0.15) 0%, rgba(239,68,68,0.1) 100%);display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-book" style="font-size:2.5rem;color:var(--text-on-dark-muted);"></i></div>
                 <div class="project-body">
                     <div class="project-client">George Polisner</div>
                     <h3>CivicSky</h3>

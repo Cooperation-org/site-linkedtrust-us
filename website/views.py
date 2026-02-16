@@ -234,8 +234,12 @@ def interns_view(request):
 
 def linkedclaims_view(request):
     """LinkedClaims ecosystem page — cards for every app/spec/tool built on the standard."""
+    all_items = EcosystemItem.objects.all()
     context = {
-        'ecosystem_items': EcosystemItem.objects.all(),
+        'ecosystem_items': all_items,
+        'ecosystem_standards': all_items.filter(sort_order__lte=1),
+        'ecosystem_platforms': all_items.filter(sort_order__gte=2, sort_order__lte=8),
+        'ecosystem_devtools': all_items.filter(sort_order__gte=9),
     }
     return render(request, 'linkedclaims.html', context)
 

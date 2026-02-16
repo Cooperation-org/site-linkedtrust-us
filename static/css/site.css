@@ -418,7 +418,18 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
     border-color: var(--brand-primary);
     box-shadow: var(--shadow-md);
 }
-.service-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+.service-icon {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--brand-primary);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 178, 229, 0.08);
+    border-radius: 10px;
+}
 .service-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
 .service-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
 .service-card .price-range {
@@ -563,7 +574,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
     margin-bottom: 2rem;
 }
 
-/* Infinite carousel */
+/* Infinite carousel — slow scroll, not distracting */
 .carousel-wrapper {
     position: relative;
     width: 100%;
@@ -574,8 +585,16 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 .carousel-track {
     display: flex;
     align-items: center;
-    gap: 0;
+    gap: 2rem;
     width: max-content;
+    animation: carousel-scroll 90s linear infinite;
+}
+.carousel-track:hover {
+    animation-play-state: paused;
+}
+@keyframes carousel-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
 }
 .carousel-track img {
     height: 36px;
@@ -586,8 +605,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
     flex-shrink: 0;
 }
 .carousel-track img:hover {
-    opacity: 1;
-    filter: brightness(1);
+    opacity: 0.8;
 }
 
 /* Legacy logo-grid (fallback for pages that still use it) */
@@ -858,12 +876,24 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 }
 
 .ecosystem-grid-section {
-    padding: 2rem 0 5rem;
+    padding: 0.5rem 0 1rem;
 }
-.ecosystem-grid-section .container {
+.ecosystem-grid-section:first-of-type {
+    padding-top: 1rem;
+}
+.ecosystem-group-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+}
+.ecosystem-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 1.5rem;
+}
+.ecosystem-grid--wide {
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .ecosystem-card {

@@ -17,7 +17,7 @@
     <div class="services-grid">
         {% for service in services %}
         <a href="{% url 'service_detail' service.slug %}" class="service-card">
-            {% if service.icon %}<div class="service-icon">{{ service.icon }}</div>{% endif %}
+            {% if service.icon %}<div class="service-icon"><i class="{{ service.icon }}"></i></div>{% endif %}
             <h3>{{ service.title }}</h3>
             <p>{{ service.short_description }}</p>
             {% if service.price_range %}
@@ -26,32 +26,32 @@
         </a>
         {% empty %}
         <div class="service-card">
-            <div class="service-icon">&#9881;</div>
+            <div class="service-icon"><i class="fa-solid fa-server"></i></div>
             <h3>Baremetal Migration</h3>
             <p>Move off Amazon. Save money. 128GB bare metal infrastructure.</p>
         </div>
         <div class="service-card">
-            <div class="service-icon">&#129302;</div>
+            <div class="service-icon"><i class="fa-solid fa-brain"></i></div>
             <h3>AI Integration</h3>
             <p>RAG search, document extraction, agentic AI for your systems.</p>
         </div>
         <div class="service-card">
-            <div class="service-icon">&#127891;</div>
+            <div class="service-icon"><i class="fa-solid fa-certificate"></i></div>
             <h3>Credentials &amp; Badges</h3>
             <p>Verifiable credentials for employees and partners. Open Badges v3.</p>
         </div>
         <div class="service-card">
-            <div class="service-icon">&#128640;</div>
+            <div class="service-icon"><i class="fa-solid fa-rocket"></i></div>
             <h3>MVP Development</h3>
             <p>Full-stack prototypes in weeks. React, Django, Next.js, FastAPI.</p>
         </div>
         <div class="service-card">
-            <div class="service-icon">&#128101;</div>
+            <div class="service-icon"><i class="fa-solid fa-users"></i></div>
             <h3>Team Augmentation</h3>
             <p>Full-stack developers at affordable rates. Node, Python, React, Next.js.</p>
         </div>
         <div class="service-card">
-            <div class="service-icon">&#128270;</div>
+            <div class="service-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
             <h3>Recruiter Tools</h3>
             <p>Sort resumes with verified skills. AI-powered credential matching.</p>
         </div>
