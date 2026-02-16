@@ -3,6 +3,76 @@
 
 {% block title %}About — LinkedTrust{% endblock %}
 
+{% block extra_css %}
+<style>
+.about-values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+.about-team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+.about-team-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+.about-team-card:hover {
+    border-color: var(--brand-primary);
+}
+.about-team-card-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+.about-team-card-body {
+    padding: 1.25rem;
+}
+.about-team-card-body h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+.about-team-card-body .team-title {
+    font-size: 0.8rem;
+    color: var(--brand-primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.about-team-card-body p {
+    font-size: 0.83rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+.github-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+.github-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.github-links a:hover {
+    color: var(--brand-primary);
+}
+@media (max-width: 768px) {
+    .about-values-grid { grid-template-columns: 1fr; }
+    .about-team-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
 <section class="container" style="padding-top:3rem;">
@@ -16,7 +86,7 @@
             Our team spans four continents. We share equity, governance, and a belief that trust should be earned, verified, and visible — not assumed.
         </p>
         <p style="font-size:1.1rem;color:var(--text-secondary);line-height:1.8;margin-bottom:2.5rem;">
-            We built our own decentralized trust platform, and we use it. Every testimonial on this site is a verifiable claim on the LinkedTrust graph. That's not marketing — it's how we work.
+            Every testimonial on this site is a verifiable claim on the LinkedTrust graph. That's not marketing — it's how things work.
         </p>
     </div>
 </section>
@@ -26,11 +96,11 @@
 <section class="container" style="padding:3rem 2rem;">
     <div class="section-label mono">// how we work</div>
     <h2 class="section-title" style="margin-bottom:2rem;">What makes us different</h2>
-    <div class="services-grid">
+    <div class="about-values-grid">
         <div class="service-card">
             <div class="service-icon">&#129309;</div>
             <h3>Shared Equity</h3>
-            <p>Every team member has ownership. We're a cooperative, not a startup extracting value.</p>
+            <p>Every team member has ownership. A public benefit corporation, not a startup extracting value.</p>
         </div>
         <div class="service-card">
             <div class="service-icon">&#127758;</div>
@@ -38,30 +108,46 @@
             <p>Developers in the US, Nigeria, Ethiopia, India, Pakistan. Same standards, affordable rates.</p>
         </div>
         <div class="service-card">
-            <div class="service-icon">&#128275;</div>
-            <h3>Open Source First</h3>
-            <p>We contribute upstream. Our tools, SDKs, and protocols are open for anyone to use.</p>
-        </div>
-        <div class="service-card">
-            <div class="service-icon">&#9989;</div>
-            <h3>Verified Everything</h3>
-            <p>We built a trust graph and we eat our own cooking. Claims, credentials, and testimonials — all verifiable.</p>
+            <div class="service-icon">&#128279;</div>
+            <h3>Decentralized Trust</h3>
+            <p>Built on the <a href="{% url 'linkedclaims' %}" style="color:var(--brand-primary);font-weight:600;">LinkedClaims</a> open standard. Claims, credentials, and testimonials — all verifiable, all open source.</p>
+            <div class="github-links" style="margin-top:0.75rem;">
+                <a href="https://github.com/Cooperation-org" target="_blank" rel="noopener">Cooperation-org &rarr;</a>
+                <a href="https://github.com/Whats-Cookin" target="_blank" rel="noopener">Whats-Cookin &rarr;</a>
+            </div>
         </div>
     </div>
 </section>
 
 <section class="container" style="padding:2rem 2rem 3rem;">
     <div class="section-label mono">// team</div>
-    <h2 class="section-title" style="margin-bottom:1rem;">Meet the people</h2>
-    <p style="color:var(--text-secondary);margin-bottom:2rem;">
-        We're builders, not managers. Everyone on the team ships code.
+    <h2 class="section-title" style="margin-bottom:1rem;">The people</h2>
+    <p style="color:var(--text-secondary);margin-bottom:2rem;max-width:600px;">
+        Builders across four continents. Everyone ships code. Shared equity, shared purpose.
     </p>
-    <a href="{% url 'team' %}" class="btn btn-gradient">View Full Team</a>
+    <div class="about-team-grid">
+        {% for member in team_members %}
+        <div class="about-team-card">
+            {% if member.image %}
+            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="about-team-card-image">
+            {% else %}
+            <div class="about-team-card-image" style="background:linear-gradient(135deg, rgba(0,178,229,0.1), rgba(102,126,234,0.1));"></div>
+            {% endif %}
+            <div class="about-team-card-body">
+                <h3>{{ member.name }}</h3>
+                <div class="team-title">{{ member.title }}</div>
+                <p>{{ member.truncated_description }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p style="color:var(--text-muted);grid-column:1/-1;">Team profiles coming soon — add them in the admin.</p>
+        {% endfor %}
+    </div>
 </section>
 
 <section class="cta-banner">
     <h2>Want to work with us?</h2>
-    <p>We're always looking for good people and good projects.</p>
+    <p>Always looking for good people and good projects.</p>
     <a href="{% url 'contact' %}" class="btn btn-white">Get in Touch</a>
 </section>
 

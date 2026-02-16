@@ -124,6 +124,39 @@ class Testimonial(models.Model):
         return f"{self.person_name} — {self.person_title}"
 
 
+class EcosystemItem(models.Model):
+    """An app, spec, paper, or tool in the LinkedClaims ecosystem.
+    Shown on the /linkedclaims/ page as cards with screenshots."""
+    STATUS_CHOICES = [
+        ('live', 'Live'),
+        ('active', 'Active'),
+        ('beta', 'Beta'),
+        ('coming', 'Coming Soon'),
+    ]
+
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True, blank=True)
+    short_description = models.CharField(max_length=300, help_text="One-liner for card display")
+    screenshot = models.ImageField(upload_to='ecosystem/', blank=True)
+    live_url = models.URLField(blank=True, help_text="Link to the live site/doc/paper")
+    repo_url = models.URLField(blank=True, help_text="GitHub repo if open source")
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='live')
+    sort_order = models.IntegerField(default=0, help_text="Lower = appears first")
+
+    class Meta:
+        ordering = ['sort_order']
+        verbose_name = 'Ecosystem item'
+        verbose_name_plural = 'Ecosystem items'
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
 class ServicePackage(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True, blank=True)

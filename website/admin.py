@@ -4,7 +4,7 @@ from django.utils.html import format_html
 from django.db.models import Avg, Sum
 from django.utils import timezone
 from datetime import timedelta
-from .models import TeamMember, PortfolioProject, CaseStudy, Testimonial, ServicePackage, ContactInquiry
+from .models import TeamMember, PortfolioProject, CaseStudy, Testimonial, EcosystemItem, ServicePackage, ContactInquiry
 
 class LinkedtrustAdminSite(AdminSite):
     site_header = 'Linkedtrust Administration'
@@ -128,6 +128,21 @@ class TestimonialAdmin(admin.ModelAdmin):
     search_fields = ['person_name', 'quote_text']
 
 
+# --- EcosystemItem ---
+class EcosystemItemAdmin(admin.ModelAdmin):
+    list_display = ['name', 'status', 'live_url', 'sort_order', 'display_screenshot']
+    list_filter = ['status']
+    list_editable = ['status', 'sort_order']
+    search_fields = ['name', 'short_description']
+    prepopulated_fields = {'slug': ('name',)}
+
+    def display_screenshot(self, obj):
+        if obj.screenshot:
+            return format_html('<img src="{}" width="80" height="50" style="border-radius:4px;object-fit:cover;" />', obj.screenshot.url)
+        return "—"
+    display_screenshot.short_description = 'Screenshot'
+
+
 # --- ServicePackage ---
 class ServicePackageAdmin(admin.ModelAdmin):
     list_display = ['title', 'price_range', 'is_active', 'sort_order']
@@ -152,5 +167,6 @@ admin_site.register(TeamMember, TeamMemberAdmin)
 admin_site.register(PortfolioProject, PortfolioProjectAdmin)
 admin_site.register(CaseStudy, CaseStudyAdmin)
 admin_site.register(Testimonial, TestimonialAdmin)
+admin_site.register(EcosystemItem, EcosystemItemAdmin)
 admin_site.register(ServicePackage, ServicePackageAdmin)
 admin_site.register(ContactInquiry, ContactInquiryAdmin)

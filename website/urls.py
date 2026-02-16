@@ -14,6 +14,9 @@ urlpatterns = [
     path('services/', services_view, name='services'),
     path('services/<slug:slug>/', service_detail_view, name='service_detail'),
 
+    # LinkedClaims ecosystem
+    path('linkedclaims/', linkedclaims_view, name='linkedclaims'),
+
     # Core pages
     path('about/', about_view, name='about'),
     path('team/', team_view, name='team'),

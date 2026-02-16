@@ -4,7 +4,7 @@ from django.core.mail import EmailMessage
 from django.views.decorators.csrf import csrf_protect
 from django.conf import settings
 from django.views.decorators.http import require_http_methods
-from .models import TeamMember, PortfolioProject, CaseStudy, Testimonial, ServicePackage, ContactInquiry
+from .models import TeamMember, PortfolioProject, CaseStudy, Testimonial, EcosystemItem, ServicePackage, ContactInquiry
 from .forms import ContactForm
 import json
 import logging
@@ -28,9 +28,12 @@ def home_view(request):
 
 def about_view(request):
     """
-    Render the about page.
+    Render the about page with team members inline.
     """
-    return render(request, 'about.html')
+    context = {
+        'team_members': TeamMember.objects.all().order_by('created_at'),
+    }
+    return render(request, 'about.html', context)
 
 def services_view(request):
     """
@@ -227,6 +230,14 @@ def interns_view(request):
     Render the internships page.
     """
     return render(request, 'interns.html')
+
+
+def linkedclaims_view(request):
+    """LinkedClaims ecosystem page — cards for every app/spec/tool built on the standard."""
+    context = {
+        'ecosystem_items': EcosystemItem.objects.all(),
+    }
+    return render(request, 'linkedclaims.html', context)
 
 
 # --- New portfolio & service views ---

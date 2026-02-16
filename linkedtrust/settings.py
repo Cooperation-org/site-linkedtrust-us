@@ -13,6 +13,8 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['linkedtrust.us', 'www.linkedtrust.us', 'demos.linkedtrust.us', '127.0.0.1', 'localhost']
 
+CSRF_TRUSTED_ORIGINS = ['https://linkedtrust.us', 'https://demos.linkedtrust.us']
+
 # When proxied under a subdir (e.g. demos.linkedtrust.us/site-dev/)
 # set SCRIPT_NAME=/site-dev to fix URL generation
 FORCE_SCRIPT_NAME = config('SCRIPT_NAME', default=None)
