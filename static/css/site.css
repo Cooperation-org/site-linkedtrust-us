@@ -95,17 +95,15 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 .nav-logo {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.4rem;
     font-weight: 800;
     font-size: 1.15rem;
     color: var(--text-primary);
     text-decoration: none;
-    line-height: 1;
 }
 .nav-logo-img {
-    width: 26px;
-    height: 26px;
-    display: block;
+    width: 28px;
+    height: 28px;
 }
 .nav-logo span { color: var(--brand-primary); }
 
