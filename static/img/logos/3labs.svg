@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="lg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background -->
+  <rect x="8" y="8" width="184" height="184" rx="40" fill="url(#lg3)"/>
+  <!-- Stylized "3" made of three horizontal bars with rounded ends -->
+  <rect x="60" y="48" width="80" height="16" rx="8" fill="#fff"/>
+  <rect x="80" y="78" width="60" height="16" rx="8" fill="#fff" opacity="0.9"/>
+  <rect x="60" y="108" width="80" height="16" rx="8" fill="#fff"/>
+  <!-- Lab flask silhouette -->
+  <path d="M88 135 L88 150 L72 175 C70 179, 73 183, 78 183 L122 183 C127 183, 130 179, 128 175 L112 150 L112 135Z" fill="#fff" opacity="0.85"/>
+  <!-- Flask neck -->
+  <rect x="92" y="128" width="16" height="12" rx="2" fill="#fff" opacity="0.85"/>
+  <!-- Bubbles in flask -->
+  <circle cx="95" cy="168" r="4" fill="url(#lg3)" opacity="0.5"/>
+  <circle cx="108" cy="172" r="3" fill="url(#lg3)" opacity="0.4"/>
+</svg>
