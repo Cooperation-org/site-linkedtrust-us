@@ -9,91 +9,35 @@
 <section class="hero">
     <div class="hero-text">
         <h1>Deep tech.<br><span class="gradient-text">Human trust.</span></h1>
-        <p>We build verified trust systems, civic tech platforms, and AI-powered tools for organizations that care about doing things right. Real projects, real impact, all verifiable on our own platform.</p>
+        <p>We build verified trust systems, civic tech platforms, and AI-powered tools — for organizations that care about doing things right. Real projects, real impact, all verifiable on our own platform.</p>
         <div class="hero-ctas">
             <a href="{% url 'work_list' %}" class="btn btn-gradient">See Our Work</a>
             <a href="{% url 'contact' %}" class="btn btn-outline">Schedule a Call</a>
         </div>
     </div>
 
-    <!-- Featured trust badge — above the fold, show-not-tell -->
-    <div class="hero-badge">
-        {% if featured_testimonials %}
-            {% with t=featured_testimonials.0 %}
-                {% if t.linked_claim_id %}
-                    <linked-badge claim-id="{{ t.linked_claim_id }}" theme="dark"></linked-badge>
-                {% else %}
-                    <div class="hero-badge-video">
-                        <div class="play-btn"></div>
-                    </div>
-                    <div class="badge-content">
-                        <div class="badge-header">
-                            <span class="verified-icon"></span>
-                            <span class="badge-label">Verified Testimonial</span>
-                        </div>
-                        <p class="badge-quote">"{{ t.quote_text }}"</p>
-                        <div class="badge-meta">
-                            <div>
-                                <div class="badge-author">{{ t.person_name }}</div>
-                                <div class="badge-org">{{ t.person_title }}</div>
-                            </div>
-                            <a href="https://live.linkedtrust.us" class="badge-link" target="_blank">View on trust graph &rarr;</a>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endwith %}
+    <!-- Two stacked row badges on the right -->
+    <div class="hero-badge hero-badge-stack">
+        {% if hero_badges %}
+            {% for badge in hero_badges %}
+                <linked-badge claim-id="{{ badge.linked_claim_id }}" layout="{{ badge.badge_layout }}" theme="{{ badge.badge_theme }}"></linked-badge>
+            {% endfor %}
         {% else %}
-            <!-- Placeholder until testimonials are added -->
-            <div class="hero-badge-video">
-                <div class="play-btn"></div>
-            </div>
-            <div class="badge-content">
-                <div class="badge-header">
-                    <span class="verified-icon"></span>
-                    <span class="badge-label">Verified Testimonial</span>
-                </div>
-                <p class="badge-quote">"LinkedTrust helped us build systems where trust is earned, verified, and visible."</p>
-                <div class="badge-meta">
-                    <div>
-                        <div class="badge-author">Our Clients</div>
-                        <div class="badge-org">Verified on LinkedTrust</div>
-                    </div>
-                    <a href="https://live.linkedtrust.us" class="badge-link" target="_blank">View trust graph &rarr;</a>
-                </div>
-            </div>
+            <!-- Fallback until hero badges are configured in admin -->
+            <linked-badge claim-id="124419" layout="row" theme="dark"></linked-badge>
+            <linked-badge claim-id="124418" layout="row" theme="dark"></linked-badge>
         {% endif %}
     </div>
 </section>
 
-<!-- MORE BADGES — secondary testimonials below hero -->
-{% if featured_testimonials.count > 1 %}
+<!-- MORE BADGES — secondary badges below hero -->
 <section class="more-badges">
-    {% for t in featured_testimonials %}
-        {% if not forloop.first %}
-            {% if t.linked_claim_id %}
-                <linked-badge claim-id="{{ t.linked_claim_id }}" theme="light" compact></linked-badge>
-            {% else %}
-                <div class="mini-badge">
-                    <div class="badge-header">
-                        <span class="verified-icon"></span>
-                        <span class="badge-label">Verified</span>
-                    </div>
-                    <p class="badge-quote">"{{ t.quote_text }}"</p>
-                    <div class="badge-meta">
-                        <div>
-                            <div class="badge-author">{{ t.person_name }}</div>
-                            <div class="badge-org">{{ t.person_title }}</div>
-                        </div>
-                        {% if t.linked_claim_id %}
-                            <a href="https://live.linkedtrust.us/claims/{{ t.linked_claim_id }}" class="badge-link" target="_blank">Trust graph &rarr;</a>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endif %}
-        {% endif %}
-    {% endfor %}
+    {% if homepage_badges %}
+        {% for badge in homepage_badges %}
+            <linked-badge claim-id="{{ badge.linked_claim_id }}" layout="{{ badge.badge_layout }}" theme="{{ badge.badge_theme }}"{% if badge.badge_layout == 'card' %} compact{% endif %}></linked-badge>
+        {% endfor %}
+    {% endif %}
 </section>
-{% endif %}
 
 <!-- GRADIENT BAR — visual separator -->
 <div class="gradient-bar"></div>
@@ -119,33 +63,35 @@
         <div class="service-card">
             <div class="service-icon">&#129302;</div>
             <h3>AI Integration</h3>
-            <p>Add RAG search, document extraction, or agentic AI to your existing systems.</p>
+            <p>RAG search, document extraction, agentic AI for your systems.</p>
         </div>
         <div class="service-card">
             <div class="service-icon">&#127891;</div>
             <h3>Credentials &amp; Badges</h3>
-            <p>Issue verifiable credentials to employees, volunteers, and partners. Open Badges v3.</p>
+            <p>Verifiable credentials for employees and partners. Open Badges v3.</p>
         </div>
         <div class="service-card">
             <div class="service-icon">&#128640;</div>
             <h3>MVP Development</h3>
-            <p>Full-stack prototypes in weeks, not months. React, Django, Next.js, FastAPI.</p>
+            <p>Full-stack prototypes in weeks. React, Django, Next.js, FastAPI.</p>
         </div>
         {% endfor %}
     </div>
 </section>
 
 <!-- PORTFOLIO — dark tech showcase section -->
-<section class="portfolio-dark">
-    <div class="container">
+<section class="portfolio-dark" style="padding:5rem 2rem;">
+    <div style="max-width:1200px;margin:0 auto;">
         <div class="section-label mono">// portfolio</div>
         <h2 class="section-title">Selected work</h2>
         <div class="portfolio-grid">
             {% for project in featured_projects %}
             <a href="{% url 'work_detail' project.slug %}" class="project-card">
-                <div class="project-thumb" {% if project.thumbnail_image %}style="background:#1a1d27;"{% else %}style="background: linear-gradient(135deg, rgba(0,178,229,0.15), rgba(102,126,234,0.15));"{% endif %}>
+                <div class="project-thumb" {% if project.thumbnail_image %}style="background:#1a1d27;"{% else %}style="background: {% cycle 'linear-gradient(135deg, rgba(0,178,229,0.15) 0%, rgba(102,126,234,0.15) 100%)' 'linear-gradient(135deg, rgba(102,126,234,0.15) 0%, rgba(147,51,234,0.15) 100%)' 'linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(0,178,229,0.15) 100%)' 'linear-gradient(135deg, rgba(234,179,8,0.15) 0%, rgba(239,68,68,0.1) 100%)' %};"{% endif %}>
                     {% if project.thumbnail_image %}
                         <img src="{{ project.thumbnail_image.url }}" alt="{{ project.title }}">
+                    {% else %}
+                        {% cycle '&#128200;' '&#127758;' '&#129302;' '&#128218;' %}
                     {% endif %}
                 </div>
                 <div class="project-body">
@@ -162,7 +108,7 @@
             {% empty %}
             <!-- Placeholder projects until admin populates -->
             <div class="project-card">
-                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(0,178,229,0.15), rgba(102,126,234,0.15));">&#128200;</div>
+                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(0,178,229,0.15) 0%, rgba(102,126,234,0.15) 100%);">&#128200;</div>
                 <div class="project-body">
                     <div class="project-client">Rising LLC</div>
                     <h3>StreetWell</h3>
@@ -170,67 +116,90 @@
                     <div class="tech-tags">
                         <span class="tech-tag">React</span>
                         <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Vite</span>
                     </div>
                 </div>
             </div>
             <div class="project-card">
-                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(102,126,234,0.15), rgba(147,51,234,0.15));">&#127758;</div>
+                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(102,126,234,0.15) 0%, rgba(147,51,234,0.15) 100%);">&#127758;</div>
                 <div class="project-body">
                     <div class="project-client">Ben Armentrout</div>
                     <h3>AZ-Sunshine</h3>
-                    <p>Political transparency tool for Arizona elections.</p>
+                    <p>Political transparency. Campaign finance + independent expenditures for AZ.</p>
                     <div class="tech-tags">
                         <span class="tech-tag">Django</span>
                         <span class="tech-tag">React</span>
+                        <span class="tech-tag">Data Viz</span>
                     </div>
                 </div>
             </div>
             <div class="project-card">
-                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(0,178,229,0.15));">&#129302;</div>
+                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(0,178,229,0.15) 100%);">&#129302;</div>
                 <div class="project-body">
                     <div class="project-client">AZ Tender Hands</div>
                     <h3>Accentrics</h3>
-                    <p>AI-powered automation for home health care.</p>
+                    <p>AI-powered automation for home health care. Scheduling, billing, hiring.</p>
                     <div class="tech-tags">
                         <span class="tech-tag">FastAPI</span>
                         <span class="tech-tag">Claude AI</span>
+                        <span class="tech-tag">Twilio</span>
                     </div>
                 </div>
             </div>
             <div class="project-card">
-                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(234,179,8,0.15), rgba(239,68,68,0.1));">&#128218;</div>
+                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(234,179,8,0.15) 0%, rgba(239,68,68,0.1) 100%);">&#128218;</div>
                 <div class="project-body">
                     <div class="project-client">George Polisner</div>
                     <h3>CivicSky</h3>
-                    <p>Ghost CMS to Bluesky bridge with civic action cards.</p>
+                    <p>Ghost CMS to Bluesky bridge with embedded civic action cards.</p>
                     <div class="tech-tags">
                         <span class="tech-tag">Next.js</span>
                         <span class="tech-tag">ATProto</span>
+                        <span class="tech-tag">Ghost</span>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
         <div class="view-all">
-            <a href="{% url 'work_list' %}">View all projects &rarr;</a>
+            <a href="{% url 'work_list' %}">View all 15+ projects &rarr;</a>
         </div>
     </div>
 </section>
 
-<!-- TRUSTED BY -->
+<!-- TRUSTED BY — infinite carousel -->
 <section class="trusted-section">
     <div class="trusted-label">Trusted by &amp; built with</div>
-    <div class="logo-grid">
-        {% comment %}Replace with actual logo images from static/img/ {% endcomment %}
-        <span>United Nations</span>
-        <span>DIF</span>
-        <span>NLnet</span>
-        <span>Candid</span>
-        <span>Human Protocol</span>
-        <span>Bloomberg BETA</span>
-        <span>Hyperledger</span>
-        <span>Bluesky</span>
-        <span>BC Gov</span>
+    <div class="carousel-wrapper">
+        <div class="carousel-track">
+            <img src="{% static 'img/logos/united-nations.png' %}" alt="United Nations">
+            <img src="{% static 'img/logos/dif.png' %}" alt="DIF">
+            <img src="{% static 'img/logos/human-protocol.png' %}" alt="HUMAN Protocol">
+            <img src="{% static 'img/logos/candid-logo.png' %}" alt="Candid">
+            <img src="{% static 'img/logos/nlnet-logo.png' %}" alt="NLnet">
+            <img src="{% static 'img/logos/british-columbia.png' %}" alt="British Columbia">
+            <img src="{% static 'img/logos/hyperledger-aries.png' %}" alt="Hyperledger ARIES">
+            <img src="{% static 'img/logos/bloomberg-beta.png' %}" alt="Bloomberg BETA">
+            <img src="{% static 'img/logos/bluesky-logo.png' %}" alt="Bluesky">
+            <img src="{% static 'img/logos/fairmint-logo.png' %}" alt="Fairmint">
+            <img src="{% static 'img/logos/3labs-logo.png' %}" alt="3 LABS">
+            <img src="{% static 'img/logos/mandate-democracy.png' %}" alt="Mandate Democracy">
+            <img src="{% static 'img/logos/intuit-logo.png' %}" alt="Intuit">
+            <!-- Duplicate for seamless loop -->
+            <img src="{% static 'img/logos/united-nations.png' %}" alt="United Nations">
+            <img src="{% static 'img/logos/dif.png' %}" alt="DIF">
+            <img src="{% static 'img/logos/human-protocol.png' %}" alt="HUMAN Protocol">
+            <img src="{% static 'img/logos/candid-logo.png' %}" alt="Candid">
+            <img src="{% static 'img/logos/nlnet-logo.png' %}" alt="NLnet">
+            <img src="{% static 'img/logos/british-columbia.png' %}" alt="British Columbia">
+            <img src="{% static 'img/logos/hyperledger-aries.png' %}" alt="Hyperledger ARIES">
+            <img src="{% static 'img/logos/bloomberg-beta.png' %}" alt="Bloomberg BETA">
+            <img src="{% static 'img/logos/bluesky-logo.png' %}" alt="Bluesky">
+            <img src="{% static 'img/logos/fairmint-logo.png' %}" alt="Fairmint">
+            <img src="{% static 'img/logos/3labs-logo.png' %}" alt="3 LABS">
+            <img src="{% static 'img/logos/mandate-democracy.png' %}" alt="Mandate Democracy">
+            <img src="{% static 'img/logos/intuit-logo.png' %}" alt="Intuit">
+        </div>
     </div>
 </section>
 

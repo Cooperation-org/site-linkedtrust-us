@@ -4,7 +4,8 @@ from django.core.mail import EmailMessage
 from django.views.decorators.csrf import csrf_protect
 from django.conf import settings
 from django.views.decorators.http import require_http_methods
-from .models import TeamMember, PortfolioProject, CaseStudy, Testimonial, ServicePackage
+from .models import TeamMember, PortfolioProject, CaseStudy, Testimonial, ServicePackage, ContactInquiry
+from .forms import ContactForm
 import json
 import logging
 
@@ -17,6 +18,8 @@ def home_view(request):
     """
     context = {
         'featured_projects': PortfolioProject.objects.filter(featured=True)[:4],
+        'hero_badges': Testimonial.objects.filter(placement='hero', linked_claim_id__gt='')[:2],
+        'homepage_badges': Testimonial.objects.filter(placement='homepage', linked_claim_id__gt=''),
         'featured_testimonials': Testimonial.objects.filter(featured=True)[:3],
         'services': ServicePackage.objects.filter(is_active=True)[:4],
         'show_banner': True,
@@ -44,11 +47,39 @@ def getstarted_view(request):
     """
     return render(request, 'getstarted.html')
 
+@csrf_protect
 def contact_view(request):
     """
-    Render the contact page.
+    Render the contact page and handle form submissions.
     """
-    return render(request, 'contact.html')
+    success = False
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            inquiry = form.save()
+            # Send notification email
+            try:
+                subject = f"New Contact: {inquiry.get_subject_display()} — {inquiry.name or inquiry.email}"
+                body = (
+                    f"Name: {inquiry.name or '(not provided)'}\n"
+                    f"Email: {inquiry.email}\n"
+                    f"Subject: {inquiry.get_subject_display()}\n\n"
+                    f"Message:\n{inquiry.message or '(no message)'}\n"
+                )
+                EmailMessage(
+                    subject=subject,
+                    body=body,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=['connect@linkedtrust.us'],
+                    reply_to=[inquiry.email],
+                ).send(fail_silently=True)
+            except Exception as e:
+                logger.error(f"Contact email failed: {e}")
+            success = True
+            form = ContactForm()  # reset form after success
+    else:
+        form = ContactForm()
+    return render(request, 'contact.html', {'form': form, 'success': success})
 
 def press_view(request):
     """

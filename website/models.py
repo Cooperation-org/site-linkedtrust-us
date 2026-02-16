@@ -92,6 +92,17 @@ class CaseStudy(models.Model):
 
 
 class Testimonial(models.Model):
+    PLACEMENT_CHOICES = [
+        ('hero', 'Hero (top of homepage, row layout)'),
+        ('homepage', 'Homepage (below hero)'),
+        ('wall', 'Badge Wall page'),
+        ('page', 'Specific project page only'),
+    ]
+    LAYOUT_CHOICES = [
+        ('row', 'Row (horizontal rectangle — good for stacking)'),
+        ('card', 'Card (vertical — good for standalone)'),
+    ]
+
     person_name = models.CharField(max_length=100)
     person_title = models.CharField(max_length=200, blank=True)
     person_image = models.ImageField(upload_to='testimonials/', blank=True)
@@ -100,6 +111,9 @@ class Testimonial(models.Model):
     has_video = models.BooleanField(default=False)
     project = models.ForeignKey(PortfolioProject, on_delete=models.SET_NULL, null=True, blank=True, related_name='testimonials')
     featured = models.BooleanField(default=False, help_text="Show on homepage")
+    placement = models.CharField(max_length=20, choices=PLACEMENT_CHOICES, default='homepage', help_text="Where this badge appears on the site")
+    badge_layout = models.CharField(max_length=10, choices=LAYOUT_CHOICES, default='row', help_text="Badge display layout")
+    badge_theme = models.CharField(max_length=10, choices=[('dark', 'Dark'), ('light', 'Light')], default='dark', help_text="Badge color theme")
     sort_order = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -133,3 +147,25 @@ class ServicePackage(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ContactInquiry(models.Model):
+    SUBJECT_CHOICES = [
+        ('consulting', 'Consulting'),
+        ('site_issue', 'Site Issue'),
+        ('developer', 'Developer question'),
+        ('other', 'Other'),
+    ]
+
+    name = models.CharField(max_length=150, blank=True)
+    email = models.EmailField()
+    subject = models.CharField(max_length=30, choices=SUBJECT_CHOICES, default='consulting')
+    message = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name_plural = 'Contact inquiries'
+
+    def __str__(self):
+        return f"{self.email} — {self.get_subject_display()} ({self.created_at:%Y-%m-%d})"

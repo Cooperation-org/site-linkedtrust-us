@@ -28,3 +28,6 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # Also serve media at /media/ (without SCRIPT_NAME prefix) for when nginx strips it
+    if settings.FORCE_SCRIPT_NAME:
+        urlpatterns += static('/media/', document_root=settings.MEDIA_ROOT)

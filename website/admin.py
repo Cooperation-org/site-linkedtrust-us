@@ -4,7 +4,7 @@ from django.utils.html import format_html
 from django.db.models import Avg, Sum
 from django.utils import timezone
 from datetime import timedelta
-from .models import TeamMember, PortfolioProject, CaseStudy, Testimonial, ServicePackage
+from .models import TeamMember, PortfolioProject, CaseStudy, Testimonial, ServicePackage, ContactInquiry
 
 class LinkedtrustAdminSite(AdminSite):
     site_header = 'Linkedtrust Administration'
@@ -79,7 +79,7 @@ class CaseStudyInline(admin.StackedInline):
 class TestimonialInline(admin.TabularInline):
     model = Testimonial
     extra = 0
-    fields = ['person_name', 'person_title', 'quote_text', 'linked_claim_id', 'featured']
+    fields = ['person_name', 'person_title', 'quote_text', 'linked_claim_id', 'placement', 'badge_layout', 'badge_theme', 'featured']
 
 class PortfolioProjectAdmin(admin.ModelAdmin):
     list_display = ['title', 'client_name', 'category', 'featured', 'sort_order', 'display_thumb']
@@ -122,9 +122,9 @@ class CaseStudyAdmin(admin.ModelAdmin):
 
 # --- Testimonial ---
 class TestimonialAdmin(admin.ModelAdmin):
-    list_display = ['person_name', 'person_title', 'project', 'linked_claim_id', 'has_video', 'featured', 'sort_order']
-    list_filter = ['featured', 'has_video']
-    list_editable = ['featured', 'sort_order']
+    list_display = ['person_name', 'person_title', 'project', 'linked_claim_id', 'placement', 'badge_layout', 'badge_theme', 'featured', 'sort_order']
+    list_filter = ['featured', 'placement', 'badge_layout', 'has_video']
+    list_editable = ['featured', 'placement', 'badge_layout', 'badge_theme', 'sort_order']
     search_fields = ['person_name', 'quote_text']
 
 
@@ -138,9 +138,19 @@ class ServicePackageAdmin(admin.ModelAdmin):
     filter_horizontal = ['example_projects']
 
 
+# --- ContactInquiry ---
+class ContactInquiryAdmin(admin.ModelAdmin):
+    list_display = ['email', 'name', 'subject', 'created_at']
+    list_filter = ['subject', 'created_at']
+    search_fields = ['email', 'name', 'message']
+    readonly_fields = ['created_at']
+    ordering = ['-created_at']
+
+
 # Register with custom admin site
 admin_site.register(TeamMember, TeamMemberAdmin)
 admin_site.register(PortfolioProject, PortfolioProjectAdmin)
 admin_site.register(CaseStudy, CaseStudyAdmin)
 admin_site.register(Testimonial, TestimonialAdmin)
 admin_site.register(ServicePackage, ServicePackageAdmin)
+admin_site.register(ContactInquiry, ContactInquiryAdmin)

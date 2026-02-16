@@ -4,10 +4,10 @@
         <a href="{% url 'home' %}" class="nav-logo">Linked<span>Trust</span><span class="dot"></span></a>
 
         <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'work_list' %}">Our Work</a></li>
             <li><a href="{% url 'services' %}">Services</a></li>
-            <li><a href="{% url 'contact' %}">Contact</a></li>
             <li><a href="{% url 'contact' %}" class="nav-cta">Let's Talk</a></li>
         </ul>
 
@@ -18,10 +18,10 @@
 </nav>
 
 <div class="nav-mobile-menu">
+    <a href="{% url 'home' %}">Home</a>
     <a href="{% url 'about' %}">About</a>
     <a href="{% url 'work_list' %}">Our Work</a>
     <a href="{% url 'services' %}">Services</a>
     <a href="{% url 'team' %}">Team</a>
-    <a href="{% url 'contact' %}">Contact</a>
     <a href="{% url 'contact' %}" class="btn btn-gradient" style="margin-top:1rem;text-align:center;">Let's Talk</a>
 </div>

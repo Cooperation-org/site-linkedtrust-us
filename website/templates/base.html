@@ -13,7 +13,21 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}LinkedTrust{% endblock %}</title>
+    <title>{% block title %}LinkedTrust — Deep Tech. Human Trust.{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}We build verified trust systems, civic tech platforms, and AI-powered tools for organizations that care about doing things right.{% endblock %}">
+
+    <!-- Open Graph / Social sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}LinkedTrust — Deep Tech. Human Trust.{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Verified trust systems, civic tech platforms, and AI-powered tools. Real projects, real impact, all verifiable.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% static 'img/logo.svg' %}{% endblock %}">
+    <meta property="og:url" content="https://linkedtrust.us">
+    <meta property="og:site_name" content="LinkedTrust">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LinkedTrust — Deep Tech. Human Trust.">
+    <meta name="twitter:description" content="Verified trust systems, civic tech platforms, and AI-powered tools. Real projects, real impact.">
 
     <link rel="shortcut icon" href="{% static 'img/logo.svg' %}" type="image/x-icon">
 
@@ -25,7 +39,8 @@
     {% block extra_css %}{% endblock %}
 
     <!-- LinkedTrust badge web component -->
-    <script src="https://linkedtrust.us/badge.js" defer></script>
+    <!-- TEMPORARY: badge.js served from demos VM. Move to permanent URL (e.g. linkedtrust.us/embed/) later -->
+    <script src="https://demos.linkedtrust.us/embed/badge.js" defer></script>
 </head>
 <body>
     {% include 'navbar.html' %}
