@@ -946,12 +946,15 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 
 linked-badge {
     display: block;
-    min-height: 200px;
+    min-height: 180px;
     border-radius: var(--radius);
 }
 linked-badge:not(:defined) {
     background: var(--bg-dark-card);
     border-radius: var(--radius);
+}
+linked-badge[layout="card"]:not(:defined) {
+    min-height: 340px;
 }
 
 
