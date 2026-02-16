@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}LinkedClaims Ecosystem — LinkedTrust{% endblock %}
+
+{% block content %}
+
+<section class="linkedclaims-hero">
+    <div class="container">
+        <div class="section-label mono">// linkedclaims</div>
+        <h1>The LinkedClaims Ecosystem</h1>
+        <p class="linkedclaims-intro">[CONTENT NEEDED: golda's description of LinkedClaims — what it is, why it matters, the DIF Labs standard, the vision of a decentralized web of trust. Pull from LinkedClaims repo or abra.]</p>
+    </div>
+</section>
+
+<section class="ecosystem-grid-section">
+    <div class="container">
+        {% for item in ecosystem_items %}
+        <a href="{{ item.live_url }}" target="_blank" rel="noopener" class="ecosystem-card{% if not item.live_url %} no-link{% endif %}">
+            <div class="ecosystem-screenshot">
+                {% if item.screenshot %}
+                    <img src="{{ item.screenshot.url }}" alt="{{ item.name }}">
+                {% else %}
+                    <div class="screenshot-placeholder">Screenshot needed</div>
+                {% endif %}
+            </div>
+            <div class="ecosystem-body">
+                <div class="ecosystem-topline">
+                    <h3>{{ item.name }}</h3>
+                    <span class="ecosystem-status status-{{ item.status }}">{{ item.get_status_display }}</span>
+                </div>
+                <p>{{ item.short_description }}</p>
+                {% if item.repo_url %}
+                    <span class="ecosystem-repo-link">GitHub &rarr;</span>
+                {% endif %}
+            </div>
+        </a>
+        {% empty %}
+        <p>Ecosystem items coming soon — add them in <a href="{% url 'linkedtrust_admin:index' %}">the admin</a>.</p>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
