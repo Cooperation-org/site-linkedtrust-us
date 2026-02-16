@@ -1,7 +1,7 @@
 {% load static %}
 <nav class="site-nav">
     <div class="nav-inner">
-        <a href="{% url 'home' %}" class="nav-logo">Linked<span>Trust</span><span class="dot"></span></a>
+        <a href="{% url 'home' %}" class="nav-logo"><img src="{% static 'img/logo.svg' %}" alt="" class="nav-logo-img">Linked<span>Trust</span></a>
 
         <ul class="nav-links">
             <li><a href="{% url 'linkedclaims' %}">LinkedClaims</a></li>
