@@ -4,187 +4,118 @@
 {% block extrastyle %}
 {{ block.super }}
 <style>
-    /* Dashboard Layout */
-    .dashboard-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-        padding: 20px;
-        max-width: 1400px;
-        margin: 0 auto;
+    .updates-list li small {
+        color: var(--body-quiet-color);
     }
 
-    /* Card Styling */
-    .dashboard-card {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        padding: 20px;
-        transition: transform 0.2s;
-    }
-
-    .dashboard-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    .dashboard-card h2 {
-        color: var(--primary-color);
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #eee;
-        font-size: 1.2em;
-    }
-
-    /* Stats Grid */
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 15px;
-    }
-
-    .stat-item {
-        text-align: center;
-        padding: 15px;
-        background: #f8f9fa;
-        border-radius: 8px;
-        transition: background-color 0.2s;
-    }
-
-    .stat-item:hover {
-        background: #e9ecef;
-    }
-
-    .stat-value {
-        font-size: 24px;
-        font-weight: bold;
-        color: var(--primary-color);
-        margin-bottom: 5px;
-    }
-
-    .stat-label {
-        font-size: 14px;
-        color: #666;
-    }
-
-    /* Recent Updates List */
-    .updates-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .updates-list li {
-        padding: 12px 0;
-        border-bottom: 1px solid #eee;
+    /* Welcome banner */
+    .admin-welcome {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+        padding: 24px 30px;
+        margin-bottom: 10px;
+        background: var(--darkened-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
     }
 
-    .updates-list li:last-child {
-        border-bottom: none;
+    .admin-welcome-text h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--body-fg);
+        margin: 0 0 6px;
     }
 
-    /* Quick Actions */
-    .quick-actions {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-        margin-top: 10px;
+    .admin-welcome-text p {
+        color: var(--body-quiet-color);
+        margin: 0;
+        font-size: 0.95rem;
     }
 
-    .action-button {
-        display: inline-block;
-        padding: 8px 16px;
-        background: var(--primary-color);
-        color: white;
-        text-decoration: none;
-        border-radius: 4px;
-        text-align: center;
-        transition: background-color 0.2s;
+    .admin-welcome-illustration {
+        flex-shrink: 0;
     }
 
-    .action-button:hover {
-        background: var(--secondary-color);
-        color: white;
-        text-decoration: none;
-    }
-
-    /* Model List Styling */
-    .model-list {
-        margin-top: 20px;
-    }
-
-    .model-list table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .model-list th, .model-list td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid #eee;
-    }
-
-    .model-list tr:hover {
-        background: #f8f9fa;
-    }
-
-    .addlink, .viewlink {
-        padding: 4px 8px;
-        border-radius: 4px;
-        text-decoration: none;
-        font-size: 0.9em;
-        margin-left: 8px;
-    }
-
-    .addlink {
-        background: #28a745;
-        color: white;
-    }
-
-    .viewlink {
-        background: #17a2b8;
-        color: white;
-    }
-
-    .addlink:hover, .viewlink:hover {
-        opacity: 0.9;
-        color: white;
-        text-decoration: none;
+    @media (max-width: 767px) {
+        .admin-welcome {
+            flex-direction: column;
+            text-align: center;
+        }
+        .admin-welcome-illustration {
+            order: -1;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
+<!-- Welcome Banner with Illustration -->
+<div class="admin-welcome">
+    <div class="admin-welcome-text">
+        <h1>{% trans "Welcome to LinkedTrust Admin" %}</h1>
+        <p>{% trans "Manage your team, credentials, and trust claims." %}</p>
+    </div>
+    <div class="admin-welcome-illustration">
+        <svg width="140" height="100" viewBox="0 0 140 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Desk -->
+            <rect x="15" y="60" width="110" height="4" rx="2" fill="var(--border-color)"/>
+            <!-- Monitor -->
+            <rect x="40" y="20" width="60" height="38" rx="4" fill="var(--primary)" opacity="0.15"/>
+            <rect x="44" y="24" width="52" height="30" rx="2" fill="var(--primary)" opacity="0.25"/>
+            <!-- Screen content lines -->
+            <rect x="50" y="30" width="24" height="3" rx="1.5" fill="var(--primary)" opacity="0.6"/>
+            <rect x="50" y="36" width="38" height="2" rx="1" fill="var(--primary)" opacity="0.3"/>
+            <rect x="50" y="41" width="32" height="2" rx="1" fill="var(--primary)" opacity="0.3"/>
+            <rect x="50" y="46" width="20" height="2" rx="1" fill="var(--primary)" opacity="0.3"/>
+            <!-- Monitor stand -->
+            <rect x="65" y="58" width="10" height="4" rx="1" fill="var(--border-color)"/>
+            <rect x="58" y="61" width="24" height="3" rx="1.5" fill="var(--border-color)"/>
+            <!-- Coffee mug -->
+            <rect x="110" y="50" width="12" height="12" rx="3" fill="var(--primary)" opacity="0.2"/>
+            <rect x="121" y="53" width="4" height="6" rx="2" fill="var(--primary)" opacity="0.15"/>
+            <!-- Floating trust nodes -->
+            <circle cx="22" cy="28" r="6" fill="var(--primary)" opacity="0.3"/>
+            <circle cx="120" cy="18" r="5" fill="var(--accent, #667eea)" opacity="0.3"/>
+            <circle cx="16" cy="48" r="4" fill="var(--accent, #667eea)" opacity="0.2"/>
+            <!-- Connection lines -->
+            <line x1="28" y1="28" x2="40" y2="35" stroke="var(--primary)" stroke-width="1" opacity="0.2"/>
+            <line x1="115" y1="18" x2="100" y2="28" stroke="var(--primary)" stroke-width="1" opacity="0.2"/>
+            <!-- Checkmark badge -->
+            <circle cx="130" cy="38" r="7" fill="#10B981" opacity="0.25"/>
+            <path d="M126 38l3 3 5-5" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+        </svg>
+    </div>
+</div>
+
 <div class="dashboard-container">
     <!-- Team Overview Card -->
     <div class="dashboard-card">
-        <h2>Team Overview</h2>
+        <h2>{% trans "Team Overview" %}</h2>
         <div class="stats-grid">
             <div class="stat-item">
                 <div class="stat-value">{{ team_count }}</div>
-                <div class="stat-label">Team Members</div>
+                <div class="stat-label">{% trans "Team Members" %}</div>
             </div>
             <div class="stat-item">
                 <div class="stat-value">${{ avg_rate|floatformat:2 }}</div>
-                <div class="stat-label">Avg. Rate/Hour</div>
+                <div class="stat-label">{% trans "Avg. Rate/Hour" %}</div>
             </div>
             <div class="stat-item">
                 <div class="stat-value">${{ total_team_value|floatformat:0 }}</div>
-                <div class="stat-label">Total Value</div>
+                <div class="stat-label">{% trans "Total Value" %}</div>
             </div>
         </div>
         <div class="quick-actions">
-            <a href="{% url 'admin:website_teammember_add' %}" class="action-button">Add Member</a>
-            <a href="{% url 'admin:website_teammember_changelist' %}" class="action-button">View All</a>
+            <a href="{% url 'admin:website_teammember_add' %}" class="action-button">{% trans "Add Member" %}</a>
+            <a href="{% url 'admin:website_teammember_changelist' %}" class="action-button">{% trans "View All" %}</a>
         </div>
     </div>
 
     <!-- Recent Updates Card -->
     <div class="dashboard-card">
-        <h2>Recent Updates</h2>
+        <h2>{% trans "Recent Updates" %}</h2>
         <ul class="updates-list">
             {% for member in recent_updates %}
             <li>
@@ -193,23 +124,23 @@
             </li>
             {% endfor %}
             {% if not recent_updates %}
-            <li>No recent updates</li>
+            <li>{% trans "No recent updates" %}</li>
             {% endif %}
         </ul>
     </div>
 
     <!-- New Members Card -->
     <div class="dashboard-card">
-        <h2>New Team Members</h2>
+        <h2>{% trans "New Team Members" %}</h2>
         <ul class="updates-list">
             {% for member in recent_members %}
             <li>
                 <span>{{ member.name }} - {{ member.title }}</span>
-                <small>Joined {{ member.created_at|date:"M d" }}</small>
+                <small>{% trans "Joined" %} {{ member.created_at|date:"M d" }}</small>
             </li>
             {% endfor %}
             {% if not recent_members %}
-            <li>No new members</li>
+            <li>{% trans "No new members" %}</li>
             {% endif %}
         </ul>
     </div>

@@ -8,6 +8,11 @@
 <!-- Favicon -->
 <link rel="shortcut icon" href="{% static 'img/logo.svg' %}?v=2" type="image/x-icon">
 
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-G1WJCFQ4RQ"></script>
 <script>
@@ -25,122 +30,130 @@
 <link rel="stylesheet" href="{% static 'css/custom_admin.css' %}">
 
 <style>
-    :root {
-        --primary-color: #04b3e4;
-        --secondary-color: #04ceda;
-        --accent-color: #8cc541;
-        --warning-color: #ffcd51;
-        --danger-color: #f05f68;
+    /* ---- LinkedTrust Admin Theme (light/dark aware) ---- */
+
+    /* Module cards get rounded corners */
+    .module {
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
     }
 
+    .module h2, .module caption, .inline-group h2 {
+        border-radius: 12px 12px 0 0;
+    }
+
+    /* Header — always dark, matching website nav */
     #header {
-        background: var(--primary-color);
-        color: white;
+        background: var(--header-bg);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
-    #branding h1 {
-        color: white;
+    /* Branding logo + text */
+    #branding {
+        align-items: center;
+        gap: 10px;
     }
 
-    .module h2,
-    .module caption,
-    .inline-group h2 {
-        background: var(--secondary-color);
+    #branding .admin-logo {
+        height: 28px;
+        width: auto;
     }
 
+    #site-name a:link, #site-name a:visited {
+        color: #fff;
+    }
+
+    #user-tools {
+        color: #888899;
+    }
+
+    #user-tools a:link, #user-tools a:visited {
+        color: #00B2E5;
+        border-bottom-color: rgba(0,178,229,0.3);
+    }
+
+    /* Breadcrumbs */
     div.breadcrumbs {
-        background: var(--secondary-color);
+        background: var(--breadcrumbs-bg);
+        color: var(--breadcrumbs-fg);
+        border-bottom: 1px solid var(--hairline-color);
     }
 
-    .button,
-    input[type=submit],
-    input[type=button],
-    .submit-row input,
-    a.button {
-        background: var(--primary-color);
+    div.breadcrumbs a:link, div.breadcrumbs a:visited {
+        color: var(--breadcrumbs-link-fg);
     }
 
-    .button:hover,
-    input[type=submit]:hover,
-    input[type=button]:hover {
-        background: var(--accent-color);
+    /* Buttons — brand blue */
+    .button, input[type=submit], input[type=button], .submit-row input, a.button {
+        border-radius: 8px;
     }
 
     .object-tools a {
-        background: var(--accent-color);
+        background: var(--object-tools-bg);
     }
 
-    .object-tools a:hover {
-        background: var(--secondary-color);
+    .delete-button, .deletelink {
+        background: var(--delete-button-bg) !important;
+        color: white !important;
     }
 
-    .delete-button {
-        background: var(--danger-color) !important;
+    .delete-button:hover, .deletelink:hover {
+        background: var(--delete-button-hover-bg) !important;
     }
 
-    .delete-button:hover {
-        background: #d95057 !important;
+    /* Submit row */
+    .submit-row {
+        background: var(--darkened-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
     }
 
-    /* Dashboard cards */
-    .dashboard-card {
-        border-top: 3px solid var(--primary-color);
+    /* Tables */
+    #changelist-filter {
+        background: var(--darkened-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
     }
 
-    .stat-value {
-        color: var(--primary-color);
+    #changelist-filter li.selected a {
+        color: var(--primary);
+        font-weight: 600;
     }
 
-    .action-button {
-        background: var(--accent-color);
+    /* Forms */
+    fieldset {
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
     }
 
-    .action-button:hover {
-        background: var(--secondary-color);
+    input:not([type]), input[type=text], input[type=password], input[type=email],
+    input[type=url], input[type=number], input[type=tel], textarea, select {
+        border-radius: 8px;
     }
 
-    /* Table styling */
-    thead th {
-        background: var(--primary-color);
-        color: white;
+    input:focus, select:focus, textarea:focus {
+        border-color: var(--primary);
+        outline: none;
     }
 
-    tbody tr:hover {
-        background-color: rgba(4, 179, 228, 0.1);
-    }
-
-    /* Form styling */
-    .form-row.errors {
-        border-color: var(--danger-color);
-    }
-
+    /* Messages */
     .errornote {
-        background: var(--danger-color);
+        border-radius: 8px;
     }
 
-    /* Success messages */
-    .success {
-        background: var(--accent-color);
+    /* Nav sidebar */
+    #nav-sidebar {
+        background: var(--body-bg);
+        border-right: 1px solid var(--hairline-color);
     }
 
-    /* Warning messages */
-    .warning {
-        background: var(--warning-color);
+    /* Inline related */
+    .inline-related {
+        border-radius: 12px;
     }
 
-    /* Links */
-    a:link,
-    a:visited {
-        color: var(--primary-color);
-    }
-
-    a:hover {
-        color: var(--secondary-color);
-    }
-</style>
-
-<style>
-    /* Dashboard Layout */
+    /* Dashboard shared styles */
     .dashboard-container {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -150,29 +163,26 @@
         margin: 0 auto;
     }
 
-    /* Card Styling */
     .dashboard-card {
-        background: white;
+        background: var(--darkened-bg);
+        border: 1px solid var(--border-color);
         border-radius: 12px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         padding: 20px;
-        transition: transform 0.2s;
     }
 
     .dashboard-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-color: var(--primary);
     }
 
     .dashboard-card h2 {
-        color: var(--primary-color);
+        color: var(--primary);
         margin-bottom: 20px;
         padding-bottom: 10px;
-        border-bottom: 2px solid #eee;
+        border-bottom: 1px solid var(--hairline-color);
         font-size: 1.2em;
+        background: none;
     }
 
-    /* Stats Grid */
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -182,28 +192,27 @@
     .stat-item {
         text-align: center;
         padding: 15px;
-        background: #f8f9fa;
-        border-radius: 8px;
-        transition: background-color 0.2s;
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
     }
 
     .stat-item:hover {
-        background: #e9ecef;
+        border-color: var(--primary);
     }
 
     .stat-value {
         font-size: 24px;
-        font-weight: bold;
-        color: var(--primary-color);
+        font-weight: 700;
+        color: var(--primary);
         margin-bottom: 5px;
     }
 
     .stat-label {
         font-size: 14px;
-        color: #666;
+        color: var(--body-quiet-color);
     }
 
-    /* Recent Updates List */
     .updates-list {
         list-style: none;
         padding: 0;
@@ -212,17 +221,17 @@
 
     .updates-list li {
         padding: 12px 0;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid var(--hairline-color);
         display: flex;
         justify-content: space-between;
         align-items: center;
+        color: var(--body-fg);
     }
 
     .updates-list li:last-child {
         border-bottom: none;
     }
 
-    /* Quick Actions */
     .quick-actions {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -233,23 +242,26 @@
     .action-button {
         display: inline-block;
         padding: 8px 16px;
-        background: var(--primary-color);
+        background: var(--button-bg);
         color: white;
         text-decoration: none;
-        border-radius: 4px;
+        border-radius: 8px;
         text-align: center;
-        transition: background-color 0.2s;
+        font-weight: 500;
     }
 
     .action-button:hover {
-        background: var(--secondary-color);
+        background: var(--button-hover-bg);
         color: white;
         text-decoration: none;
     }
 
-    /* Model List Styling */
+    .action-button:link, .action-button:visited {
+        color: white;
+    }
+
     .model-list {
-        margin-top: 20px;
+        margin-top: 0;
     }
 
     .model-list table {
@@ -257,51 +269,62 @@
         border-collapse: collapse;
     }
 
-    .model-list th,
-    .model-list td {
+    .model-list th, .model-list td {
         padding: 12px;
         text-align: left;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid var(--hairline-color);
+        color: var(--body-fg);
     }
 
     .model-list tr:hover {
-        background: #f8f9fa;
+        background: var(--selected-bg);
     }
 
-    .addlink,
-    .viewlink {
-        padding: 4px 8px;
-        border-radius: 4px;
+    .model-list a:link, .model-list a:visited {
+        color: var(--link-fg);
+    }
+
+    .dashboard-card .addlink,
+    .dashboard-card .viewlink {
+        padding: 4px 10px;
+        border-radius: 6px;
         text-decoration: none;
-        font-size: 0.9em;
+        font-size: 0.85em;
         margin-left: 8px;
+        background-image: none;
+        padding-left: 10px;
     }
 
-    .addlink {
-        background: #28a745;
+    .dashboard-card .addlink {
+        background: var(--button-bg);
         color: white;
     }
 
-    .viewlink {
-        background: #17a2b8;
+    .dashboard-card .viewlink {
+        background: var(--accent);
         color: white;
     }
 
-    .addlink:hover,
-    .viewlink:hover {
-        opacity: 0.9;
+    .dashboard-card .addlink:hover,
+    .dashboard-card .viewlink:hover {
+        opacity: 0.85;
         color: white;
         text-decoration: none;
+    }
+
+    .dashboard-card .addlink:link, .dashboard-card .addlink:visited,
+    .dashboard-card .viewlink:link, .dashboard-card .viewlink:visited {
+        color: white;
     }
 </style>
-
 
 {% endblock %}
 
 {% block branding %}
 <h1 id="site-name">
     <a href="{% url 'admin:index' %}">
-        Linkedtrust Administration
+        <img src="{% static 'img/logo.svg' %}" alt="LinkedTrust" class="admin-logo">
+        LinkedTrust Admin
     </a>
 </h1>
 {% endblock %}

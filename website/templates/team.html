@@ -198,15 +198,7 @@
 
 {% block content %}
 
-<section class="container" style="padding-top:3rem;">
-    <div class="section-label mono">// team</div>
-    <h1 class="section-title">Our Team</h1>
-    <p style="color:var(--text-secondary);max-width:600px;margin-bottom:2.5rem;">
-        Builders across four continents. Everyone ships code. Shared equity, shared purpose.
-    </p>
-</section>
-
-<section class="container" style="padding-top:0;padding-bottom:3rem;">
+<section class="container" style="padding-top:1.5rem;padding-bottom:3rem;">
     <div class="team-grid">
         {% for member in team_members %}
         <div class="team-card" data-member-id="{{ member.id }}">

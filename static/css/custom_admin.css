@@ -2,89 +2,72 @@
     DJANGO Admin styles
 */
 
-/* VARIABLE DEFINITIONS */
+/* VARIABLE DEFINITIONS — LinkedTrust Design System */
 html[data-theme="light"],
 :root {
-    --primary: #79aec8;
-    --secondary: #417690;
-    --accent: #f5dd5d;
+    --primary: #00B2E5;
+    --secondary: #0090b8;
+    --accent: #667eea;
     --primary-fg: #fff;
 
-    --body-fg: #333;
-    --body-bg: #fff;
-    --body-quiet-color: #666;
+    --body-fg: #1a1a1a;
+    --body-bg: #FAFAF8;
+    --body-quiet-color: #555555;
     --body-medium-color: #444;
     --body-loud-color: #000;
 
-    --header-color: #ffc;
-    --header-branding-color: var(--accent);
-    --header-bg: var(--secondary);
-    --header-link-color: var(--primary-fg);
+    --header-color: #e8e8e8;
+    --header-branding-color: #fff;
+    --header-bg: #0f1117;
+    --header-link-color: #e8e8e8;
 
-    --breadcrumbs-fg: #c4dce8;
-    --breadcrumbs-link-fg: var(--body-bg);
-    --breadcrumbs-bg: #264b5d;
+    --breadcrumbs-fg: #888899;
+    --breadcrumbs-link-fg: #e8e8e8;
+    --breadcrumbs-bg: #1a1d27;
 
-    --link-fg: #417893;
-    --link-hover-color: #036;
-    --link-selected-fg: var(--secondary);
+    --link-fg: #0090b8;
+    --link-hover-color: #667eea;
+    --link-selected-fg: #00B2E5;
 
-    --hairline-color: #e8e8e8;
-    --border-color: #ccc;
+    --hairline-color: #e8e8e6;
+    --border-color: #e8e8e6;
 
     --error-fg: #ba2121;
 
-    --message-success-bg: #dfd;
-    --message-warning-bg: #ffc;
-    --message-error-bg: #ffefef;
+    --message-success-bg: #d1fae5;
+    --message-warning-bg: #fef3c7;
+    --message-error-bg: #fee2e2;
 
-    --darkened-bg: #f8f8f8; /* A bit darker than --body-bg */
-    --selected-bg: #e4e4e4; /* E.g. selected table cells */
-    --selected-row: #ffc;
+    --darkened-bg: #f0f0ee;
+    --selected-bg: #e4e4e4;
+    --selected-row: #e0f4fd;
 
     --button-fg: #fff;
-    --button-bg: var(--secondary);
-    --button-hover-bg: #205067;
-    --default-button-bg: #205067;
-    --default-button-hover-bg: var(--secondary);
+    --button-bg: #00B2E5;
+    --button-hover-bg: #0090b8;
+    --default-button-bg: #0090b8;
+    --default-button-hover-bg: #00B2E5;
     --close-button-bg: #747474;
-    --close-button-hover-bg: #333;
-    --delete-button-bg: #ba2121;
-    --delete-button-hover-bg: #a41515;
+    --close-button-hover-bg: #555;
+    --delete-button-bg: #dc2626;
+    --delete-button-hover-bg: #b91c1c;
 
     --object-tools-fg: var(--button-fg);
     --object-tools-bg: var(--close-button-bg);
     --object-tools-hover-bg: var(--close-button-hover-bg);
 
     --font-family-primary:
-        "Segoe UI",
+        "Montserrat",
         system-ui,
-        Roboto,
-        "Helvetica Neue",
-        Arial,
-        sans-serif,
-        "Apple Color Emoji",
-        "Segoe UI Emoji",
-        "Segoe UI Symbol",
-        "Noto Color Emoji";
+        -apple-system,
+        "Segoe UI",
+        sans-serif;
     --font-family-monospace:
+        "JetBrains Mono",
         ui-monospace,
-        Menlo,
-        Monaco,
-        "Cascadia Mono",
-        "Segoe UI Mono",
-        "Roboto Mono",
-        "Oxygen Mono",
-        "Ubuntu Monospace",
-        "Source Code Pro",
-        "Fira Mono",
-        "Droid Sans Mono",
-        "Courier New",
-        monospace,
-        "Apple Color Emoji",
-        "Segoe UI Emoji",
-        "Segoe UI Symbol",
-        "Noto Color Emoji";
+        "Fira Code",
+        Consolas,
+        monospace;
 
     color-scheme: light;
 }
@@ -1179,39 +1162,50 @@ a.deletelink:focus, a.deletelink:hover {
 }
 
 
-/* Dark Mode CSS */
+/* Dark Mode CSS — LinkedTrust Dark Palette */
 @media (prefers-color-scheme: dark) {
     :root {
-      --primary: #264b5d;
-      --primary-fg: #f7f7f7;
-  
-      --body-fg: #eeeeee;
-      --body-bg: #121212;
-      --body-quiet-color: #d0d0d0;
-      --body-medium-color: #e0e0e0;
+      --primary: #00B2E5;
+      --primary-fg: #fff;
+
+      --body-fg: #e8e8e8;
+      --body-bg: #0f1117;
+      --body-quiet-color: #888899;
+      --body-medium-color: #aaaabc;
       --body-loud-color: #ffffff;
-  
-      --breadcrumbs-link-fg: #e0e0e0;
-      --breadcrumbs-bg: var(--primary);
-  
-      --link-fg: #81d4fa;
-      --link-hover-color: #4ac1f7;
-      --link-selected-fg: #6f94c6;
-  
-      --hairline-color: #272727;
-      --border-color: #353535;
-  
-      --error-fg: #e35f5f;
-      --message-success-bg: #006b1b;
-      --message-warning-bg: #583305;
-      --message-error-bg: #570808;
-  
-      --darkened-bg: #212121;
-      --selected-bg: #1b1b1b;
-      --selected-row: #00363a;
-  
-      --close-button-bg: #333333;
-      --close-button-hover-bg: #666666;
+
+      --header-color: #e8e8e8;
+      --header-branding-color: #fff;
+      --header-bg: #0f1117;
+      --header-link-color: #e8e8e8;
+
+      --breadcrumbs-link-fg: #e8e8e8;
+      --breadcrumbs-bg: #1a1d27;
+
+      --link-fg: #00B2E5;
+      --link-hover-color: #667eea;
+      --link-selected-fg: #00B2E5;
+
+      --hairline-color: rgba(255,255,255,0.08);
+      --border-color: rgba(255,255,255,0.12);
+
+      --error-fg: #f87171;
+      --message-success-bg: #064e3b;
+      --message-warning-bg: #78350f;
+      --message-error-bg: #7f1d1d;
+
+      --darkened-bg: #1a1d27;
+      --selected-bg: #22263a;
+      --selected-row: #0c3547;
+
+      --button-bg: #00B2E5;
+      --button-hover-bg: #0090b8;
+      --default-button-bg: #0090b8;
+      --default-button-hover-bg: #00B2E5;
+      --close-button-bg: #333344;
+      --close-button-hover-bg: #555566;
+      --delete-button-bg: #dc2626;
+      --delete-button-hover-bg: #b91c1c;
 
       color-scheme: dark;
     }
@@ -1219,36 +1213,47 @@ a.deletelink:focus, a.deletelink:hover {
 
 
 html[data-theme="dark"] {
-    --primary: #264b5d;
-    --primary-fg: #f7f7f7;
+    --primary: #00B2E5;
+    --primary-fg: #fff;
 
-    --body-fg: #eeeeee;
-    --body-bg: #121212;
-    --body-quiet-color: #d0d0d0;
-    --body-medium-color: #e0e0e0;
+    --body-fg: #e8e8e8;
+    --body-bg: #0f1117;
+    --body-quiet-color: #888899;
+    --body-medium-color: #aaaabc;
     --body-loud-color: #ffffff;
 
-    --breadcrumbs-link-fg: #e0e0e0;
-    --breadcrumbs-bg: var(--primary);
+    --header-color: #e8e8e8;
+    --header-branding-color: #fff;
+    --header-bg: #0f1117;
+    --header-link-color: #e8e8e8;
 
-    --link-fg: #81d4fa;
-    --link-hover-color: #4ac1f7;
-    --link-selected-fg: #6f94c6;
+    --breadcrumbs-link-fg: #e8e8e8;
+    --breadcrumbs-bg: #1a1d27;
 
-    --hairline-color: #272727;
-    --border-color: #353535;
+    --link-fg: #00B2E5;
+    --link-hover-color: #667eea;
+    --link-selected-fg: #00B2E5;
 
-    --error-fg: #e35f5f;
-    --message-success-bg: #006b1b;
-    --message-warning-bg: #583305;
-    --message-error-bg: #570808;
+    --hairline-color: rgba(255,255,255,0.08);
+    --border-color: rgba(255,255,255,0.12);
 
-    --darkened-bg: #212121;
-    --selected-bg: #1b1b1b;
-    --selected-row: #00363a;
+    --error-fg: #f87171;
+    --message-success-bg: #064e3b;
+    --message-warning-bg: #78350f;
+    --message-error-bg: #7f1d1d;
 
-    --close-button-bg: #333333;
-    --close-button-hover-bg: #666666;
+    --darkened-bg: #1a1d27;
+    --selected-bg: #22263a;
+    --selected-row: #0c3547;
+
+    --button-bg: #00B2E5;
+    --button-hover-bg: #0090b8;
+    --default-button-bg: #0090b8;
+    --default-button-hover-bg: #00B2E5;
+    --close-button-bg: #333344;
+    --close-button-hover-bg: #555566;
+    --delete-button-bg: #dc2626;
+    --delete-button-hover-bg: #b91c1c;
 
     color-scheme: dark;
 }

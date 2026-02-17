@@ -21,6 +21,12 @@ FORCE_SCRIPT_NAME = config('SCRIPT_NAME', default=None)
 if FORCE_SCRIPT_NAME == '':
     FORCE_SCRIPT_NAME = None
 
+# Scope cookies to the subpath so multiple Django apps on the same domain
+# (e.g. alonovo, newsite) don't clobber each other's sessions
+if FORCE_SCRIPT_NAME:
+    SESSION_COOKIE_PATH = FORCE_SCRIPT_NAME + '/'
+    CSRF_COOKIE_PATH = FORCE_SCRIPT_NAME + '/'
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',

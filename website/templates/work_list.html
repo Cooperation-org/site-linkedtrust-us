@@ -5,13 +5,7 @@
 
 {% block content %}
 
-<section class="container" style="padding-top:3rem;padding-bottom:1rem;">
-    <div class="section-label mono">// portfolio</div>
-    <h1 class="section-title">Our Work</h1>
-    <p style="color:var(--text-secondary);max-width:600px;margin-bottom:2rem;">
-        Real projects for real organizations. From civic transparency to AI automation, each project is a deep-linkable story.
-    </p>
-
+<section class="container" style="padding-top:1.5rem;padding-bottom:1rem;">
     <div class="filter-tabs">
         <a href="{% url 'work_list' %}" class="filter-tab {% if not active_category %}active{% endif %}">All</a>
         {% for value, label in categories %}
