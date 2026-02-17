@@ -4,26 +4,25 @@
 This is the LinkedTrust.us marketing/portfolio website. Django 4.2, PostgreSQL, vanilla JS + CSS.
 The site showcases LinkedTrust's services, portfolio of real projects, and verified trust badges.
 
-## Quick Start
+## Production
+- **URL**: https://linkedtrust.us
+- **Service**: `systemctl status linkedtrust-site` (gunicorn :8010, 3 workers)
+- **nginx**: `/etc/nginx/sites-enabled/linkedtrust.us` → proxy to :8010
+- **Caddy**: SSL termination on Proxmox host, routes to VM 200
+- **Admin**: https://linkedtrust.us/admin/ (admin / Lt-admin-2026!)
+- **DB**: `linkedtrust_site` on PostgreSQL VM 100
+
+### Local dev
 ```bash
 cd /opt/shared/repos/site-linkedtrust-us
-python3 manage.py runserver 0.0.0.0:8000
+DEBUG=True .venv/bin/python manage.py runserver 0.0.0.0:8000
 ```
-Admin: http://localhost:8000/admin/ (admin/admin123)
-
-### Serve under demos.linkedtrust.us/newsite/
-```bash
-SCRIPT_NAME=/newsite python3 manage.py runserver 0.0.0.0:8010
-```
-nginx is configured to proxy `/newsite/` to port 8010.
 
 ## Architecture
 
 ### Database
 - **Shared PostgreSQL** at `10.0.0.100:5432`, user `cobox`, no password
-- **Dev DB**: `linkedtrust_site_dev` (set `DJANGO_ENV=dev`, default)
-- **Prod DB**: `linkedtrust_site_prod` (set `DJANGO_ENV=prod`)
-- **IMPORTANT**: Always use semantic namespacing for any new databases: `linkedtrust_{purpose}_{env}`
+- **DB**: `linkedtrust_site`
 
 ### Key Models (`website/models.py`)
 - `PortfolioProject` — portfolio items with slug, category, tech_tags, featured flag

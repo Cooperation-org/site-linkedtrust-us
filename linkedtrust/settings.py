@@ -73,14 +73,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'linkedtrust.wsgi.application'
 
-# Database — shared PostgreSQL instance, namespaced by environment
-# Set DJANGO_ENV=prod to use linkedtrust_site_prod
-DJANGO_ENV = config('DJANGO_ENV', default='dev')
-
+# Database — shared PostgreSQL instance
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': f'linkedtrust_site_{DJANGO_ENV}',
+        'NAME': 'linkedtrust_site',
         'USER': config('PG_USER', default='cobox'),
         'PASSWORD': config('PG_PASSWORD', default=''),
         'HOST': config('PG_HOST', default='10.0.0.100'),
