@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}LinkedClaims Ecosystem — LinkedTrust{% endblock %}
+
+{% block content %}
+
+<section class="linkedclaims-hero">
+    <div class="container">
+        <div class="section-label mono">// linkedclaims</div>
+        <h1>The LinkedClaims Ecosystem</h1>
+        <p class="linkedclaims-intro">LinkedClaims is an open, minimal standard for expressing assertions about addressable things, published at the <a href="https://identity.foundation/labs-linkedclaims/" style="color:var(--brand-primary);font-weight:600;">Decentralized Identity Foundation</a>. It enables linking to third-party sources and other claims, building a decentralized web of trust that is inclusive of external projects and data. These are the tools, specs, and platforms built on the standard.</p>
+    </div>
+</section>
+
+<!-- The Standard — spec and foundational paper -->
+<section class="ecosystem-grid-section">
+    <div class="container">
+        <div class="ecosystem-group-label mono">// the standard</div>
+    </div>
+    <div class="container ecosystem-grid ecosystem-grid--wide">
+        {% for item in ecosystem_standards %}
+        <a href="{{ item.live_url }}" target="_blank" rel="noopener" class="ecosystem-card{% if not item.live_url %} no-link{% endif %}">
+            <div class="ecosystem-screenshot">
+                {% if item.screenshot %}
+                    <img src="{{ item.screenshot.url }}" alt="{{ item.name }}">
+                {% else %}
+                    <div class="screenshot-placeholder">Screenshot needed</div>
+                {% endif %}
+            </div>
+            <div class="ecosystem-body">
+                <div class="ecosystem-topline">
+                    <h3>{{ item.name }}</h3>
+                    <span class="ecosystem-status status-{{ item.status }}">{{ item.get_status_display }}</span>
+                </div>
+                <p>{{ item.short_description }}</p>
+                {% if item.repo_url %}
+                    <span class="ecosystem-repo-link">GitHub &rarr;</span>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Platforms — live applications built on LinkedClaims -->
+<section class="ecosystem-grid-section">
+    <div class="container">
+        <div class="ecosystem-group-label mono">// platforms</div>
+    </div>
+    <div class="container ecosystem-grid">
+        {% for item in ecosystem_platforms %}
+        <a href="{{ item.live_url }}" target="_blank" rel="noopener" class="ecosystem-card{% if not item.live_url %} no-link{% endif %}">
+            <div class="ecosystem-screenshot">
+                {% if item.screenshot %}
+                    <img src="{{ item.screenshot.url }}" alt="{{ item.name }}">
+                {% else %}
+                    <div class="screenshot-placeholder">Screenshot needed</div>
+                {% endif %}
+            </div>
+            <div class="ecosystem-body">
+                <div class="ecosystem-topline">
+                    <h3>{{ item.name }}</h3>
+                    <span class="ecosystem-status status-{{ item.status }}">{{ item.get_status_display }}</span>
+                </div>
+                <p>{{ item.short_description }}</p>
+                {% if item.repo_url %}
+                    <span class="ecosystem-repo-link">GitHub &rarr;</span>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Developer Tools — libraries and APIs -->
+<section class="ecosystem-grid-section">
+    <div class="container">
+        <div class="ecosystem-group-label mono">// developer tools</div>
+    </div>
+    <div class="container ecosystem-grid ecosystem-grid--wide">
+        {% for item in ecosystem_devtools %}
+        <a href="{{ item.live_url }}" target="_blank" rel="noopener" class="ecosystem-card{% if not item.live_url %} no-link{% endif %}">
+            <div class="ecosystem-screenshot">
+                {% if item.screenshot %}
+                    <img src="{{ item.screenshot.url }}" alt="{{ item.name }}">
+                {% else %}
+                    <div class="screenshot-placeholder">Screenshot needed</div>
+                {% endif %}
+            </div>
+            <div class="ecosystem-body">
+                <div class="ecosystem-topline">
+                    <h3>{{ item.name }}</h3>
+                    <span class="ecosystem-status status-{{ item.status }}">{{ item.get_status_display }}</span>
+                </div>
+                <p>{{ item.short_description }}</p>
+                {% if item.repo_url %}
+                    <span class="ecosystem-repo-link">GitHub &rarr;</span>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

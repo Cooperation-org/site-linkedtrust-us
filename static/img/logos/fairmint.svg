@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="fmg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background -->
+  <rect x="8" y="8" width="184" height="184" rx="40" fill="url(#fmg)"/>
+  <!-- Leaf / mint mark — representing fairness + growth -->
+  <path d="M100 40 C60 60, 45 100, 60 140 C70 115, 85 95, 100 80 C115 95, 130 115, 140 140 C155 100, 140 60, 100 40Z" fill="#fff" opacity="0.95"/>
+  <!-- Center stem -->
+  <line x1="100" y1="80" x2="100" y2="155" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+  <!-- Small equity dots along stem -->
+  <circle cx="100" cy="110" r="5" fill="#fff"/>
+  <circle cx="100" cy="130" r="4" fill="#fff" opacity="0.7"/>
+  <circle cx="100" cy="148" r="3" fill="#fff" opacity="0.5"/>
+</svg>

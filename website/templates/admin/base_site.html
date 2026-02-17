@@ -1,0 +1,332 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Linkedtrust Admin') }}{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<!-- Favicon -->
+<link rel="shortcut icon" href="{% static 'img/logo.svg' %}?v=2" type="image/x-icon">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1WJCFQ4RQ"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-G1WJCFQ4RQ');
+</script>
+
+<script src="{% static 'js/custom_admin.js' %}"></script>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/custom_admin.css' %}">
+
+<style>
+    /* ---- LinkedTrust Admin Theme (light/dark aware) ---- */
+
+    /* Module cards get rounded corners */
+    .module {
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+    }
+
+    .module h2, .module caption, .inline-group h2 {
+        border-radius: 12px 12px 0 0;
+    }
+
+    /* Header — always dark, matching website nav */
+    #header {
+        background: var(--header-bg);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Branding logo + text */
+    #branding {
+        align-items: center;
+        gap: 10px;
+    }
+
+    #branding .admin-logo {
+        height: 28px;
+        width: auto;
+    }
+
+    #site-name a:link, #site-name a:visited {
+        color: #fff;
+    }
+
+    #user-tools {
+        color: #888899;
+    }
+
+    #user-tools a:link, #user-tools a:visited {
+        color: #00B2E5;
+        border-bottom-color: rgba(0,178,229,0.3);
+    }
+
+    /* Breadcrumbs */
+    div.breadcrumbs {
+        background: var(--breadcrumbs-bg);
+        color: var(--breadcrumbs-fg);
+        border-bottom: 1px solid var(--hairline-color);
+    }
+
+    div.breadcrumbs a:link, div.breadcrumbs a:visited {
+        color: var(--breadcrumbs-link-fg);
+    }
+
+    /* Buttons — brand blue */
+    .button, input[type=submit], input[type=button], .submit-row input, a.button {
+        border-radius: 8px;
+    }
+
+    .object-tools a {
+        background: var(--object-tools-bg);
+    }
+
+    .delete-button, .deletelink {
+        background: var(--delete-button-bg) !important;
+        color: white !important;
+    }
+
+    .delete-button:hover, .deletelink:hover {
+        background: var(--delete-button-hover-bg) !important;
+    }
+
+    /* Submit row */
+    .submit-row {
+        background: var(--darkened-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+    }
+
+    /* Tables */
+    #changelist-filter {
+        background: var(--darkened-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+    }
+
+    #changelist-filter li.selected a {
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    /* Forms */
+    fieldset {
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+    }
+
+    input:not([type]), input[type=text], input[type=password], input[type=email],
+    input[type=url], input[type=number], input[type=tel], textarea, select {
+        border-radius: 8px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+        border-color: var(--primary);
+        outline: none;
+    }
+
+    /* Messages */
+    .errornote {
+        border-radius: 8px;
+    }
+
+    /* Nav sidebar */
+    #nav-sidebar {
+        background: var(--body-bg);
+        border-right: 1px solid var(--hairline-color);
+    }
+
+    /* Inline related */
+    .inline-related {
+        border-radius: 12px;
+    }
+
+    /* Dashboard shared styles */
+    .dashboard-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .dashboard-card {
+        background: var(--darkened-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 20px;
+    }
+
+    .dashboard-card:hover {
+        border-color: var(--primary);
+    }
+
+    .dashboard-card h2 {
+        color: var(--primary);
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--hairline-color);
+        font-size: 1.2em;
+        background: none;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 15px;
+        background: var(--body-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+    }
+
+    .stat-item:hover {
+        border-color: var(--primary);
+    }
+
+    .stat-value {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 5px;
+    }
+
+    .stat-label {
+        font-size: 14px;
+        color: var(--body-quiet-color);
+    }
+
+    .updates-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .updates-list li {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--hairline-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--body-fg);
+    }
+
+    .updates-list li:last-child {
+        border-bottom: none;
+    }
+
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .action-button {
+        display: inline-block;
+        padding: 8px 16px;
+        background: var(--button-bg);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    .action-button:hover {
+        background: var(--button-hover-bg);
+        color: white;
+        text-decoration: none;
+    }
+
+    .action-button:link, .action-button:visited {
+        color: white;
+    }
+
+    .model-list {
+        margin-top: 0;
+    }
+
+    .model-list table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .model-list th, .model-list td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid var(--hairline-color);
+        color: var(--body-fg);
+    }
+
+    .model-list tr:hover {
+        background: var(--selected-bg);
+    }
+
+    .model-list a:link, .model-list a:visited {
+        color: var(--link-fg);
+    }
+
+    .dashboard-card .addlink,
+    .dashboard-card .viewlink {
+        padding: 4px 10px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 0.85em;
+        margin-left: 8px;
+        background-image: none;
+        padding-left: 10px;
+    }
+
+    .dashboard-card .addlink {
+        background: var(--button-bg);
+        color: white;
+    }
+
+    .dashboard-card .viewlink {
+        background: var(--accent);
+        color: white;
+    }
+
+    .dashboard-card .addlink:hover,
+    .dashboard-card .viewlink:hover {
+        opacity: 0.85;
+        color: white;
+        text-decoration: none;
+    }
+
+    .dashboard-card .addlink:link, .dashboard-card .addlink:visited,
+    .dashboard-card .viewlink:link, .dashboard-card .viewlink:visited {
+        color: white;
+    }
+</style>
+
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+        <img src="{% static 'img/logo.svg' %}" alt="LinkedTrust" class="admin-logo">
+        LinkedTrust Admin
+    </a>
+</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

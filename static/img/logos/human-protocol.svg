@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="hpGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6B3FA0;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#5046E5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background -->
+  <rect x="8" y="8" width="184" height="184" rx="40" ry="40" fill="url(#hpGrad)"/>
+  <!-- Geometric H icon -->
+  <!-- Left vertical pillar -->
+  <path d="M52,46 L52,154 Q52,158 56,158 L72,158 Q76,158 76,154 L76,46 Q76,42 72,42 L56,42 Q52,42 52,46 Z" fill="#FFFFFF"/>
+  <!-- Right vertical pillar -->
+  <path d="M124,46 L124,154 Q124,158 128,158 L144,158 Q148,158 148,154 L148,46 Q148,42 144,42 L128,42 Q124,42 124,46 Z" fill="#FFFFFF"/>
+  <!-- Horizontal crossbar -->
+  <rect x="76" y="84" width="48" height="32" rx="4" ry="4" fill="#FFFFFF"/>
+  <!-- Network node dots at corners of H -->
+  <circle cx="64" cy="34" r="4.5" fill="#FFFFFF" opacity="0.5"/>
+  <circle cx="136" cy="34" r="4.5" fill="#FFFFFF" opacity="0.5"/>
+  <circle cx="64" cy="166" r="4.5" fill="#FFFFFF" opacity="0.5"/>
+  <circle cx="136" cy="166" r="4.5" fill="#FFFFFF" opacity="0.5"/>
+  <!-- Subtle connecting lines for distributed protocol feel -->
+  <line x1="69" y1="34" x2="131" y2="34" stroke="#FFFFFF" stroke-width="1.5" opacity="0.25"/>
+  <line x1="69" y1="166" x2="131" y2="166" stroke="#FFFFFF" stroke-width="1.5" opacity="0.25"/>
+</svg>

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Services — LinkedTrust{% endblock %}
+
+{% block content %}
+
+<section class="services-section" style="padding-top:1.5rem;">
+    <div class="services-grid">
+        {% for service in services %}
+        <a href="{% url 'service_detail' service.slug %}" class="service-card">
+            {% if service.icon %}<div class="service-icon"><i class="{{ service.icon }}"></i></div>{% endif %}
+            <h3>{{ service.title }}</h3>
+            <p>{{ service.short_description }}</p>
+            {% if service.price_range %}
+            <div class="price-range">{{ service.price_range }}</div>
+            {% endif %}
+        </a>
+        {% empty %}
+        <div class="service-card">
+            <div class="service-icon"><i class="fa-solid fa-server"></i></div>
+            <h3>Baremetal Migration</h3>
+            <p>Move off Amazon. Save money. 128GB bare metal infrastructure.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon"><i class="fa-solid fa-brain"></i></div>
+            <h3>AI Integration</h3>
+            <p>RAG search, document extraction, agentic AI for your systems.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon"><i class="fa-solid fa-certificate"></i></div>
+            <h3>Credentials &amp; Badges</h3>
+            <p>Verifiable credentials for employees and partners. Open Badges v3.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon"><i class="fa-solid fa-rocket"></i></div>
+            <h3>MVP Development</h3>
+            <p>Full-stack prototypes in weeks. React, Django, Next.js, FastAPI.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon"><i class="fa-solid fa-users"></i></div>
+            <h3>Team Augmentation</h3>
+            <p>Full-stack developers at affordable rates. Node, Python, React, Next.js.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+            <h3>Recruiter Tools</h3>
+            <p>Sort resumes with verified skills. AI-powered credential matching.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="cta-banner">
+    <h2>Not sure what you need?</h2>
+    <p>Book a free call. We'll listen first and figure it out together.</p>
+    <a href="{% url 'contact' %}" class="btn btn-white">Schedule a Call</a>
+</section>
+
+{% endblock %}

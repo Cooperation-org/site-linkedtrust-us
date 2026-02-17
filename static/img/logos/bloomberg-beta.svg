@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bloomberg Beta - geometric brand mark -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#0f3460"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded rectangle -->
+  <rect width="200" height="200" rx="20" fill="url(#bg)"/>
+
+  <!-- Bloomberg-style geometric B mark - clean filled paths -->
+  <!-- Vertical stem of the B -->
+  <path d="M50,32 L66,32 L66,168 L50,168 Z" fill="#ffffff"/>
+
+  <!-- Upper bowl of B -->
+  <path d="M50,32 L108,32 C126,32 140,46 140,64 C140,82 126,96 108,96 L50,96 L50,80 L106,80 C116.5,80 124,72.5 124,64 C124,55.5 116.5,48 106,48 L50,48 Z" fill="#ffffff"/>
+
+  <!-- Lower bowl of B (wider) -->
+  <path d="M50,96 L116,96 C136,96 152,112 152,132 C152,152 136,168 116,168 L50,168 L50,152 L114,152 C126.5,152 136,143 136,132 C136,121 126.5,112 114,112 L50,112 Z" fill="#ffffff"/>
+
+  <!-- Accent bar - Bloomberg orange -->
+  <rect x="50" y="92" width="90" height="4" rx="2" fill="#f7931e"/>
+
+  <!-- Geometric accent dots -->
+  <circle cx="152" cy="48" r="5" fill="#f7931e"/>
+  <circle cx="160" cy="64" r="3.5" fill="#f7931e" opacity="0.7"/>
+</svg>

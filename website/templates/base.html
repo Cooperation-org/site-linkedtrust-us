@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G1WJCFQ4RQ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-G1WJCFQ4RQ');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}LinkedTrust — Deep Tech. Human Trust.{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Coop-style startup that builds verified trust systems, civic tech platforms, and AI-powered tools for organizations that care about doing things right.{% endblock %}">
+
+    <!-- Open Graph / Social sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}LinkedTrust — Deep Tech. Human Trust.{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Verified trust systems, civic tech platforms, and AI-powered tools. Real projects, real impact, all verifiable.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% static 'img/logo.svg' %}{% endblock %}">
+    <meta property="og:url" content="https://linkedtrust.us">
+    <meta property="og:site_name" content="LinkedTrust">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LinkedTrust — Deep Tech. Human Trust.">
+    <meta name="twitter:description" content="Verified trust systems, civic tech platforms, and AI-powered tools. Real projects, real impact.">
+
+    <link rel="shortcut icon" href="{% static 'img/logo.svg' %}" type="image/x-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!-- Design system -->
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    {% block extra_css %}{% endblock %}
+
+    <!-- LinkedTrust badge web component -->
+    <!-- TEMPORARY: badge.js served from demos VM. Move to permanent URL (e.g. linkedtrust.us/embed/) later -->
+    <script src="https://demos.linkedtrust.us/embed/badge.js" defer></script>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
