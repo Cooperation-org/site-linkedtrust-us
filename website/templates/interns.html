@@ -308,6 +308,11 @@
     font-style: italic;
 }
 
+/* Anchor offset for sticky nav */
+#organizations {
+    scroll-margin-top: 80px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .intern-hero { grid-template-columns: 1fr; padding: 2.5rem 1.5rem 2rem; }
@@ -339,7 +344,7 @@
         to host talent and students ready to grow.</p>
         <div class="intern-hero-ctas">
             <a href="#apply" class="btn btn-gradient">Apply Now</a>
-            <a href="{% url 'contact' %}" class="btn btn-outline">Ask a Question</a>
+            <a href="#organizations" class="btn btn-outline">Hire Our Interns</a>
         </div>
     </div>
     <div class="intern-hero-visual">
@@ -420,44 +425,6 @@
     </div>
 </section>
 
-<!-- FOR ORGANIZATIONS — feature cards -->
-<section class="intern-audience">
-    <div class="intern-audience-header">
-        <div class="intern-audience-icon icon-org"><i class="fa-solid fa-building"></i></div>
-        <h2>For Organizations</h2>
-    </div>
-    <div class="intern-features">
-        <div class="intern-feature">
-            <div class="intern-feature-top">
-                <div class="intern-feature-icon"><i class="fa-solid fa-star"></i></div>
-                <h3>Pre-trained Candidates</h3>
-            </div>
-            <p>Interns arrive with Git workflows, PR processes, code review etiquette, and collaborative development patterns already in place. Not starting from zero.</p>
-        </div>
-        <div class="intern-feature">
-            <div class="intern-feature-top">
-                <div class="intern-feature-icon"><i class="fa-solid fa-users"></i></div>
-                <h3>Team-ready Skills</h3>
-            </div>
-            <p>They know how to work in teams, communicate in async and distributed environments, and contribute to shared codebases without hand-holding.</p>
-        </div>
-        <div class="intern-feature">
-            <div class="intern-feature-top">
-                <div class="intern-feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                <h3>Low-risk, High-value</h3>
-            </div>
-            <p>Interns work on well-scoped tasks — documentation, demos, incremental improvements — freeing senior engineers for critical work without risking production systems.</p>
-        </div>
-        <div class="intern-feature">
-            <div class="intern-feature-top">
-                <div class="intern-feature-icon"><i class="fa-solid fa-user-plus"></i></div>
-                <h3>Hiring Pipeline</h3>
-            </div>
-            <p>Successful internships serve as a pipeline for future full-time hires who already understand your codebase and culture.</p>
-        </div>
-    </div>
-</section>
-
 <!-- FOR INTERNS — feature cards -->
 <section class="intern-audience">
     <div class="intern-audience-header">
@@ -519,6 +486,55 @@
             <h3>Own</h3>
             <p>Increasing responsibility on meaningful work. Demonstrate competence and build the track record that opens doors.</p>
         </div>
+    </div>
+</section>
+
+<!-- FOR ORGANIZATIONS -->
+<section class="intern-audience" id="organizations">
+    <div class="intern-audience-header">
+        <div class="intern-audience-icon icon-org"><i class="fa-solid fa-building"></i></div>
+        <h2>For Organizations</h2>
+    </div>
+    <p style="font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 700px; margin-bottom: 2rem;">Our interns complete a structured program on real open source projects before placement. They've already learned the workflows, made the beginner mistakes, and shipped code. When they join your team, they're ready to contribute.</p>
+    <div class="intern-features">
+        <div class="intern-feature">
+            <div class="intern-feature-top">
+                <div class="intern-feature-icon"><i class="fa-solid fa-star"></i></div>
+                <h3>Already Trained</h3>
+            </div>
+            <p>Git workflows, pull requests, code review, CI/CD — they've done all of it on production systems before they get to you. No ramp-up on basics.</p>
+        </div>
+        <div class="intern-feature">
+            <div class="intern-feature-top">
+                <div class="intern-feature-icon"><i class="fa-solid fa-users"></i></div>
+                <h3>Team-ready</h3>
+            </div>
+            <p>They've worked on distributed teams with async communication, standups, and shared codebases. They know how to collaborate without needing to be managed through every step.</p>
+        </div>
+        <div class="intern-feature">
+            <div class="intern-feature-top">
+                <div class="intern-feature-icon"><i class="fa-solid fa-eye"></i></div>
+                <h3>Fresh Eyes</h3>
+            </div>
+            <p>New team members notice what veterans don't. Interns are especially good at finding rough edges in your UX and developer experience — confusing flows, unclear docs, tooling friction — because they haven't learned to work around them yet.</p>
+        </div>
+        <div class="intern-feature">
+            <div class="intern-feature-top">
+                <div class="intern-feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3>Proven Work Product</h3>
+            </div>
+            <p>Every intern has a track record of contributions on real projects. You can review their actual work — commits, PRs, documentation — before making any decisions.</p>
+        </div>
+        <div class="intern-feature">
+            <div class="intern-feature-top">
+                <div class="intern-feature-icon"><i class="fa-solid fa-user-plus"></i></div>
+                <h3>Low-risk Pipeline</h3>
+            </div>
+            <p>Start with a short engagement. If it works, hire them. They already know how to work in a team and ship code. No surprises.</p>
+        </div>
+    </div>
+    <div style="margin-top: 2rem;">
+        <a href="{% url 'contact' %}" class="btn btn-gradient">Learn More</a>
     </div>
 </section>
 

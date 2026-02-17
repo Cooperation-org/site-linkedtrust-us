@@ -446,7 +446,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 .portfolio-dark {
     background: var(--bg-dark);
     color: var(--text-on-dark);
-    padding: 5rem 0;
+    padding: 5rem 2rem;
 }
 .portfolio-dark .section-label { color: var(--brand-accent); }
 .portfolio-dark .section-title { color: #fff; }
@@ -999,7 +999,7 @@ linked-badge[layout="card"]:not(:defined) {
     .more-badges { grid-template-columns: 1fr; padding: 0 1.5rem 2rem; }
     .services-section { padding: 3rem 1.5rem; }
     .services-grid { grid-template-columns: 1fr; }
-    .portfolio-dark { padding: 3rem 0; }
+    .portfolio-dark { padding: 3rem 1.5rem; }
     .portfolio-grid { grid-template-columns: 1fr; }
     .footer-inner { grid-template-columns: 1fr 1fr; }
     .nav-links { display: none; }
@@ -1007,6 +1007,9 @@ linked-badge[layout="card"]:not(:defined) {
     .project-detail-hero h1 { font-size: 1.8rem; }
     .service-detail-hero h1 { font-size: 1.8rem; }
     .cta-banner h2 { font-size: 1.6rem; }
+    .cta-banner { padding: 3rem 1.5rem; }
+    .ecosystem-grid--wide { grid-template-columns: 1fr; }
+    .ecosystem-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {

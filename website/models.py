@@ -184,6 +184,7 @@ class ServicePackage(models.Model):
 class ContactInquiry(models.Model):
     SUBJECT_CHOICES = [
         ('consulting', 'Consulting'),
+        ('intern_placement', 'Intern Placement'),
         ('site_issue', 'Site Issue'),
         ('developer', 'Developer question'),
         ('other', 'Other'),
