@@ -7,7 +7,7 @@
 
 <section class="container service-detail-hero">
     <div class="section-label mono">// services</div>
-    {% if service.icon %}<div style="font-size:2.5rem;margin-bottom:1rem;">{{ service.icon }}</div>{% endif %}
+    {% if service.icon %}<div style="font-size:2.5rem;margin-bottom:1rem;"><i class="{{ service.icon }}"></i></div>{% endif %}
     <h1>{{ service.title }}</h1>
     <p class="description">{{ service.short_description }}</p>
     {% if service.price_range %}
