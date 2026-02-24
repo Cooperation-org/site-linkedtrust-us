@@ -120,24 +120,22 @@
 
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;">
             <div>
-                <h3 style="font-size:1rem;margin-bottom:0.75rem;color:var(--brand-primary);">Before: AWS + DigitalOcean</h3>
+                <h3 style="font-size:1rem;margin-bottom:0.75rem;color:#ef4444;">Before: scattered across AWS + DO</h3>
                 <ul style="list-style:none;padding:0;">
-                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">8 DigitalOcean droplets</li>
-                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">2 DO managed PostgreSQL clusters (11 databases)</li>
-                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">2 DO App Platform services</li>
-                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">4 EC2 instances + 2 RDS databases on AWS</li>
-                    <li style="padding:0.5rem 0;font-size:0.9rem;color:var(--text-on-dark-muted);">Shared-disk I/O bottlenecks on managed Postgres</li>
+                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:#fca5a5;">8 droplets, 4 EC2 instances, 2 App Platform services</li>
+                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:#fca5a5;">2 managed PG clusters + 2 RDS databases (11 DBs total)</li>
+                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:#fca5a5;">Shared-disk I/O bottlenecks on managed Postgres</li>
+                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:#fca5a5;">Multiple billing dashboards, scattered access</li>
+                    <li style="padding:0.5rem 0;font-size:0.9rem;color:#fca5a5;">Management nightmare</li>
                 </ul>
             </div>
             <div>
-                <h3 style="font-size:1rem;margin-bottom:0.75rem;color:var(--brand-primary);">After: one box, $355/month</h3>
+                <h3 style="font-size:1rem;margin-bottom:0.75rem;color:var(--brand-primary);">After: 1 box, room to spare</h3>
                 <ul style="list-style:none;padding:0;">
-                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">1 Rackdog bare metal &mdash; 24 cores, 128 GB RAM, NVMe</li>
-                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">Proxmox VE with isolated VMs per app</li>
-                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">1.92 TB Samsung NVMe passthrough to Postgres</li>
-                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">18 databases on one PostgreSQL 15 instance</li>
-                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">pgvector for AI workloads on the same box</li>
-                    <li style="padding:0.5rem 0;font-size:0.9rem;color:var(--text-on-dark);">Auto-SSL, systemd services, full team access</li>
+                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">24 cores, 128 GB RAM, 2 TB NVMe &mdash; isolated VMs per app + shared dev environment</li>
+                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">NVMe-backed Postgres with pgvector &mdash; fast AI workloads</li>
+                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">Consolidated alerts and access control</li>
+                    <li style="padding:0.5rem 0;font-size:0.9rem;color:var(--text-on-dark);">Rapid development and experimentation at low cost</li>
                 </ul>
             </div>
         </div>
