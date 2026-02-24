@@ -182,6 +182,8 @@ class ServicePackage(models.Model):
 
 
 class ContactInquiry(models.Model):
+    # LEGACY — do not edit. Changing these triggers a migration.
+    # The real subject choices are defined in forms.py (SUBJECT_CHOICES).
     SUBJECT_CHOICES = [
         ('consulting', 'Consulting'),
         ('intern_placement', 'Intern Placement'),

@@ -81,7 +81,11 @@ def contact_view(request):
             success = True
             form = ContactForm()  # reset form after success
     else:
-        form = ContactForm()
+        initial = {}
+        subject = request.GET.get('subject')
+        if subject:
+            initial['subject'] = subject
+        form = ContactForm(initial=initial)
     return render(request, 'contact.html', {'form': form, 'success': success})
 
 def press_view(request):
@@ -285,8 +289,15 @@ def case_study_view(request, slug):
 def service_detail_view(request, slug):
     """Individual service detail page — deep link for a specific offering."""
     service = get_object_or_404(ServicePackage, slug=slug, is_active=True)
+
+    # Dedicated landing pages for key services
+    dedicated_templates = {
+        'baremetal-migration': 'service_baremetal.html',
+    }
+    template = dedicated_templates.get(slug, 'service_detail.html')
+
     context = {
         'service': service,
         'example_projects': service.example_projects.all(),
     }
-    return render(request, 'service_detail.html', context)
+    return render(request, template, context)
