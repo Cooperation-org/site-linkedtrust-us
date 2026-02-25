@@ -1,0 +1,322 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Get Off the Cloud — Massively Better Performance, Fraction of the Cost{% endblock %}
+{% block meta_description %}Migrate off AWS, DigitalOcean, or Vercel to dedicated bare metal. Massively better database performance at 50-80% less cost. We've done it ourselves.{% endblock %}
+
+{% block extra_css %}
+<style>
+    .bm-container { max-width: 1000px; margin: 0 auto; padding: 0 2.5rem; }
+    .bm-dark .bm-container { max-width: 1000px; margin: 0 auto; padding: 0 2.5rem; }
+    .bm-hero { padding-top: 3rem; padding-bottom: 2rem; }
+    .bm-section { padding-top: 3rem; padding-bottom: 3rem; }
+    .bm-dark { background: var(--bg-dark); }
+    .bm-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 1.5rem; }
+    .bm-stat { background: var(--bg-dark-card); border-radius: var(--radius); padding: 1.25rem; text-align: center; }
+    .bm-stat-num { font-size: 1.8rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .bm-stat-label { font-size: 0.75rem; color: var(--text-on-dark-muted); margin-top: 0.25rem; }
+    .bm-stat-note { font-size: 0.8rem; color: var(--text-on-dark-muted); margin-top: 0.5rem; }
+    .bm-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .bm-card { background: var(--bg-dark-card); border-radius: var(--radius); padding: 1.5rem; }
+    .bm-light-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+    .bm-price-card { background: var(--bg-white); border: 2px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; }
+    .bm-price-num { font-size: 2rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .bm-link { color: var(--brand-primary); }
+    .bm-link:hover { text-decoration: underline; }
+    @media (max-width: 768px) {
+        .bm-stat-grid { grid-template-columns: repeat(2, 1fr); }
+        .bm-container { padding: 0 1.25rem; }
+        .bm-hero h1 { font-size: 1.6rem; }
+        .bm-price-card { padding: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+        .bm-stat-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .bm-stat { padding: 1rem; }
+        .bm-stat-num { font-size: 1.4rem; }
+        .bm-stat-note { font-size: 0.7rem; }
+        .bm-hero h1 { font-size: 1.4rem; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero: lead with the performance story -->
+<section class="bm-dark">
+    <div class="bm-container bm-hero">
+        <div class="section-label mono" style="color:var(--brand-primary);">// bare metal migration</div>
+        <h1 style="color:var(--text-on-dark);font-size:2.2rem;margin-bottom:0.75rem;">Massively Better Performance.<br>Fraction of the Cost.<br><span style="color:var(--brand-primary);">Get Off the Cloud.</span></h1>
+        <p style="color:var(--text-on-dark-muted);font-size:1.1rem;max-width:700px;">We migrate startups off AWS, DigitalOcean, and Vercel to dedicated bare metal. Not marginally better &mdash; <strong style="color:var(--text-on-dark);">4-10x better database performance</strong> at 50-80% less cost. We know because we did it ourselves.</p>
+
+        <!-- Real benchmark comparison charts -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:1.5rem;">
+            <div>
+                <img src="https://demos.linkedtrust.us/baremetal-benchmarks/2-21-2026-chart-pgvector-qps.svg" alt="pgvector search: 1,045 QPS on our bare metal vs 240 QPS Supabase Medium, 102 QPS Alibaba Cloud" style="width:100%;height:auto;border-radius:8px;">
+            </div>
+            <div>
+                <img src="https://demos.linkedtrust.us/baremetal-benchmarks/2-21-2026-chart-pgbench-rw.svg" alt="pgbench read/write: 6,611 TPS on our 8 vCPU bare metal vs 6,628 on AWS 16 vCPU" style="width:100%;height:auto;border-radius:8px;">
+            </div>
+        </div>
+
+        <!-- Stat cards -->
+        <div class="bm-stat-grid">
+            <div class="bm-stat">
+                <p class="bm-stat-num">6,611</p>
+                <p class="bm-stat-label mono">TPS read/write</p>
+                <p class="bm-stat-note">Matches AWS 16 vCPU at half the hardware</p>
+            </div>
+            <div class="bm-stat">
+                <p class="bm-stat-num">41,848</p>
+                <p class="bm-stat-label mono">TPS read-only</p>
+                <p class="bm-stat-note">Sub-millisecond latency at 64 clients</p>
+            </div>
+            <div class="bm-stat">
+                <p class="bm-stat-num">5.5x</p>
+                <p class="bm-stat-label mono">faster index builds</p>
+                <p class="bm-stat-note">vs Alibaba Cloud at 2x the hardware</p>
+            </div>
+            <div class="bm-stat">
+                <p class="bm-stat-num">$355</p>
+                <p class="bm-stat-label mono">/month flat</p>
+                <p class="bm-stat-note">No egress. No IOPS fees. No surprises.</p>
+            </div>
+        </div>
+        <p style="margin-top:1rem;font-size:0.8rem;color:var(--text-on-dark-muted);">
+            Full benchmark data: <a href="https://demos.linkedtrust.us/baremetal-benchmarks/" class="bm-link" target="_blank" rel="noopener">Back to the Bare(Metal) Basics</a> &mdash; PostgreSQL 15 + pgvector on NVMe passthrough, Feb 2026
+        </p>
+    </div>
+</section>
+
+<!-- The Problem: social proof -->
+<section class="bm-container bm-section">
+    <div class="section-label mono">// you're not alone</div>
+    <h2 style="margin-bottom:2rem;">Cloud bills grow. Performance doesn't.</h2>
+    <div class="bm-card-grid">
+        <div class="bm-light-card">
+            <p class="mono" style="color:var(--brand-primary);font-size:0.85rem;margin-bottom:0.5rem;">Dukaan</p>
+            <p style="font-size:1.1rem;font-weight:600;">$80K/mo &rarr; $5K/mo</p>
+            <p style="color:var(--text-secondary);font-size:0.9rem;">Migrated off AWS to bare metal. <a href="https://analyticsindiamag.com/ai-news-updates/dukaan-moved-to-bare-metal-to-prevent-80000-a-monthly-cloud-bills/" class="bm-link" target="_blank" rel="noopener">Source</a></p>
+        </div>
+        <div class="bm-light-card">
+            <p class="mono" style="color:var(--brand-primary);font-size:0.85rem;margin-bottom:0.5rem;">37signals / Basecamp</p>
+            <p style="font-size:1.1rem;font-weight:600;">Saved $2M/year</p>
+            <p style="color:var(--text-secondary);font-size:0.9rem;">$3.2M to under $1M annually. <a href="https://www.theregister.com/2025/05/09/37signals_cloud_repatriation_storage_savings" class="bm-link" target="_blank" rel="noopener">Source</a></p>
+        </div>
+        <div class="bm-light-card">
+            <p class="mono" style="color:var(--brand-primary);font-size:0.85rem;margin-bottom:0.5rem;">Industry trend</p>
+            <p style="font-size:1.1rem;font-weight:600;">86% of CIOs moving off cloud</p>
+            <p style="color:var(--text-secondary);font-size:0.9rem;">Barclays CIO Survey. <a href="https://www.puppet.com/blog/cloud-repatriation" class="bm-link" target="_blank" rel="noopener">Source</a></p>
+        </div>
+    </div>
+</section>
+
+<!-- Case Study: Our Migration -->
+<div class="gradient-bar"></div>
+<section class="bm-dark">
+    <div class="bm-container bm-section">
+        <div class="section-label mono" style="color:var(--brand-primary);">// case study</div>
+        <h2 class="section-title" style="color:var(--text-on-dark);">We Migrated Everything. Here's What We Moved.</h2>
+        <p style="color:var(--text-on-dark-muted);margin-bottom:2rem;">We consolidated our entire multi-cloud infrastructure &mdash; spread across AWS and DigitalOcean &mdash; onto a single bare metal server.</p>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;">
+            <div>
+                <h3 style="font-size:1rem;margin-bottom:0.75rem;color:#ef4444;">Before: scattered across AWS + DO</h3>
+                <ul style="list-style:none;padding:0;">
+                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:#fca5a5;">8 droplets, 4 EC2 instances, 2 App Platform services</li>
+                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:#fca5a5;">2 managed PG clusters + 2 RDS databases (11 DBs total)</li>
+                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:#fca5a5;">Shared-disk I/O bottlenecks on managed Postgres</li>
+                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:#fca5a5;">Multiple billing dashboards, scattered access</li>
+                    <li style="padding:0.5rem 0;font-size:0.9rem;color:#fca5a5;">Management nightmare</li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="font-size:1rem;margin-bottom:0.75rem;color:var(--brand-primary);">After: 1 box, room to spare</h3>
+                <ul style="list-style:none;padding:0;">
+                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">24 cores, 128 GB RAM, 2 TB NVMe &mdash; isolated VMs per app + shared dev environment</li>
+                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">NVMe-backed Postgres with pgvector &mdash; fast AI workloads</li>
+                    <li style="padding:0.5rem 0;border-bottom:1px solid var(--border-dark);font-size:0.9rem;color:var(--text-on-dark);">Consolidated alerts and access control</li>
+                    <li style="padding:0.5rem 0;font-size:0.9rem;color:var(--text-on-dark);">Rapid development and experimentation at low cost</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Cost comparison table -->
+<section class="bm-container bm-section">
+    <div class="section-label mono">// cost comparison</div>
+    <h2 style="margin-bottom:1.5rem;">What you're paying vs. what you could pay</h2>
+
+    <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+            <thead>
+                <tr style="border-bottom:2px solid var(--border);">
+                    <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-weight:500;">Option</th>
+                    <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-weight:500;">vCPU</th>
+                    <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-weight:500;">RAM</th>
+                    <th style="text-align:right;padding:0.75rem;color:var(--text-muted);font-weight:500;">Monthly</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid var(--border);">
+                    <td style="padding:0.75rem;">AWS RDS db.r6g.xlarge</td>
+                    <td style="padding:0.75rem;">4</td>
+                    <td style="padding:0.75rem;">32 GB</td>
+                    <td style="padding:0.75rem;text-align:right;">~$403</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border);">
+                    <td style="padding:0.75rem;">AWS RDS db.r6g.2xlarge</td>
+                    <td style="padding:0.75rem;">8</td>
+                    <td style="padding:0.75rem;">64 GB</td>
+                    <td style="padding:0.75rem;text-align:right;">~$782</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border);">
+                    <td style="padding:0.75rem;">Supabase XL</td>
+                    <td style="padding:0.75rem;">8</td>
+                    <td style="padding:0.75rem;">~32 GB</td>
+                    <td style="padding:0.75rem;text-align:right;">~$400</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border);">
+                    <td style="padding:0.75rem;">DigitalOcean (typical startup)</td>
+                    <td style="padding:0.75rem;">varies</td>
+                    <td style="padding:0.75rem;">varies</td>
+                    <td style="padding:0.75rem;text-align:right;">$500-$5,000</td>
+                </tr>
+                <tr style="background:rgba(0,178,229,0.06);">
+                    <td style="padding:0.75rem;font-weight:600;color:var(--brand-primary);">Rackdog bare metal (entire server)</td>
+                    <td style="padding:0.75rem;color:var(--brand-primary);">24+</td>
+                    <td style="padding:0.75rem;color:var(--brand-primary);">128 GB</td>
+                    <td style="padding:0.75rem;text-align:right;font-weight:700;color:var(--brand-primary);">$355 flat</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p style="margin-top:0.75rem;font-size:0.8rem;color:var(--text-muted);">
+        Sources: <a href="https://aws.amazon.com/rds/postgresql/pricing/" class="bm-link" target="_blank" rel="noopener">AWS RDS pricing</a>,
+        <a href="https://supabase.com/docs/guides/ai/choosing-compute-addon" class="bm-link" target="_blank" rel="noopener">Supabase docs</a>,
+        <a href="https://rackdog.com/bare-metal" class="bm-link" target="_blank" rel="noopener">Rackdog</a>
+    </p>
+</section>
+
+<!-- What we do -->
+<div class="gradient-bar"></div>
+<section class="bm-dark">
+    <div class="bm-container bm-section">
+        <div class="section-label mono" style="color:var(--brand-primary);">// what we do</div>
+        <h2 class="section-title" style="color:var(--text-on-dark);">Full migration, start to finish</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;margin-top:2rem;">
+            <div class="bm-card">
+                <p style="font-weight:600;color:var(--text-on-dark);margin-bottom:0.5rem;">1. Audit</p>
+                <p style="color:var(--text-on-dark-muted);font-size:0.9rem;">Map your current infrastructure. What moves, what stays, what gets simplified.</p>
+            </div>
+            <div class="bm-card">
+                <p style="font-weight:600;color:var(--text-on-dark);margin-bottom:0.5rem;">2. Provision</p>
+                <p style="color:var(--text-on-dark-muted);font-size:0.9rem;">Bare metal server, Proxmox VMs, NVMe passthrough, network isolation, automated backups.</p>
+            </div>
+            <div class="bm-card">
+                <p style="font-weight:600;color:var(--text-on-dark);margin-bottom:0.5rem;">3. Migrate</p>
+                <p style="color:var(--text-on-dark-muted);font-size:0.9rem;">Databases, app servers, static assets. Zero-downtime where possible. DNS cutover when ready.</p>
+            </div>
+            <div class="bm-card">
+                <p style="font-weight:600;color:var(--text-on-dark);margin-bottom:0.5rem;">4. Verify</p>
+                <p style="color:var(--text-on-dark-muted);font-size:0.9rem;">Performance benchmarks on your data. Monitoring. 30 days of post-migration support.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing -->
+<section class="bm-container bm-section">
+    <div class="section-label mono">// pricing</div>
+    <h2 style="margin-bottom:2rem;">Two options depending on your scale</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;">
+        <div class="bm-price-card">
+            <p class="mono" style="color:var(--brand-primary);font-size:0.85rem;margin-bottom:0.25rem;">Your own box</p>
+            <h3 style="margin-bottom:0.5rem;">Dedicated bare metal server</h3>
+            <p class="bm-price-num">$355<span style="font-size:1rem;font-weight:400;">/month</span></p>
+            <p style="color:var(--text-secondary);font-size:0.9rem;margin-top:0.5rem;">Rackdog server: 24+ cores, 128 GB RAM, NVMe. We set it up, migrate your services, hand you the keys.</p>
+            <ul style="list-style:none;padding:0;margin-top:1rem;">
+                <li style="padding:0.3rem 0;font-size:0.9rem;color:var(--text-secondary);">Migration: $2K-$8K one-time</li>
+                <li style="padding:0.3rem 0;font-size:0.9rem;color:var(--text-secondary);">Optional managed services: $500-$2K/month</li>
+                <li style="padding:0.3rem 0;font-size:0.9rem;color:var(--text-secondary);">No egress fees, no per-IOPS charges, ever</li>
+            </ul>
+        </div>
+        <div class="bm-price-card">
+            <p class="mono" style="color:var(--brand-primary);font-size:0.85rem;margin-bottom:0.25rem;">Shared hosting</p>
+            <h3 style="margin-bottom:0.5rem;">VM on our infrastructure</h3>
+            <p class="bm-price-num">$20+<span style="font-size:1rem;font-weight:400;">/month</span></p>
+            <p style="color:var(--text-secondary);font-size:0.9rem;margin-top:0.5rem;">Your own VM on our bare metal with NVMe-backed PostgreSQL + pgvector. We also set up Claude Code so you can make changes to your site just by talking to it.</p>
+            <ul style="list-style:none;padding:0;margin-top:1rem;">
+                <li style="padding:0.3rem 0;font-size:0.9rem;color:var(--text-secondary);"><strong style="color:var(--brand-primary);">Free migration for small sites</strong> with monthly contract</li>
+                <li style="padding:0.3rem 0;font-size:0.9rem;color:var(--text-secondary);">Claude Code configured for your project &mdash; update your site in plain English</li>
+                <li style="padding:0.3rem 0;font-size:0.9rem;color:var(--text-secondary);">NVMe Postgres access for fast queries and AI workloads</li>
+                <li style="padding:0.3rem 0;font-size:0.9rem;color:var(--text-secondary);">Scale up to a dedicated box when you're ready</li>
+            </ul>
+        </div>
+    </div>
+
+    <p style="margin-top:1.5rem;color:var(--text-secondary);font-size:0.9rem;">Already have your own hardware? We also do <strong>colocation setup</strong> &mdash; we'll configure Proxmox, NVMe passthrough, PostgreSQL tuning, and Claude Code for your team on your own box.</p>
+    </div>
+</section>
+
+<!-- Our experience -->
+<div class="gradient-bar"></div>
+<section class="bm-dark">
+    <div class="bm-container bm-section">
+        <div class="section-label mono" style="color:var(--brand-primary);">// why us</div>
+        <h2 class="section-title" style="color:var(--text-on-dark);">We Run Production on Bare Metal. Every Day.</h2>
+        <p style="color:var(--text-on-dark-muted);margin-bottom:1.5rem;max-width:700px;">This isn't a side offering. Our entire infrastructure &mdash; 18 production databases, 10+ VMs, a dozen live websites and APIs &mdash; runs on the same bare metal platform we're offering you. We eat our own cooking.</p>
+        <div class="bm-card-grid" style="margin-bottom:2rem;">
+            <div class="bm-card">
+                <p style="font-weight:600;color:var(--text-on-dark);margin-bottom:0.3rem;">Full-stack migration team</p>
+                <p style="color:var(--text-on-dark-muted);font-size:0.9rem;">Django, Node.js, FastAPI, WordPress, React, Next.js &mdash; we've migrated all of them. Databases, app servers, static sites, managed services.</p>
+            </div>
+            <div class="bm-card">
+                <p style="font-weight:600;color:var(--text-on-dark);margin-bottom:0.3rem;">Proxmox + NVMe expertise</p>
+                <p style="color:var(--text-on-dark-muted);font-size:0.9rem;">VM isolation, PCIe passthrough tuning, PostgreSQL performance optimization, pgvector for AI workloads. Not theory &mdash; production experience.</p>
+            </div>
+            <div class="bm-card">
+                <p style="font-weight:600;color:var(--text-on-dark);margin-bottom:0.3rem;">Rackdog hardware partner</p>
+                <p style="color:var(--text-on-dark-muted);font-size:0.9rem;">Direct relationship with <a href="https://rackdog.com/bare-metal" class="bm-link" target="_blank" rel="noopener">Rackdog</a> for dedicated servers. $355/month flat, no surprises, quick provisioning.</p>
+            </div>
+        </div>
+
+        <p class="mono" style="color:var(--brand-primary);font-size:0.75rem;margin-bottom:0.75rem;">Our work</p>
+        <ul style="list-style:none;padding:0;">
+            <li style="padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                <a href="https://demos.linkedtrust.us/baremetal-benchmarks/" class="bm-link" style="font-weight:500;" target="_blank" rel="noopener">Back to the Bare(Metal) Basics</a>
+                <span style="color:var(--text-on-dark-muted);font-size:0.85rem;"> &mdash; Our full benchmark article: PostgreSQL + pgvector on NVMe, Feb 2026</span>
+            </li>
+        </ul>
+
+        <p class="mono" style="color:var(--text-on-dark-muted);font-size:0.75rem;margin-top:1.5rem;margin-bottom:0.75rem;">Industry context</p>
+        <ul style="list-style:none;padding:0;">
+            <li style="padding:0.4rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+                <a href="https://www.theregister.com/2025/05/09/37signals_cloud_repatriation_storage_savings" class="bm-link" style="font-weight:400;font-size:0.9rem;" target="_blank" rel="noopener">37signals saves $2M/year leaving cloud</a>
+                <span style="color:var(--text-on-dark-muted);font-size:0.8rem;"> &mdash; The Register</span>
+            </li>
+            <li style="padding:0.4rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+                <a href="https://analyticsindiamag.com/ai-news-updates/dukaan-moved-to-bare-metal-to-prevent-80000-a-monthly-cloud-bills/" class="bm-link" style="font-weight:400;font-size:0.9rem;" target="_blank" rel="noopener">Dukaan: $80K/mo AWS to ~$5K on bare metal</a>
+                <span style="color:var(--text-on-dark-muted);font-size:0.8rem;"> &mdash; Analytics India Mag</span>
+            </li>
+            <li style="padding:0.4rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+                <a href="https://www.puppet.com/blog/cloud-repatriation" class="bm-link" style="font-weight:400;font-size:0.9rem;" target="_blank" rel="noopener">86% of CIOs moving workloads off cloud</a>
+                <span style="color:var(--text-on-dark-muted);font-size:0.8rem;"> &mdash; Barclays CIO Survey</span>
+            </li>
+            <li style="padding:0.4rem 0;">
+                <a href="https://www.datamintelligence.com/research-report/bare-metal-cloud-market" class="bm-link" style="font-weight:400;font-size:0.9rem;" target="_blank" rel="noopener">Bare metal market: $11.6B → $67B by 2033</a>
+                <span style="color:var(--text-on-dark-muted);font-size:0.8rem;"> &mdash; DataM Intelligence</span>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+    <h2>Ready to cut your cloud bill?</h2>
+    <p>Tell us what you're running. We'll tell you what it would cost on bare metal.</p>
+    <a href="{% url 'contact' %}?subject=cloud_exit" class="btn btn-white">Get a Free Assessment</a>
+</section>
+
+{% endblock %}
