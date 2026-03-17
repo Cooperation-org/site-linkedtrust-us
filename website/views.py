@@ -293,6 +293,7 @@ def service_detail_view(request, slug):
     # Dedicated landing pages for key services
     dedicated_templates = {
         'baremetal-migration': 'service_baremetal.html',
+        'ai-integration': 'service_ai_integration.html',
     }
     template = dedicated_templates.get(slug, 'service_detail.html')
 

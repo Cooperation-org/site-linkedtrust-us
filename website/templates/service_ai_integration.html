@@ -1,0 +1,405 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AI Integration — Empower Every Employee with Company Intelligence{% endblock %}
+{% block meta_description %}Turn complex internal documents into an easy, web-based AI assistant. No coding, just instant answers for your team.{% endblock %}
+
+{% block extra_css %}
+<style>
+    .t2w-container { max-width: 1000px; margin: 0 auto; padding: 0 2.5rem; }
+    .t2w-hero { padding: 4rem 0 3rem; }
+    .t2w-pill {
+        display: inline-block;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--brand-primary);
+        background: rgba(0, 178, 229, 0.08);
+        border: 1px solid rgba(0, 178, 229, 0.2);
+        padding: 0.35rem 1rem;
+        border-radius: 50px;
+        margin-bottom: 1.25rem;
+        letter-spacing: 0.5px;
+    }
+    .t2w-hero h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+        line-height: 1.15;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+    }
+    .t2w-hero .t2w-sub {
+        font-size: 1.15rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+        max-width: 650px;
+        margin-bottom: 2rem;
+    }
+
+    /* Terminal box */
+    .t2w-terminal {
+        background: var(--bg-dark);
+        border-radius: var(--radius);
+        padding: 1.5rem 1.75rem;
+        max-width: 600px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+    }
+    .t2w-terminal-dots {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 1rem;
+    }
+    .t2w-terminal-dots span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+    .t2w-terminal-dots span:nth-child(1) { background: #ff5f57; }
+    .t2w-terminal-dots span:nth-child(2) { background: #febc2e; }
+    .t2w-terminal-dots span:nth-child(3) { background: #28c840; }
+    .t2w-terminal-line {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.85rem;
+        color: var(--text-on-dark-muted);
+        line-height: 1.8;
+        min-height: 1.8em;
+    }
+    .t2w-terminal-line .t2w-prompt {
+        color: var(--brand-primary);
+    }
+    .t2w-terminal-line .t2w-cursor {
+        display: inline-block;
+        width: 8px;
+        height: 1em;
+        background: var(--brand-primary);
+        vertical-align: text-bottom;
+        animation: t2w-blink 1s step-end infinite;
+    }
+    @keyframes t2w-blink {
+        50% { opacity: 0; }
+    }
+
+    /* Features grid */
+    .t2w-features { padding: 4rem 0; }
+    .t2w-features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    .t2w-feature-card {
+        background: var(--bg-white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 2rem 1.75rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .t2w-feature-card:hover {
+        border-color: var(--brand-primary);
+        box-shadow: var(--shadow-md);
+    }
+    .t2w-feature-icon {
+        width: 44px;
+        height: 44px;
+        background: rgba(0, 178, 229, 0.08);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--brand-primary);
+        margin-bottom: 1rem;
+    }
+    .t2w-feature-card h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.6rem;
+    }
+    .t2w-feature-card p {
+        font-size: 0.88rem;
+        color: var(--text-secondary);
+        line-height: 1.65;
+    }
+
+    /* Form section */
+    .t2w-form-section {
+        background: var(--bg-dark);
+        padding: 4rem 0;
+    }
+    .t2w-form-wrapper {
+        max-width: 520px;
+        margin: 0 auto;
+    }
+    .t2w-form-wrapper h2 {
+        color: var(--text-on-dark);
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+    .t2w-form-wrapper .t2w-form-sub {
+        color: var(--text-on-dark-muted);
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+    }
+    .t2w-form-group {
+        margin-bottom: 1.25rem;
+    }
+    .t2w-form-group label {
+        display: block;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--text-on-dark-muted);
+        margin-bottom: 0.4rem;
+        letter-spacing: 0.3px;
+    }
+    .t2w-form-group input,
+    .t2w-form-group select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background: var(--bg-dark-card);
+        border: 1px solid var(--border-dark);
+        border-radius: 8px;
+        color: var(--text-on-dark);
+        font-size: 0.95rem;
+        font-family: 'Montserrat', sans-serif;
+        transition: border-color 0.2s;
+        box-sizing: border-box;
+    }
+    .t2w-form-group input::placeholder {
+        color: var(--text-on-dark-muted);
+    }
+    .t2w-form-group input:focus,
+    .t2w-form-group select:focus {
+        outline: none;
+        border-color: var(--brand-primary);
+    }
+    .t2w-form-group select option {
+        background: var(--bg-dark-card);
+        color: var(--text-on-dark);
+    }
+    .t2w-form-msg {
+        margin-top: 1rem;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        display: none;
+    }
+    .t2w-form-msg.success {
+        display: block;
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        color: var(--success);
+    }
+    .t2w-form-msg.error {
+        display: block;
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #ef4444;
+    }
+    .t2w-submit-btn {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .t2w-container { padding: 0 1.25rem; }
+        .t2w-hero h1 { font-size: 1.8rem; }
+        .t2w-features-grid { grid-template-columns: 1fr; }
+        .t2w-hero { padding: 2.5rem 0 2rem; }
+        .t2w-features { padding: 2.5rem 0; }
+    }
+    @media (max-width: 480px) {
+        .t2w-hero h1 { font-size: 1.5rem; }
+        .t2w-terminal { padding: 1rem 1.25rem; }
+        .t2w-terminal-line { font-size: 0.75rem; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="t2w-hero">
+    <div class="t2w-container">
+        <div class="t2w-pill">AI-Powered Intelligence</div>
+        <h1>Empower Every Employee<br>with <span class="gradient-text">Company Intelligence.</span></h1>
+        <p class="t2w-sub">Turn complex internal documents into an easy, web-based AI assistant. No coding, just instant answers for your team.</p>
+
+        <div class="t2w-terminal">
+            <div class="t2w-terminal-dots">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="t2w-terminal-line">
+                <span class="t2w-prompt">&gt; </span><span id="t2w-typed"></span><span class="t2w-cursor"></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="gradient-bar"></div>
+
+<!-- Features -->
+<section class="t2w-features">
+    <div class="t2w-container">
+        <div class="section-label mono">// why terminal2web</div>
+        <h2 class="section-title">Built for the Enterprise</h2>
+
+        <div class="t2w-features-grid">
+            <div class="t2w-feature-card">
+                <div class="t2w-feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3>Enterprise-Grade Privacy</h3>
+                <p>Data is never used for training. Your intellectual property stays within your perimeter.</p>
+            </div>
+            <div class="t2w-feature-card">
+                <div class="t2w-feature-icon"><i class="fa-solid fa-coins"></i></div>
+                <h3>Cost-Efficient</h3>
+                <p>Pay-per-use API model. No expensive per-user seats. Scale your knowledge base without scaling your overhead.</p>
+            </div>
+            <div class="t2w-feature-card">
+                <div class="t2w-feature-icon"><i class="fa-solid fa-plug"></i></div>
+                <h3>Seamless Integration</h3>
+                <p>Connects directly to your existing ERP and Databases. Pull data in real-time and make it conversational in minutes.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="gradient-bar"></div>
+
+<!-- Early Access Form -->
+<section class="t2w-form-section">
+    <div class="t2w-container">
+        <div class="t2w-form-wrapper">
+            <div class="section-label mono" style="color:var(--brand-primary);">// early access</div>
+            <h2>Get Started with Terminal2Web</h2>
+            <p class="t2w-form-sub">Request early access and we'll get you set up.</p>
+
+            <form id="t2w-form" novalidate>
+                <div class="t2w-form-group">
+                    <label for="t2w-name">Full Name</label>
+                    <input type="text" id="t2w-name" name="name" placeholder="Jane Doe" required>
+                </div>
+                <div class="t2w-form-group">
+                    <label for="t2w-email">Work Email</label>
+                    <input type="email" id="t2w-email" name="email" placeholder="jane@company.com" required>
+                </div>
+                <div class="t2w-form-group">
+                    <label for="t2w-company">Company Name</label>
+                    <input type="text" id="t2w-company" name="company" placeholder="Acme Corp" required>
+                </div>
+                <div class="t2w-form-group">
+                    <label for="t2w-usecase">Primary Use Case</label>
+                    <select id="t2w-usecase" name="useCase" required>
+                        <option value="" disabled selected>Select a use case</option>
+                        <option value="Internal KB">Internal KB</option>
+                        <option value="Customer Support">Customer Support</option>
+                        <option value="Data Analysis">Data Analysis</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-gradient t2w-submit-btn">Request Early Access</button>
+            </form>
+            <div id="t2w-form-msg" class="t2w-form-msg"></div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+    <h2>Have questions first?</h2>
+    <p>Book a free call. We'll walk you through how Terminal2Web fits your workflow.</p>
+    <a href="{% url 'contact' %}" class="btn btn-white">Schedule a Call</a>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function() {
+    /* Terminal typing animation */
+    const sentences = [
+        'Connecting to company documents...',
+        'Analyzing internal knowledge base...',
+        'Ready to answer your questions.'
+    ];
+    const el = document.getElementById('t2w-typed');
+    if (!el) return;
+
+    let sIdx = 0, cIdx = 0, deleting = false;
+
+    function tick() {
+        const current = sentences[sIdx];
+        if (!deleting) {
+            el.textContent = current.slice(0, cIdx + 1);
+            cIdx++;
+            if (cIdx >= current.length) {
+                if (sIdx === sentences.length - 1) return; /* stop on last */
+                setTimeout(function() { deleting = true; tick(); }, 1500);
+                return;
+            }
+            setTimeout(tick, 45);
+        } else {
+            el.textContent = current.slice(0, cIdx);
+            cIdx--;
+            if (cIdx < 0) {
+                deleting = false;
+                cIdx = 0;
+                sIdx++;
+                setTimeout(tick, 400);
+                return;
+            }
+            setTimeout(tick, 25);
+        }
+    }
+    setTimeout(tick, 600);
+
+    /* Early access form */
+    var form = document.getElementById('t2w-form');
+    var msgEl = document.getElementById('t2w-form-msg');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        msgEl.className = 't2w-form-msg';
+        msgEl.style.display = 'none';
+
+        var btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+
+        var payload = {
+            name: form.elements.name.value.trim(),
+            email: form.elements.email.value.trim(),
+            company: form.elements.company.value.trim(),
+            useCase: form.elements.useCase.value
+        };
+
+        fetch('https://terminal2web.vercel.app/api/demo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(function(res) {
+            if (!res.ok) throw new Error('Request failed');
+            return res.json();
+        })
+        .then(function() {
+            msgEl.textContent = 'Thank you! We\'ll be in touch shortly.';
+            msgEl.className = 't2w-form-msg success';
+            form.reset();
+        })
+        .catch(function() {
+            msgEl.textContent = 'Something went wrong. Please try again or contact us directly.';
+            msgEl.className = 't2w-form-msg error';
+        })
+        .finally(function() {
+            btn.disabled = false;
+            btn.textContent = 'Request Early Access';
+        });
+    });
+})();
+</script>
+{% endblock %}
