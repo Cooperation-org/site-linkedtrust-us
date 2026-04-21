@@ -115,6 +115,19 @@ python3 manage.py seed_portfolio --clear  # Clear and re-seed
 4. Set up gunicorn + systemd service
 5. Point linkedtrust.us DNS/nginx at the new site
 
+## Blog (Ghost)
+- **URL**: https://linkedtrust.us/blog/
+- **Platform**: Ghost 6.19 (Zombie fork with Bluesky/ATProto integration)
+- **Production host**: VM 105 (10.0.0.15), NOT on the dev VM
+- **Service**: `ghost-blog.service` on VM 105
+- **Port**: 2368 (proxied via nginx on VM 105)
+- **Database**: `lt_blog` (MySQL) on VM 100
+- **Theme**: Custom `linkedtrust` theme
+- **Runtime**: Node.js 22
+- **Source repo**: `/opt/shared/repos/ghost-fork/` (branch: `bluesky-integration`) — dev copy on VM 200
+- **Dev instance**: `tmp-ghost-blog.service` on VM 200 at demos.linkedtrust.us/blog/
+- **Nav integration**: Blog link uses `/blog/` path (served by Ghost via nginx, not Django)
+
 ## Landing Pages (Future — Not Yet Built)
 Golda wants dedicated landing pages with unique sub-branding:
 - `/unblocked` — "Is your dev team running in 19 directions?"
