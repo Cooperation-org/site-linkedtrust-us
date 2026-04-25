@@ -122,8 +122,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # WhiteNoise Configuration (only for production)
 if not DEBUG:
-    # Use WhiteNoiseStorage to serve directly from static/ without collectstatic
-    STATICFILES_STORAGE = 'whitenoise.storage.WhiteNoiseStorage'
+    # CompressedStaticFilesStorage serves from static/ without collectstatic
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
     # WhiteNoise Compression and Caching Settings
     WHITENOISE_AUTOREFRESH = True
     WHITENOISE_USE_FINDERS = True
