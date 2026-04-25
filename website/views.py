@@ -302,3 +302,18 @@ def service_detail_view(request, slug):
         'example_projects': service.example_projects.all(),
     }
     return render(request, template, context)
+
+
+def services_startups_view(request):
+    """Landing page for startup services."""
+    return render(request, 'services_startups.html')
+
+
+def services_nonprofits_view(request):
+    """Landing page for nonprofit services."""
+    return render(request, 'services_nonprofits.html')
+
+
+def services_launch_view(request):
+    """Landing page for MVP/launch services."""
+    return render(request, 'services_launch.html')

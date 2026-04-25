@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}For Nonprofits — Tech for Social Impact — LinkedTrust{% endblock %}
+
+{% block content %}
+
+<section class="service-landing-hero" style="background: linear-gradient(135deg, #1a3a1a 0%, #0f1117 100%); color: #e8e8e8; padding: 4rem 2rem; text-align: center;">
+    <div class="container">
+        <p style="color: #10B981; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">For Nonprofits</p>
+        <h1 style="font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 1rem;">Maximize your impact through<br>lean, efficient technology.</h1>
+        <p style="color: #888899; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">We help nonprofits build robust systems using open-source tools — at a fraction of standard agency costs.</p>
+    </div>
+</section>
+
+<section class="services-section">
+    <div class="service-topics-grid">
+
+        <div class="service-topic-card">
+            <div class="service-topic-icon"><i class="fa-solid fa-compass"></i></div>
+            <div class="service-topic-content">
+                <h3>Content Planning</h3>
+                <p class="service-topic-headline">Vision-Based Content Planner.</p>
+                <p>A strategic tool to align your organization's mission with your digital presence. Turn your long-term vision into a daily content execution plan that resonates with donors.</p>
+            </div>
+        </div>
+
+        <div class="service-topic-card">
+            <div class="service-topic-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+            <div class="service-topic-content">
+                <h3>Affordable Tech</h3>
+                <p class="service-topic-headline">Low-Cost, High-Performance Development.</p>
+                <p>We specialize in building robust systems using Open-Source stacks. Get the professional tools you need (Portals, Dashboards, or Databases) at a fraction of standard agency costs.</p>
+            </div>
+        </div>
+
+        <div class="service-topic-card">
+            <div class="service-topic-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="service-topic-content">
+                <h3>Impact Tracking</h3>
+                <p class="service-topic-headline">Validate Your Impact.</p>
+                <p>Don't just do good—prove it. We build data visualization and reporting tools that help you track and showcase your real-world results to stakeholders and grant makers.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="cta-banner">
+    <h2>Ready to maximize your impact?</h2>
+    <p>Book a free call. We'll listen first and figure it out together.</p>
+    <a href="{% url 'contact' %}" class="btn btn-white">Schedule a Call</a>
+</section>
+
+{% endblock %}

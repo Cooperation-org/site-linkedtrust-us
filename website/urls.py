@@ -12,6 +12,9 @@ urlpatterns = [
 
     # Services — deep-linkable service pages
     path('services/', services_view, name='services'),
+    path('services/startups/', services_startups_view, name='services_startups'),
+    path('services/nonprofits/', services_nonprofits_view, name='services_nonprofits'),
+    path('services/launch/', services_launch_view, name='services_launch'),
     path('services/<slug:slug>/', service_detail_view, name='service_detail'),
 
     # LinkedClaims ecosystem

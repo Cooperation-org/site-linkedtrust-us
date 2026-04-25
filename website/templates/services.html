@@ -5,6 +5,30 @@
 
 {% block content %}
 
+<!-- Entry Point Cards -->
+<section class="services-section" style="padding-top:1.5rem;">
+    <div class="entry-points-grid">
+        <a href="{% url 'services_startups' %}" class="entry-point-card entry-point-card--startups">
+            <div class="entry-point-icon"><i class="fa-solid fa-rocket"></i></div>
+            <h3>For Startups</h3>
+            <p>Optimize Your Burn Rate</p>
+            <span class="entry-point-cta">Explore <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+        <a href="{% url 'services_nonprofits' %}" class="entry-point-card entry-point-card--nonprofits">
+            <div class="entry-point-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+            <h3>For Nonprofits</h3>
+            <p>Tech for Social Impact</p>
+            <span class="entry-point-cta">Explore <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+        <a href="{% url 'services_launch' %}" class="entry-point-card entry-point-card--launch">
+            <div class="entry-point-icon"><i class="fa-solid fa-code"></i></div>
+            <h3>Your Idea Made Live</h3>
+            <p>From Concept to Code</p>
+            <span class="entry-point-cta">Explore <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+    </div>
+</section>
+
 <section class="services-section" style="padding-top:1.5rem;">
     <div class="services-grid">
         {% for service in services %}
