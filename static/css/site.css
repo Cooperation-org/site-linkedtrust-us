@@ -200,6 +200,51 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 }
 .btn-white:hover { opacity: 0.9; }
 
+/* ---- BACK LINK ---- */
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    transition: color 0.2s ease;
+}
+.back-link:hover { color: rgba(255, 255, 255, 0.9); }
+
+/* ---- RELATED LINKS ---- */
+
+.related-projects {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.related-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.related-link {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--brand-accent);
+    text-decoration: none;
+    padding: 2px 8px;
+    background: rgba(102, 126, 234, 0.08);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+.related-link:hover { background: rgba(102, 126, 234, 0.15); }
+
 
 /* ---- SECTION UTILITIES ---- */
 

@@ -5,90 +5,59 @@
 
 {% block content %}
 
-<!-- Hero Section -->
-<section class="bento-hero bento-hero--launch">
-    <div class="bento-hero-bg"></div>
+<!-- Hero -->
+<section class="portfolio-dark">
     <div class="container">
         <a href="{% url 'services' %}" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Services</a>
-        <div class="bento-hero-content">
-            <div class="bento-badge">MVP Development</div>
-            <h1>Rapid MVP development for founders<br>who need to move fast.</h1>
-            <p>From raw idea to production-ready MVP in weeks, not months. We use clean code and scalable frameworks.</p>
+        <div style="text-align: center; padding: 2rem 0;">
+            <p style="color: var(--brand-primary); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">MVP Development</p>
+            <h1 style="font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 1rem;">Rapid MVP development for founders<br>who need to move fast.</h1>
+            <p style="color: var(--text-on-dark-muted); font-size: 1.05rem; max-width: 550px; margin: 0 auto;">From raw idea to production-ready MVP in weeks, not months. We use clean code and scalable frameworks.</p>
         </div>
     </div>
 </section>
 
-<!-- Bento Grid -->
-<section class="bento-section">
-    <div class="container">
-        <div class="bento-grid">
+<!-- Cards -->
+<section class="services-section">
+    <div class="services-grid">
 
-            <!-- Step 1: Discovery -->
-            <div class="bento-card">
-                <div class="bento-card-header">
-                    <div class="step-number">01</div>
-                    <div class="bento-card-title">
-                        <h3>Discovery</h3>
-                        <p class="bento-headline">Your Vision, Built to Scale.</p>
-                    </div>
-                </div>
-                <div class="bento-card-body">
-                    <p>We take your raw idea and architect the MVP using Clean Code and scalable frameworks (React, Next.js, Node.js). We dig into your requirements and build a technical roadmap that serves your business goals.</p>
-                </div>
-                <div class="bento-card-footer">
-                    <div class="related-projects">
-                        <span class="related-label">Related:</span>
-                        <a href="/work/linkedclaims-sdk/" class="related-link">LinkedClaims SDK</a>
-                    </div>
-                </div>
+        <div class="service-card">
+            <div class="service-icon" style="font-family: 'JetBrains Mono', monospace; font-weight: 700;">01</div>
+            <h3>Discovery</h3>
+            <p class="service-topic-headline" style="font-size: 0.9rem; font-weight: 600; color: var(--brand-primary); margin-bottom: 0.5rem;">Your Vision, Built to Scale.</p>
+            <p>We take your raw idea and architect the MVP using Clean Code and scalable frameworks (React, Next.js, Node.js). We dig into your requirements and build a technical roadmap that serves your business goals.</p>
+            <div class="related-projects">
+                <span class="related-label">Related:</span>
+                <a href="/work/linkedclaims-sdk/" class="related-link">LinkedClaims SDK</a>
             </div>
-
-            <!-- Step 2: Rapid Execution -->
-            <div class="bento-card">
-                <div class="bento-card-header">
-                    <div class="step-number">02</div>
-                    <div class="bento-card-title">
-                        <h3>Rapid Execution</h3>
-                        <p class="bento-headline">Focus on the "Must-Haves".</p>
-                    </div>
-                </div>
-                <div class="bento-card-body">
-                    <p>We build the core features first to get you to market in weeks, not months. No scope creep, no unnecessary polish — just a working product you can test with real users.</p>
-                </div>
-                <div class="bento-card-footer">
-                    <div class="related-projects">
-                        <span class="related-label">Related:</span>
-                        <a href="/work/talent-talentstamp/" class="related-link">TalentStamp</a>
-                        <a href="/work/amebo/" class="related-link">Amebo</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 3: Deployment -->
-            <div class="bento-card">
-                <div class="bento-card-header">
-                    <div class="step-number">03</div>
-                    <div class="bento-card-title">
-                        <h3>Deployment</h3>
-                        <p class="bento-headline">Production-Ready from Day One.</p>
-                    </div>
-                </div>
-                <div class="bento-card-body">
-                    <p>Launching on production-ready environments with a focus on stability and user feedback loops. We set up monitoring, analytics, and the infrastructure to scale when you're ready.</p>
-                </div>
-                <div class="bento-card-footer">
-                    <div class="related-projects">
-                        <span class="related-label">Related:</span>
-                        <a href="/work/trunet/" class="related-link">Tru.net</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+        <div class="service-card">
+            <div class="service-icon" style="font-family: 'JetBrains Mono', monospace; font-weight: 700;">02</div>
+            <h3>Rapid Execution</h3>
+            <p class="service-topic-headline" style="font-size: 0.9rem; font-weight: 600; color: var(--brand-primary); margin-bottom: 0.5rem;">Focus on the "Must-Haves".</p>
+            <p>We build the core features first to get you to market in weeks, not months. No scope creep, no unnecessary polish — just a working product you can test with real users.</p>
+            <div class="related-projects">
+                <span class="related-label">Related:</span>
+                <a href="/work/talent-talentstamp/" class="related-link">TalentStamp</a>
+                <a href="/work/amebo/" class="related-link">Amebo</a>
+            </div>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon" style="font-family: 'JetBrains Mono', monospace; font-weight: 700;">03</div>
+            <h3>Deployment</h3>
+            <p class="service-topic-headline" style="font-size: 0.9rem; font-weight: 600; color: var(--brand-primary); margin-bottom: 0.5rem;">Production-Ready from Day One.</p>
+            <p>Launching on production-ready environments with a focus on stability and user feedback loops. We set up monitoring, analytics, and the infrastructure to scale when you're ready.</p>
+            <div class="related-projects">
+                <span class="related-label">Related:</span>
+                <a href="/work/trunet/" class="related-link">Tru.net</a>
+            </div>
+        </div>
+
     </div>
 </section>
 
-<!-- CTA -->
 <section class="cta-banner">
     <h2>Have an idea you want to build?</h2>
     <p>Book a free call. We'll listen first and figure it out together.</p>

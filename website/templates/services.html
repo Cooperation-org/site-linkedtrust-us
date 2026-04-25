@@ -5,27 +5,22 @@
 
 {% block content %}
 
-<!-- Floating Tab Navigation -->
-<section class="services-tabs-section">
-    <div class="services-tabs-container">
-        <div class="services-tabs-inner">
-            <a href="{% url 'services_startups' %}" class="tab-item tab-item--startups">
-                <span class="tab-icon"><i class="fa-solid fa-rocket"></i></span>
-                <span class="tab-label">For Startups</span>
-            </a>
-            <a href="{% url 'services_nonprofits' %}" class="tab-item tab-item--nonprofits">
-                <span class="tab-icon"><i class="fa-solid fa-hand-holding-heart"></i></span>
-                <span class="tab-label">For Nonprofits</span>
-            </a>
-            <a href="{% url 'services_launch' %}" class="tab-item tab-item--launch">
-                <span class="tab-icon"><i class="fa-solid fa-bolt"></i></span>
-                <span class="tab-label">Your Idea Made Live</span>
-            </a>
-        </div>
+<!-- Entry Point Buttons -->
+<section class="services-section" style="padding-top: 2rem;">
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem;">
+        <a href="{% url 'services_startups' %}" class="btn btn-gradient" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-rocket"></i> For Startups
+        </a>
+        <a href="{% url 'services_nonprofits' %}" class="btn btn-gradient" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-hand-holding-heart"></i> For Nonprofits
+        </a>
+        <a href="{% url 'services_launch' %}" class="btn btn-gradient" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-code"></i> Your Idea Made Live
+        </a>
     </div>
 </section>
 
-<section class="services-section" style="padding-top:1.5rem;">
+<section class="services-section" style="padding-top: 0;">
     <div class="services-grid">
         {% for service in services %}
         <a href="{% url 'service_detail' service.slug %}" class="service-card">
