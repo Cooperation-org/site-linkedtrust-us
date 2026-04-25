@@ -5,18 +5,23 @@
 
 {% block content %}
 
-<!-- Entry Point Buttons -->
-<section style="padding: 3rem 2rem 0; text-align: center;">
-    <div class="entry-points-buttons">
-        <a href="{% url 'services_startups' %}" class="btn-entry-point btn-entry-point--startups">
-            <i class="fa-solid fa-rocket"></i> For Startups
-        </a>
-        <a href="{% url 'services_nonprofits' %}" class="btn-entry-point btn-entry-point--nonprofits">
-            <i class="fa-solid fa-hand-holding-heart"></i> For Nonprofits
-        </a>
-        <a href="{% url 'services_launch' %}" class="btn-entry-point btn-entry-point--launch">
-            <i class="fa-solid fa-code"></i> Your Idea Made Live
-        </a>
+<!-- Floating Tab Navigation -->
+<section class="services-tabs-section">
+    <div class="services-tabs-container">
+        <div class="services-tabs-inner">
+            <a href="{% url 'services_startups' %}" class="tab-item tab-item--startups">
+                <span class="tab-icon"><i class="fa-solid fa-rocket"></i></span>
+                <span class="tab-label">For Startups</span>
+            </a>
+            <a href="{% url 'services_nonprofits' %}" class="tab-item tab-item--nonprofits">
+                <span class="tab-icon"><i class="fa-solid fa-hand-holding-heart"></i></span>
+                <span class="tab-label">For Nonprofits</span>
+            </a>
+            <a href="{% url 'services_launch' %}" class="tab-item tab-item--launch">
+                <span class="tab-icon"><i class="fa-solid fa-bolt"></i></span>
+                <span class="tab-label">Your Idea Made Live</span>
+            </a>
+        </div>
     </div>
 </section>
 

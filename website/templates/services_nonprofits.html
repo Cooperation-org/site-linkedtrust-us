@@ -5,69 +5,92 @@
 
 {% block content %}
 
-<!-- Hero -->
-<section class="nonprofits-hero">
-    <div class="hero-bg-decoration"></div>
+<!-- Hero Section -->
+<section class="bento-hero bento-hero--nonprofits">
+    <div class="bento-hero-bg"></div>
     <div class="container">
-        <div class="hero-label">For Nonprofits</div>
-        <h1 class="hero-headline">Maximize your impact through<br>lean, efficient technology.</h1>
-        <p class="hero-subtext">We help nonprofits build robust systems using open-source tools — at a fraction of standard agency costs.</p>
+        <a href="{% url 'services' %}" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Services</a>
+        <div class="bento-hero-content">
+            <div class="bento-badge">For Nonprofits</div>
+            <h1>Maximize your impact through<br>lean, efficient technology.</h1>
+            <p>We help nonprofits build robust systems using open-source tools — at a fraction of standard agency costs.</p>
+        </div>
     </div>
 </section>
 
-<!-- Service Sections -->
-<section class="services-section">
-    <div class="service-topics-grid">
+<!-- Bento Grid -->
+<section class="bento-section">
+    <div class="container">
+        <div class="bento-grid">
 
-        <!-- Content Planning -->
-        <div class="service-topic-card">
-            <div class="service-topic-icon">
-                <i class="fa-solid fa-compass"></i>
-            </div>
-            <div class="service-topic-content">
-                <h3>Content Planning</h3>
-                <p class="service-topic-headline">Vision-Based Content Planner.</p>
-                <p>A strategic tool to align your organization's mission with your digital presence. Turn your long-term vision into a daily content execution plan that resonates with donors.</p>
-                <div class="related-projects">
-                    <span class="related-label">Related:</span>
-                    <a href="/work/civicsky/" class="related-link">CivicSky</a>
+            <!-- Card 1: Content Planning -->
+            <div class="bento-card">
+                <div class="bento-card-header">
+                    <div class="icon-box icon-box--green">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+                    <div class="bento-card-title">
+                        <h3>Content Planning</h3>
+                        <p class="bento-headline">Vision-Based Content Planner.</p>
+                    </div>
+                </div>
+                <div class="bento-card-body">
+                    <p>A strategic tool to align your organization's mission with your digital presence. Turn your long-term vision into a daily content execution plan that resonates with donors.</p>
+                </div>
+                <div class="bento-card-footer">
+                    <div class="related-projects">
+                        <span class="related-label">Related:</span>
+                        <a href="/work/civicsky/" class="related-link">CivicSky</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Affordable Tech -->
-        <div class="service-topic-card">
-            <div class="service-topic-icon">
-                <i class="fa-solid fa-hand-holding-dollar"></i>
-            </div>
-            <div class="service-topic-content">
-                <h3>Affordable Tech</h3>
-                <p class="service-topic-headline">Low-Cost, High-Performance Development.</p>
-                <p>We specialize in building robust systems using Open-Source stacks. Get the professional tools you need (Portals, Dashboards, or Databases) at a fraction of standard agency costs.</p>
-                <div class="related-projects">
-                    <span class="related-label">Related:</span>
-                    <a href="/work/alonovo/" class="related-link">Alonovo</a>
-                    <a href="/work/amebo/" class="related-link">Amebo</a>
+            <!-- Card 2: Affordable Tech -->
+            <div class="bento-card">
+                <div class="bento-card-header">
+                    <div class="icon-box icon-box--cyan">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    </div>
+                    <div class="bento-card-title">
+                        <h3>Affordable Tech</h3>
+                        <p class="bento-headline">Low-Cost, High-Performance Development.</p>
+                    </div>
+                </div>
+                <div class="bento-card-body">
+                    <p>We specialize in building robust systems using Open-Source stacks. Get the professional tools you need (Portals, Dashboards, or Databases) at a fraction of standard agency costs.</p>
+                </div>
+                <div class="bento-card-footer">
+                    <div class="related-projects">
+                        <span class="related-label">Related:</span>
+                        <a href="/work/alonovo/" class="related-link">Alonovo</a>
+                        <a href="/work/amebo/" class="related-link">Amebo</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Impact Tracking -->
-        <div class="service-topic-card">
-            <div class="service-topic-icon">
-                <i class="fa-solid fa-chart-line"></i>
-            </div>
-            <div class="service-topic-content">
-                <h3>Impact Tracking</h3>
-                <p class="service-topic-headline">Validate Your Impact.</p>
-                <p>Don't just do good—prove it. We build data visualization and reporting tools that help you track and showcase your real-world results to stakeholders and grant makers.</p>
-                <div class="related-projects">
-                    <span class="related-label">Related:</span>
-                    <a href="/work/certify/" class="related-link">Certify</a>
+            <!-- Card 3: Impact Tracking -->
+            <div class="bento-card">
+                <div class="bento-card-header">
+                    <div class="icon-box icon-box--purple">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div class="bento-card-title">
+                        <h3>Impact Tracking</h3>
+                        <p class="bento-headline">Validate Your Impact.</p>
+                    </div>
+                </div>
+                <div class="bento-card-body">
+                    <p>Don't just do good—prove it. We build data visualization and reporting tools that help you track and showcase your real-world results to stakeholders and grant makers.</p>
+                </div>
+                <div class="bento-card-footer">
+                    <div class="related-projects">
+                        <span class="related-label">Related:</span>
+                        <a href="/work/certify/" class="related-link">Certify</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
 </section>
 

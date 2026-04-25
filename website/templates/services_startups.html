@@ -5,78 +5,97 @@
 
 {% block content %}
 
-<!-- Hero -->
-<section class="startups-hero">
-    <div class="hero-bg-decoration"></div>
+<!-- Hero Section -->
+<section class="bento-hero bento-hero--startups">
+    <div class="bento-hero-bg"></div>
     <div class="container">
-        <div class="hero-label">For Startups</div>
-        <h1 class="hero-headline">Stop wasting capital on overhead;<br>invest it in your product.</h1>
-        <p class="hero-subtext">We help startups optimize infrastructure costs, own their tools, and build with equity — not vanity metrics.</p>
+        <a href="{% url 'services' %}" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Services</a>
+        <div class="bento-hero-content">
+            <div class="bento-badge">For Startups</div>
+            <h1>Stop wasting capital on overhead;<br>invest it in your product.</h1>
+            <p>We help startups optimize infrastructure costs, own their tools, and build with equity — not vanity metrics.</p>
+        </div>
     </div>
 </section>
 
-<!-- Service Sections -->
-<section class="services-section">
-    <div class="service-topics-grid">
+<!-- Bento Grid -->
+<section class="bento-section">
+    <div class="container">
 
-        <!-- Cloud Exit Strategy -->
-        <div class="service-topic-card">
-            <div class="service-topic-icon">
-                <i class="fa-solid fa-server"></i>
-            </div>
-            <div class="service-topic-content">
-                <h3>Cloud Exit Strategy</h3>
-                <p class="service-topic-headline">Slash Your Infrastructure Costs.</p>
-                <p>Transition from expensive managed cloud services to high-performance Bare-metal or Hybrid setups. We handle the migration, ensuring your app stays fast and scalable without the "Cloud Tax."</p>
-                <div class="service-topic-meta">
-                    <span class="price-badge">$0K-8K migration + $10-$400/mo</span>
+        <!-- Bento Grid: 3 columns on desktop -->
+        <div class="bento-grid">
+
+            <!-- Card 1: Cloud Exit Strategy (full width top) -->
+            <div class="bento-card bento-card--large">
+                <div class="bento-card-header">
+                    <div class="icon-box icon-box--cyan">
+                        <i class="fa-solid fa-server"></i>
+                    </div>
+                    <div class="bento-card-title">
+                        <h3>Cloud Exit Strategy</h3>
+                        <p class="bento-headline">Slash Your Infrastructure Costs.</p>
+                    </div>
                 </div>
-                <div class="related-projects">
-                    <span class="related-label">Related:</span>
-                    <a href="/work/trunet/" class="related-link">Tru.net</a>
+                <div class="bento-card-body">
+                    <p>Transition from expensive managed cloud services to high-performance Bare-metal or Hybrid setups. We handle the migration, ensuring your app stays fast and scalable without the "Cloud Tax."</p>
+                </div>
+                <div class="bento-card-footer">
+                    <div class="price-tag">$0K-8K migration + $10-$400/mo</div>
+                    <div class="related-projects">
+                        <span class="related-label">Related:</span>
+                        <a href="/work/trunet/" class="related-link">Tru.net</a>
+                    </div>
                 </div>
             </div>
+
+            <!-- Card 2: SaaS Customization -->
+            <div class="bento-card">
+                <div class="bento-card-header">
+                    <div class="icon-box icon-box--purple">
+                        <i class="fa-solid fa-cogs"></i>
+                    </div>
+                    <div class="bento-card-title">
+                        <h3>SaaS Customization</h3>
+                        <p class="bento-headline">Own Your CRM, Don't Rent It.</p>
+                    </div>
+                </div>
+                <div class="bento-card-body">
+                    <p>Implementation of Odoo tailored to your workflow. Get a HubSpot alternative WITHOUT per-seat licensing. Pay for the software, not the number of employees you hire.</p>
+                </div>
+                <div class="bento-card-footer">
+                    <div class="price-tag">Project-based pricing</div>
+                    <div class="related-projects">
+                        <span class="related-label">Related:</span>
+                        <a href="/work/amebo/" class="related-link">Amebo</a>
+                        <a href="/work/alonovo/" class="related-link">Alonovo</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Equity Management -->
+            <div class="bento-card">
+                <div class="bento-card-header">
+                    <div class="icon-box icon-box--green">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <div class="bento-card-title">
+                        <h3>Equity Management</h3>
+                        <p class="bento-headline">Fair Equity with Slicing Pie.</p>
+                    </div>
+                </div>
+                <div class="bento-card-body">
+                    <p>Implement dynamic equity sharing models. We set up the systems to track contributions and manage "Slicing Pie" structures so your founding team stays aligned and motivated.</p>
+                </div>
+                <div class="bento-card-footer">
+                    <div class="price-tag">$1K-3K setup</div>
+                    <div class="related-projects">
+                        <span class="related-label">Related:</span>
+                        <a href="/work/alonovo/" class="related-link">Alonovo</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-        <!-- SaaS Customization -->
-        <div class="service-topic-card">
-            <div class="service-topic-icon">
-                <i class="fa-solid fa-cogs"></i>
-            </div>
-            <div class="service-topic-content">
-                <h3>SaaS Customization</h3>
-                <p class="service-topic-headline">Own Your CRM, Don't Rent It.</p>
-                <p>Implementation of Odoo tailored to your workflow. Get a HubSpot alternative WITHOUT per-seat licensing. Pay for the software, not the number of employees you hire.</p>
-                <div class="service-topic-meta">
-                    <span class="price-badge">Project-based pricing</span>
-                </div>
-                <div class="related-projects">
-                    <span class="related-label">Related:</span>
-                    <a href="/work/amebo/" class="related-link">Amebo</a>
-                    <a href="/work/alonovo/" class="related-link">Alonovo</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Equity Management -->
-        <div class="service-topic-card">
-            <div class="service-topic-icon">
-                <i class="fa-solid fa-chart-pie"></i>
-            </div>
-            <div class="service-topic-content">
-                <h3>Equity Management</h3>
-                <p class="service-topic-headline">Fair Equity with Slicing Pie.</p>
-                <p>Implement dynamic equity sharing models. We set up the systems to track contributions and manage "Slicing Pie" structures so your founding team stays aligned and motivated.</p>
-                <div class="service-topic-meta">
-                    <span class="price-badge">$1K-3K setup</span>
-                </div>
-                <div class="related-projects">
-                    <span class="related-label">Related:</span>
-                    <a href="/work/alonovo/" class="related-link">Alonovo</a>
-                </div>
-            </div>
-        </div>
-
     </div>
 </section>
 
