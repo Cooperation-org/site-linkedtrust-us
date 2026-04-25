@@ -122,13 +122,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # WhiteNoise Configuration (only for production)
 if not DEBUG:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # Use WhiteNoiseStorage to serve directly from static/ without collectstatic
+    STATICFILES_STORAGE = 'whitenoise.storage.WhiteNoiseStorage'
     # WhiteNoise Compression and Caching Settings
     WHITENOISE_AUTOREFRESH = True
-    WHITENOISE_USE_FINDERS = False
-    WHITENOISE_MANIFEST_STRICT = False
+    WHITENOISE_USE_FINDERS = True
     WHITENOISE_ALLOW_ALL_ORIGINS = True
-    # Maximum age for static files (30 days )
+    # Maximum age for static files (30 days)
     WHITENOISE_MAX_AGE = 30 * 24 * 60 * 60
 
 
