@@ -5,49 +5,74 @@
 
 {% block content %}
 
-<section class="service-landing-hero" style="background: linear-gradient(135deg, #0f1117 0%, #1a1d27 100%); color: #e8e8e8; padding: 4rem 2rem; text-align: center;">
+<!-- Hero -->
+<section class="startups-hero">
+    <div class="hero-bg-decoration"></div>
     <div class="container">
-        <p style="color: #00B2E5; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">For Startups</p>
-        <h1 style="font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 1rem;">Stop wasting capital on overhead;<br>invest it in your product.</h1>
-        <p style="color: #888899; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">We help startups optimize infrastructure costs, own their tools, and build with equity — not vanity metrics.</p>
+        <div class="hero-label">For Startups</div>
+        <h1 class="hero-headline">Stop wasting capital on overhead;<br>invest it in your product.</h1>
+        <p class="hero-subtext">We help startups optimize infrastructure costs, own their tools, and build with equity — not vanity metrics.</p>
     </div>
 </section>
 
+<!-- Service Sections -->
 <section class="services-section">
     <div class="service-topics-grid">
 
+        <!-- Cloud Exit Strategy -->
         <div class="service-topic-card">
-            <div class="service-topic-icon"><i class="fa-solid fa-server"></i></div>
+            <div class="service-topic-icon">
+                <i class="fa-solid fa-server"></i>
+            </div>
             <div class="service-topic-content">
                 <h3>Cloud Exit Strategy</h3>
                 <p class="service-topic-headline">Slash Your Infrastructure Costs.</p>
                 <p>Transition from expensive managed cloud services to high-performance Bare-metal or Hybrid setups. We handle the migration, ensuring your app stays fast and scalable without the "Cloud Tax."</p>
                 <div class="service-topic-meta">
-                    <span class="price-range">$0K-8K migration + $10-$400/mo</span>
+                    <span class="price-badge">$0K-8K migration + $10-$400/mo</span>
+                </div>
+                <div class="related-projects">
+                    <span class="related-label">Related:</span>
+                    <a href="/work/trunet/" class="related-link">Tru.net</a>
                 </div>
             </div>
         </div>
 
+        <!-- SaaS Customization -->
         <div class="service-topic-card">
-            <div class="service-topic-icon"><i class="fa-solid fa-cogs"></i></div>
+            <div class="service-topic-icon">
+                <i class="fa-solid fa-cogs"></i>
+            </div>
             <div class="service-topic-content">
                 <h3>SaaS Customization</h3>
                 <p class="service-topic-headline">Own Your CRM, Don't Rent It.</p>
                 <p>Implementation of Odoo tailored to your workflow. Get a HubSpot alternative WITHOUT per-seat licensing. Pay for the software, not the number of employees you hire.</p>
                 <div class="service-topic-meta">
-                    <span class="price-range">Project-based pricing</span>
+                    <span class="price-badge">Project-based pricing</span>
+                </div>
+                <div class="related-projects">
+                    <span class="related-label">Related:</span>
+                    <a href="/work/amebo/" class="related-link">Amebo</a>
+                    <a href="/work/alonovo/" class="related-link">Alonovo</a>
                 </div>
             </div>
         </div>
 
+        <!-- Equity Management -->
         <div class="service-topic-card">
-            <div class="service-topic-icon"><i class="fa-solid fa-chart-pie"></i></div>
+            <div class="service-topic-icon">
+                <i class="fa-solid fa-chart-pie"></i>
+            </div>
             <div class="service-topic-content">
                 <h3>Equity Management</h3>
                 <p class="service-topic-headline">Fair Equity with Slicing Pie.</p>
                 <p>Implement dynamic equity sharing models. We set up the systems to track contributions and manage "Slicing Pie" structures so your founding team stays aligned and motivated.</p>
                 <div class="service-topic-meta">
-                    <span class="price-range">$1K-3K setup</span>
+                    <span class="price-badge">$1K-3K setup</span>
+                </div>
+                <div class="related-projects">
+                    <span class="related-label">Related:</span>
+                    <a href="/work/alonovo/" class="related-link">Alonovo</a>
                 </div>
             </div>
         </div>
@@ -55,6 +80,7 @@
     </div>
 </section>
 
+<!-- CTA -->
 <section class="cta-banner">
     <h2>Ready to optimize your burn rate?</h2>
     <p>Book a free call. We'll listen first and figure it out together.</p>

@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:superbloom.design)",
+      "WebFetch(domain:ilsr.org)",
+      "WebFetch(domain:indivisible.org)",
+      "Bash(wc:*)",
+      "Bash(xargs:*)",
+      "WebFetch(domain:localfirstaz.org)",
+      "WebFetch(domain:www.localfirstaz.com)",
+      "Bash(sudo mkdir:*)",
+      "Bash(sudo chown:*)",
+      "Bash(PGPASSWORD=\"\" psql:*)",
+      "Bash(psql:*)",
+      "Bash(pip install:*)",
+      "Bash(PGUSER=cobox psql:*)",
+      "Bash(python manage.py makemigrations:*)",
+      "Bash(python3 manage.py makemigrations:*)",
+      "Bash(pip3 show:*)",
+      "Bash(pip3 install:*)",
+      "Bash(python3 manage.py migrate:*)",
+      "Bash(python3 manage.py check:*)",
+      "Bash(DJANGO_SUPERUSER_PASSWORD=admin123 python3 manage.py createsuperuser:*)",
+      "Bash(timeout 8 python3:*)",
+      "Bash(sudo tee:*)",
+      "Bash(/dev/null:*)",
+      "Bash(sudo nginx:*)",
+      "Bash(sudo systemctl reload:*)",
+      "Bash(curl:*)",
+      "Bash(python3 manage.py seed_portfolio:*)",
+      "Bash(git status:*)",
+      "Bash(git checkout:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

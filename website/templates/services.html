@@ -5,26 +5,17 @@
 
 {% block content %}
 
-<!-- Entry Point Cards -->
-<section class="services-section" style="padding-top:1.5rem;">
-    <div class="entry-points-grid">
-        <a href="{% url 'services_startups' %}" class="entry-point-card entry-point-card--startups">
-            <div class="entry-point-icon"><i class="fa-solid fa-rocket"></i></div>
-            <h3>For Startups</h3>
-            <p>Optimize Your Burn Rate</p>
-            <span class="entry-point-cta">Explore <i class="fa-solid fa-arrow-right"></i></span>
+<!-- Entry Point Buttons -->
+<section style="padding: 3rem 2rem 0; text-align: center;">
+    <div class="entry-points-buttons">
+        <a href="{% url 'services_startups' %}" class="btn-entry-point btn-entry-point--startups">
+            <i class="fa-solid fa-rocket"></i> For Startups
         </a>
-        <a href="{% url 'services_nonprofits' %}" class="entry-point-card entry-point-card--nonprofits">
-            <div class="entry-point-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
-            <h3>For Nonprofits</h3>
-            <p>Tech for Social Impact</p>
-            <span class="entry-point-cta">Explore <i class="fa-solid fa-arrow-right"></i></span>
+        <a href="{% url 'services_nonprofits' %}" class="btn-entry-point btn-entry-point--nonprofits">
+            <i class="fa-solid fa-hand-holding-heart"></i> For Nonprofits
         </a>
-        <a href="{% url 'services_launch' %}" class="entry-point-card entry-point-card--launch">
-            <div class="entry-point-icon"><i class="fa-solid fa-code"></i></div>
-            <h3>Your Idea Made Live</h3>
-            <p>From Concept to Code</p>
-            <span class="entry-point-cta">Explore <i class="fa-solid fa-arrow-right"></i></span>
+        <a href="{% url 'services_launch' %}" class="btn-entry-point btn-entry-point--launch">
+            <i class="fa-solid fa-code"></i> Your Idea Made Live
         </a>
     </div>
 </section>

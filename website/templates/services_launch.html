@@ -5,47 +5,67 @@
 
 {% block content %}
 
-<section class="service-landing-hero" style="background: linear-gradient(135deg, #2a1a4a 0%, #0f1117 100%); color: #e8e8e8; padding: 4rem 2rem; text-align: center;">
+<!-- Hero -->
+<section class="launch-hero">
+    <div class="hero-bg-decoration"></div>
     <div class="container">
-        <p style="color: #667eea; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">MVP Development</p>
-        <h1 style="font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 1rem;">Rapid MVP development for founders<br>who need to move fast.</h1>
-        <p style="color: #888899; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">From raw idea to production-ready MVP in weeks, not months. We use clean code and scalable frameworks.</p>
+        <div class="hero-label">MVP Development</div>
+        <h1 class="hero-headline">Rapid MVP development for founders<br>who need to move fast.</h1>
+        <p class="hero-subtext">From raw idea to production-ready MVP in weeks, not months. We use clean code and scalable frameworks.</p>
     </div>
 </section>
 
+<!-- Process Sections -->
 <section class="services-section">
     <div class="service-topics-grid service-topics-grid--process">
 
+        <!-- Discovery -->
         <div class="service-topic-card">
             <div class="service-topic-number">01</div>
             <div class="service-topic-content">
                 <h3>Discovery</h3>
                 <p class="service-topic-headline">Your Vision, Built to Scale.</p>
                 <p>We take your raw idea and architect the MVP using Clean Code and scalable frameworks (React, Next.js, Node.js). We dig into your requirements and build a technical roadmap that serves your business goals.</p>
+                <div class="related-projects">
+                    <span class="related-label">Related:</span>
+                    <a href="/work/linkedclaims-sdk/" class="related-link">LinkedClaims SDK</a>
+                </div>
             </div>
         </div>
 
+        <!-- Rapid Execution -->
         <div class="service-topic-card">
             <div class="service-topic-number">02</div>
             <div class="service-topic-content">
                 <h3>Rapid Execution</h3>
                 <p class="service-topic-headline">Focus on the "Must-Haves".</p>
                 <p>We build the core features first to get you to market in weeks, not months. No scope creep, no unnecessary polish — just a working product you can test with real users.</p>
+                <div class="related-projects">
+                    <span class="related-label">Related:</span>
+                    <a href="/work/talent-talentstamp/" class="related-link">TalentStamp</a>
+                    <a href="/work/amebo/" class="related-link">Amebo</a>
+                </div>
             </div>
         </div>
 
+        <!-- Deployment -->
         <div class="service-topic-card">
             <div class="service-topic-number">03</div>
             <div class="service-topic-content">
                 <h3>Deployment</h3>
                 <p class="service-topic-headline">Production-Ready from Day One.</p>
                 <p>Launching on production-ready environments with a focus on stability and user feedback loops. We set up monitoring, analytics, and the infrastructure to scale when you're ready.</p>
+                <div class="related-projects">
+                    <span class="related-label">Related:</span>
+                    <a href="/work/trunet/" class="related-link">Tru.net</a>
+                </div>
             </div>
         </div>
 
     </div>
 </section>
 
+<!-- CTA -->
 <section class="cta-banner">
     <h2>Have an idea you want to build?</h2>
     <p>Book a free call. We'll listen first and figure it out together.</p>
