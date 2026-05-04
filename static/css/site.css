@@ -451,6 +451,21 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.25rem;
 }
+/* Single-row embed badges between buttons and cards */
+.badge-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem;
+    background: rgba(0, 178, 229, 0.04);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border-radius: var(--radius);
+    overflow-x: auto;
+    scrollbar-width: none;
+    align-items: flex-start;
+}
+.badge-row::-webkit-scrollbar { display: none; }
+.badge-row > * { flex: none; width: 400px; height: 180px; }
 .service-card {
     background: var(--bg-white);
     border: 1px solid var(--border);
@@ -1044,6 +1059,7 @@ linked-badge[layout="card"]:not(:defined) {
     .more-badges { grid-template-columns: 1fr; padding: 0 1.5rem 2rem; }
     .services-section { padding: 3rem 1.5rem; }
     .services-grid { grid-template-columns: 1fr; }
+    .badge-row { margin-bottom: 1rem; }
     .portfolio-dark { padding: 3rem 1.5rem; }
     .portfolio-grid { grid-template-columns: 1fr; }
     .footer-inner { grid-template-columns: 1fr 1fr; }

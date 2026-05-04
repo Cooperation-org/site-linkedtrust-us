@@ -5,9 +5,9 @@
 
 {% block content %}
 
-<!-- Entry Point Buttons -->
+<!-- Entry Point Buttons + Badges + Cards in one tight section -->
 <section class="services-section" style="padding-top: 2rem;">
-    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem;">
+    <div class="services-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
         <a href="{% url 'services_startups' %}" class="btn btn-gradient" style="display: inline-flex; align-items: center; gap: 0.5rem;">
             <i class="fa-solid fa-rocket"></i> For Startups
         </a>
@@ -18,9 +18,14 @@
             <i class="fa-solid fa-code"></i> Your Idea Made Live
         </a>
     </div>
-</section>
 
-<section class="services-section" style="padding-top: 0;">
+    <!-- Single row of embed badges — scrolls horizontally if they don't fit -->
+    <div class="badge-row">
+        <linked-badge claim-id="124521" theme="light"></linked-badge>
+        <linked-badge claim-id="124531" theme="light"></linked-badge>
+        <linked-badge claim-id="124527" theme="light"></linked-badge>
+    </div>
+
     <div class="services-grid">
         {% for service in services %}
         <a href="{% url 'service_detail' service.slug %}" class="service-card">
