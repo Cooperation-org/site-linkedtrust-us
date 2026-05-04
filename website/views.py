@@ -294,6 +294,7 @@ def service_detail_view(request, slug):
     dedicated_templates = {
         'baremetal-migration': 'service_baremetal.html',
         'ai-integration': 'service_ai_integration.html',
+        'global-adoption': 'service_global_adoption.html',
     }
     template = dedicated_templates.get(slug, 'service_detail.html')
 

@@ -29,7 +29,7 @@
     <div class="services-grid">
         {% for service in services %}
         <a href="{% url 'service_detail' service.slug %}" class="service-card">
-            {% if service.icon %}<div class="service-icon"><i class="{{ service.icon }}"></i></div>{% endif %}
+            {% if service.icon %}<div class="service-icon"><i class="{{ service.get_icon_class }}"></i></div>{% endif %}
             <h3>{{ service.title }}</h3>
             <p>{{ service.short_description }}</p>
             {% if service.price_range %}

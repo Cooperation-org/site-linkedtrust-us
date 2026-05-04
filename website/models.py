@@ -180,6 +180,25 @@ class ServicePackage(models.Model):
     def __str__(self):
         return self.title
 
+    def get_icon_class(self):
+        """Map stored icon values (emoji or FA class) to valid FontAwesome class."""
+        ICON_MAP = {
+            '\u2699': 'fa-solid fa-gear',         # ⚙
+            '\U0001F916': 'fa-solid fa-robot',    # 🤖
+            '\U0001F393': 'fa-solid fa-graduation-cap',  # 🎓
+            '\U0001F680': 'fa-solid fa-rocket',    # 🚀
+            '\U0001F465': 'fa-solid fa-users',    # 👥
+            '\U0001F50D': 'fa-solid fa-magnifying-glass',  # 🔍
+            'fa-server': 'fa-solid fa-server',
+            'fa-brain': 'fa-solid fa-brain',
+            'fa-certificate': 'fa-solid fa-certificate',
+            'fa-rocket': 'fa-solid fa-rocket',
+            'fa-users': 'fa-solid fa-users',
+            'fa-magnifying-glass': 'fa-solid fa-magnifying-glass',
+            'fa-globe': 'fa-solid fa-globe',
+        }
+        return ICON_MAP.get(self.icon, 'fa-solid fa-wrench')
+
 
 class ContactInquiry(models.Model):
     # LEGACY — do not edit. Changing these triggers a migration.

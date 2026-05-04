@@ -124,87 +124,6 @@
         line-height: 1.65;
     }
 
-    /* Form section */
-    .t2w-form-section {
-        background: var(--bg-dark);
-        padding: 4rem 0;
-    }
-    .t2w-form-wrapper {
-        max-width: 520px;
-        margin: 0 auto;
-    }
-    .t2w-form-wrapper h2 {
-        color: var(--text-on-dark);
-        font-size: 1.8rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-    }
-    .t2w-form-wrapper .t2w-form-sub {
-        color: var(--text-on-dark-muted);
-        font-size: 0.95rem;
-        margin-bottom: 2rem;
-    }
-    .t2w-form-group {
-        margin-bottom: 1.25rem;
-    }
-    .t2w-form-group label {
-        display: block;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.75rem;
-        font-weight: 500;
-        color: var(--text-on-dark-muted);
-        margin-bottom: 0.4rem;
-        letter-spacing: 0.3px;
-    }
-    .t2w-form-group input,
-    .t2w-form-group select {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        background: var(--bg-dark-card);
-        border: 1px solid var(--border-dark);
-        border-radius: 8px;
-        color: var(--text-on-dark);
-        font-size: 0.95rem;
-        font-family: 'Montserrat', sans-serif;
-        transition: border-color 0.2s;
-        box-sizing: border-box;
-    }
-    .t2w-form-group input::placeholder {
-        color: var(--text-on-dark-muted);
-    }
-    .t2w-form-group input:focus,
-    .t2w-form-group select:focus {
-        outline: none;
-        border-color: var(--brand-primary);
-    }
-    .t2w-form-group select option {
-        background: var(--bg-dark-card);
-        color: var(--text-on-dark);
-    }
-    .t2w-form-msg {
-        margin-top: 1rem;
-        padding: 0.75rem 1rem;
-        border-radius: 8px;
-        font-size: 0.9rem;
-        display: none;
-    }
-    .t2w-form-msg.success {
-        display: block;
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.3);
-        color: var(--success);
-    }
-    .t2w-form-msg.error {
-        display: block;
-        background: rgba(239, 68, 68, 0.1);
-        border: 1px solid rgba(239, 68, 68, 0.3);
-        color: #ef4444;
-    }
-    .t2w-submit-btn {
-        width: 100%;
-        margin-top: 0.5rem;
-    }
-
     @media (max-width: 768px) {
         .t2w-container { padding: 0 1.25rem; }
         .t2w-hero h1 { font-size: 1.8rem; }
@@ -359,41 +278,15 @@
 
 <div class="gradient-bar"></div>
 
-<!-- Demo Form -->
-<section class="t2w-form-section">
-    <div class="t2w-container">
-        <div class="t2w-form-wrapper">
-            <div class="section-label mono" style="color:var(--brand-primary);">// get started</div>
-            <h2>See It With Your Documents</h2>
-            <p class="t2w-form-sub">Book a 15-minute demo. We'll show you how it works with your actual files.</p>
-
-            <form id="t2w-form" novalidate>
-                <div class="t2w-form-group">
-                    <label for="t2w-name">Full Name</label>
-                    <input type="text" id="t2w-name" name="name" placeholder="Jane Doe" required>
-                </div>
-                <div class="t2w-form-group">
-                    <label for="t2w-email">Work Email</label>
-                    <input type="email" id="t2w-email" name="email" placeholder="jane@company.com" required>
-                </div>
-                <div class="t2w-form-group">
-                    <label for="t2w-company">Company Name</label>
-                    <input type="text" id="t2w-company" name="company" placeholder="Acme Corp" required>
-                </div>
-                <div class="t2w-form-group">
-                    <label for="t2w-usecase">Primary Use Case</label>
-                    <select id="t2w-usecase" name="useCase" required>
-                        <option value="" disabled selected>Select a use case</option>
-                        <option value="Internal KB">Internal KB</option>
-                        <option value="Customer Support">Customer Support</option>
-                        <option value="Data Analysis">Data Analysis</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-gradient t2w-submit-btn">Book a Demo</button>
-            </form>
-            <div id="t2w-form-msg" class="t2w-form-msg"></div>
-        </div>
+<!-- Get Started -->
+<section class="t2w-features" style="padding: 4rem 0;">
+    <div class="t2w-container" style="text-align: center;">
+        <div class="section-label mono" style="color:var(--brand-primary);">// get started</div>
+        <h2 class="section-title">See It With Your Documents</h2>
+        <p class="t2w-sub" style="max-width: 600px; margin: 0 auto 2rem;">Book a 15-minute demo and we will show you how it works with your actual files.</p>
+        <a href="{% url 'contact' %}" class="btn btn-gradient" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-calendar"></i> Schedule a Call
+        </a>
     </div>
 </section>
 
@@ -445,52 +338,6 @@
         }
     }
     setTimeout(tick, 600);
-
-    /* Early access form */
-    var form = document.getElementById('t2w-form');
-    var msgEl = document.getElementById('t2w-form-msg');
-
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        msgEl.className = 't2w-form-msg';
-        msgEl.style.display = 'none';
-
-        var btn = form.querySelector('button[type="submit"]');
-        btn.disabled = true;
-        btn.textContent = 'Submitting...';
-
-        var name = form.elements.name.value.trim();
-        var email = form.elements.email.value.trim();
-        var company = form.elements.company.value.trim();
-        var useCase = form.elements.useCase.value;
-        var message = 'AI Knowledge Assistant demo request\n\nCompany: ' + company + '\nUse case: ' + useCase;
-
-        var formData = new FormData();
-        formData.append('name', name);
-        formData.append('email', email);
-        formData.append('subject', 'consulting');
-        formData.append('message', message);
-        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-
-        fetch('/contact/', {
-            method: 'POST',
-            body: formData
-        })
-        .then(function(res) {
-            if (!res.ok) throw new Error('Request failed');
-            msgEl.textContent = 'Thank you! We\'ll be in touch within one business day.';
-            msgEl.className = 't2w-form-msg success';
-            form.reset();
-        })
-        .catch(function() {
-            msgEl.textContent = 'Something went wrong. Please try again or email us at connect@linkedtrust.us.';
-            msgEl.className = 't2w-form-msg error';
-        })
-        .finally(function() {
-            btn.disabled = false;
-            btn.textContent = 'Book a Demo';
-        });
-    });
 })();
 </script>
 {% endblock %}

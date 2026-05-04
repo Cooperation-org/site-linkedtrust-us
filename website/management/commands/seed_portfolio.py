@@ -267,7 +267,7 @@ PROJECTS = [
         'featured': False,
         'sort_order': 21,
         'demo_url': '',
-        'repo_url': 'https://github.com/Cooperation-org/claim-extractor',
+        'repo_url': 'https://github.com/Cooperation-org/linked-claims-extractor',
     },
     {
         'title': 'odoo-cli',
@@ -382,10 +382,10 @@ class Command(BaseCommand):
         if options['clear']:
             self.stdout.write('Clearing existing data...')
             CaseStudy.objects.all().delete()
-            Testimonial.objects.all().delete()
             ServicePackage.objects.all().delete()
             PortfolioProject.objects.all().delete()
             self.stdout.write(self.style.WARNING('All portfolio data cleared.'))
+            self.stdout.write(self.style.WARNING('Note: Testimonial records were NOT cleared — they are preserved.'))
 
         # Seed projects
         created_count = 0
@@ -415,6 +415,9 @@ class Command(BaseCommand):
                 self.stdout.write(f'  = {obj.title} (already exists)')
         self.stdout.write(self.style.SUCCESS(f'{created_count} services created.'))
 
+        # Seed essential testimonials — never clear these
+        self._seed_testimonials()
+
         # Link services to related projects
         self._link_services_to_projects()
 
@@ -438,3 +441,46 @@ class Command(BaseCommand):
                 self.stdout.write(f'  Linked {service_title} -> {projects.count()} projects')
             except ServicePackage.DoesNotExist:
                 pass
+
+    def _seed_testimonials(self):
+        """Seed or update the essential testimonials that must always exist on the homepage."""
+        HERO_TESTIMONIALS = [
+            {
+                'person_name': 'Jay Graber',
+                'person_title': 'Head of Protocol, Bluesky',
+                'quote_text': 'Verifiable credentials are the missing piece for trusted social infrastructure.',
+                'linked_claim_id': '124448',
+                'placement': 'hero',
+                'badge_layout': 'row',
+                'badge_theme': 'dark',
+                'featured': True,
+                'sort_order': 1,
+            },
+            {
+                'person_name': 'Omi Sylla',
+                'person_title': 'Board Member, Raise The Voices',
+                'quote_text': 'This work is essential to civic tech that actually serves communities.',
+                'linked_claim_id': '124453',
+                'placement': 'hero',
+                'badge_layout': 'row',
+                'badge_theme': 'dark',
+                'featured': True,
+                'sort_order': 2,
+            },
+        ]
+        created = 0
+        for data in HERO_TESTIMONIALS:
+            obj, is_new = Testimonial.objects.get_or_create(
+                linked_claim_id=data['linked_claim_id'],
+                defaults=data,
+            )
+            if is_new:
+                created += 1
+                self.stdout.write(f'  + {obj.person_name} ({obj.linked_claim_id})')
+            else:
+                # Update fields in case they changed
+                for k, v in data.items():
+                    setattr(obj, k, v)
+                obj.save()
+                self.stdout.write(f'  = {obj.person_name} ({obj.linked_claim_id}) already exists')
+        self.stdout.write(self.style.SUCCESS(f'{created} testimonials seeded, {len(HERO_TESTIMONIALS) - created} preserved.'))

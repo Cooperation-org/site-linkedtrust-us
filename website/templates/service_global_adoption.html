@@ -1,0 +1,321 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sponsored Global Adoption Program — LinkedTrust{% endblock %}
+{% block meta_description %}A fully managed program where API platforms sponsor organic ecosystem adoption. We handle recruitment, community management, and execution. Developers worldwide build open source tools and integrations for your API.{% endblock %}
+
+{% block extra_css %}
+<style>
+    .t2w-container { max-width: 1000px; margin: 0 auto; padding: 0 2.5rem; }
+    .t2w-hero { padding: 4rem 0 3rem; }
+    .t2w-pill {
+        display: inline-block;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--brand-primary);
+        background: rgba(0, 178, 229, 0.08);
+        border: 1px solid rgba(0, 178, 229, 0.2);
+        padding: 0.35rem 1rem;
+        border-radius: 50px;
+        margin-bottom: 1.25rem;
+        letter-spacing: 0.5px;
+    }
+    .t2w-hero h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+        line-height: 1.15;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+    }
+    .t2w-hero .t2w-sub {
+        font-size: 1.15rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+        max-width: 650px;
+        margin-bottom: 2rem;
+    }
+
+    /* Hero with floated badge */
+    .t2w-hero-inner {
+        display: flex;
+        align-items: flex-start;
+        gap: 2rem;
+    }
+    .t2w-hero-text { flex: 1; }
+    .t2w-hero-badge {
+        flex: none;
+        width: 400px;
+        height: 180px;
+        margin-top: 0.5rem;
+    }
+    .t2w-hero-badge linked-badge {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    /* Features grid */
+    .t2w-features { padding: 4rem 0; }
+    .t2w-features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    .t2w-features-grid.t2w-grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 700px;
+    }
+    .t2w-feature-card {
+        background: var(--bg-white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 2rem 1.75rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .t2w-feature-card:hover {
+        border-color: var(--brand-primary);
+        box-shadow: var(--shadow-md);
+    }
+    .t2w-feature-icon {
+        width: 44px;
+        height: 44px;
+        background: rgba(0, 178, 229, 0.08);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--brand-primary);
+        margin-bottom: 1rem;
+    }
+    .t2w-feature-card h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.6rem;
+    }
+    .t2w-feature-card p {
+        font-size: 0.88rem;
+        color: var(--text-secondary);
+        line-height: 1.65;
+    }
+
+    /* You get / you don't side by side */
+    .t2w-get-dont {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    .t2w-get-column, .t2w-dont-column {
+        background: var(--bg-white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 2rem 1.75rem;
+    }
+    .t2w-get-column h3, .t2w-dont-column h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    .t2w-get-column h3 { color: var(--brand-primary); }
+    .t2w-dont-column h3 { color: var(--text-muted); }
+    .t2w-get-column ul, .t2w-dont-column ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .t2w-get-column li, .t2w-dont-column li {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        padding: 0.4rem 0;
+        padding-left: 1.2rem;
+        position: relative;
+    }
+    .t2w-get-column li::before {
+        content: '+';
+        position: absolute;
+        left: 0;
+        color: var(--brand-primary);
+        font-weight: 700;
+    }
+    .t2w-dont-column li::before {
+        content: '--';
+        position: absolute;
+        left: 0;
+        color: var(--text-muted);
+    }
+
+    /* Intro paragraph */
+    .t2w-intro {
+        max-width: 700px;
+        margin-bottom: 2.5rem;
+        font-size: 1.05rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+    }
+
+    @media (max-width: 768px) {
+        .t2w-container { padding: 0 1.25rem; }
+        .t2w-hero h1 { font-size: 1.8rem; }
+        .t2w-features-grid { grid-template-columns: 1fr; }
+        .t2w-features-grid.t2w-grid-2 { grid-template-columns: 1fr; max-width: 100%; }
+        .t2w-hero { padding: 2.5rem 0 2rem; }
+        .t2w-features { padding: 2.5rem 0; }
+        .t2w-hero-inner { flex-direction: column; }
+        .t2w-hero-badge { width: 100%; }
+        .t2w-get-dont { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+        .t2w-hero h1 { font-size: 1.5rem; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="t2w-hero">
+    <div class="t2w-container">
+        <div class="t2w-hero-inner">
+            <div class="t2w-hero-text">
+                <div class="t2w-pill">Ecosystem Adoption Program</div>
+                <h1>Get your API into the tools developers already use.</h1>
+                <p class="t2w-sub">Real API adoption happens when your platform is embedded in open source tools and active developer communities, not through ads or documentation alone. We run a managed sponsorship program that makes that happen. You fund it; we build the cohort, manage the community, and ship integrations.</p>
+            </div>
+            <div class="t2w-hero-badge">
+                <linked-badge claim-id="124531" theme="light"></linked-badge>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="gradient-bar"></div>
+
+<!-- Section 1: Ecosystem Adoption -->
+<section class="t2w-features">
+    <div class="t2w-container">
+        <div class="section-label mono">// ecosystem adoption</div>
+        <h2 class="section-title">Adoption Where Developers Actually Work</h2>
+
+        <div class="t2w-features-grid">
+            <div class="t2w-feature-card">
+                <div class="t2w-feature-icon"><i class="fa-solid fa-code"></i></div>
+                <h3>Embedded in Open Source Tools</h3>
+                <p>Your API gets integrated into the agentic and developer tools that engineers use every day. Not a listing. Real, working integrations contributed and maintained by developers in the community.</p>
+            </div>
+            <div class="t2w-feature-card">
+                <div class="t2w-feature-icon"><i class="fa-solid fa-comments"></i></div>
+                <h3>Active Community Presence</h3>
+                <p>We show up where your developers are: Discord, GitHub, forums. Answering questions, fixing bugs, building examples. Your API earns mindshare because real people are using it and talking about it.</p>
+            </div>
+            <div class="t2w-feature-card">
+                <div class="t2w-feature-icon"><i class="fa-solid fa-check-circle"></i></div>
+                <h3>Quality Contributions</h3>
+                <p>Every integration we ship is reviewed and tested. We give you bug reports if you want them, or we work around issues quietly if you do not. Either way, the ecosystem grows.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="gradient-bar"></div>
+
+<!-- Section 2: Global Developer Network -->
+<section class="t2w-features">
+    <div class="t2w-container">
+        <div class="section-label mono">// global developer network</div>
+        <h2 class="section-title">A Truly Global Cohort</h2>
+
+        <p class="t2w-intro">We recruit talented developers across countries and languages that most developer programs ignore: Chinese, Spanish, Arabic, Japanese, plus English. This is not charity; it is strategy. These developers bring skill, low cost relative to US markets, and reach into communities your API has not touched yet.</p>
+
+        <div class="t2w-features-grid">
+            <div class="t2w-feature-card">
+                <div class="t2w-feature-icon"><i class="fa-solid fa-language"></i></div>
+                <h3>Multilingual Community Building</h3>
+                <p>Documentation, tutorials, and developer outreach in the languages your future users actually speak.</p>
+            </div>
+            <div class="t2w-feature-card">
+                <div class="t2w-feature-icon"><i class="fa-solid fa-globe"></i></div>
+                <h3>Underserved, Underestimated</h3>
+                <p>Strong developers in regions with less competition for attention. You become the API they recommend.</p>
+            </div>
+            <div class="t2w-feature-card">
+                <div class="t2w-feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <h3>Cost-Effective by Design</h3>
+                <p>Distributed talent means a sponsorship budget goes much further than a US-only DevRel hire.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="gradient-bar"></div>
+
+<!-- Section 3: Sponsor Outcomes -->
+<section class="t2w-features">
+    <div class="t2w-container">
+        <div class="section-label mono">// sponsor outcomes</div>
+        <h2 class="section-title">What You Get and What You Do Not</h2>
+
+        <div class="t2w-get-dont">
+            <div class="t2w-get-column">
+                <h3>You get</h3>
+                <ul>
+                    <li>Open source integrations and connectors</li>
+                    <li>A real developer community talking about your API</li>
+                    <li>Multilingual documentation and tutorials</li>
+                    <li>Optional bug reports and feedback</li>
+                    <li>Adoption metrics and program reporting</li>
+                </ul>
+            </div>
+            <div class="t2w-dont-column">
+                <h3>You do not get</h3>
+                <ul>
+                    <li>Operational burden</li>
+                    <li>Hiring overhead</li>
+                    <li>Direct representation risk</li>
+                    <li>We run independently as a sponsored program, so contributors are not your employees or agents</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="gradient-bar"></div>
+
+<!-- Section 4: How It Works -->
+<section class="t2w-features">
+    <div class="t2w-container">
+        <div class="section-label mono">// how it works</div>
+        <h2 class="section-title">A Managed Sponsorship Model</h2>
+
+        <p class="t2w-intro">You fund the program as a grant or sponsorship. We design the cohort, recruit developers, manage the community, ship integrations, and report back. You stay focused on building your platform; we make sure developers around the world are building with it.</p>
+
+        <p class="t2w-intro" style="margin-top: 1rem;">We bring developer experience testing, community building, and open source program management. Every program is scoped to your API, your target ecosystem, and your goals.</p>
+    </div>
+</section>
+
+<div class="gradient-bar"></div>
+
+<!-- Get Started -->
+<section class="t2w-features" style="padding: 4rem 0;">
+    <div class="t2w-container" style="text-align: center;">
+        <div class="section-label mono">// get started</div>
+        <h2 class="section-title">Talk to Us About Your Ecosystem</h2>
+        <p class="t2w-intro" style="max-width: 600px; margin: 0 auto 2rem;">Every program is custom-scoped. Book a call and we will talk about your API, your goals, and what a sponsored cohort would look like for you.</p>
+        <a href="{% url 'contact' %}" class="btn btn-gradient" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-calendar"></i> Schedule a Call
+        </a>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+    <h2>Not sure if this fits your API?</h2>
+    <p>Book a free call. No pitch -- we will listen first and tell you honestly if this is right for you.</p>
+    <a href="{% url 'contact' %}" class="btn btn-white">Schedule a Call</a>
+</section>
+
+{% endblock %}
