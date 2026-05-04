@@ -333,7 +333,7 @@ SERVICES = [
     {
         'title': 'MVP Development',
         'icon': '\U0001F680',  # 🚀
-        'short_description': 'Full-stack prototypes in hours to weeks. React, Django, Next.js, FastAPI.',
+        'short_description': 'Full-stack applications in hours to weeks. React, Django, Next.js, FastAPI.',
         'full_description': (
             'We build functional prototypes fast. Tell us the problem, and you\'ll have '
             'have a working application you can show to users, investors, or stakeholders.\n\n'
