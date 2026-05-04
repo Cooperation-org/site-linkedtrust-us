@@ -866,7 +866,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 }
 .service-detail-content {
     max-width: 800px;
-    padding-bottom: 3rem;
+    padding: 0 2rem 3rem;
 }
 .service-detail-content p {
     font-size: 1rem;

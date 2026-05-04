@@ -333,12 +333,12 @@ SERVICES = [
     {
         'title': 'MVP Development',
         'icon': '\U0001F680',  # 🚀
-        'short_description': 'Full-stack prototypes in weeks. React, Django, Next.js, FastAPI.',
+        'short_description': 'Full-stack prototypes in hours to weeks. React, Django, Next.js, FastAPI.',
         'full_description': (
-            'We build functional prototypes fast. Tell us the problem, and in 2-4 weeks you\'ll '
+            'We build functional prototypes fast. Tell us the problem, and you\'ll have '
             'have a working application you can show to users, investors, or stakeholders.\n\n'
             'Our stack: React or Next.js frontend, Django or FastAPI backend, PostgreSQL database. '
-            'Deployed and running. Not a mockup — a real application.'
+            'Deployed and running with auth, database and human UX expert touch.'
         ),
         'price_range': '$3K-10K',
         'sort_order': 4,
