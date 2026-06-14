@@ -19,6 +19,12 @@ CSRF_TRUSTED_ORIGINS = ['https://linkedtrust.us', 'https://demos.linkedtrust.us'
 # Override or blank out per environment via the GSC_VERIFICATION env var.
 GSC_VERIFICATION = config('GSC_VERIFICATION', default='FhyuK7HCSUVK1OVSTkzzzj__lXFG2Iec8-wOk3JgP_4')
 
+# IndexNow key (public — served as a verification file at /<KEY>.txt).
+# Used to push new/changed URLs to Bing/Yandex (and thus ChatGPT Search /
+# Copilot, which ground on the Bing index). 32-char lowercase hex.
+# Override per environment via the INDEXNOW_KEY env var.
+INDEXNOW_KEY = config('INDEXNOW_KEY', default='8f4c2a9e6b1d47e3a05f9c2d8e7b3a16')
+
 # When proxied under a subdir (e.g. demos.linkedtrust.us/site-dev/)
 # set SCRIPT_NAME=/site-dev to fix URL generation
 FORCE_SCRIPT_NAME = config('SCRIPT_NAME', default=None)
