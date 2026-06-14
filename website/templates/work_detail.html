@@ -72,7 +72,7 @@
 
     {% if project.hero_image %}
     <div class="project-hero-image">
-        <img src="{{ project.hero_image.url }}" alt="{{ project.title }}">
+        <img src="{{ project.hero_image.url }}" alt="{{ project.title }}" fetchpriority="high">
     </div>
     {% endif %}
 </section>

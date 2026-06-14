@@ -46,7 +46,7 @@
         <a href="{% url 'work_detail' project.slug %}" class="project-card">
             <div class="project-thumb" {% if project.thumbnail_image %}style="background:var(--bg-primary);"{% else %}style="background: linear-gradient(135deg, rgba(0,178,229,0.1), rgba(102,126,234,0.1));"{% endif %}>
                 {% if project.thumbnail_image %}
-                    <img src="{{ project.thumbnail_image.url }}" alt="{{ project.title }}">
+                    <img src="{{ project.thumbnail_image.url }}" alt="{{ project.title }}" loading="lazy" decoding="async">
                 {% endif %}
             </div>
             <div class="project-body">

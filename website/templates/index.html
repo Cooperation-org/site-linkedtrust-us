@@ -115,7 +115,7 @@
             <a href="{% url 'work_detail' project.slug %}" class="project-card">
                 <div class="project-thumb" {% if project.thumbnail_image %}style="background:#1a1d27;"{% else %}style="background: {% cycle 'linear-gradient(135deg, rgba(0,178,229,0.15) 0%, rgba(102,126,234,0.15) 100%)' 'linear-gradient(135deg, rgba(102,126,234,0.15) 0%, rgba(147,51,234,0.15) 100%)' 'linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(0,178,229,0.15) 100%)' 'linear-gradient(135deg, rgba(234,179,8,0.15) 0%, rgba(239,68,68,0.1) 100%)' %};"{% endif %}>
                     {% if project.thumbnail_image %}
-                        <img src="{{ project.thumbnail_image.url }}" alt="{{ project.title }}">
+                        <img src="{{ project.thumbnail_image.url }}" alt="{{ project.title }}" loading="lazy" decoding="async">
                     {% else %}
                         <i class="{% cycle 'fa-solid fa-chart-line' 'fa-solid fa-globe' 'fa-solid fa-brain' 'fa-solid fa-book' %}" style="font-size:2.5rem;color:var(--text-on-dark-muted);"></i>
                     {% endif %}
@@ -198,33 +198,33 @@
     <div class="trusted-label">Trusted by &amp; built with</div>
     <div class="carousel-wrapper">
         <div class="carousel-track">
-            <img src="{% static 'img/logos/united-nations.png' %}" alt="United Nations">
-            <img src="{% static 'img/logos/dif.png' %}" alt="DIF">
-            <img src="{% static 'img/logos/human-protocol.png' %}" alt="HUMAN Protocol">
-            <img src="{% static 'img/logos/candid-logo.png' %}" alt="Candid">
-            <img src="{% static 'img/logos/nlnet-logo.png' %}" alt="NLnet">
-            <img src="{% static 'img/logos/british-columbia.png' %}" alt="British Columbia">
-            <img src="{% static 'img/logos/hyperledger-aries.png' %}" alt="Hyperledger ARIES">
-            <img src="{% static 'img/logos/bloomberg-beta.png' %}" alt="Bloomberg BETA">
-            <img src="{% static 'img/logos/bluesky-logo.png' %}" alt="Bluesky">
-            <img src="{% static 'img/logos/fairmint-logo.png' %}" alt="Fairmint">
-            <img src="{% static 'img/logos/3labs-logo.png' %}" alt="3 LABS">
-            <img src="{% static 'img/logos/mandate-democracy.png' %}" alt="Mandate Democracy">
-            <img src="{% static 'img/logos/intuit-logo.png' %}" alt="Intuit">
+            <img src="{% static 'img/logos/united-nations.png' %}" alt="United Nations" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/dif.png' %}" alt="DIF" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/human-protocol.png' %}" alt="HUMAN Protocol" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/candid-logo.png' %}" alt="Candid" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/nlnet-logo.png' %}" alt="NLnet" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/british-columbia.png' %}" alt="British Columbia" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/hyperledger-aries.png' %}" alt="Hyperledger ARIES" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/bloomberg-beta.png' %}" alt="Bloomberg BETA" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/bluesky-logo.png' %}" alt="Bluesky" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/fairmint-logo.png' %}" alt="Fairmint" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/3labs-logo.png' %}" alt="3 LABS" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/mandate-democracy.png' %}" alt="Mandate Democracy" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/intuit-logo.png' %}" alt="Intuit" loading="lazy" decoding="async">
             <!-- Duplicate for seamless loop -->
-            <img src="{% static 'img/logos/united-nations.png' %}" alt="United Nations">
-            <img src="{% static 'img/logos/dif.png' %}" alt="DIF">
-            <img src="{% static 'img/logos/human-protocol.png' %}" alt="HUMAN Protocol">
-            <img src="{% static 'img/logos/candid-logo.png' %}" alt="Candid">
-            <img src="{% static 'img/logos/nlnet-logo.png' %}" alt="NLnet">
-            <img src="{% static 'img/logos/british-columbia.png' %}" alt="British Columbia">
-            <img src="{% static 'img/logos/hyperledger-aries.png' %}" alt="Hyperledger ARIES">
-            <img src="{% static 'img/logos/bloomberg-beta.png' %}" alt="Bloomberg BETA">
-            <img src="{% static 'img/logos/bluesky-logo.png' %}" alt="Bluesky">
-            <img src="{% static 'img/logos/fairmint-logo.png' %}" alt="Fairmint">
-            <img src="{% static 'img/logos/3labs-logo.png' %}" alt="3 LABS">
-            <img src="{% static 'img/logos/mandate-democracy.png' %}" alt="Mandate Democracy">
-            <img src="{% static 'img/logos/intuit-logo.png' %}" alt="Intuit">
+            <img src="{% static 'img/logos/united-nations.png' %}" alt="United Nations" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/dif.png' %}" alt="DIF" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/human-protocol.png' %}" alt="HUMAN Protocol" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/candid-logo.png' %}" alt="Candid" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/nlnet-logo.png' %}" alt="NLnet" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/british-columbia.png' %}" alt="British Columbia" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/hyperledger-aries.png' %}" alt="Hyperledger ARIES" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/bloomberg-beta.png' %}" alt="Bloomberg BETA" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/bluesky-logo.png' %}" alt="Bluesky" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/fairmint-logo.png' %}" alt="Fairmint" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/3labs-logo.png' %}" alt="3 LABS" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/mandate-democracy.png' %}" alt="Mandate Democracy" loading="lazy" decoding="async">
+            <img src="{% static 'img/logos/intuit-logo.png' %}" alt="Intuit" loading="lazy" decoding="async">
         </div>
     </div>
 </section>

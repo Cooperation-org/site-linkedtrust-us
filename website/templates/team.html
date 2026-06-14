@@ -227,7 +227,7 @@
         {% for member in team_members %}
         <div class="team-card" data-member-id="{{ member.id }}">
             {% if member.image %}
-            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="team-card-image">
+            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="team-card-image" loading="lazy" decoding="async">
             {% else %}
             <div class="team-card-image" style="background:linear-gradient(135deg, rgba(0,178,229,0.1), rgba(102,126,234,0.1));"></div>
             {% endif %}

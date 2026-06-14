@@ -24,7 +24,7 @@
         <a href="{{ item.live_url }}" target="_blank" rel="noopener" class="ecosystem-card{% if not item.live_url %} no-link{% endif %}">
             <div class="ecosystem-screenshot">
                 {% if item.screenshot %}
-                    <img src="{{ item.screenshot.url }}" alt="{{ item.name }}">
+                    <img src="{{ item.screenshot.url }}" alt="{{ item.name }}" loading="lazy" decoding="async">
                 {% else %}
                     <div class="screenshot-placeholder">Screenshot needed</div>
                 {% endif %}
@@ -54,7 +54,7 @@
         <a href="{{ item.live_url }}" target="_blank" rel="noopener" class="ecosystem-card{% if not item.live_url %} no-link{% endif %}">
             <div class="ecosystem-screenshot">
                 {% if item.screenshot %}
-                    <img src="{{ item.screenshot.url }}" alt="{{ item.name }}">
+                    <img src="{{ item.screenshot.url }}" alt="{{ item.name }}" loading="lazy" decoding="async">
                 {% else %}
                     <div class="screenshot-placeholder">Screenshot needed</div>
                 {% endif %}
@@ -84,7 +84,7 @@
         <a href="{{ item.live_url }}" target="_blank" rel="noopener" class="ecosystem-card{% if not item.live_url %} no-link{% endif %}">
             <div class="ecosystem-screenshot">
                 {% if item.screenshot %}
-                    <img src="{{ item.screenshot.url }}" alt="{{ item.name }}">
+                    <img src="{{ item.screenshot.url }}" alt="{{ item.name }}" loading="lazy" decoding="async">
                 {% else %}
                     <div class="screenshot-placeholder">Screenshot needed</div>
                 {% endif %}
