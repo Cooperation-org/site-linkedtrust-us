@@ -15,6 +15,10 @@ ALLOWED_HOSTS = ['linkedtrust.us', 'www.linkedtrust.us', 'demos.linkedtrust.us',
 
 CSRF_TRUSTED_ORIGINS = ['https://linkedtrust.us', 'https://demos.linkedtrust.us']
 
+# Google Search Console site-verification token (public; rendered in <head>).
+# Override or blank out per environment via the GSC_VERIFICATION env var.
+GSC_VERIFICATION = config('GSC_VERIFICATION', default='FhyuK7HCSUVK1OVSTkzzzj__lXFG2Iec8-wOk3JgP_4')
+
 # When proxied under a subdir (e.g. demos.linkedtrust.us/site-dev/)
 # set SCRIPT_NAME=/site-dev to fix URL generation
 FORCE_SCRIPT_NAME = config('SCRIPT_NAME', default=None)
@@ -71,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'website.context_processors.site_meta',
             ],
         },
     },
