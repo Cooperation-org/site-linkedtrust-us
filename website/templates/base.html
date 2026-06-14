@@ -60,14 +60,18 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="{% block og_title %}LinkedTrust — Deep Tech. Human Trust.{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Verified trust systems, civic tech platforms, and AI-powered tools. Real projects, real impact, all verifiable.{% endblock %}">
-    <meta property="og:image" content="{% block og_image %}{% static 'img/logo.svg' %}{% endblock %}">
-    <meta property="og:url" content="https://linkedtrust.us">
+    <meta property="og:image" content="{% block og_image %}https://linkedtrust.us{% static 'img/og.png' %}{% endblock %}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="LinkedTrust — Deep Tech. Human Trust.">
+    <meta property="og:url" content="{% block og_url %}https://linkedtrust.us{{ request.path }}{% endblock %}">
     <meta property="og:site_name" content="LinkedTrust">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="LinkedTrust — Deep Tech. Human Trust.">
+    <meta name="twitter:title" content="{% block twitter_title %}LinkedTrust — Deep Tech. Human Trust.{% endblock %}">
     <meta name="twitter:description" content="Verified trust systems, civic tech platforms, and AI-powered tools. Real projects, real impact.">
+    <meta name="twitter:image" content="{% block twitter_image %}https://linkedtrust.us{% static 'img/og.png' %}{% endblock %}">
 
     <link rel="shortcut icon" href="{% static 'img/logo.svg' %}" type="image/x-icon">
 
