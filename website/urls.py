@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic import RedirectView
 from .views import *
 
 urlpatterns = [
@@ -28,14 +29,16 @@ urlpatterns = [
     path('privacy/', privacy_view, name='privacy'),
     path('interns/', interns_view, name='interns'),
 
-    # Keep old paths working (redirects not needed — Django handles trailing slash)
-    path('contact', contact_view),
+    # Legacy no-slash paths → 301 redirect to the canonical trailing-slash URL
+    # (avoids duplicate content; the slash version is the canonical one).
+    path('contact', RedirectView.as_view(url='/contact/', permanent=True)),
+    path('press', RedirectView.as_view(url='/press/', permanent=True)),
+    path('privacy', RedirectView.as_view(url='/privacy/', permanent=True)),
+    path('services', RedirectView.as_view(url='/services/', permanent=True)),
+    path('about', RedirectView.as_view(url='/about/', permanent=True)),
+    path('interns', RedirectView.as_view(url='/interns/', permanent=True)),
+    # getstarted has no trailing-slash route; it is canonical as-is.
     path('getstarted', getstarted_view, name='getstarted'),
-    path('press', press_view),
-    path('privacy', privacy_view),
-    path('services', services_view),
-    path('about', about_view),
-    path('interns', interns_view),
 
     # API endpoints
     path('team/member/<int:member_id>/', team_member_detail_view, name='team_member_detail'),
