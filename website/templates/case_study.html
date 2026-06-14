@@ -1,5 +1,9 @@
 {% extends 'work_detail.html' %}
-{# Case study page reuses the work_detail template — it already renders case_study if present #}
+{# Case study page reuses the work_detail template — it already renders case_study if present.
+   It renders the same content as the project page, so canonicalize to work_detail to avoid
+   duplicate content (and it's intentionally kept out of the sitemap). #}
+
+{% block canonical %}https://linkedtrust.us{% url 'work_detail' project.slug %}{% endblock %}
 
 {% block structured_data %}
 <script type="application/ld+json">

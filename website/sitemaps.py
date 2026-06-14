@@ -6,7 +6,7 @@ domain and forces https, so it works without django.contrib.sites / SITE_ID.
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
-from .models import PortfolioProject, ServicePackage, CaseStudy
+from .models import PortfolioProject, ServicePackage
 
 
 class StaticViewSitemap(Sitemap):
@@ -57,21 +57,6 @@ class PortfolioSitemap(Sitemap):
         return obj.updated_at
 
 
-class CaseStudySitemap(Sitemap):
-    protocol = "https"
-    changefreq = "yearly"
-    priority = 0.6
-
-    def items(self):
-        return CaseStudy.objects.select_related("project").all()
-
-    def location(self, obj):
-        return reverse("case_study", args=[obj.project.slug])
-
-    def lastmod(self, obj):
-        return obj.updated_at
-
-
 class ServiceSitemap(Sitemap):
     protocol = "https"
     changefreq = "monthly"
@@ -90,6 +75,5 @@ class ServiceSitemap(Sitemap):
 sitemaps = {
     "static": StaticViewSitemap,
     "portfolio": PortfolioSitemap,
-    "case_studies": CaseStudySitemap,
     "services": ServiceSitemap,
 }
