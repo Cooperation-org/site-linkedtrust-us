@@ -69,7 +69,11 @@ def robots_txt(request):
     for agent in ai_agents:
         lines += [f"User-agent: {agent}", "Allow: /", ""]
 
-    lines += [f"Sitemap: {root}/sitemap.xml", ""]
+    lines += [
+        f"Sitemap: {root}/sitemap.xml",
+        f"Sitemap: {root}/blog/sitemap.xml",  # Ghost blog (served separately)
+        "",
+    ]
     return HttpResponse("\n".join(lines), content_type="text/plain; charset=utf-8")
 
 

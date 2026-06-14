@@ -20,6 +20,7 @@
 
     <!-- Canonical URL -->
     <link rel="canonical" href="{% block canonical %}https://linkedtrust.us{{ request.path }}{% endblock %}">
+    {% block meta_robots %}{% endblock %}
 
     <!-- Structured data: Organization + WebSite (site-wide) -->
     <script type="application/ld+json">
