@@ -26,9 +26,13 @@ _CSP = "; ".join([
     "default-src 'self'",
     "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com "
     "https://www.google-analytics.com https://demos.linkedtrust.us",
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com",
-    "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com",
+    # Our own fonts are self-hosted; these origins are for the <linked-badge>
+    # web component, which injects its own Google Fonts.
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' data: https://fonts.gstatic.com",
     "img-src 'self' data: https:",
+    # <linked-badge> testimonial videos are served from Backblaze S3.
+    "media-src 'self' https://*.backblazeb2.com https://*.linkedtrust.us",
     "connect-src 'self' https://www.google-analytics.com https://*.linkedtrust.us",
     "frame-src 'self' https://www.youtube.com https://docs.google.com https://www.google.com",
     "frame-ancestors 'self'",
