@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block title %}{{ project.title }} — LinkedTrust{% endblock %}
+{% block meta_description %}{{ project.short_description|truncatechars:160 }}{% endblock %}
 
 {% block content %}
 

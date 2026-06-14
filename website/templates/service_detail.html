@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block title %}{{ service.title }} — LinkedTrust Services{% endblock %}
+{% block meta_description %}{{ service.short_description|truncatechars:160 }}{% endblock %}
 
 {% block content %}
 

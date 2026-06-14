@@ -16,6 +16,9 @@
     <title>{% block title %}LinkedTrust — Deep Tech. Human Trust.{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}Coop-style startup that builds verified trust systems, civic tech platforms, and AI-powered tools for organizations that care about doing things right.{% endblock %}">
 
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{% block canonical %}https://linkedtrust.us{{ request.path }}{% endblock %}">
+
     <!-- Open Graph / Social sharing -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="{% block og_title %}LinkedTrust — Deep Tech. Human Trust.{% endblock %}">

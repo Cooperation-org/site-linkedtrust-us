@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Services — LinkedTrust{% endblock %}
+{% block title %}Services — What We Build | LinkedTrust{% endblock %}
+{% block meta_description %}LinkedTrust service packages — MVP launch, AI assistants, bare-metal migration, and tech for startups and nonprofits. See what we build and what it costs.{% endblock %}
 
 {% block content %}
 
+<section class="container" style="padding-top:2.5rem;padding-bottom:0;text-align:center;">
+    <h1 class="section-title">What we build</h1>
+    <p style="color:var(--text-secondary);max-width:620px;margin:0.5rem auto 0;">Pick your path, or browse every service package below.</p>
+</section>
+
 <!-- Entry Point Buttons + Badges + Cards in one tight section -->
-<section class="services-section" style="padding-top: 2rem;">
+<section class="services-section" style="padding-top: 1.5rem;">
     <div class="services-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
         <a href="{% url 'services_startups' %}" class="btn btn-gradient" style="display: inline-flex; align-items: center; gap: 0.5rem;">
             <i class="fa-solid fa-rocket"></i> For Startups
