@@ -45,6 +45,10 @@ if not DEBUG:
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # Runs last on the response path → stamps CSP / Link / nosniff headers on
+    # every response, including static files served by WhiteNoise below.
+    'website.middleware.SecurityHeadersMiddleware',
+    'website.middleware.MarkdownNegotiationMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -73,6 +77,25 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'linkedtrust.wsgi.application'
+
+# --- Security headers ---------------------------------------------------------
+# Native headers handled by Django (SecurityMiddleware / XFrameOptionsMiddleware).
+# CSP, Permissions-Policy and Link headers are added by website.middleware.
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+# SSL terminates at Caddy/nginx; trust the forwarded-proto header so
+# request.is_secure() is correct (drives HSTS + canonical https URLs).
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# HSTS + secure cookies only in production (HTTPS). Never in local dev.
+if not DEBUG:
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 # Database — shared PostgreSQL instance
 DATABASES = {
