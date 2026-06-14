@@ -1,2 +1,55 @@
 {% extends 'work_detail.html' %}
 {# Case study page reuses the work_detail template — it already renders case_study if present #}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "{{ project.title|escapejs }}{% if case_study %} — Case Study{% endif %}",
+      "url": "https://linkedtrust.us{% url 'case_study' project.slug %}",
+      {% if project.hero_image %}"image": "https://linkedtrust.us{{ project.hero_image.url }}",{% endif %}
+      "about": {
+        "@type": "CreativeWork",
+        "name": "{{ project.title|escapejs }}",
+        "url": "https://linkedtrust.us{% url 'work_detail' project.slug %}"
+      },
+      {% if case_study %}"articleBody": "{% if case_study.problem_text %}Problem: {{ case_study.problem_text|escapejs }} {% endif %}{% if case_study.solution_text %}Solution: {{ case_study.solution_text|escapejs }} {% endif %}{% if case_study.result_text %}Result: {{ case_study.result_text|escapejs }}{% endif %}",{% endif %}
+      "author": { "@id": "https://linkedtrust.us/#org" },
+      "publisher": { "@id": "https://linkedtrust.us/#org" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://linkedtrust.us{% url 'home' %}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Our Work",
+          "item": "https://linkedtrust.us{% url 'work_list' %}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{{ project.title|escapejs }}",
+          "item": "https://linkedtrust.us{% url 'work_detail' project.slug %}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Case Study",
+          "item": "https://linkedtrust.us{% url 'case_study' project.slug %}"
+        }
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}

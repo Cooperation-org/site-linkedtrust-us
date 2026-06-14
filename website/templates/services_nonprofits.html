@@ -3,6 +3,57 @@
 
 {% block title %}For Nonprofits — Tech for Social Impact — LinkedTrust{% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does LinkedTrust help nonprofits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We help mission-driven organizations build robust systems on open-source stacks at a fraction of standard agency costs, so more of your budget goes to your mission. That includes content planning, affordable custom tools, and impact tracking."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why open-source instead of off-the-shelf software?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Open-source stacks let you own your tools rather than rent them, avoid per-seat licensing, and customize freely. For nonprofits running lean, that means professional portals, dashboards, and databases without recurring vendor lock-in."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can you help us measure and prove our impact?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. We build data visualization and reporting tools so you can track and showcase real-world results to stakeholders and grant makers. Don't just do good — prove it with verifiable data."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is content planning for nonprofits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is a strategic tool that aligns your organization's mission with your digital presence, turning your long-term vision into a daily content plan that resonates with donors and supporters."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do we get started?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Book a free call. We listen first, learn about your mission and constraints, and figure out the most cost-effective path together before scoping any work."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
 {% block content %}
 
 <!-- Hero -->
@@ -56,6 +107,32 @@
         </div>
 
     </div>
+</section>
+
+<!-- FAQ -->
+<section class="container" style="max-width:780px;padding-bottom:3rem;">
+    <p style="color:var(--brand-primary);font-family:'JetBrains Mono',monospace;font-size:0.8rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:0.75rem;">// faq</p>
+    <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:1.25rem;">Frequently asked questions</h2>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">How does LinkedTrust help nonprofits?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">We help mission-driven organizations build robust systems on open-source stacks at a fraction of standard agency costs, so more of your budget goes to your mission. That includes content planning, affordable custom tools, and impact tracking.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">Why open-source instead of off-the-shelf software?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">Open-source stacks let you own your tools rather than rent them, avoid per-seat licensing, and customize freely. For nonprofits running lean, that means professional portals, dashboards, and databases without recurring vendor lock-in.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">Can you help us measure and prove our impact?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">Yes. We build data visualization and reporting tools so you can track and showcase real-world results to stakeholders and grant makers. Don't just do good &mdash; prove it with verifiable data.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">What is content planning for nonprofits?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">It is a strategic tool that aligns your organization's mission with your digital presence, turning your long-term vision into a daily content plan that resonates with donors and supporters.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">How do we get started?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">Book a free call. We listen first, learn about your mission and constraints, and figure out the most cost-effective path together before scoping any work.</p>
+    </details>
 </section>
 
 <section class="cta-banner">

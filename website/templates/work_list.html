@@ -4,6 +4,26 @@
 {% block title %}Our Work — Portfolio of Real Projects | LinkedTrust{% endblock %}
 {% block meta_description %}Explore LinkedTrust's portfolio of client work, open-source projects, and research — real software with real, verifiable impact.{% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "LinkedTrust Portfolio",
+  "url": "https://linkedtrust.us{% url 'work_list' %}",
+  "itemListElement": [
+    {% for project in projects %}{
+      "@type": "ListItem",
+      "position": {{ forloop.counter }},
+      "name": "{{ project.title|escapejs }}",
+      "url": "https://linkedtrust.us{% url 'work_detail' project.slug %}"
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endblock %}
+
 {% block content %}
 
 <section class="container" style="padding-top:2rem;padding-bottom:0.5rem;">

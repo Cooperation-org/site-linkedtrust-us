@@ -21,6 +21,41 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="{% block canonical %}https://linkedtrust.us{{ request.path }}{% endblock %}">
 
+    <!-- Structured data: Organization + WebSite (site-wide) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://linkedtrust.us/#org",
+          "name": "LinkedTrust",
+          "url": "https://linkedtrust.us/",
+          "logo": "https://linkedtrust.us{% static 'img/logo.svg' %}",
+          "description": "Coop-style deep-tech studio that builds verified trust systems, civic-tech platforms, and AI-powered tools, backed by publicly verifiable trust claims (LinkedClaims).",
+          "sameAs": [
+            "https://github.com/Cooperation-org",
+            "https://www.linkedin.com/company/linkedtrust"
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Tucson",
+            "addressRegion": "AZ",
+            "addressCountry": "US"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://linkedtrust.us/#website",
+          "url": "https://linkedtrust.us/",
+          "name": "LinkedTrust",
+          "publisher": { "@id": "https://linkedtrust.us/#org" }
+        }
+      ]
+    }
+    </script>
+    {% block structured_data %}{% endblock %}
+
     <!-- Open Graph / Social sharing -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="{% block og_title %}LinkedTrust — Deep Tech. Human Trust.{% endblock %}">

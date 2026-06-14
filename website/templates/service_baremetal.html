@@ -4,6 +4,65 @@
 {% block title %}Get Off the Cloud — Bare-Metal Migration | LinkedTrust{% endblock %}
 {% block meta_description %}Migrate off AWS, DigitalOcean, or Vercel to dedicated bare metal. Massively better database performance at 50-80% less cost. We've done it ourselves.{% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is bare-metal migration?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is moving your application and databases off managed cloud platforms like AWS, DigitalOcean, or Vercel onto a dedicated physical server. You get the full machine — no shared tenants, no per-IOPS or egress fees — which means much higher database performance for a fraction of the monthly cost."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will I really save money leaving the cloud?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For most teams, yes — typically 50 to 80 percent less than equivalent managed cloud. Savings are largest when you have heavy database workloads, high egress, or are paying for managed services and IOPS. We give you a cost comparison against your current bill before you commit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there downtime during migration?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We aim for zero-downtime migrations wherever possible. We provision and verify the new environment first, sync your data, then cut over DNS only when everything is tested and ready. The exact approach depends on your stack, which we map during the audit step."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the migration process look like?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Four steps: audit your current infrastructure, provision the bare-metal server with Proxmox VMs and NVMe storage, migrate databases and app servers, then verify with performance benchmarks on your own data. Every migration includes 30 days of post-migration support."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can you manage the server for us afterward?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You can take the keys and run it yourself, or add optional managed services for monitoring, backups, and updates. We also offer smaller shared VMs on our infrastructure with NVMe-backed PostgreSQL if you are not ready for a whole dedicated box."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why should we trust LinkedTrust with this?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because we run our entire production stack — many databases, VMs, and live sites and APIs — on the same bare-metal platform we are offering you. This is not a side service; we eat our own cooking, and our benchmark data is published openly."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
 {% block extra_css %}
 <style>
     .bm-container { max-width: 1000px; margin: 0 auto; padding: 0 2.5rem; }
@@ -310,6 +369,36 @@
             </li>
         </ul>
     </div>
+</section>
+
+<!-- FAQ -->
+<section class="bm-container bm-section">
+    <div class="section-label mono">// faq</div>
+    <h2 style="margin-bottom:1.5rem;">Frequently asked questions</h2>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:600;cursor:pointer;">What is bare-metal migration?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">It is moving your application and databases off managed cloud platforms like AWS, DigitalOcean, or Vercel onto a dedicated physical server. You get the full machine &mdash; no shared tenants, no per-IOPS or egress fees &mdash; which means much higher database performance for a fraction of the monthly cost.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:600;cursor:pointer;">Will I really save money leaving the cloud?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">For most teams, yes &mdash; typically 50 to 80 percent less than equivalent managed cloud. Savings are largest when you have heavy database workloads, high egress, or are paying for managed services and IOPS. We give you a cost comparison against your current bill before you commit.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:600;cursor:pointer;">Is there downtime during migration?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">We aim for zero-downtime migrations wherever possible. We provision and verify the new environment first, sync your data, then cut over DNS only when everything is tested and ready. The exact approach depends on your stack, which we map during the audit step.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:600;cursor:pointer;">What does the migration process look like?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">Four steps: audit your current infrastructure, provision the bare-metal server with Proxmox VMs and NVMe storage, migrate databases and app servers, then verify with performance benchmarks on your own data. Every migration includes 30 days of post-migration support.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:600;cursor:pointer;">Can you manage the server for us afterward?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">Yes. You can take the keys and run it yourself, or add optional managed services for monitoring, backups, and updates. We also offer smaller shared VMs on our infrastructure with NVMe-backed PostgreSQL if you are not ready for a whole dedicated box.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:600;cursor:pointer;">Why should we trust LinkedTrust with this?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">Because we run our entire production stack &mdash; many databases, VMs, and live sites and APIs &mdash; on the same bare-metal platform we are offering you. This is not a side service; we eat our own cooking, and our benchmark data is published openly.</p>
+    </details>
 </section>
 
 <!-- CTA -->

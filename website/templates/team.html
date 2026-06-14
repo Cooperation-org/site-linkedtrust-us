@@ -197,6 +197,25 @@
 </style>
 {% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {% for member in team_members %}{
+      "@type": "Person",
+      "name": "{{ member.name|escapejs }}",
+      "jobTitle": "{{ member.title|escapejs }}",
+      "description": "{{ member.description|escapejs }}",
+      {% if member.image %}"image": "https://linkedtrust.us{{ member.image.url }}",
+      {% endif %}"worksFor": {"@id": "https://linkedtrust.us/#org"},
+      "url": "https://linkedtrust.us/team/"
+    }{% if not forloop.last %},{% endif %}{% endfor %}
+  ]
+}
+</script>
+{% endblock %}
+
 {% block content %}
 
 <section class="container" style="padding-top:2.5rem;padding-bottom:0;text-align:center;">

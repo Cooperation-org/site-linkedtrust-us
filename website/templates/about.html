@@ -74,6 +74,19 @@
 </style>
 {% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "url": "https://linkedtrust.us/about/",
+  "name": "About LinkedTrust",
+  "description": "LinkedTrust is a global, employee-owned technology cooperative based in Tucson, Arizona, building verifiable trust systems, civic tech platforms, and AI-powered tools.",
+  "mainEntity": {"@id": "https://linkedtrust.us/#org"}
+}
+</script>
+{% endblock %}
+
 {% block content %}
 
 <section class="container" style="padding-top:3rem;">

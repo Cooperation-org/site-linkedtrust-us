@@ -4,6 +4,57 @@
 {% block title %}Services — What We Build | LinkedTrust{% endblock %}
 {% block meta_description %}LinkedTrust service packages — MVP launch, AI assistants, bare-metal migration, and tech for startups and nonprofits. See what we build and what it costs.{% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What services does LinkedTrust offer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We build and ship software end to end: rapid MVP development, AI knowledge assistants and integrations, bare-metal cloud migration, verifiable credentials and badges, and ongoing team augmentation. We also run tailored programs for startups and nonprofits."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do engagements work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every engagement starts with a free call where we listen first and scope the work together. From there we agree on a clear deliverable and timeline, then build iteratively so you can see progress early. Pricing depends on the service — some are project-based, some monthly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you work with startups and nonprofits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. We have dedicated paths for both: startups focused on cutting burn rate and owning their tools, and nonprofits building lean, high-impact systems on open-source stacks at a fraction of typical agency costs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is LinkedClaims?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "LinkedClaims is our open standard for verifiable, linked claims — portable statements of trust, credentials, and reputation that anyone can verify. It powers the trust badges you see across our work and lets achievements and endorsements be checked independently rather than taken on faith."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What makes LinkedTrust different?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We use the tools we sell. Our own infrastructure, AI assistants, and trust graph run in production every day, and our track record is backed by verifiable LinkedClaims rather than just testimonials. You get a team that has actually shipped what it is recommending."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
 {% block content %}
 
 <section class="container" style="padding-top:2.5rem;padding-bottom:0;text-align:center;">
@@ -75,6 +126,32 @@
         </div>
         {% endfor %}
     </div>
+</section>
+
+<!-- FAQ -->
+<section class="container" style="max-width:780px;padding-top:1rem;padding-bottom:3rem;">
+    <div class="section-label mono">// faq</div>
+    <h2 class="section-title">Frequently asked questions</h2>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">What services does LinkedTrust offer?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">We build and ship software end to end: rapid MVP development, AI knowledge assistants and integrations, bare-metal cloud migration, verifiable credentials and badges, and ongoing team augmentation. We also run tailored programs for startups and nonprofits.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">How do engagements work?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">Every engagement starts with a free call where we listen first and scope the work together. From there we agree on a clear deliverable and timeline, then build iteratively so you can see progress early. Pricing depends on the service — some are project-based, some monthly.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">Do you work with startups and nonprofits?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">Yes. We have dedicated paths for both: startups focused on cutting burn rate and owning their tools, and nonprofits building lean, high-impact systems on open-source stacks at a fraction of typical agency costs.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">What is LinkedClaims?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">LinkedClaims is our open standard for verifiable, linked claims — portable statements of trust, credentials, and reputation that anyone can verify. It powers the trust badges you see across our work and lets achievements and endorsements be checked independently rather than taken on faith.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">What makes LinkedTrust different?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">We use the tools we sell. Our own infrastructure, AI assistants, and trust graph run in production every day, and our track record is backed by verifiable LinkedClaims rather than just testimonials. You get a team that has actually shipped what it is recommending.</p>
+    </details>
 </section>
 
 <section class="cta-banner">

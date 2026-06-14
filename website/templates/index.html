@@ -4,6 +4,31 @@
 {% block title %}LinkedTrust — Deep Tech. Human Trust.{% endblock %}
 {% block meta_description %}LinkedTrust is a coop-style studio building verified trust systems, civic-tech platforms, and AI tools. Real projects, real impact — all verifiable.{% endblock %}
 
+{% block extra_css %}
+<style>
+.faq-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.faq-item h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.faq-item p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+@media (max-width: 768px) {
+    .faq-list { grid-template-columns: 1fr; }
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
 <!-- HERO: split layout — text left, featured trust badge right -->
@@ -204,6 +229,38 @@
     </div>
 </section>
 
+<!-- FAQ — entity-defining answers for people and answer engines -->
+<section class="services-section faq-section">
+    <div class="section-label mono">// faq</div>
+    <h2 class="section-title">Frequently asked questions</h2>
+    <div class="faq-list">
+        <div class="service-card faq-item">
+            <h3>What is LinkedTrust?</h3>
+            <p>LinkedTrust is a global, employee-owned technology cooperative based in Tucson, Arizona. We build verified trust systems, civic tech platforms, and AI-powered tools for organizations that care about doing things right.</p>
+        </div>
+        <div class="service-card faq-item">
+            <h3>What is LinkedClaims?</h3>
+            <p>LinkedClaims is the open standard LinkedTrust builds on. It makes claims, credentials, and testimonials verifiable and linkable on a public trust graph, so trust can be earned and checked rather than simply asserted.</p>
+        </div>
+        <div class="service-card faq-item">
+            <h3>What does LinkedTrust build?</h3>
+            <p>We build verified trust systems, civic tech platforms, verifiable credentials and badges, AI integrations like RAG search and document extraction, and full-stack MVPs in React, Svelte, Django, and FastAPI.</p>
+        </div>
+        <div class="service-card faq-item">
+            <h3>Where is LinkedTrust based?</h3>
+            <p>LinkedTrust is headquartered in Tucson, Arizona, with a global team spanning several continents, including developers across the US, Nigeria, Ethiopia, India, and Pakistan.</p>
+        </div>
+        <div class="service-card faq-item">
+            <h3>How is LinkedTrust different?</h3>
+            <p>We are a cooperative where every team member shares equity and governance, not a startup extracting value. Our work is backed by a verifiable track record of LinkedClaims, so the testimonials on this site are claims you can independently verify.</p>
+        </div>
+        <div class="service-card faq-item">
+            <h3>How do I start a project with LinkedTrust?</h3>
+            <p>Get in touch through our <a href="{% url 'contact' %}" style="color:var(--brand-primary);font-weight:600;">contact page</a> to schedule a free 30-minute call. We listen first, then tell you what we can do.</p>
+        </div>
+    </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-banner">
     <h2>Ready to build something real?</h2>
@@ -211,4 +268,63 @@
     <a href="{% url 'contact' %}" class="btn btn-white">Schedule a Call</a>
 </section>
 
+{% endblock %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is LinkedTrust?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "LinkedTrust is a global, employee-owned technology cooperative based in Tucson, Arizona. We build verified trust systems, civic tech platforms, and AI-powered tools for organizations that care about doing things right."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is LinkedClaims?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "LinkedClaims is the open standard LinkedTrust builds on. It makes claims, credentials, and testimonials verifiable and linkable on a public trust graph, so trust can be earned and checked rather than simply asserted."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does LinkedTrust build?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We build verified trust systems, civic tech platforms, verifiable credentials and badges, AI integrations like RAG search and document extraction, and full-stack MVPs in React, Svelte, Django, and FastAPI."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is LinkedTrust based?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "LinkedTrust is headquartered in Tucson, Arizona, with a global team spanning several continents, including developers across the US, Nigeria, Ethiopia, India, and Pakistan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is LinkedTrust different?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We are a cooperative where every team member shares equity and governance, not a startup extracting value. Our work is backed by a verifiable track record of LinkedClaims, so the testimonials on this site are claims you can independently verify."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I start a project with LinkedTrust?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Get in touch through our contact page to schedule a free 30-minute call. We listen first, then tell you what we can do."
+      }
+    }
+  ]
+}
+</script>
 {% endblock %}

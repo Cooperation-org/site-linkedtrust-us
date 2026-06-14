@@ -3,6 +3,57 @@
 
 {% block title %}Your Idea Made Live — From Concept to Code — LinkedTrust{% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is an MVP and why build one?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An MVP, or minimum viable product, is the smallest production-ready version of your idea that real users can actually use. Building one gets you to market fast so you can test with real users and learn before investing in a full build."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it take to build an MVP?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Weeks, not months. We build the core must-have features first, avoid scope creep and unnecessary polish, and get you a working product you can put in front of users quickly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What technologies do you use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We architect with clean code and scalable frameworks such as React, Next.js, and Node.js, chosen to fit your business goals and to scale as you grow."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the process look like?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Three phases: discovery to turn your raw idea into a technical roadmap, rapid execution to build the core features, and deployment on a production-ready environment with monitoring, analytics, and user feedback loops."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the MVP ready for real users at launch?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. We launch on production-ready infrastructure with a focus on stability and feedback loops, and set up the monitoring and analytics needed to scale when you are ready."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
 {% block content %}
 
 <!-- Hero -->
@@ -56,6 +107,32 @@
         </div>
 
     </div>
+</section>
+
+<!-- FAQ -->
+<section class="container" style="max-width:780px;padding-bottom:3rem;">
+    <p style="color:var(--brand-primary);font-family:'JetBrains Mono',monospace;font-size:0.8rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:0.75rem;">// faq</p>
+    <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:1.25rem;">Frequently asked questions</h2>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">What is an MVP and why build one?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">An MVP, or minimum viable product, is the smallest production-ready version of your idea that real users can actually use. Building one gets you to market fast so you can test with real users and learn before investing in a full build.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">How long does it take to build an MVP?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">Weeks, not months. We build the core must-have features first, avoid scope creep and unnecessary polish, and get you a working product you can put in front of users quickly.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">What technologies do you use?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">We architect with clean code and scalable frameworks such as React, Next.js, and Node.js, chosen to fit your business goals and to scale as you grow.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">What does the process look like?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">Three phases: discovery to turn your raw idea into a technical roadmap, rapid execution to build the core features, and deployment on a production-ready environment with monitoring, analytics, and user feedback loops.</p>
+    </details>
+    <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+        <summary style="font-weight:700;cursor:pointer;">Is the MVP ready for real users at launch?</summary>
+        <p style="color:var(--text-secondary);margin-top:0.75rem;">Yes. We launch on production-ready infrastructure with a focus on stability and feedback loops, and set up the monitoring and analytics needed to scale when you are ready.</p>
+    </details>
 </section>
 
 <section class="cta-banner">

@@ -4,6 +4,57 @@
 {% block title %}Sponsored Global Adoption Program — LinkedTrust{% endblock %}
 {% block meta_description %}Sponsor organic adoption of your API — we recruit and manage developers worldwide who build open-source tools and integrations for your platform.{% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the Sponsored Global Adoption Program?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is a managed sponsorship program that drives organic adoption of your API. You fund it; we recruit a cohort of developers worldwide, manage the community, and ship real open-source integrations into the tools developers already use."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is this different from running ads or DevRel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ads and docs alone rarely create lasting adoption. We embed your API in working open-source tools and show up in the communities where developers actually are — Discord, GitHub, forums — so your platform earns mindshare because real people use it and talk about it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who builds the integrations?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A truly global cohort of developers we recruit across countries and languages many programs ignore — Chinese, Spanish, Arabic, Japanese, plus English. Every integration is reviewed and tested before it ships."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What do I get, and what risk do I take on?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You get open-source integrations and connectors, an active developer community, multilingual documentation, optional bug reports, and program reporting. You do not take on hiring overhead, operational burden, or direct representation risk — we run independently, so contributors are not your employees or agents."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does pricing and scoping work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every program is custom-scoped to your API, target ecosystem, and goals, and funded as a grant or sponsorship. Distributed global talent means the budget goes much further than a US-only DevRel hire. Book a call and we will scope a cohort for you."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
 {% block extra_css %}
 <style>
     .t2w-container { max-width: 1000px; margin: 0 auto; padding: 0 2.5rem; }
@@ -308,6 +359,36 @@
         <a href="{% url 'contact' %}" class="btn btn-gradient" style="display: inline-flex; align-items: center; gap: 0.5rem;">
             <i class="fa-solid fa-calendar"></i> Schedule a Call
         </a>
+    </div>
+</section>
+
+<div class="gradient-bar"></div>
+
+<!-- FAQ -->
+<section class="t2w-features">
+    <div class="t2w-container" style="max-width:780px;">
+        <div class="section-label mono">// faq</div>
+        <h2 class="section-title">Frequently asked questions</h2>
+        <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+            <summary style="font-weight:700;cursor:pointer;color:var(--text-primary);">What is the Sponsored Global Adoption Program?</summary>
+            <p style="color:var(--text-secondary);margin-top:0.75rem;line-height:1.65;">It is a managed sponsorship program that drives organic adoption of your API. You fund it; we recruit a cohort of developers worldwide, manage the community, and ship real open-source integrations into the tools developers already use.</p>
+        </details>
+        <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+            <summary style="font-weight:700;cursor:pointer;color:var(--text-primary);">How is this different from running ads or DevRel?</summary>
+            <p style="color:var(--text-secondary);margin-top:0.75rem;line-height:1.65;">Ads and docs alone rarely create lasting adoption. We embed your API in working open-source tools and show up in the communities where developers actually are &mdash; Discord, GitHub, forums &mdash; so your platform earns mindshare because real people use it and talk about it.</p>
+        </details>
+        <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+            <summary style="font-weight:700;cursor:pointer;color:var(--text-primary);">Who builds the integrations?</summary>
+            <p style="color:var(--text-secondary);margin-top:0.75rem;line-height:1.65;">A truly global cohort of developers we recruit across countries and languages many programs ignore &mdash; Chinese, Spanish, Arabic, Japanese, plus English. Every integration is reviewed and tested before it ships.</p>
+        </details>
+        <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+            <summary style="font-weight:700;cursor:pointer;color:var(--text-primary);">What do I get, and what risk do I take on?</summary>
+            <p style="color:var(--text-secondary);margin-top:0.75rem;line-height:1.65;">You get open-source integrations and connectors, an active developer community, multilingual documentation, optional bug reports, and program reporting. You do not take on hiring overhead, operational burden, or direct representation risk &mdash; we run independently, so contributors are not your employees or agents.</p>
+        </details>
+        <details style="border-bottom:1px solid var(--border);padding:1rem 0;">
+            <summary style="font-weight:700;cursor:pointer;color:var(--text-primary);">How does pricing and scoping work?</summary>
+            <p style="color:var(--text-secondary);margin-top:0.75rem;line-height:1.65;">Every program is custom-scoped to your API, target ecosystem, and goals, and funded as a grant or sponsorship. Distributed global talent means the budget goes much further than a US-only DevRel hire. Book a call and we will scope a cohort for you.</p>
+        </details>
     </div>
 </section>
 
