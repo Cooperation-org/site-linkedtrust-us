@@ -7,6 +7,9 @@ urlpatterns = [
     path('', home_view, name='home'),
 
     # Portfolio — deep-linkable project pages
+    # Alias: the blog nav links to /portfolio/ — 301 it to the real /work/ page.
+    path('portfolio/', RedirectView.as_view(url='/work/', permanent=True)),
+    path('portfolio', RedirectView.as_view(url='/work/', permanent=True)),
     path('work/', work_list_view, name='work_list'),
     path('work/<slug:slug>/', work_detail_view, name='work_detail'),
     path('work/<slug:slug>/case-study/', case_study_view, name='case_study'),
