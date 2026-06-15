@@ -19,6 +19,7 @@ Uses only the Python standard library (urllib) — no new pip dependencies.
 """
 import json
 import logging
+import re
 import urllib.request
 import urllib.error
 
@@ -78,6 +79,46 @@ def all_site_urls(host=DEFAULT_HOST):
                 urls.append(url)
 
     return urls
+
+
+# ---------------------------------------------------------------------------
+# Blog (Ghost) URLs — collected from the blog's own sitemap
+# ---------------------------------------------------------------------------
+def sitemap_urls(sitemap_url, _seen=None):
+    """Recursively collect <loc> URLs from a sitemap or sitemap index."""
+    _seen = _seen if _seen is not None else set()
+    if sitemap_url in _seen:
+        return []
+    _seen.add(sitemap_url)
+    req = urllib.request.Request(
+        sitemap_url, headers={"User-Agent": "linkedtrust-indexnow"})
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            xml = resp.read().decode("utf-8", "ignore")
+    except Exception as exc:  # pragma: no cover - defensive
+        logger.warning("indexnow: failed to fetch sitemap %s: %s", sitemap_url, exc)
+        return []
+
+    locs = re.findall(r"<loc>\s*(.*?)\s*</loc>", xml)
+    urls = []
+    if "<sitemapindex" in xml:
+        for child in locs:
+            urls.extend(sitemap_urls(child, _seen))
+    else:
+        urls.extend(locs)
+    return urls
+
+
+def blog_urls(host=DEFAULT_HOST):
+    """Collect blog (Ghost) URLs from /blog/sitemap.xml, filtered to this host.
+
+    The blog is a separate system, so its URLs aren't in our Django sitemaps;
+    this fetches the blog's own sitemap. URLs share the host, so the IndexNow
+    key is valid for them.
+    """
+    base = f"https://{host}"
+    return [u for u in sitemap_urls(f"{base}/blog/sitemap.xml")
+            if u.startswith(base)]
 
 
 # ---------------------------------------------------------------------------

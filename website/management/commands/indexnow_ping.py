@@ -5,6 +5,7 @@ Pass one or more --url flags to submit specific URLs instead.
 
 Examples:
     python manage.py indexnow_ping
+    python manage.py indexnow_ping --include-blog
     python manage.py indexnow_ping --url https://linkedtrust.us/work/streetwell/
     python manage.py indexnow_ping --url https://linkedtrust.us/ --url https://linkedtrust.us/services/
 """
@@ -29,15 +30,27 @@ class Command(BaseCommand):
             default=indexnow.DEFAULT_HOST,
             help=f'Host to submit under (default: {indexnow.DEFAULT_HOST}).',
         )
+        parser.add_argument(
+            '--include-blog',
+            action='store_true',
+            dest='include_blog',
+            help='Also submit blog URLs pulled from /blog/sitemap.xml (Ghost).',
+        )
 
     def handle(self, *args, **options):
         host = options['host']
         urls = options.get('urls')
+        include_blog = options.get('include_blog')
 
         if urls:
             self.stdout.write(f'Submitting {len(urls)} explicit URL(s) to IndexNow...')
         else:
             urls = indexnow.all_site_urls(host=host)
+            if include_blog:
+                seen = set(urls)
+                blog = [u for u in indexnow.blog_urls(host=host) if u not in seen]
+                urls = urls + blog
+                self.stdout.write(f'Including {len(blog)} blog URL(s) from /blog/sitemap.xml')
             self.stdout.write(f'Submitting all {len(urls)} site URL(s) to IndexNow...')
 
         for u in urls:
