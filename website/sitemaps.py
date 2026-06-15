@@ -4,6 +4,7 @@ Served at /sitemap.xml (see linkedtrust/urls.py). Uses the request host for the
 domain and forces https, so it works without django.contrib.sites / SITE_ID.
 """
 from django.contrib.sitemaps import Sitemap
+from django.shortcuts import render
 from django.urls import reverse
 
 from .models import PortfolioProject, ServicePackage
@@ -77,3 +78,25 @@ sitemaps = {
     "portfolio": PortfolioSitemap,
     "services": ServiceSitemap,
 }
+
+
+def sitemap_index_view(request):
+    """Custom sitemap index.
+
+    Unlike Django's built-in index view, this lets us include an external
+    sitemap (the Ghost blog) alongside our section sitemaps.
+    """
+    scheme = "https" if request.is_secure() else request.scheme
+    root = f"{scheme}://{request.get_host()}"
+    children = [
+        root + "/sitemap-pages.xml",
+        root + "/sitemap-work.xml",
+        root + "/sitemap-services.xml",
+        root + "/blog/sitemap.xml",
+    ]
+    return render(
+        request,
+        "sitemap_index_styled.xml",
+        {"children": children},
+        content_type="application/xml",
+    )

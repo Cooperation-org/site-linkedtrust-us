@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from website.admin import admin_site
-from website.sitemaps import sitemaps
+from website.sitemaps import sitemaps, sitemap_index_view
 from website import agent_views
 from website import indexnow
 
@@ -27,7 +27,10 @@ urlpatterns = [
     path('admin/', admin_site.urls),
 
     # Agent- & crawler-facing endpoints (must live at the true site root)
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('sitemap.xml', sitemap_index_view, name='sitemap_index'),
+    path('sitemap-pages.xml', sitemap, {'sitemaps': {'static': sitemaps['static']}, 'template_name': 'sitemap_styled.xml'}, name='sitemap_pages'),
+    path('sitemap-work.xml', sitemap, {'sitemaps': {'portfolio': sitemaps['portfolio']}, 'template_name': 'sitemap_styled.xml'}, name='sitemap_work'),
+    path('sitemap-services.xml', sitemap, {'sitemaps': {'services': sitemaps['services']}, 'template_name': 'sitemap_styled.xml'}, name='sitemap_services'),
     path('robots.txt', agent_views.robots_txt, name='robots_txt'),
     path('llms.txt', agent_views.llms_txt, name='llms_txt'),
     path('llms-full.txt', agent_views.llms_full_txt, name='llms_full_txt'),

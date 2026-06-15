@@ -1,6 +1,11 @@
 import os
+import mimetypes
 from pathlib import Path
 from decouple import config
+
+# Browsers only apply an XSL stylesheet if the .xsl is served with an XML-ish
+# MIME type (octet-stream is rejected) — needed for the pretty sitemap.
+mimetypes.add_type('text/xsl', '.xsl')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -165,6 +170,8 @@ if not DEBUG:
     WHITENOISE_ALLOW_ALL_ORIGINS = True
     # Maximum age for static files (30 days)
     WHITENOISE_MAX_AGE = 30 * 24 * 60 * 60
+    # Ensure the sitemap stylesheet is served as text/xsl (browsers reject octet-stream)
+    WHITENOISE_MIMETYPES = {'.xsl': 'text/xsl'}
 
 
 # Default primary key field type
