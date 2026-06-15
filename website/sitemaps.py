@@ -3,7 +3,11 @@
 Served at /sitemap.xml (see linkedtrust/urls.py). Uses the request host for the
 domain and forces https, so it works without django.contrib.sites / SITE_ID.
 """
+import os
+
+from django.conf import settings
 from django.contrib.sitemaps import Sitemap
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -100,3 +104,20 @@ def sitemap_index_view(request):
         {"children": children},
         content_type="application/xml",
     )
+
+
+# Cache the stylesheet contents on first read.
+_XSL_CACHE = {}
+
+
+def sitemap_xsl(request):
+    """Serve the sitemap stylesheet with an explicit text/xsl type.
+
+    WhiteNoise serves .xsl as application/octet-stream, which browsers refuse
+    to apply as an XSL stylesheet, so we serve it through this view instead.
+    """
+    if "body" not in _XSL_CACHE:
+        path = os.path.join(settings.BASE_DIR, "static", "sitemap.xsl")
+        with open(path, "r", encoding="utf-8") as fh:
+            _XSL_CACHE["body"] = fh.read()
+    return HttpResponse(_XSL_CACHE["body"], content_type="text/xsl")

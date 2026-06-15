@@ -170,8 +170,6 @@ if not DEBUG:
     WHITENOISE_ALLOW_ALL_ORIGINS = True
     # Maximum age for static files (30 days)
     WHITENOISE_MAX_AGE = 30 * 24 * 60 * 60
-    # Ensure the sitemap stylesheet is served as text/xsl (browsers reject octet-stream)
-    WHITENOISE_MIMETYPES = {'.xsl': 'text/xsl'}
 
 
 # Default primary key field type
