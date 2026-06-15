@@ -28,7 +28,7 @@ GSC_VERIFICATION = config('GSC_VERIFICATION', default='FhyuK7HCSUVK1OVSTkzzzj__l
 # Used to push new/changed URLs to Bing/Yandex (and thus ChatGPT Search /
 # Copilot, which ground on the Bing index). 32-char lowercase hex.
 # Override per environment via the INDEXNOW_KEY env var.
-INDEXNOW_KEY = config('INDEXNOW_KEY', default='8f4c2a9e6b1d47e3a05f9c2d8e7b3a16')
+INDEXNOW_KEY = config('INDEXNOW_KEY', default='cfbac5dcbf374555a73f256170b10951')
 
 # When proxied under a subdir (e.g. demos.linkedtrust.us/site-dev/)
 # set SCRIPT_NAME=/site-dev to fix URL generation
