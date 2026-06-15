@@ -93,6 +93,14 @@
     <script src="https://demos.linkedtrust.us/embed/badge.js" defer></script>
 </head>
 <body>
+    <!--
+      ╔════════════════════════════════════════════════╗
+      ║   LinkedTrust — Deep Tech. Human Trust.          ║
+      ╚════════════════════════════════════════════════╝
+      Built cooperatively · every testimonial here is a verifiable LinkedClaim.
+      Like building real things with real trust?  →  connect@linkedtrust.us
+      (psst — open the console for the full signature)
+    -->
     {% include 'navbar.html' %}
 
     <main>
@@ -102,6 +110,7 @@
     {% include 'footer.html' %}
 
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/console-signature.js' %}" defer></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>
