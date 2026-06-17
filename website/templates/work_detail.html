@@ -14,7 +14,7 @@
       "name": "{{ project.title|escapejs }}",
       "description": "{% if project.full_description %}{{ project.full_description|escapejs }}{% else %}{{ project.short_description|escapejs }}{% endif %}",
       "url": "https://linkedtrust.us{% url 'work_detail' project.slug %}",
-      {% if project.hero_image %}"image": "https://linkedtrust.us{{ project.hero_image.url }}",{% endif %}
+      {% if project.hero_image or project.thumbnail_image %}"image": "https://linkedtrust.us{% if project.hero_image %}{{ project.hero_image.url }}{% else %}{{ project.thumbnail_image.url }}{% endif %}",{% endif %}
       {% with techs=project.get_tech_list %}{% if techs %}"keywords": "{% for tag in techs %}{{ tag|escapejs }}{% if not forloop.last %}, {% endif %}{% endfor %}",{% endif %}{% endwith %}
       {% if project.client_name %}"about": "{{ project.client_name|escapejs }}",{% endif %}
       "creator": { "@id": "https://linkedtrust.us/#org" },
@@ -70,9 +70,9 @@
         {% endfor %}
     </div>
 
-    {% if project.hero_image %}
+    {% if project.hero_image or project.thumbnail_image %}
     <div class="project-hero-image">
-        <img src="{{ project.hero_image.url }}" alt="{{ project.title }}" fetchpriority="high">
+        <img src="{% if project.hero_image %}{{ project.hero_image.url }}{% else %}{{ project.thumbnail_image.url }}{% endif %}" alt="{{ project.title }}" fetchpriority="high">
     </div>
     {% endif %}
 </section>
