@@ -100,6 +100,13 @@ def privacy_view(request):
     """
     return render(request, 'privacy.html')
 
+def earnedgov_view(request):
+    """
+    Render the Earned Governance Accelerator landing page.
+    Self-contained page (own styles); assets under static/img/earnedgov/.
+    """
+    return render(request, 'earnedgov.html')
+
 def team_view(request):
     """
     Render the team page with all team members.

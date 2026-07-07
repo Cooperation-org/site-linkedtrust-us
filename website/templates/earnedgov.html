@@ -1,0 +1,620 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Earned Governance Accelerator — Accountable Organizations That Outcompete</title>
+    <meta name="description" content="Software has evolved rapidly but the corporate form has not. Earned governance and transparency not permission lets startups move fast, with trust and accountability. Battle-tested.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Earned Governance Accelerator">
+    <meta property="og:description" content="Accountable organizations that outcompete. Earned governance and transparency not permission — battle-tested by LinkedTrust.">
+
+    <!-- Fonts (same as linkedtrust.us) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="shortcut icon" href="{% static 'img/earnedgov/logo.svg' %}" type="image/svg+xml">
+
+    <!-- LinkedTrust badge web component -->
+    <script src="https://demos.linkedtrust.us/embed/badge.js" defer></script>
+
+    <style>
+        /* === LinkedTrust Design System === */
+        :root {
+            --bg-primary: #FAFAF8;
+            --bg-white: #FFFFFF;
+            --bg-warm: #FFF8F0;
+            --bg-dark: #0f1117;
+            --bg-dark-card: #1a1d27;
+            --text-primary: #1a1a1a;
+            --text-secondary: #555555;
+            --text-muted: #888888;
+            --text-on-dark: #e8e8e8;
+            --text-on-dark-muted: #888899;
+            --brand-primary: #00B2E5;
+            --brand-dark: #0090b8;
+            --brand-accent: #667eea;
+            --gradient: linear-gradient(135deg, #00B2E5 0%, #667eea 100%);
+            --success: #10B981;
+            --border: #e8e8e6;
+            --border-dark: rgba(255,255,255,0.08);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --radius: 12px;
+            --radius-lg: 16px;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.75rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            font-family: inherit;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+        .btn-gradient { background: var(--gradient); color: #fff; }
+        .btn-gradient:hover { opacity: 0.9; }
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+        .btn-outline:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+        .btn-white { background: #fff; color: var(--text-primary); font-weight: 700; }
+        .btn-white:hover { opacity: 0.9; }
+
+        /* Section utilities */
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--brand-primary);
+            margin-bottom: 0.5rem;
+        }
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+        }
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .gradient-bar { height: 4px; background: var(--gradient); }
+
+
+        /* === HERO === */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem 4rem;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .hero-text h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            margin-bottom: 1.5rem;
+        }
+        .hero-text .voice {
+            font-size: 1.15rem;
+            color: var(--text-primary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        .hero-text .voice em {
+            font-style: italic;
+            font-weight: 600;
+        }
+        .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .hero-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-visual img {
+            max-width: 340px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--brand-primary);
+            margin-bottom: 1rem;
+        }
+        .hero-badge img {
+            width: 22px;
+            height: 22px;
+        }
+
+
+        /* === THE TENSION === */
+        .tension {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .tension-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .tension-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+        .tension-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .tension-card h3 i { color: var(--brand-primary); }
+        .tension-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .tension-solution {
+            border-color: var(--brand-primary);
+            border-width: 2px;
+        }
+        .founder-quote {
+            border-left: 4px solid var(--brand-primary);
+            padding: 1.5rem 2rem;
+            background: var(--bg-warm);
+            border-radius: 0 var(--radius) var(--radius) 0;
+            max-width: 800px;
+        }
+        .founder-quote blockquote {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+
+        /* === HOW IT WORKS === */
+        .how-it-works {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .elements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.25rem;
+        }
+        .element-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+        }
+        .element-card:hover {
+            border-color: var(--brand-primary);
+            box-shadow: var(--shadow-md);
+        }
+        .element-icon {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--brand-primary);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 178, 229, 0.08);
+            border-radius: 10px;
+        }
+        .element-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .element-card p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
+
+
+        /* === BATTLE TESTED (dark section) === */
+        .battle-tested {
+            background: var(--bg-dark);
+            color: var(--text-on-dark);
+            padding: 5rem 2rem;
+        }
+        .battle-tested-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .battle-tested .section-label { color: var(--brand-accent); }
+        .battle-tested .section-title { color: #fff; }
+        .battle-tested p {
+            font-size: 1rem;
+            color: var(--text-on-dark);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            opacity: 0.85;
+        }
+        .proof-points {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .proof-point {
+            background: var(--bg-dark-card);
+            border: 1px solid var(--border-dark);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            flex: 1;
+        }
+        .proof-value {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--brand-primary);
+            margin-bottom: 0.25rem;
+        }
+        .proof-label {
+            font-size: 0.75rem;
+            color: var(--text-on-dark-muted);
+        }
+        .badge-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .badge-stack linked-badge {
+            display: block;
+            border-radius: var(--radius);
+        }
+        .badge-stack linked-badge:not(:defined) {
+            background: var(--bg-dark-card);
+            border-radius: var(--radius);
+            min-height: 120px;
+        }
+
+
+        /* === BETTER FOR EVERYONE === */
+        .better {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .better-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+        .better-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+        .better-card:hover {
+            border-color: var(--brand-primary);
+            box-shadow: var(--shadow-md);
+        }
+        .better-icon {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--brand-primary);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 178, 229, 0.08);
+            border-radius: 10px;
+        }
+        .better-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .better-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+
+        /* === CTA === */
+        .cta-banner {
+            background: var(--gradient);
+            padding: 5rem 2rem;
+            text-align: center;
+            color: #fff;
+        }
+        .cta-banner h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+        .cta-banner p {
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+        .cta-btn-row {
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .cta-contacts {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        .cta-contact {
+            text-align: center;
+        }
+        .cta-contact .name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+        }
+        .cta-contact .email {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+        }
+        .cta-contact a { color: #fff; text-decoration: underline; }
+
+
+        /* === FOOTER === */
+        .site-footer {
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border);
+            padding: 2rem 0;
+            text-align: center;
+        }
+        .site-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .site-footer a { color: var(--brand-primary); }
+
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 3rem 1.5rem 2rem;
+            }
+            .hero-text h1 { font-size: 2.2rem; }
+            .hero-visual { margin-top: -1rem; }
+            .hero-visual img { max-width: 240px; margin: 0 auto; }
+            .tension { padding: 3rem 1.5rem; }
+            .tension-grid { grid-template-columns: 1fr; }
+            .how-it-works { padding: 3rem 1.5rem; }
+            .elements-grid { grid-template-columns: 1fr; }
+            .battle-tested { padding: 3rem 1.5rem; }
+            .battle-tested-inner { grid-template-columns: 1fr; }
+            .better { padding: 3rem 1.5rem; }
+            .better-grid { grid-template-columns: 1fr; }
+            .cta-banner h2 { font-size: 1.6rem; }
+            .cta-banner { padding: 3rem 1.5rem; }
+            .proof-points { flex-direction: column; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 { font-size: 1.8rem; }
+            .hero-ctas { flex-direction: column; }
+            .cta-contacts { flex-direction: column; gap: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-text">
+        <div class="hero-badge">
+            <img src="{% static 'img/earnedgov/logo.svg' %}" alt="">
+            Powered by LinkedTrust
+        </div>
+        <h1>Earned Governance<br><span class="gradient-text">Accelerator</span></h1>
+        <p class="lead" style="font-size:1.15rem; color:var(--text-secondary); margin-bottom:1.5rem;">Launching startups where builders earn real ownership and governance through the work they do.</p>
+        <div class="voice">
+            <p>We value democracy, but we work in top-down corporations. Software has evolved rapidly but the corporate form has not.</p>
+	    <p style="margin-top:1rem;">Teams with <em>genuine</em> ownership can outcompete archaic, dinosaur-brained traditional top-down corporations. Earned governance and transparency not permission lets startups move fast, with trust and accountability.</p>
+            <p style="margin-top:1rem;">Battle-tested. We built LinkedTrust on this model and created a toolkit that works for scrappy startups. Join us and build a better future.</p>
+        </div>
+        <div class="hero-ctas">
+            <a href="#get-involved" class="btn btn-gradient">Get Involved</a>
+            <a href="#how-it-works" class="btn btn-outline">How It Works</a>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <img src="{% static 'img/earnedgov/team.png' %}" alt="LinkedTrust global team">
+    </div>
+</section>
+
+<div class="gradient-bar"></div>
+
+<!-- THE TENSION -->
+<section class="tension">
+    <div class="section-label" style="font-family:'JetBrains Mono',monospace;">// the tension</div>
+    <h2 class="section-title">Democracies are losing to anonymous capital</h2>
+    <div class="tension-grid">
+        <div class="tension-card">
+            <h3><i class="fa-solid fa-coins"></i> The Liquidity Problem</h3>
+            <p>Democracy (one person one vote, not transferable) is essentially a completely illiquid currency. Money is the opposite: completely transferable, not trackable, any anonymous agent can use it to purchase control over any resource. Naturally there is a tension between democratic control and anonymous control, and currently the democracies seem to be losing.</p>
+        </div>
+        <div class="tension-card tension-solution">
+            <h3><i class="fa-solid fa-tree"></i> Growing as a Tree, Not a Slime Mold</h3>
+            <p>When there is democratic accountability, people feel safer that their rights are protected, and they can focus on longer term goals than merely survival. These structures allow society to grow as a tree rather than as a slime mold engulfing all in its path. The question is: what kinds of structures give us the accountability of democracy with the vigorous growth that earning allows?</p>
+        </div>
+    </div>
+    <div class="founder-quote">
+        <blockquote>Builders and creators deserve ownership. Earned governance through peer-reviewed task tracking means the hardest workers gain more share, without hard feelings. Teams can grow rapidly.</blockquote>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how-it-works">
+    <div class="section-label" style="font-family:'JetBrains Mono',monospace;">// earned governance</div>
+    <h2 class="section-title">How it works</h2>
+    <p class="section-subtitle">Transparency-not-Permission allows leaders to drive ahead while maintaining team trust. Inclusive, fast and battle-tested shared decision making.</p>
+    <div class="elements-grid">
+        <div class="element-card">
+            <div class="element-icon"><i class="fa-solid fa-link"></i></div>
+            <h3>Task-to-Token Equity</h3>
+            <p>Granular earning of governance and equity means the hardest workers gain more share, without hard feelings. Teams can grow rapidly. All work, including mentor meetings, is tracked for equity.</p>
+        </div>
+        <div class="element-card">
+            <div class="element-icon"><i class="fa-solid fa-eye"></i></div>
+            <h3>Transparency Not Permission</h3>
+            <p>Leaders drive ahead while maintaining team trust. Visibility into decisions and resource allocation is as powerful as voting, without the delay.</p>
+        </div>
+        <div class="element-card">
+            <div class="element-icon"><i class="fa-solid fa-person-booth"></i></div>
+            <h3>Earned Leadership</h3>
+            <p>CEO elected by ranked-choice, work-weighted vote. Profits spent by proposals to rotating steering committee with work-weighted random selection. Contribution-based governance prevents takeover.</p>
+        </div>
+        <div class="element-card">
+            <div class="element-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+            <h3>Legal Equity From Day One</h3>
+            <p>Real ownership via Fairmint or Slicing Pie legal instruments, not vague promises. The accelerator invests via stipends and receives shares through the Rolling SAFE.</p>
+        </div>
+        <div class="element-card">
+            <div class="element-icon"><i class="fa-solid fa-globe"></i></div>
+            <h3>Global, Diverse Teams</h3>
+            <p>Teams are encouraged to recruit globally and stay open to adding members. Built for distributed, async collaboration. Focus on markets with high talent and low capital access where earned equity is a competitive advantage.</p>
+        </div>
+        <div class="element-card">
+            <div class="element-icon"><i class="fa-solid fa-brain"></i></div>
+            <h3>AI-Accelerated Building</h3>
+            <p>Proof of concept is now hours not days or weeks. Integrated task tracker and AI-aligned shared dev environment, credited on the equity table as an in-kind contribution.</p>
+        </div>
+    </div>
+</section>
+
+<div class="gradient-bar"></div>
+
+<!-- BATTLE TESTED -->
+<section class="battle-tested">
+    <div class="battle-tested-inner">
+        <div>
+            <div class="section-label">// battle-tested</div>
+            <h2 class="section-title">LinkedTrust: Company Zero</h2>
+            <p>We didn't just design this model. We built a company on it. What's Cookin' Inc, DBA LinkedTrust, is a United States Public Benefit Corporation with a global team where all members share equity.</p>
+            <p>Our bylaws require that governance is earned and our CEO is elected by ranked-choice, work-weighted vote. We use transparency-not-permission to stay fast while keeping trust high.</p>
+            <p>Now we're ready to spread this DNA, launching multiple social enterprises with the same principles through an accelerator program.</p>
+            <div class="proof-points">
+                <div class="proof-point">
+                    <div class="proof-value">Elected CEO</div>
+                    <div class="proof-label">Ranked-choice, work-weighted vote</div>
+                </div>
+                <div class="proof-point">
+                    <div class="proof-value">Global Team</div>
+                    <div class="proof-label">All share equity via Rolling SAFE</div>
+                </div>
+                <div class="proof-point">
+                    <div class="proof-value">PBC</div>
+                    <div class="proof-label">Public Benefit Corporation</div>
+                </div>
+            </div>
+        </div>
+        <div class="badge-stack">
+            <linked-badge claim-id="124471" layout="row" theme="dark"></linked-badge>
+            <linked-badge claim-id="124470" layout="row" theme="dark"></linked-badge>
+            <linked-badge claim-id="124461" layout="row" theme="dark"></linked-badge>
+        </div>
+    </div>
+</section>
+
+<!-- BETTER FOR EVERYONE -->
+<section class="better">
+    <div class="section-label" style="font-family:'JetBrains Mono',monospace;">// better for everyone</div>
+    <h2 class="section-title">Why partner with us</h2>
+    <p class="section-subtitle">Most accelerators give you a check and a mentor. We give you an Operating System.</p>
+    <div class="better-grid">
+        <div class="better-card">
+            <div class="better-icon"><i class="fa-solid fa-rocket"></i></div>
+            <h3>For Founders</h3>
+            <p>We provide the legal structure and the work-tracking engine so you can recruit the best people in the world today and pay them in real ownership, not just promises. Fair, fast, and legally sound from day one.</p>
+        </div>
+        <div class="better-card">
+            <div class="better-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <h3>For Partners &amp; Funders</h3>
+            <p>Back a model where every shareholder earned their stake. Full transparency via verified contribution history. No dead equity, no silent founders. Aligned teams that ship.</p>
+        </div>
+        <div class="better-card">
+            <div class="better-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <h3>For Universities</h3>
+            <p>Turn student internships into actual ownership stakes. Graduates leave with equity in real companies, solving the "unpaid labor" ethical dilemma.</p>
+        </div>
+    </div>
+</section>
+
+<div class="gradient-bar"></div>
+
+<!-- CTA -->
+<section class="cta-banner" id="get-involved">
+    <h2>Builders and creators deserve ownership</h2>
+    <p>We're assembling the board, advisors, and partners to launch this accelerator.</p>
+    <p>If you believe accountable organizations can outcompete the dinosaurs, let's build this together.</p>
+    <div class="cta-btn-row">
+        <a href="mailto:golda@linkedtrust.us" class="btn btn-white">Get in Touch</a>
+    </div>
+    <div class="cta-contacts">
+        <div class="cta-contact">
+            <div class="name">Bianca Momand</div>
+        </div>
+        <div class="cta-contact">
+            <div class="name">Golda Velez</div>
+            <div class="email"><a href="mailto:golda@linkedtrust.us">golda@linkedtrust.us</a></div>
+        </div>
+        <div class="cta-contact">
+            <div class="name">Gitonga Miriam Njeri</div>
+            <div class="email"><a href="mailto:gitonga@linkedtrust.us">gitonga@linkedtrust.us</a></div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+    <p>&copy; 2026 What's Cookin' Inc DBA <a href="https://linkedtrust.us">LinkedTrust</a> &middot; United States Public Benefit Corporation</p>
+</footer>
+
+</body>
+</html>

@@ -24,6 +24,10 @@ urlpatterns = [
     # LinkedClaims ecosystem
     path('linkedclaims/', linkedclaims_view, name='linkedclaims'),
 
+    # Earned Governance Accelerator landing page
+    path('earnedgov/', earnedgov_view, name='earnedgov'),
+    path('earnedgov', RedirectView.as_view(url='/earnedgov/', permanent=True)),
+
     # Core pages
     path('about/', about_view, name='about'),
     path('team/', team_view, name='team'),
