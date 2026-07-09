@@ -184,6 +184,18 @@ always a **word in a quiet tint**: `open` (gold tint), `approved`/`live` (green 
 no border. The word does the work; the tint just lets you find it fast.
 ↑ SIX LEAVES · ↓ used in every composition.
 
+
+### 19 · DETAILS UNFOLD
+
+*A page that shows every option and every field up front is intimidating; a wizard that
+hides them across steps loses the whole.* — Show the **high-level concept first, details
+if you want them** — all in one place. The essential few fields (or the headline numbers)
+are visible; everything advanced sits folded beneath a one-line summary that names the
+concept AND its defaults ("Valuation — hours × rate, all-time window"), so skipping it is
+an informed choice. A fold with a validation error opens itself. PROVENANCE IS A BRANCH
+is this pattern applied to a ledger; this is the general law for forms and pages alike.
+↑ THE MEAT IS THE PAGE, ONE TRUNK PER PAGE · ↓ HAIRLINE STRUCTURE, `details.gk-unfold`.
+
 ---
 
 ## III. Compositions (whole pages)
