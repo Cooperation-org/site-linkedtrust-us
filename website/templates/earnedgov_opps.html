@@ -1,0 +1,120 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Opportunities — Earned Governance Accelerator</title>
+    <meta name="description" content="Adoptable opportunities — ventures, projects, partnerships, grants and roles that can become part of the Earned Governance Accelerator cohort.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Adoptable Opportunities — Earned Governance Accelerator">
+    <meta property="og:description" content="Openings that can turn into cohort ventures. Adopt one and it becomes yours to build — with earned ownership from day one.">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'img/earnedgov/logo.svg' %}" type="image/svg+xml">
+    <style>
+        :root {
+            --bg-primary: #FAFAF8; --bg-white: #FFFFFF; --bg-warm: #FFF8F0;
+            --text-primary: #1a1a1a; --text-secondary: #555; --text-muted: #888;
+            --brand-primary: #00B2E5; --brand-dark: #0090b8;
+            --gradient: linear-gradient(135deg, #00B2E5 0%, #667eea 100%);
+            --border: #e8e8e6; --radius: 12px; --radius-lg: 16px;
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08); --danger: #c0392b;
+        }
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Montserrat',sans-serif; background:var(--bg-primary); color:var(--text-primary); line-height:1.6; -webkit-font-smoothing:antialiased; }
+        a { color:var(--brand-dark); text-decoration:none; }
+        .page { max-width: 1100px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+        .crumb { font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--brand-primary); margin-bottom:0.5rem; }
+        h1 { font-size:1.9rem; font-weight:800; letter-spacing:-0.5px; margin-bottom:0.75rem; }
+        .lede { color:var(--text-secondary); max-width:700px; margin-bottom:2.5rem; }
+        .banner, .errors { border-radius:var(--radius); padding:1rem 1.25rem; margin-bottom:1.5rem; font-size:0.95rem; }
+        .banner { background:var(--bg-warm); border:1px solid var(--border); font-weight:600; }
+        .errors { background:#fdf0ee; border:1px solid #f0c8c2; color:var(--danger); }
+        .opps-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:1.5rem; margin-bottom:3.5rem; }
+        .opp-card {
+            background:var(--bg-white); border:1px solid var(--border); border-radius:var(--radius-lg);
+            padding:1.5rem; box-shadow:var(--shadow-md); display:flex; flex-direction:column; gap:0.7rem;
+        }
+        .opp-kind { font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--brand-dark); text-transform:uppercase; letter-spacing:1px; }
+        .opp-title { font-weight:700; font-size:1.05rem; }
+        .opp-words { color:var(--text-secondary); font-size:0.95rem; white-space:pre-line; }
+        .opp-meta { margin-top:auto; display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; color:var(--text-muted); }
+        .btn { display:inline-block; padding:0.65rem 1.4rem; font-weight:600; font-size:0.9rem; font-family:inherit; border-radius:8px; cursor:pointer; border:none; }
+        .btn-gradient { background:var(--gradient); color:#fff; }
+        .btn-adopt { align-self:flex-start; }
+        h2 { font-size:1.3rem; font-weight:800; margin-bottom:0.4rem; }
+        .formwrap { background:var(--bg-white); border:1px solid var(--border); border-radius:var(--radius); padding:1.75rem; box-shadow:var(--shadow-md); max-width:660px; }
+        fieldset { border:0; margin-bottom:1.3rem; }
+        label { display:block; font-weight:600; font-size:0.9rem; margin-bottom:0.35rem; }
+        .hint { font-weight:400; color:var(--text-muted); font-size:0.8rem; }
+        input[type=text], select, textarea {
+            width:100%; padding:0.65rem 0.8rem; border:1px solid var(--border); border-radius:8px;
+            font-family:inherit; font-size:0.95rem; background:var(--bg-primary);
+        }
+        textarea { min-height:110px; resize:vertical; }
+        input:focus, select:focus, textarea:focus { outline:2px solid var(--brand-primary); outline-offset:0; border-color:transparent; }
+        .empty { color:var(--text-muted); margin-bottom:3rem; }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="crumb">// <a href="/earnedgov/">earned governance accelerator</a> / opportunities</div>
+    <h1>Adoptable opportunities</h1>
+    <p class="lede">Openings that can turn into cohort ventures: ideas seeking founders, partnerships seeking a team,
+    grants seeking a builder, roles seeking a person. Each is a public attestation on LinkedTrust.
+    <strong>Adopt one and it becomes yours to build</strong> — with earned ownership from day one.</p>
+
+    {% if posted_id %}
+    <div class="banner">✓ Opportunity posted — <a href="{{ lt_api }}/claims/{{ posted_id }}" target="_blank" rel="noopener">view its attestation</a>.</div>
+    {% endif %}
+    {% if errors %}<div class="errors">{% for e in errors %}<div>{{ e }}</div>{% endfor %}</div>{% endif %}
+
+    <div class="opps-grid">
+        {% for o in board.opps %}
+        <div class="opp-card">
+            <div class="opp-kind">{{ o.kind }}</div>
+            <div class="opp-title">{% if o.subject_uri and 'earnedgov#opp-' not in o.subject_uri %}<a href="{{ o.subject_uri }}" target="_blank" rel="noopener">{{ o.title }}</a>{% else %}{{ o.title }}{% endif %}</div>
+            <div class="opp-words">{{ o.statement }}</div>
+            <a class="btn btn-gradient btn-adopt" href="/earnedgov/commit/?adopt={{ o.id }}">Adopt this →</a>
+            <div class="opp-meta">
+                <span>{{ o.date }}</span>
+                <a href="{{ o.claim_url }}" target="_blank" rel="noopener">View attestation ↗</a>
+            </div>
+        </div>
+        {% empty %}
+        <p class="empty">No open opportunities posted yet — add the first one below.</p>
+        {% endfor %}
+    </div>
+
+    <h2>Post an opportunity</h2>
+    <p class="lede" style="margin-bottom:1.25rem;">Know something that should exist — a venture idea, a partnership on the table, a grant that fits, a role that needs a person? Put it where a builder can pick it up.</p>
+    <div class="formwrap">
+        <form method="post">
+            {% csrf_token %}
+            <fieldset>
+                <label>Title</label>
+                <input type="text" name="title" required value="{{ form.title }}" placeholder="e.g. Regional co-op payroll tool seeking founding team">
+            </fieldset>
+            <fieldset>
+                <label>Kind</label>
+                <select name="kind">
+                    {% for k in kinds %}<option value="{{ k }}" {% if form.kind == k %}selected{% endif %}>{{ k|title }}</option>{% endfor %}
+                </select>
+            </fieldset>
+            <fieldset>
+                <label>What is it? <span class="hint">— and what would adopting it mean</span></label>
+                <textarea name="statement" required>{{ form.statement }}</textarea>
+            </fieldset>
+            <fieldset>
+                <label>Link <span class="hint">— optional, if it exists somewhere (doc, site, grant page)</span></label>
+                <input type="text" name="link" value="{{ form.link }}">
+            </fieldset>
+            <fieldset>
+                <label>Your link <span class="hint">— optional, so adopters know who posted it</span></label>
+                <input type="text" name="poster_link" value="{{ form.poster_link }}">
+            </fieldset>
+            <button type="submit" class="btn btn-gradient">Post opportunity</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

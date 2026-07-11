@@ -24,6 +24,8 @@ EFFORT_URI = "https://linkedtrust.us/earnedgov"
 # Older anchor claims used the demos URL for the same effort.
 EFFORT_URIS = {EFFORT_URI, "https://demos.linkedtrust.us/earnedgov"}
 COMMIT_VERB = "COMMITS_TO"
+OPP_VERB = "OPPORTUNITY"
+OPP_KINDS = ["venture", "project", "partnership", "grant", "role"]
 ROLES = ["advisor", "mentor", "partner", "founder", "supporter"]
 ROLE_LABELS = {
     "advisor": "Advisors",
@@ -146,16 +148,85 @@ def _wins(a, b):
     return a["date"] > b["date"]
 
 
-def fetch_claim(claim_id):
-    """One claim, for the step-up prefill. Returns None if unavailable."""
+def fetch_opportunities():
+    """OPPORTUNITY claims on the effort: adoptable openings for the cohort.
+
+    Shape: <opportunity-uri> OPPORTUNITY <effort-uri>; title in the node name,
+    kind in `aspect`, description in `statement`.
+    """
+    cache_key = _CACHE_KEY + "_opps"
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
+    try:
+        feed = _get("/api/feed", query="linkedtrust.us/earnedgov", limit=100)
+        ids = [
+            e["id"]
+            for e in feed.get("entries", [])
+            if e.get("claim") == OPP_VERB
+            and (e.get("object") or {}).get("uri") in EFFORT_URIS
+        ]
+        opps = []
+        for cid in ids:
+            try:
+                detail = _get(f"/api/claims/{cid}")
+            except Exception:
+                continue
+            claim = detail.get("claim", detail)
+            name, _img = _subject_display(detail)
+            opps.append({
+                "id": cid,
+                "subject_uri": claim.get("subject"),
+                "title": name or claim.get("subject", "").split("#")[-1].replace("-", " ").title(),
+                "kind": (claim.get("aspect") or "project").lower(),
+                "statement": claim.get("statement") or "",
+                "source_uri": claim.get("sourceURI"),
+                "date": (claim.get("effectiveDate") or "")[:10],
+                "claim_url": _claim_url(cid),
+            })
+        opps.sort(key=lambda o: o["date"], reverse=True)
+        result = {"opps": opps, "count": len(opps)}
+    except Exception:
+        logger.exception("earnedgov: opportunities fetch failed")
+        result = {"opps": [], "count": 0, "error": True}
+    cache.set(cache_key, result, 60)
+    return result
+
+
+def create_opportunity(*, title, kind, statement, link=None, poster_uri=None):
+    """Create an OPPORTUNITY claim. The opportunity's URI is its own link if it
+    has one, else an anchor under the effort page."""
+    from django.utils.text import slugify
+    subject = link or f"{EFFORT_URI}#opp-{slugify(title)}"
+    payload = {
+        "subject": subject,
+        "claim": OPP_VERB,
+        "object": EFFORT_URI,
+        "statement": statement,
+        "aspect": kind if kind in OPP_KINDS else "project",
+        "name": title,
+        "howKnown": "FIRST_HAND",
+        "sourceURI": poster_uri or EFFORT_URI,
+        "effectiveDate": date.today().isoformat(),
+        "confidence": 1.0,
+    }
+    r = requests.post(f"{LT_API}/api/claims", json=payload, timeout=30)
+    r.raise_for_status()
+    cache.delete(_CACHE_KEY + "_opps")
+    return r.json().get("claim", {})
+
+
+def fetch_claim(claim_id, verbs=(COMMIT_VERB, OPP_VERB)):
+    """One claim, for step-up/adopt prefills. Returns None if unavailable."""
     try:
         detail = _get(f"/api/claims/{int(claim_id)}")
         claim = detail.get("claim", detail)
-        if claim.get("claim") != COMMIT_VERB:
+        if claim.get("claim") not in verbs:
             return None
         name, _ = _subject_display(detail)
         return {
             "id": claim.get("id"),
+            "verb": claim.get("claim"),
             "subject_uri": claim.get("subject"),
             "name": name,
             "role": (claim.get("aspect") or "supporter").lower(),

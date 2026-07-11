@@ -79,6 +79,13 @@
         Recorded so far ({{ upgrade.how_known|lower }}): “{{ upgrade.statement|truncatechars:200 }}”
     </div>
     {% endif %}
+    {% if adopt %}
+    <div class="upgrade-note">
+        You're adopting: <strong>{{ adopt.name }}</strong> — “{{ adopt.statement|truncatechars:180 }}”
+        (<a href="{{ lt_api }}/claims/{{ adopt.id }}" target="_blank" rel="noopener">the opportunity</a>).
+        Your commitment below links you to it.
+    </div>
+    {% endif %}
 
     {% if errors %}
     <div class="errors">{% for e in errors %}<div>{{ e }}</div>{% endfor %}</div>

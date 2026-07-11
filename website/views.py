@@ -129,7 +129,12 @@ def earnedgov_commit_view(request):
     upgrade = None
     upgrade_id = request.GET.get('upgrade')
     if upgrade_id and upgrade_id.isdigit():
-        upgrade = earnedgov_claims.fetch_claim(upgrade_id)
+        upgrade = earnedgov_claims.fetch_claim(upgrade_id, verbs=(earnedgov_claims.COMMIT_VERB,))
+
+    adopt = None
+    adopt_id = request.GET.get('adopt')
+    if adopt_id and adopt_id.isdigit():
+        adopt = earnedgov_claims.fetch_claim(adopt_id, verbs=(earnedgov_claims.OPP_VERB,))
 
     errors = []
     form = {
@@ -143,6 +148,12 @@ def earnedgov_commit_view(request):
             'link': upgrade.get('subject_uri') or '',
             'role': upgrade.get('role') or 'supporter',
             'statement': upgrade.get('statement') or '',
+        })
+    elif adopt:
+        form.update({
+            'role': 'founder',
+            'statement': f"Adopting the opportunity “{adopt.get('name') or ''}” "
+                         f"({adopt.get('subject_uri')}): ",
         })
 
     if request.method == 'POST':
@@ -198,7 +209,58 @@ def earnedgov_commit_view(request):
         'form': form,
         'errors': errors,
         'upgrade': upgrade,
+        'adopt': adopt,
         'roles': earnedgov_claims.ROLES,
+        'lt_api': earnedgov_claims.LT_API,
+    })
+
+
+@csrf_protect
+def earnedgov_opps_view(request):
+    """
+    Adoptable opportunities: openings (ventures, projects, partnerships, grants,
+    roles) that can turn into cohort things. Stored as OPPORTUNITY claims on
+    LinkedTrust; anyone can post one; "Adopt this" routes into the commit flow.
+    """
+    from . import earnedgov_claims
+
+    errors = []
+    posted_id = None
+    form = {'title': '', 'kind': 'project', 'statement': '', 'link': '', 'poster_link': ''}
+
+    if request.method == 'POST':
+        for key in form:
+            form[key] = (request.POST.get(key) or '').strip()
+        if not form['title']:
+            errors.append("The opportunity needs a short title.")
+        if not form['statement']:
+            errors.append("Describe the opportunity — what is it, and what would adopting it mean?")
+        link = form['link']
+        if link and not link.startswith(('http://', 'https://')):
+            link = 'https://' + link
+        poster = form['poster_link']
+        if poster and not poster.startswith(('http://', 'https://')):
+            poster = 'https://' + poster
+        if not errors:
+            try:
+                claim = earnedgov_claims.create_opportunity(
+                    title=form['title'],
+                    kind=form['kind'],
+                    statement=form['statement'],
+                    link=link or None,
+                    poster_uri=poster or None,
+                )
+                return redirect(f"/earnedgov/opportunities/?posted={claim.get('id', '')}")
+            except Exception:
+                logger.exception("earnedgov: opportunity creation failed")
+                errors.append("Could not reach LinkedTrust — please try again in a minute.")
+
+    return render(request, 'earnedgov_opps.html', {
+        'board': earnedgov_claims.fetch_opportunities(),
+        'form': form,
+        'errors': errors,
+        'posted_id': request.GET.get('posted'),
+        'kinds': earnedgov_claims.OPP_KINDS,
         'lt_api': earnedgov_claims.LT_API,
     })
 
