@@ -1,0 +1,215 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Commit — Earned Governance Accelerator</title>
+    <meta name="description" content="Add your commitment to the Earned Governance Accelerator as a verifiable LinkedTrust attestation, in your own words — text, photo, or video.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Join the Earned Governance Accelerator">
+    <meta property="og:description" content="Say it in your own words. Your commitment becomes a verifiable attestation on LinkedTrust.">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'img/earnedgov/logo.svg' %}" type="image/svg+xml">
+    <style>
+        :root {
+            --bg-primary: #FAFAF8; --bg-white: #FFFFFF; --bg-warm: #FFF8F0;
+            --text-primary: #1a1a1a; --text-secondary: #555; --text-muted: #888;
+            --brand-primary: #00B2E5; --brand-dark: #0090b8;
+            --gradient: linear-gradient(135deg, #00B2E5 0%, #667eea 100%);
+            --border: #e8e8e6; --radius: 12px; --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --danger: #c0392b;
+        }
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Montserrat',sans-serif; background:var(--bg-primary); color:var(--text-primary); line-height:1.6; -webkit-font-smoothing:antialiased; }
+        a { color:var(--brand-dark); text-decoration:none; }
+        .page { max-width: 660px; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+        .crumb { font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--brand-primary); margin-bottom:0.5rem; }
+        h1 { font-size:1.7rem; font-weight:800; letter-spacing:-0.5px; margin-bottom:0.75rem; }
+        .lede { color:var(--text-secondary); margin-bottom:2rem; }
+        .upgrade-note, .errors {
+            border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.95rem;
+        }
+        .upgrade-note { background: var(--bg-warm); border: 1px solid var(--border); }
+        .errors { background:#fdf0ee; border:1px solid #f0c8c2; color:var(--danger); }
+        form { background:var(--bg-white); border:1px solid var(--border); border-radius:var(--radius); padding:1.75rem; box-shadow:var(--shadow-md); }
+        fieldset { border:0; margin-bottom:1.4rem; }
+        label { display:block; font-weight:600; font-size:0.9rem; margin-bottom:0.35rem; }
+        .hint { font-weight:400; color:var(--text-muted); font-size:0.8rem; }
+        input[type=text], input[type=url], select, textarea {
+            width:100%; padding:0.65rem 0.8rem; border:1px solid var(--border); border-radius:8px;
+            font-family:inherit; font-size:0.95rem; background:var(--bg-primary);
+        }
+        textarea { min-height: 130px; resize: vertical; }
+        input:focus, select:focus, textarea:focus { outline:2px solid var(--brand-primary); outline-offset:0; border-color:transparent; }
+        .mode-row { display:flex; gap:0.75rem; margin-bottom:1.4rem; }
+        .mode-row label {
+            flex:1; border:1px solid var(--border); border-radius:8px; padding:0.7rem 0.9rem;
+            font-weight:500; font-size:0.88rem; cursor:pointer; margin:0; background:var(--bg-primary);
+        }
+        .mode-row input { margin-right:0.5rem; }
+        .mode-row label:has(input:checked) { border-color:var(--brand-primary); background:#eaf8fd; }
+        .vouch-only { display:none; }
+        form.vouch .vouch-only { display:block; }
+        .media-row { display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center; }
+        .btn { display:inline-block; padding:0.7rem 1.5rem; font-weight:600; font-size:0.92rem; font-family:inherit; border-radius:8px; cursor:pointer; border:none; }
+        .btn-gradient { background:var(--gradient); color:#fff; }
+        .btn-quiet { background:var(--bg-primary); border:1px solid var(--border); color:var(--text-primary); font-size:0.85rem; padding:0.55rem 1rem; }
+        .btn-quiet:hover { border-color:var(--brand-primary); }
+        #video-status { font-size:0.8rem; color:var(--text-muted); }
+        #video-preview { width:100%; border-radius:8px; margin-top:0.6rem; display:none; }
+        .fine { font-size:0.8rem; color:var(--text-muted); margin-top:1.25rem; }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="crumb">// <a href="/earnedgov/#committed">earned governance accelerator</a></div>
+    <h1>{% if upgrade %}Say it in your own words{% else %}Add your commitment{% endif %}</h1>
+    <p class="lede">
+        {% if upgrade %}
+        Someone vouched for your commitment. Replace their record with your own attestation —
+        your words, and your face or voice if you like. Yours takes precedence on the wall.
+        {% else %}
+        Your commitment becomes a <strong>verifiable attestation on LinkedTrust</strong> —
+        your words, attributable and permanent, shown on the accelerator wall.
+        {% endif %}
+    </p>
+
+    {% if upgrade %}
+    <div class="upgrade-note">
+        Recorded so far ({{ upgrade.how_known|lower }}): “{{ upgrade.statement|truncatechars:200 }}”
+    </div>
+    {% endif %}
+
+    {% if errors %}
+    <div class="errors">{% for e in errors %}<div>{{ e }}</div>{% endfor %}</div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" id="commit-form" class="{% if form.mode == 'vouch' %}vouch{% endif %}">
+        {% csrf_token %}
+        <input type="hidden" name="video_url" id="video_url" value="{{ form.video_url }}">
+
+        {% if not upgrade %}
+        <div class="mode-row">
+            <label><input type="radio" name="mode" value="self" {% if form.mode != 'vouch' %}checked{% endif %}>This is my commitment</label>
+            <label><input type="radio" name="mode" value="vouch" {% if form.mode == 'vouch' %}checked{% endif %}>Someone told me theirs</label>
+        </div>
+        {% else %}
+        <input type="hidden" name="mode" value="self">
+        {% endif %}
+
+        <fieldset>
+            <label>Name <span class="hint">— of the person committing</span></label>
+            <input type="text" name="name" required value="{{ form.name }}">
+        </fieldset>
+        <fieldset>
+            <label>Their link <span class="hint">— LinkedIn, website, or profile (identifies the person)</span></label>
+            <input type="text" name="link" placeholder="https://linkedin.com/in/…" value="{{ form.link }}">
+        </fieldset>
+        <fieldset>
+            <label>Role</label>
+            <select name="role">
+                {% for r in roles %}<option value="{{ r }}" {% if form.role == r %}selected{% endif %}>{{ r|title }}</option>{% endfor %}
+            </select>
+        </fieldset>
+        <fieldset>
+            <label>The commitment, in {% if upgrade %}your{% else %}their/your{% endif %} own words</label>
+            <textarea name="statement" required placeholder="What are you committing to, and why does this matter to you?">{{ form.statement }}</textarea>
+        </fieldset>
+
+        <fieldset class="vouch-only">
+            <label>Your name <span class="hint">— you heard this directly; the attestation records that</span></label>
+            <input type="text" name="voucher_name" value="{{ form.voucher_name }}">
+        </fieldset>
+        <fieldset class="vouch-only">
+            <label>Your link <span class="hint">— optional</span></label>
+            <input type="text" name="voucher_link" value="{{ form.voucher_link }}">
+        </fieldset>
+
+        <fieldset>
+            <label>Photo <span class="hint">— optional, shown on the wall</span></label>
+            <input type="file" name="photo" accept="image/*">
+        </fieldset>
+        <fieldset>
+            <label>Video <span class="hint">— optional; say it on camera (up to ~60s)</span></label>
+            <div class="media-row">
+                <button type="button" class="btn btn-quiet" id="rec-btn">● Record video</button>
+                <input type="file" id="video-file" accept="video/*" style="display:none">
+                <button type="button" class="btn btn-quiet" id="upload-video-btn">Upload a video file</button>
+                <span id="video-status"></span>
+            </div>
+            <video id="video-preview" controls></video>
+        </fieldset>
+
+        <button type="submit" class="btn btn-gradient" id="submit-btn">Record my commitment</button>
+        <p class="fine">This publishes a public attestation (name, words, media) to
+            <a href="{{ lt_api }}" target="_blank" rel="noopener">LinkedTrust</a>. Questions?
+            <a href="mailto:golda@linkedtrust.us">golda@linkedtrust.us</a></p>
+    </form>
+</div>
+
+<script>
+(function () {
+    var form = document.getElementById('commit-form');
+    document.querySelectorAll('input[name=mode]').forEach(function (r) {
+        r.addEventListener('change', function () {
+            form.classList.toggle('vouch', this.value === 'vouch');
+        });
+    });
+
+    var LT = '{{ lt_api|escapejs }}';
+    var status = document.getElementById('video-status');
+    var preview = document.getElementById('video-preview');
+    var urlField = document.getElementById('video_url');
+    var recBtn = document.getElementById('rec-btn');
+    var fileInput = document.getElementById('video-file');
+    var recorder = null, chunks = [], stream = null;
+
+    function uploadVideo(blob, name) {
+        status.textContent = 'Uploading video…';
+        var fd = new FormData();
+        fd.append('video', blob, name || 'commitment.webm');
+        fetch(LT + '/api/video/upload', { method: 'POST', body: fd })
+            .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+            .then(function (d) {
+                urlField.value = d.videoUrl || d.url || '';
+                status.textContent = urlField.value ? '✓ Video attached' : 'Upload failed — try again';
+            })
+            .catch(function () { status.textContent = 'Upload failed — you can still submit without video.'; });
+    }
+
+    document.getElementById('upload-video-btn').addEventListener('click', function () { fileInput.click(); });
+    fileInput.addEventListener('change', function () {
+        if (!this.files.length) return;
+        preview.src = URL.createObjectURL(this.files[0]);
+        preview.style.display = 'block';
+        uploadVideo(this.files[0], this.files[0].name);
+    });
+
+    recBtn.addEventListener('click', function () {
+        if (recorder && recorder.state === 'recording') { recorder.stop(); return; }
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(function (s) {
+            stream = s; chunks = [];
+            recorder = new MediaRecorder(s);
+            recorder.ondataavailable = function (e) { if (e.data.size) chunks.push(e.data); };
+            recorder.onstop = function () {
+                stream.getTracks().forEach(function (t) { t.stop(); });
+                var blob = new Blob(chunks, { type: 'video/webm' });
+                preview.src = URL.createObjectURL(blob);
+                preview.style.display = 'block';
+                recBtn.textContent = '● Record again';
+                uploadVideo(blob);
+            };
+            recorder.start();
+            recBtn.textContent = '■ Stop recording';
+            status.textContent = 'Recording… click stop when done (keep it under a minute).';
+            setTimeout(function () { if (recorder.state === 'recording') recorder.stop(); }, 90000);
+        }).catch(function () { status.textContent = 'Camera unavailable — upload a file instead.'; });
+    });
+
+    form.addEventListener('submit', function () {
+        document.getElementById('submit-btn').disabled = true;
+    });
+})();
+</script>
+</body>
+</html>

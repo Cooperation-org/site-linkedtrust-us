@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.text import slugify
 from django.http import JsonResponse
 from django.core.mail import EmailMessage
 from django.views.decorators.csrf import csrf_protect
@@ -104,8 +105,102 @@ def earnedgov_view(request):
     """
     Render the Earned Governance Accelerator landing page.
     Self-contained page (own styles); assets under static/img/earnedgov/.
+    The commitment wall is live LinkedTrust claims (see earnedgov_claims.py).
     """
-    return render(request, 'earnedgov.html')
+    from . import earnedgov_claims
+    context = {
+        'wall': earnedgov_claims.fetch_commitments(),
+        'committed_id': request.GET.get('committed'),
+        'lt_api': earnedgov_claims.LT_API,
+    }
+    return render(request, 'earnedgov.html', context)
+
+
+@csrf_protect
+def earnedgov_commit_view(request):
+    """
+    The commitment / invitation page: someone joins the accelerator effort
+    by making (or vouching for) a COMMITS_TO claim on LinkedTrust.
+    ?upgrade=<claim_id> prefills from an existing second-hand claim so the
+    person can replace it with their own self-attested (step-up) version.
+    """
+    from . import earnedgov_claims
+
+    upgrade = None
+    upgrade_id = request.GET.get('upgrade')
+    if upgrade_id and upgrade_id.isdigit():
+        upgrade = earnedgov_claims.fetch_claim(upgrade_id)
+
+    errors = []
+    form = {
+        'mode': 'self',
+        'name': '', 'link': '', 'role': 'supporter', 'statement': '',
+        'voucher_name': '', 'voucher_link': '', 'video_url': '',
+    }
+    if upgrade:
+        form.update({
+            'name': upgrade.get('name') or '',
+            'link': upgrade.get('subject_uri') or '',
+            'role': upgrade.get('role') or 'supporter',
+            'statement': upgrade.get('statement') or '',
+        })
+
+    if request.method == 'POST':
+        for key in form:
+            form[key] = (request.POST.get(key) or '').strip()
+        name = form['name']
+        statement = form['statement']
+        role = form['role'] if form['role'] in earnedgov_claims.ROLES else 'supporter'
+        self_attested = form['mode'] != 'vouch'
+        link = form['link']
+        video_url = form['video_url']
+
+        if not name:
+            errors.append("Please give the person's name.")
+        if not statement:
+            errors.append("The commitment needs words — what was actually said.")
+        if link and not link.startswith(('http://', 'https://')):
+            link = 'https://' + link
+        if not link:
+            # Subject must be a URI; anchor unlinked people under the effort page.
+            link = f"https://linkedtrust.us/earnedgov#{slugify(name)}"
+        voucher_link = form['voucher_link']
+        if voucher_link and not voucher_link.startswith(('http://', 'https://')):
+            voucher_link = 'https://' + voucher_link
+        if not self_attested and not form['voucher_name']:
+            errors.append("Vouching: add your own name so the attestation says who heard it.")
+        if video_url and not video_url.startswith(earnedgov_claims.LT_API):
+            errors.append("Video URL doesn't look like a LinkedTrust upload.")
+
+        if not errors:
+            statement_full = statement
+            if not self_attested and form['voucher_name']:
+                statement_full = f"{statement}\n\n— as told to {form['voucher_name']}"
+            try:
+                claim = earnedgov_claims.create_commitment(
+                    subject_uri=link,
+                    name=name,
+                    role=role,
+                    statement=statement_full,
+                    self_attested=self_attested,
+                    voucher_uri=voucher_link or None,
+                    photo_file=request.FILES.get('photo'),
+                    video_url=video_url or None,
+                )
+                return redirect(f"/earnedgov/?committed={claim.get('id', '')}#committed")
+            except ValueError as e:
+                errors.append(str(e))
+            except Exception:
+                logger.exception("earnedgov: claim creation failed")
+                errors.append("Could not reach LinkedTrust to record the commitment — please try again in a minute.")
+
+    return render(request, 'earnedgov_commit.html', {
+        'form': form,
+        'errors': errors,
+        'upgrade': upgrade,
+        'roles': earnedgov_claims.ROLES,
+        'lt_api': earnedgov_claims.LT_API,
+    })
 
 def team_view(request):
     """

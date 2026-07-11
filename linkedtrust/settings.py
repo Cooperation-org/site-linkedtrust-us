@@ -33,6 +33,10 @@ INDEXNOW_KEY = config('INDEXNOW_KEY', default='cfbac5dcbf374555a73f256170b10951'
 # When proxied under a subdir (e.g. demos.linkedtrust.us/site-dev/)
 # set SCRIPT_NAME=/site-dev to fix URL generation
 FORCE_SCRIPT_NAME = config('SCRIPT_NAME', default=None)
+
+# LinkedTrust claims API used by the earnedgov commitment wall/invite pages.
+# Point at https://dev.linkedtrust.us when testing so no claims hit live.
+EARNEDGOV_LT_API = config('EARNEDGOV_LT_API', default='https://live.linkedtrust.us')
 if FORCE_SCRIPT_NAME == '':
     FORCE_SCRIPT_NAME = None
 

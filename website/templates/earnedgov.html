@@ -440,6 +440,49 @@
             .hero-ctas { flex-direction: column; }
             .cta-contacts { flex-direction: column; gap: 1.5rem; }
         }
+        /* === COMMITMENT WALL === */
+        .wall { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        .wall-banner {
+            background: var(--bg-warm); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1rem 1.5rem; margin-bottom: 2rem;
+            font-weight: 600;
+        }
+        .wall-role { margin-top: 2.5rem; }
+        .wall-role h3 {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+            letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .wall-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .commit-card {
+            background: var(--bg-white); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-md);
+            display: flex; flex-direction: column; gap: 0.75rem;
+        }
+        .commit-head { display: flex; align-items: center; gap: 0.9rem; }
+        .commit-head img, .commit-avatar {
+            width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+        }
+        .commit-avatar {
+            background: var(--gradient); color: #fff; display: flex;
+            align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem;
+        }
+        .commit-name { font-weight: 700; }
+        .commit-name a:hover { color: var(--brand-primary); }
+        .commit-role {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            color: var(--brand-dark); text-transform: uppercase; letter-spacing: 1px;
+        }
+        .commit-words { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; white-space: pre-line; }
+        .commit-card video { width: 100%; border-radius: 8px; }
+        .commit-meta {
+            margin-top: auto; display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.78rem; color: var(--text-muted);
+        }
+        .commit-meta a { color: var(--brand-dark); }
+        .commit-meta a:hover { text-decoration: underline; }
+        .commit-stepup { font-size: 0.78rem; }
+        .wall-cta { margin-top: 2.5rem; }
     </style>
 </head>
 <body>
@@ -583,6 +626,57 @@
             <h3>For Universities</h3>
             <p>Turn student internships into actual ownership stakes. Graduates leave with equity in real companies, solving the "unpaid labor" ethical dilemma.</p>
         </div>
+    </div>
+</section>
+
+<div class="gradient-bar"></div>
+
+<!-- COMMITMENT WALL — live LinkedTrust attestations -->
+<section class="wall" id="committed">
+    <div class="section-label">// who's committed</div>
+    <h2 class="section-title">People are stepping up</h2>
+    <p class="section-subtitle">Every card below is a verifiable attestation on LinkedTrust — a real commitment by a real person, in their own words. This wall grows as the accelerator assembles.</p>
+
+    {% if committed_id %}
+    <div class="wall-banner">
+        ✓ Your commitment is recorded — <a href="{{ lt_api }}/claims/{{ committed_id }}" target="_blank" rel="noopener" style="color:var(--brand-dark);">view your attestation</a>.
+        It may take a minute to appear on the wall.
+    </div>
+    {% endif %}
+
+    {% for group in wall.groups %}
+    <div class="wall-role">
+        <h3>{{ group.label }}</h3>
+        <div class="wall-grid">
+            {% for m in group.members %}
+            <div class="commit-card">
+                <div class="commit-head">
+                    {% if m.image %}<img src="{{ m.image }}" alt="{{ m.name }}" loading="lazy">
+                    {% else %}<div class="commit-avatar">{{ m.name|first|upper }}</div>{% endif %}
+                    <div>
+                        <div class="commit-name"><a href="{{ m.subject_uri }}" target="_blank" rel="noopener">{{ m.name }}</a></div>
+                        <div class="commit-role">{{ m.role }}</div>
+                    </div>
+                </div>
+                {% if m.video %}<video controls preload="metadata" src="{{ m.video }}"></video>{% endif %}
+                {% if m.statement %}<div class="commit-words">{{ m.statement }}</div>{% endif %}
+                <div class="commit-meta">
+                    <span>{% if m.self_attested %}Self-attested{% else %}Vouched{% endif %}{% if m.date %} · {{ m.date }}{% endif %}</span>
+                    <a href="{{ m.claim_url }}" target="_blank" rel="noopener">View attestation ↗</a>
+                </div>
+                {% if not m.self_attested %}
+                <div class="commit-stepup"><a href="/earnedgov/commit/?upgrade={{ m.id }}" style="color:var(--brand-dark);">Is this you? Say it in your own words →</a></div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% empty %}
+    <p class="section-subtitle" style="margin-bottom:0;">Be the first on this wall.</p>
+    {% endfor %}
+
+    <div class="wall-cta">
+        <a href="/earnedgov/commit/" class="btn btn-gradient">Add your commitment</a>
     </div>
 </section>
 
