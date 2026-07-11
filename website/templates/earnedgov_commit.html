@@ -81,8 +81,10 @@
     {% endif %}
     {% if adopt %}
     <div class="upgrade-note">
-        You're adopting: <strong>{{ adopt.name }}</strong> — “{{ adopt.statement|truncatechars:180 }}”
+        You're {% if adopt.adoptable %}adopting{% else %}asking to join{% endif %}:
+        <strong>{{ adopt.name }}</strong> — “{{ adopt.statement|truncatechars:180 }}”
         (<a href="{{ lt_api }}/claims/{{ adopt.id }}" target="_blank" rel="noopener">the opportunity</a>).
+        {% if adopt.owner %}Owned by {{ adopt.owner }}.{% endif %}
         Your commitment below links you to it.
     </div>
     {% endif %}
@@ -146,6 +148,16 @@
             </div>
             <video id="video-preview" controls></video>
         </fieldset>
+
+        {% if adopt and adopt.gate_type %}
+        <fieldset>
+            <label style="font-weight:600;">
+                <input type="checkbox" name="gate_agree" value="1" required style="margin-right:0.5rem;">
+                I agree to this opportunity's {{ adopt.gate_type }} gate:
+                <span class="hint" style="display:block; margin-top:0.3rem;">“{{ adopt.gate_terms }}”</span>
+            </label>
+        </fieldset>
+        {% endif %}
 
         <button type="submit" class="btn btn-gradient" id="submit-btn">Record my commitment</button>
         <p class="fine">This publishes a public attestation (name, words, media) to

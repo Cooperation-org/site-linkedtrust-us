@@ -155,9 +155,10 @@ def earnedgov_commit_view(request):
             'statement': upgrade.get('statement') or '',
         })
     elif adopt:
+        verb = 'Adopting' if adopt.get('adoptable', True) else 'Joining'
         form.update({
             'role': 'founder',
-            'statement': f"Adopting the opportunity “{adopt.get('name') or ''}” "
+            'statement': f"{verb} the opportunity “{adopt.get('name') or ''}” "
                          f"({adopt.get('subject_uri')}): ",
         })
 
@@ -188,10 +189,20 @@ def earnedgov_commit_view(request):
         if video_url and not video_url.startswith(earnedgov_claims.LT_API):
             errors.append("Video URL doesn't look like a LinkedTrust upload.")
 
+        if adopt and adopt.get('gate_type') and not request.POST.get('gate_agree'):
+            errors.append(
+                f"This opportunity has a {adopt['gate_type']} gate — you must "
+                f"agree to its terms to join."
+            )
         if not errors:
             statement_full = statement
             if not self_attested and form['voucher_name']:
                 statement_full = f"{statement}\n\n— as told to {form['voucher_name']}"
+            if adopt and adopt.get('gate_type') and request.POST.get('gate_agree'):
+                statement_full += (
+                    f"\n\n[Agreed to the opportunity's {adopt['gate_type']} gate: "
+                    f"{adopt.get('gate_terms')}]"
+                )
             try:
                 claim = earnedgov_claims.create_commitment(
                     subject_uri=link,
@@ -304,7 +315,9 @@ def earnedgov_opps_view(request):
 
     errors = []
     posted_id = None
-    form = {'title': '', 'kind': 'project', 'statement': '', 'link': '', 'poster_link': ''}
+    form = {'title': '', 'kind': 'project', 'statement': '', 'link': '', 'poster_link': '',
+            'owner': '', 'owner_link': '', 'lead': '', 'ip': '', 'valuation': '',
+            'gate_type': '', 'gate_terms': ''}
 
     if request.method == 'POST':
         for key in form:
@@ -319,6 +332,20 @@ def earnedgov_opps_view(request):
         poster = form['poster_link']
         if poster and not poster.startswith(('http://', 'https://')):
             poster = 'https://' + poster
+        owner_link = form['owner_link']
+        if owner_link and not owner_link.startswith(('http://', 'https://')):
+            owner_link = 'https://' + owner_link
+        valuation = form['valuation'].replace(',', '').replace('$', '')
+        if valuation:
+            try:
+                valuation = float(valuation)
+            except ValueError:
+                errors.append("Valuation should be a number (USD).")
+                valuation = None
+        if form['gate_type'] and form['gate_type'] not in ('purpose', 'agreement'):
+            form['gate_type'] = ''
+        if form['gate_type'] and not form['gate_terms']:
+            errors.append("A join gate needs its terms — what must a joiner agree to?")
         if not errors:
             try:
                 claim = earnedgov_claims.create_opportunity(
@@ -327,6 +354,13 @@ def earnedgov_opps_view(request):
                     statement=form['statement'],
                     link=link or None,
                     poster_uri=poster or None,
+                    owner=form['owner'] or None,
+                    owner_link=owner_link or None,
+                    lead=form['lead'] or None,
+                    ip=form['ip'] or None,
+                    valuation=valuation or None,
+                    gate_type=form['gate_type'] or None,
+                    gate_terms=form['gate_terms'] or None,
                 )
                 return redirect(f"/earnedgov/opportunities/?posted={claim.get('id', '')}")
             except Exception:

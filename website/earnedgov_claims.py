@@ -148,6 +148,57 @@ def _wins(a, b):
     return a["date"] > b["date"]
 
 
+import re as _re
+
+# Structured trailer lines appended to an opportunity's statement. Claims have
+# no free metadata fields, so owner/lead/IP/gate ride in the statement in a
+# parseable, human-readable convention (valuation gets real fields: amt/unit).
+_TRAILER_RE = _re.compile(
+    r"^(Owner|Lead|IP|Gate\[(?:purpose|agreement)\]):\s*(.+)$", _re.IGNORECASE
+)
+
+
+def _parse_opp_statement(statement):
+    """Split an opportunity statement into (description, meta dict)."""
+    meta = {"owner": None, "owner_link": None, "lead": None, "ip": None,
+            "gate_type": None, "gate_terms": None}
+    desc_lines = []
+    for line in (statement or "").splitlines():
+        m = _TRAILER_RE.match(line.strip())
+        if not m:
+            desc_lines.append(line)
+            continue
+        key, val = m.group(1).lower(), m.group(2).strip()
+        if key == "owner":
+            lm = _re.match(r"(.+?)\s*\((https?://\S+)\)\s*$", val)
+            if lm:
+                meta["owner"], meta["owner_link"] = lm.group(1).strip(), lm.group(2)
+            else:
+                meta["owner"] = val
+        elif key == "lead":
+            meta["lead"] = val
+        elif key == "ip":
+            meta["ip"] = val
+        elif key.startswith("gate["):
+            meta["gate_type"] = "purpose" if "purpose" in key else "agreement"
+            meta["gate_terms"] = val
+    return "\n".join(desc_lines).strip(), meta
+
+
+def _build_opp_statement(statement, *, owner=None, owner_link=None, lead=None,
+                         ip=None, gate_type=None, gate_terms=None):
+    lines = [statement.strip(), ""]
+    if owner:
+        lines.append(f"Owner: {owner}" + (f" ({owner_link})" if owner_link else ""))
+    if lead:
+        lines.append(f"Lead: {lead}")
+    if ip:
+        lines.append(f"IP: {ip}")
+    if gate_type in ("purpose", "agreement") and gate_terms:
+        lines.append(f"Gate[{gate_type}]: {gate_terms}")
+    return "\n".join(lines).strip()
+
+
 def fetch_opportunities():
     """OPPORTUNITY claims on the effort: adoptable openings for the cohort.
 
@@ -174,15 +225,20 @@ def fetch_opportunities():
                 continue
             claim = detail.get("claim", detail)
             name, _img = _subject_display(detail)
+            desc, meta = _parse_opp_statement(claim.get("statement"))
             opps.append({
                 "id": cid,
                 "subject_uri": claim.get("subject"),
                 "title": name or claim.get("subject", "").split("#")[-1].replace("-", " ").title(),
                 "kind": (claim.get("aspect") or "project").lower(),
-                "statement": claim.get("statement") or "",
+                "statement": desc,
                 "source_uri": claim.get("sourceURI"),
                 "date": (claim.get("effectiveDate") or "")[:10],
                 "claim_url": _claim_url(cid),
+                "valuation": claim.get("amt"),
+                "valuation_unit": claim.get("unit") or "USD",
+                "adoptable": not meta["owner"],
+                **meta,
             })
         opps.sort(key=lambda o: o["date"], reverse=True)
         result = {"opps": opps, "count": len(opps)}
@@ -193,16 +249,23 @@ def fetch_opportunities():
     return result
 
 
-def create_opportunity(*, title, kind, statement, link=None, poster_uri=None):
+def create_opportunity(*, title, kind, statement, link=None, poster_uri=None,
+                       owner=None, owner_link=None, lead=None, ip=None,
+                       valuation=None, gate_type=None, gate_terms=None):
     """Create an OPPORTUNITY claim. The opportunity's URI is its own link if it
-    has one, else an anchor under the effort page."""
+    has one, else an anchor under the effort page. Owner/lead/IP/gate ride in
+    the statement trailer; valuation goes into amt/unit."""
     from django.utils.text import slugify
     subject = link or f"{EFFORT_URI}#opp-{slugify(title)}"
+    full_statement = _build_opp_statement(
+        statement, owner=owner, owner_link=owner_link, lead=lead, ip=ip,
+        gate_type=gate_type, gate_terms=gate_terms,
+    )
     payload = {
         "subject": subject,
         "claim": OPP_VERB,
         "object": EFFORT_URI,
-        "statement": statement,
+        "statement": full_statement,
         "aspect": kind if kind in OPP_KINDS else "project",
         "name": title,
         "howKnown": "FIRST_HAND",
@@ -210,6 +273,9 @@ def create_opportunity(*, title, kind, statement, link=None, poster_uri=None):
         "effectiveDate": date.today().isoformat(),
         "confidence": 1.0,
     }
+    if valuation:
+        payload["amt"] = float(valuation)
+        payload["unit"] = "USD"
     r = requests.post(f"{LT_API}/api/claims", json=payload, timeout=30)
     r.raise_for_status()
     cache.delete(_CACHE_KEY + "_opps")
@@ -224,7 +290,7 @@ def fetch_claim(claim_id, verbs=(COMMIT_VERB, OPP_VERB)):
         if claim.get("claim") not in verbs:
             return None
         name, _ = _subject_display(detail)
-        return {
+        out = {
             "id": claim.get("id"),
             "verb": claim.get("claim"),
             "subject_uri": claim.get("subject"),
@@ -233,6 +299,12 @@ def fetch_claim(claim_id, verbs=(COMMIT_VERB, OPP_VERB)):
             "statement": claim.get("statement") or "",
             "how_known": claim.get("howKnown"),
         }
+        if claim.get("claim") == OPP_VERB:
+            desc, meta = _parse_opp_statement(out["statement"])
+            out["statement"] = desc
+            out.update(meta)
+            out["adoptable"] = not meta["owner"]
+        return out
     except Exception:
         logger.warning("earnedgov: could not fetch claim %s for upgrade", claim_id)
         return None

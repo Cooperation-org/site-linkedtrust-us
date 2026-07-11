@@ -35,6 +35,18 @@
             padding:1.5rem; box-shadow:var(--shadow-md); display:flex; flex-direction:column; gap:0.7rem;
         }
         .opp-kind { font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--brand-dark); text-transform:uppercase; letter-spacing:1px; }
+        .opp-badges { display:flex; flex-wrap:wrap; gap:0.4rem; }
+        .badge {
+            font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.5px;
+            border:1px solid var(--border); border-radius:999px; padding:0.15rem 0.6rem;
+            color:var(--text-secondary); background:var(--bg-primary);
+        }
+        .badge a { color:inherit; text-decoration:underline; }
+        .badge-open { border-color:#bfe8d2; background:#effaf3; color:#177245; }
+        .badge-gate { border-color:#f0dcc2; background:#fdf6ec; color:#9a6b1f; }
+        details.more { margin-bottom:1.3rem; }
+        details.more summary { cursor:pointer; font-weight:600; font-size:0.9rem; color:var(--brand-dark); }
+        details.more fieldset:first-of-type { margin-top:1rem; }
         .opp-title { font-weight:700; font-size:1.05rem; }
         .opp-words { color:var(--text-secondary); font-size:0.95rem; white-space:pre-line; }
         .opp-meta { margin-top:auto; display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; color:var(--text-muted); }
@@ -73,8 +85,18 @@
         <div class="opp-card">
             <div class="opp-kind">{{ o.kind }}</div>
             <div class="opp-title">{% if o.subject_uri and 'earnedgov#opp-' not in o.subject_uri %}<a href="{{ o.subject_uri }}" target="_blank" rel="noopener">{{ o.title }}</a>{% else %}{{ o.title }}{% endif %}</div>
+            <div class="opp-badges">
+                {% if o.adoptable %}<span class="badge badge-open">fully adoptable</span>
+                {% else %}<span class="badge">owner: {% if o.owner_link %}<a href="{{ o.owner_link }}" target="_blank" rel="noopener">{{ o.owner }}</a>{% else %}{{ o.owner }}{% endif %}</span>{% endif %}
+                {% if o.lead %}<span class="badge">lead: {{ o.lead }}</span>{% endif %}
+                {% if o.ip %}<span class="badge">existing IP</span>{% endif %}
+                {% if o.valuation %}<span class="badge">${{ o.valuation|floatformat:0 }} valuation</span>{% endif %}
+                {% if o.gate_type %}<span class="badge badge-gate">{{ o.gate_type }} gate</span>{% endif %}
+            </div>
             <div class="opp-words">{{ o.statement }}</div>
-            <a class="btn btn-gradient btn-adopt" href="/earnedgov/commit/?adopt={{ o.id }}">Adopt this →</a>
+            {% if o.ip %}<div class="opp-words" style="font-size:0.85rem;"><strong>IP:</strong> {{ o.ip }}</div>{% endif %}
+            {% if o.gate_type %}<div class="opp-words" style="font-size:0.85rem;"><strong>To join, agree to:</strong> {{ o.gate_terms }}</div>{% endif %}
+            <a class="btn btn-gradient btn-adopt" href="/earnedgov/commit/?adopt={{ o.id }}">{% if o.adoptable %}Adopt this →{% else %}Ask to join →{% endif %}</a>
             <div class="opp-meta">
                 <span>{{ o.date }}</span>
                 <a href="{{ o.claim_url }}" target="_blank" rel="noopener">View attestation ↗</a>
@@ -112,6 +134,41 @@
                 <label>Your link <span class="hint">— optional, so adopters know who posted it</span></label>
                 <input type="text" name="poster_link" value="{{ form.poster_link }}">
             </fieldset>
+            <details class="more" {% if form.owner or form.gate_type or form.valuation %}open{% endif %}>
+                <summary>Ownership, IP, valuation, join gate (if any)</summary>
+                <fieldset>
+                    <label>Owner <span class="hint">— leave blank if this is fully adoptable (no owner)</span></label>
+                    <input type="text" name="owner" value="{{ form.owner }}" placeholder="Person or org that owns it">
+                </fieldset>
+                <fieldset>
+                    <label>Owner link <span class="hint">— optional</span></label>
+                    <input type="text" name="owner_link" value="{{ form.owner_link }}">
+                </fieldset>
+                <fieldset>
+                    <label>Lead <span class="hint">— if someone is already leading it</span></label>
+                    <input type="text" name="lead" value="{{ form.lead }}">
+                </fieldset>
+                <fieldset>
+                    <label>Existing IP <span class="hint">— what exists already (code, brand, patents, users)</span></label>
+                    <input type="text" name="ip" value="{{ form.ip }}">
+                </fieldset>
+                <fieldset>
+                    <label>Valuation <span class="hint">— USD, if there's an existing team/IP</span></label>
+                    <input type="text" name="valuation" value="{{ form.valuation }}" placeholder="e.g. 250000">
+                </fieldset>
+                <fieldset>
+                    <label>Join gate</label>
+                    <select name="gate_type">
+                        <option value="" {% if not form.gate_type %}selected{% endif %}>None — open to join</option>
+                        <option value="purpose" {% if form.gate_type == 'purpose' %}selected{% endif %}>Purpose gate — joiners must share the purpose</option>
+                        <option value="agreement" {% if form.gate_type == 'agreement' %}selected{% endif %}>Agreement gate — joiners must accept terms</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <label>Gate terms <span class="hint">— what a joiner must agree to (required if gated)</span></label>
+                    <textarea name="gate_terms" style="min-height:70px;">{{ form.gate_terms }}</textarea>
+                </fieldset>
+            </details>
             <button type="submit" class="btn btn-gradient">Post opportunity</button>
         </form>
     </div>
