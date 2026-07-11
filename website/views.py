@@ -108,9 +108,14 @@ def earnedgov_view(request):
     The commitment wall is live LinkedTrust claims (see earnedgov_claims.py).
     """
     from . import earnedgov_claims
+    committed_id = request.GET.get('committed')
+    share = None
+    if committed_id and committed_id.isdigit():
+        share = earnedgov_claims.fetch_claim(committed_id, verbs=(earnedgov_claims.COMMIT_VERB,))
     context = {
         'wall': earnedgov_claims.fetch_commitments(),
-        'committed_id': request.GET.get('committed'),
+        'committed_id': committed_id,
+        'share': share,
         'lt_api': earnedgov_claims.LT_API,
     }
     return render(request, 'earnedgov.html', context)
@@ -213,6 +218,79 @@ def earnedgov_commit_view(request):
         'roles': earnedgov_claims.ROLES,
         'lt_api': earnedgov_claims.LT_API,
     })
+
+
+def earnedgov_card_view(request, claim_id):
+    """
+    Server-rendered 1200x630 share card (PNG) for a commitment claim, used as
+    og:image so a pasted wall link shows the person and their words.
+    """
+    from . import earnedgov_claims
+    from django.core.cache import cache
+    from django.http import HttpResponse, Http404
+
+    cache_key = f"earnedgov_card_{claim_id}"
+    png = cache.get(cache_key)
+    if png is None:
+        c = earnedgov_claims.fetch_claim(claim_id, verbs=(earnedgov_claims.COMMIT_VERB,))
+        if not c:
+            raise Http404
+        png = _render_commit_card(c)
+        cache.set(cache_key, png, 600)
+    return HttpResponse(png, content_type='image/png')
+
+
+def _render_commit_card(c):
+    from io import BytesIO
+    from PIL import Image, ImageDraw, ImageFont
+
+    W, H = 1200, 630
+    img = Image.new('RGB', (W, H), (15, 17, 23))          # --bg-dark
+    d = ImageDraw.Draw(img)
+    # gradient bar (cyan -> purple), simple horizontal interpolation
+    for x in range(W):
+        t = x / W
+        col = (int(0 + t * 102), int(178 - t * 52), int(229 + t * 5))
+        d.line([(x, 0), (x, 10)], fill=col)
+
+    fp = '/usr/share/fonts/truetype/dejavu/'
+    f_label = ImageFont.truetype(fp + 'DejaVuSansMono.ttf', 28)
+    f_name = ImageFont.truetype(fp + 'DejaVuSans-Bold.ttf', 64)
+    f_role = ImageFont.truetype(fp + 'DejaVuSans-Bold.ttf', 34)
+    f_quote = ImageFont.truetype(fp + 'DejaVuSans.ttf', 36)
+    f_foot = ImageFont.truetype(fp + 'DejaVuSans.ttf', 26)
+
+    d.text((70, 60), '// earned governance accelerator', font=f_label, fill=(0, 178, 229))
+    d.text((70, 130), c['name'] or 'A new commitment', font=f_name, fill=(240, 240, 240))
+    d.text((70, 215), (c['role'] or '').upper(), font=f_role, fill=(102, 126, 234))
+
+    # word-wrapped quote, max 4 lines
+    words = (c['statement'] or '').replace('\n', ' ').split()
+    lines, cur = [], ''
+    for w in words:
+        trial = (cur + ' ' + w).strip()
+        if d.textlength(trial, font=f_quote) > W - 180:
+            lines.append(cur)
+            cur = w
+            if len(lines) == 4:
+                cur += ' …'
+                break
+        else:
+            cur = trial
+    if cur:
+        lines.append(cur)
+    y = 300
+    for ln in lines[:4]:
+        d.text((70, y), ('“' if ln is lines[0] else '') + ln + ('”' if ln is lines[-1] else ''),
+               font=f_quote, fill=(200, 200, 205))
+        y += 52
+
+    d.text((70, H - 70), 'linkedtrust.us/earnedgov — verifiable commitment on LinkedTrust',
+           font=f_foot, fill=(136, 136, 153))
+
+    buf = BytesIO()
+    img.save(buf, format='PNG')
+    return buf.getvalue()
 
 
 @csrf_protect

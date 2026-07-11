@@ -7,8 +7,18 @@
     <meta name="description" content="Software has evolved rapidly but the corporate form has not. Earned governance and transparency not permission lets startups move fast, with trust and accountability. Battle-tested.">
 
     <meta property="og:type" content="website">
+    {% if share %}
+    <meta property="og:title" content="{{ share.name }} committed as {{ share.role }} — Earned Governance Accelerator">
+    <meta property="og:description" content="{{ share.statement|truncatechars:180 }}">
+    <meta property="og:image" content="https://linkedtrust.us/earnedgov/card/{{ share.id }}.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://linkedtrust.us/earnedgov/card/{{ share.id }}.png">
+    {% else %}
     <meta property="og:title" content="Earned Governance Accelerator">
     <meta property="og:description" content="Accountable organizations that outcompete. Earned governance and transparency not permission — battle-tested by LinkedTrust.">
+    {% endif %}
 
     <!-- Fonts (same as linkedtrust.us) -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">

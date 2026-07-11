@@ -29,6 +29,7 @@ urlpatterns = [
     path('earnedgov', RedirectView.as_view(url='/earnedgov/', permanent=True)),
     path('earnedgov/commit/', earnedgov_commit_view, name='earnedgov_commit'),
     path('earnedgov/opportunities/', earnedgov_opps_view, name='earnedgov_opps'),
+    path('earnedgov/card/<int:claim_id>.png', earnedgov_card_view, name='earnedgov_card'),
 
     # Core pages
     path('about/', about_view, name='about'),
