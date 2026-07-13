@@ -24,13 +24,17 @@ from django.utils.deprecation import MiddlewareMixin
 # used. Tighten with nonces later if desired.
 _CSP = "; ".join([
     "default-src 'self'",
+    # cdn.tailwindcss.com: the earnedgov pages use the Tailwind play CDN
+    # (swap for a built stylesheet when that design settles, then remove).
     "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com "
     "https://www.google-analytics.com https://demos.linkedtrust.us "
+    "https://cdn.tailwindcss.com "
     "https://www.clarity.ms https://*.clarity.ms",
     # Our own fonts are self-hosted; these origins are for the <linked-badge>
     # web component, which injects its own Google Fonts.
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "font-src 'self' data: https://fonts.gstatic.com",
+    # cdnjs.cloudflare.com: Font Awesome used by the earnedgov pages.
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com",
+    "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com",
     "img-src 'self' data: https:",
     # <linked-badge> testimonial videos are served from Backblaze S3.
     "media-src 'self' https://*.backblazeb2.com https://*.linkedtrust.us",
