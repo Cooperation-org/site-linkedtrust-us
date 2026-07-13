@@ -63,14 +63,9 @@
 <body>
 <div class="page">
     <div class="crumb">// <a href="/earnedgov/#committed">earned governance accelerator</a></div>
-    <h1>{% if invite %}{{ invite.name }}, you're invited{% elif upgrade %}Say it in your own words{% else %}Add your commitment{% endif %}</h1>
+    <h1>{% if upgrade %}Say it in your own words{% else %}Add your commitment{% endif %}</h1>
     <p class="lede">
-        {% if invite %}
-        <strong>{{ invite.inviter }}</strong> invited you to join the Earned Governance
-        Accelerator as {% if invite.role == 'advisor' %}an{% else %}a{% endif %} <strong>{{ invite.role }}</strong>.
-        Everything below is prefilled — check it, make the words yours if you like
-        (add a photo or a short video if you want), and click commit. That's it.
-        {% elif upgrade %}
+        {% if upgrade %}
         Someone vouched for your commitment. Replace their record with your own attestation —
         your words, and your face or voice if you like. Yours takes precedence on the wall.
         {% else %}
@@ -101,10 +96,7 @@
     <form method="post" enctype="multipart/form-data" id="commit-form" class="{% if form.mode == 'vouch' %}vouch{% endif %}">
         {% csrf_token %}
         <input type="hidden" name="video_url" id="video_url" value="{{ form.video_url }}">
-        {% if invite_token %}<input type="hidden" name="invite_token" value="{{ invite_token }}">{% endif %}
-        {% if gk_token %}<input type="hidden" name="gk_token" value="{{ gk_token }}">{% endif %}
-
-        {% if not upgrade and not invite %}
+        {% if not upgrade %}
         <div class="mode-row">
             <label><input type="radio" name="mode" value="self" {% if form.mode != 'vouch' %}checked{% endif %}>This is my commitment</label>
             <label><input type="radio" name="mode" value="vouch" {% if form.mode == 'vouch' %}checked{% endif %}>Someone told me theirs</label>
@@ -166,7 +158,7 @@
         </fieldset>
         {% endif %}
 
-        <button type="submit" class="btn btn-gradient" id="submit-btn">{% if invite %}Commit — I'm in{% else %}Record my commitment{% endif %}</button>
+        <button type="submit" class="btn btn-gradient" id="submit-btn">Record my commitment</button>
         <p class="fine">Committing publishes a public attestation (your name, words, and any media)
             to <a href="{{ lt_api }}" target="_blank" rel="noopener">LinkedTrust</a>, lists you on the
             <a href="/earnedgov/#committed">accelerator page</a>, and we may share the news on social

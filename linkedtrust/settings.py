@@ -38,10 +38,16 @@ FORCE_SCRIPT_NAME = config('SCRIPT_NAME', default=None)
 # Point at https://dev.linkedtrust.us when testing so no claims hit live.
 EARNEDGOV_LT_API = config('EARNEDGOV_LT_API', default='https://live.linkedtrust.us')
 
-# GovKit (the accelerator dashboard) — base URL used to validate magic invite
-# tokens and to hand committed invitees into the SSO accept flow. Point at the
-# cohort VM's govkit when it exists; demo meanwhile.
+# GovKit (the accelerator dashboard) — GovKit mints and owns invites; the
+# doorway resolves them server-to-server and hands committed invitees into
+# GovKit's SSO accept flow. Contract: govkit/scratch.md 2026-07-13. Point at
+# the cohort VM's govkit when it exists; demo meanwhile.
 GOVKIT_BASE_URL = config('GOVKIT_BASE_URL', default='https://demos.linkedtrust.us/govkit')
+# Org slug of the accelerator itself inside GovKit (confirmed by Golda 7/13).
+GOVKIT_ORG_SLUG = config('GOVKIT_ORG_SLUG', default='earnedgov')
+# Shared server-to-server secret for the invite API (same env var name on the
+# GovKit side). Production value supplied by Golda; empty disables the client.
+GOVKIT_S2S_TOKEN = config('GOVKIT_S2S_TOKEN', default='')
 # Where the post-commit dashboard button on the wall banner points (optional).
 EARNEDGOV_DASHBOARD_URL = config('EARNEDGOV_DASHBOARD_URL', default='')
 if FORCE_SCRIPT_NAME == '':
@@ -135,6 +141,17 @@ DATABASES = {
         'PORT': config('PG_PORT', default='5432'),
     }
 }
+
+# The shared-VM Postgres user has no CREATEDB, so `manage.py test` cannot make
+# its throwaway test database there. Tests run on sqlite instead (external
+# services are mocked in tests; no PG-specific fields in these models). If
+# cobox is ever granted CREATEDB on VM 100, delete this block.
+import sys
+if sys.argv[1:2] == ['test']:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
