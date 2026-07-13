@@ -217,9 +217,21 @@
             </div>
 
             {% if committed_id %}
-            <div class="max-w-2xl mx-auto mb-10 p-4 bg-brand-50 border border-brand-100 rounded-xl text-center text-slate-700 text-sm">
-                ✓ Your commitment is recorded — <a href="{{ lt_api }}/claims/{{ committed_id }}" target="_blank" rel="noopener" class="text-brand-600 font-bold hover:underline">view your attestation</a>.
-                It may take a minute to appear on the wall.
+            <div class="max-w-2xl mx-auto mb-10 p-6 bg-brand-50 border border-brand-100 rounded-xl text-center text-slate-700 text-sm">
+                {% if pending %}
+                ✓ Thank you — your commitment is recorded
+                (<a href="{{ lt_api }}/claims/{{ committed_id }}" target="_blank" rel="noopener" class="text-brand-600 font-bold hover:underline">your attestation</a>).
+                A human reviews walk-up commitments before they join the wall — usually within a day.
+                {% else %}
+                ✓ You're on the wall — <a href="{{ lt_api }}/claims/{{ committed_id }}" target="_blank" rel="noopener" class="text-brand-600 font-bold hover:underline">view your attestation</a>
+                (it may take a minute to show below).
+                <div class="mt-3 flex flex-wrap gap-3 justify-center">
+                    <button onclick="navigator.clipboard.writeText('https://linkedtrust.us/earnedgov/?committed={{ committed_id }}'); this.textContent='✓ Link copied'" class="px-5 py-2 rounded-full border border-brand-500 text-brand-600 font-bold text-sm">Copy your share link</button>
+                    {% if dashboard_url %}
+                    <a href="{{ dashboard_url }}" class="px-5 py-2 rounded-full bg-brand-600 text-white font-bold text-sm hover:bg-brand-500">Continue with LinkedTrust → your dashboard</a>
+                    {% endif %}
+                </div>
+                {% endif %}
             </div>
             {% endif %}
 

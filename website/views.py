@@ -108,15 +108,35 @@ def earnedgov_view(request):
     The commitment wall is live LinkedTrust claims (see earnedgov_claims.py).
     """
     from . import earnedgov_claims
+    from .models import EarnedgovCommitment
     committed_id = request.GET.get('committed')
     share = None
     if committed_id and committed_id.isdigit():
         share = earnedgov_claims.fetch_claim(committed_id, verbs=(earnedgov_claims.COMMIT_VERB,))
+
+    # Moderation: claims with a ledger row that is not approved stay off the
+    # wall (walk-ups pending review, or explicitly hidden). No row = visible
+    # (grandfathered pre-moderation claims).
+    wall = earnedgov_claims.fetch_commitments()
+    blocked = set(
+        EarnedgovCommitment.objects.exclude(status='approved')
+        .values_list('claim_id', flat=True)
+    )
+    if blocked and wall.get('groups'):
+        groups = []
+        for g in wall['groups']:
+            members = [m for m in g['members'] if m['id'] not in blocked]
+            if members:
+                groups.append({**g, 'members': members})
+        wall = {**wall, 'groups': groups}
+
     context = {
-        'wall': earnedgov_claims.fetch_commitments(),
+        'wall': wall,
         'committed_id': committed_id,
         'share': share,
         'lt_api': earnedgov_claims.LT_API,
+        'dashboard_url': getattr(settings, 'EARNEDGOV_DASHBOARD_URL', ''),
+        'pending': request.GET.get('pending'),
     }
     return render(request, 'earnedgov.html', context)
 
@@ -130,6 +150,13 @@ def earnedgov_commit_view(request):
     person can replace it with their own self-attested (step-up) version.
     """
     from . import earnedgov_claims
+    from . import earnedgov_invites
+    from .models import EarnedgovCommitment
+
+    invite = None
+    invite_token = (request.GET.get('invite') or request.POST.get('invite_token') or '').strip()
+    if invite_token:
+        invite = earnedgov_invites.read_invite(invite_token)
 
     upgrade = None
     upgrade_id = request.GET.get('upgrade')
@@ -153,6 +180,14 @@ def earnedgov_commit_view(request):
             'link': upgrade.get('subject_uri') or '',
             'role': upgrade.get('role') or 'supporter',
             'statement': upgrade.get('statement') or '',
+        })
+    elif invite and request.method != 'POST':
+        role = invite['role'] if invite['role'] in earnedgov_claims.ROLES else 'supporter'
+        form.update({
+            'name': invite['name'],
+            'link': invite['link'],
+            'role': role,
+            'statement': earnedgov_invites.ROLE_STATEMENTS.get(role, ''),
         })
     elif adopt:
         verb = 'Adopting' if adopt.get('adoptable', True) else 'Joining'
@@ -214,7 +249,21 @@ def earnedgov_commit_view(request):
                     photo_file=request.FILES.get('photo'),
                     video_url=video_url or None,
                 )
-                return redirect(f"/earnedgov/?committed={claim.get('id', '')}#committed")
+                cid = claim.get('id')
+                if cid:
+                    EarnedgovCommitment.objects.get_or_create(
+                        claim_id=cid,
+                        defaults={
+                            'status': 'approved' if invite else 'pending',
+                            'invited': bool(invite),
+                            'inviter': (invite or {}).get('inviter', ''),
+                            'person_name': name,
+                            'role': role,
+                        },
+                    )
+                if invite:
+                    return redirect(f"/earnedgov/?committed={cid}#committed")
+                return redirect(f"/earnedgov/?committed={cid}&pending=1#committed")
             except ValueError as e:
                 errors.append(str(e))
             except Exception:
@@ -226,8 +275,37 @@ def earnedgov_commit_view(request):
         'errors': errors,
         'upgrade': upgrade,
         'adopt': adopt,
+        'invite': invite,
+        'invite_token': invite_token if invite else '',
         'roles': earnedgov_claims.ROLES,
         'lt_api': earnedgov_claims.LT_API,
+    })
+
+
+def earnedgov_invite_new_view(request):
+    """
+    Staff-only: mint a personal invite link. Golda sends it in her own email;
+    the link greets the person by name and one-click prefills their commitment.
+    """
+    from django.contrib.admin.views.decorators import staff_member_required as _smr
+    return _smr(_earnedgov_invite_new)(request)
+
+
+def _earnedgov_invite_new(request):
+    from . import earnedgov_claims, earnedgov_invites
+    link = None
+    form = {'name': '', 'link': '', 'role': 'mentor', 'inviter': 'Golda'}
+    if request.method == 'POST':
+        for k in form:
+            form[k] = (request.POST.get(k) or '').strip()
+        if form['name']:
+            token = earnedgov_invites.make_invite(
+                name=form['name'], link=form['link'],
+                role=form['role'], inviter=form['inviter'] or 'Golda',
+            )
+            link = f"https://linkedtrust.us/earnedgov/commit/?invite={token}"
+    return render(request, 'earnedgov_invite_new.html', {
+        'form': form, 'link': link, 'roles': earnedgov_claims.ROLES,
     })
 
 

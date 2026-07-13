@@ -26,11 +26,12 @@ EFFORT_URIS = {EFFORT_URI, "https://demos.linkedtrust.us/earnedgov"}
 COMMIT_VERB = "COMMITS_TO"
 OPP_VERB = "OPPORTUNITY"
 OPP_KINDS = ["venture", "project", "partnership", "grant", "role"]
-ROLES = ["advisor", "mentor", "partner", "founder", "supporter"]
+ROLES = ["advisor", "mentor", "partner", "funder", "founder", "supporter"]
 ROLE_LABELS = {
     "advisor": "Advisors",
     "mentor": "Mentors",
     "partner": "Partners",
+    "funder": "Funders",
     "founder": "Founders",
     "supporter": "Supporters",
 }

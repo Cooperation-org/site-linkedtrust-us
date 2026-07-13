@@ -223,3 +223,30 @@ class ContactInquiry(models.Model):
 
     def __str__(self):
         return f"{self.email} — {self.get_subject_display()} ({self.created_at:%Y-%m-%d})"
+
+class EarnedgovCommitment(models.Model):
+    """Moderation ledger for the earnedgov wall (the claim content itself
+    lives on LinkedTrust; this only decides visibility).
+
+    Claims with no row here are grandfathered as visible (pre-feature claims).
+    Invited commitments are auto-approved; walk-ups start pending so spammers
+    never reach the wall. 'hidden' also covers the rare "please don't list me".
+    """
+    STATUS_CHOICES = [
+        ('approved', 'Approved (on the wall)'),
+        ('pending', 'Pending review'),
+        ('hidden', 'Hidden'),
+    ]
+    claim_id = models.IntegerField(unique=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+    invited = models.BooleanField(default=False)
+    inviter = models.CharField(max_length=100, blank=True)
+    person_name = models.CharField(max_length=200, blank=True)
+    role = models.CharField(max_length=30, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"claim {self.claim_id} — {self.person_name} ({self.status})"

@@ -170,3 +170,13 @@ admin_site.register(Testimonial, TestimonialAdmin)
 admin_site.register(EcosystemItem, EcosystemItemAdmin)
 admin_site.register(ServicePackage, ServicePackageAdmin)
 admin_site.register(ContactInquiry, ContactInquiryAdmin)
+
+from .models import EarnedgovCommitment
+
+class EarnedgovCommitmentAdmin(admin.ModelAdmin):
+    list_display = ('claim_id', 'person_name', 'role', 'status', 'invited', 'inviter', 'created_at')
+    list_filter = ('status', 'invited', 'role')
+    list_editable = ('status',)
+    search_fields = ('person_name',)
+
+admin_site.register(EarnedgovCommitment, EarnedgovCommitmentAdmin)
