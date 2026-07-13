@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Earned Governance Accelerator — Accountable Organizations That Outcompete</title>
-    <meta name="description" content="Software has evolved rapidly but the corporate form has not. Earned governance and transparency not permission lets startups move fast, with trust and accountability. Battle-tested.">
+    <title>Earned Governance Accelerator | Call for Mentors</title>
+    <meta name="description" content="LinkedTrust is launching an Alpha Cohort of the Earned Governance Accelerator — a 4-week sprint where teams build startups whose daily work converts into verifiable equity and voting weight.">
 
     <meta property="og:type" content="website">
     {% if share %}
@@ -17,709 +17,276 @@
     <meta name="twitter:image" content="https://linkedtrust.us/earnedgov/card/{{ share.id }}.png">
     {% else %}
     <meta property="og:title" content="Earned Governance Accelerator">
-    <meta property="og:description" content="Accountable organizations that outcompete. Earned governance and transparency not permission — battle-tested by LinkedTrust.">
+    <meta property="og:description" content="Call for mentors, advisors, and strategic partners. Teams build startups whose daily work converts into verifiable equity and voting weight.">
     {% endif %}
 
-    <!-- Fonts (same as linkedtrust.us) -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="shortcut icon" href="{% static 'img/earnedgov/logo.svg' %}" type="image/svg+xml">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
     <!-- LinkedTrust badge web component -->
     <script src="https://demos.linkedtrust.us/embed/badge.js" defer></script>
 
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            900: '#134e4a',
+                            950: '#042f2e'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* === LinkedTrust Design System === */
-        :root {
-            --bg-primary: #FAFAF8;
-            --bg-white: #FFFFFF;
-            --bg-warm: #FFF8F0;
-            --bg-dark: #0f1117;
-            --bg-dark-card: #1a1d27;
-            --text-primary: #1a1a1a;
-            --text-secondary: #555555;
-            --text-muted: #888888;
-            --text-on-dark: #e8e8e8;
-            --text-on-dark-muted: #888899;
-            --brand-primary: #00B2E5;
-            --brand-dark: #0090b8;
-            --brand-accent: #667eea;
-            --gradient: linear-gradient(135deg, #00B2E5 0%, #667eea 100%);
-            --success: #10B981;
-            --border: #e8e8e6;
-            --border-dark: rgba(255,255,255,0.08);
-            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
-            --radius: 12px;
-            --radius-lg: 16px;
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        a { color: inherit; text-decoration: none; }
-        img { max-width: 100%; display: block; }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 1.75rem;
-            font-weight: 600;
-            font-size: 0.95rem;
-            font-family: inherit;
-            border-radius: 8px;
-            cursor: pointer;
-            border: none;
-            text-decoration: none;
-        }
-        .btn-gradient { background: var(--gradient); color: #fff; }
-        .btn-gradient:hover { opacity: 0.9; }
-        .btn-outline {
-            background: transparent;
-            color: var(--text-primary);
-            border: 2px solid var(--border);
-        }
-        .btn-outline:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
-        .btn-white { background: #fff; color: var(--text-primary); font-weight: 700; }
-        .btn-white:hover { opacity: 0.9; }
-
-        /* Section utilities */
-        .section-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--brand-primary);
-            margin-bottom: 0.5rem;
-        }
-        .section-title {
-            font-size: 2rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 1rem;
-        }
-        .section-subtitle {
-            font-size: 1.05rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            max-width: 700px;
-            margin-bottom: 2.5rem;
-        }
-        .gradient-text {
-            background: var(--gradient);
+        .text-gradient {
+            background: linear-gradient(135deg, #2dd4bf 0%, #0ea5e9 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
-        .gradient-bar { height: 4px; background: var(--gradient); }
-
-
-        /* === HERO === */
-        .hero {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 5rem 2rem 4rem;
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 3rem;
-            align-items: center;
-        }
-        .hero-text h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            line-height: 1.15;
-            letter-spacing: -1px;
-            margin-bottom: 1.5rem;
-        }
-        .hero-text .voice {
-            font-size: 1.15rem;
-            color: var(--text-primary);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-        .hero-text .voice em {
-            font-style: italic;
-            font-weight: 600;
-        }
-        .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .hero-visual {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .hero-visual img {
-            max-width: 340px;
-        }
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--brand-primary);
-            margin-bottom: 1rem;
-        }
-        .hero-badge img {
-            width: 22px;
-            height: 22px;
-        }
-
-
-        /* === THE TENSION === */
-        .tension {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-        .tension-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-        }
-        .tension-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem;
-        }
-        .tension-card h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .tension-card h3 i { color: var(--brand-primary); }
-        .tension-card p {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-        .tension-solution {
-            border-color: var(--brand-primary);
-            border-width: 2px;
-        }
-        .founder-quote {
-            border-left: 4px solid var(--brand-primary);
-            padding: 1.5rem 2rem;
-            background: var(--bg-warm);
-            border-radius: 0 var(--radius) var(--radius) 0;
-            max-width: 800px;
-        }
-        .founder-quote blockquote {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            line-height: 1.7;
-        }
-
-
-        /* === HOW IT WORKS === */
-        .how-it-works {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-        .elements-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.25rem;
-        }
-        .element-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.75rem;
-        }
-        .element-card:hover {
-            border-color: var(--brand-primary);
-            box-shadow: var(--shadow-md);
-        }
-        .element-icon {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            color: var(--brand-primary);
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 178, 229, 0.08);
-            border-radius: 10px;
-        }
-        .element-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .element-card p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
-
-
-        /* === BATTLE TESTED (dark section) === */
-        .battle-tested {
-            background: var(--bg-dark);
-            color: var(--text-on-dark);
-            padding: 5rem 2rem;
-        }
-        .battle-tested-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-        .battle-tested .section-label { color: var(--brand-accent); }
-        .battle-tested .section-title { color: #fff; }
-        .battle-tested p {
-            font-size: 1rem;
-            color: var(--text-on-dark);
-            line-height: 1.7;
-            margin-bottom: 1rem;
-            opacity: 0.85;
-        }
-        .proof-points {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        .proof-point {
-            background: var(--bg-dark-card);
-            border: 1px solid var(--border-dark);
-            border-radius: var(--radius);
-            padding: 1.25rem;
-            flex: 1;
-        }
-        .proof-value {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--brand-primary);
-            margin-bottom: 0.25rem;
-        }
-        .proof-label {
-            font-size: 0.75rem;
-            color: var(--text-on-dark-muted);
-        }
-        .badge-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .badge-stack linked-badge {
-            display: block;
-            border-radius: var(--radius);
-        }
-        .badge-stack linked-badge:not(:defined) {
-            background: var(--bg-dark-card);
-            border-radius: var(--radius);
-            min-height: 120px;
-        }
-
-
-        /* === BETTER FOR EVERYONE === */
-        .better {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-        .better-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.25rem;
-        }
-        .better-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem;
-        }
-        .better-card:hover {
-            border-color: var(--brand-primary);
-            box-shadow: var(--shadow-md);
-        }
-        .better-icon {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            color: var(--brand-primary);
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 178, 229, 0.08);
-            border-radius: 10px;
-        }
-        .better-card h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-        }
-        .better-card p {
-            font-size: 0.88rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-
-        /* === CTA === */
-        .cta-banner {
-            background: var(--gradient);
-            padding: 5rem 2rem;
-            text-align: center;
-            color: #fff;
-        }
-        .cta-banner h2 {
-            font-size: 2.25rem;
-            font-weight: 800;
-            margin-bottom: 0.75rem;
-        }
-        .cta-banner p {
-            color: rgba(255,255,255,0.85);
-            margin-bottom: 0.5rem;
-            font-size: 1.05rem;
-        }
-        .cta-btn-row {
-            margin-top: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .cta-contacts {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            flex-wrap: wrap;
-        }
-        .cta-contact {
-            text-align: center;
-        }
-        .cta-contact .name {
-            font-weight: 700;
-            font-size: 1rem;
-            color: #fff;
-        }
-        .cta-contact .email {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.8);
-        }
-        .cta-contact a { color: #fff; text-decoration: underline; }
-
-
-        /* === FOOTER === */
-        .site-footer {
-            background: var(--bg-primary);
-            border-top: 1px solid var(--border);
-            padding: 2rem 0;
-            text-align: center;
-        }
-        .site-footer p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-        .site-footer a { color: var(--brand-primary); }
-
-
-        /* === RESPONSIVE === */
-        @media (max-width: 768px) {
-            .hero {
-                grid-template-columns: 1fr;
-                padding: 3rem 1.5rem 2rem;
-            }
-            .hero-text h1 { font-size: 2.2rem; }
-            .hero-visual { margin-top: -1rem; }
-            .hero-visual img { max-width: 240px; margin: 0 auto; }
-            .tension { padding: 3rem 1.5rem; }
-            .tension-grid { grid-template-columns: 1fr; }
-            .how-it-works { padding: 3rem 1.5rem; }
-            .elements-grid { grid-template-columns: 1fr; }
-            .battle-tested { padding: 3rem 1.5rem; }
-            .battle-tested-inner { grid-template-columns: 1fr; }
-            .better { padding: 3rem 1.5rem; }
-            .better-grid { grid-template-columns: 1fr; }
-            .cta-banner h2 { font-size: 1.6rem; }
-            .cta-banner { padding: 3rem 1.5rem; }
-            .proof-points { flex-direction: column; }
-        }
-
-        @media (max-width: 480px) {
-            .hero-text h1 { font-size: 1.8rem; }
-            .hero-ctas { flex-direction: column; }
-            .cta-contacts { flex-direction: column; gap: 1.5rem; }
-        }
-        /* === COMMITMENT WALL === */
-        .wall { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
-        .wall-banner {
-            background: var(--bg-warm); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 1rem 1.5rem; margin-bottom: 2rem;
-            font-weight: 600;
-        }
-        .wall-role { margin-top: 2.5rem; }
-        .wall-role h3 {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
-            letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-        .wall-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-        .commit-card {
-            background: var(--bg-white); border: 1px solid var(--border);
-            border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-md);
-            display: flex; flex-direction: column; gap: 0.75rem;
-        }
-        .commit-head { display: flex; align-items: center; gap: 0.9rem; }
-        .commit-head img, .commit-avatar {
-            width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
-        }
-        .commit-avatar {
-            background: var(--gradient); color: #fff; display: flex;
-            align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem;
-        }
-        .commit-name { font-weight: 700; }
-        .commit-name a:hover { color: var(--brand-primary); }
-        .commit-role {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
-            color: var(--brand-dark); text-transform: uppercase; letter-spacing: 1px;
-        }
-        .commit-words { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; white-space: pre-line; }
-        .commit-card video { width: 100%; border-radius: 8px; }
-        .commit-meta {
-            margin-top: auto; display: flex; justify-content: space-between; align-items: center;
-            font-size: 0.78rem; color: var(--text-muted);
-        }
-        .commit-meta a { color: var(--brand-dark); }
-        .commit-meta a:hover { text-decoration: underline; }
-        .commit-stepup { font-size: 0.78rem; }
-        .wall-cta { margin-top: 2.5rem; }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white">
 
-<!-- HERO -->
-<section class="hero">
-    <div class="hero-text">
-        <div class="hero-badge">
-            <img src="{% static 'img/earnedgov/logo.svg' %}" alt="">
-            Powered by LinkedTrust
-        </div>
-        <h1>Earned Governance<br><span class="gradient-text">Accelerator</span></h1>
-        <p class="lead" style="font-size:1.15rem; color:var(--text-secondary); margin-bottom:1.5rem;">Launching startups where builders earn real ownership and governance through the work they do.</p>
-        <div class="voice">
-            <p>We value democracy, but we work in top-down corporations. Software has evolved rapidly but the corporate form has not.</p>
-	    <p style="margin-top:1rem;">Teams with <em>genuine</em> ownership can outcompete archaic, dinosaur-brained traditional top-down corporations. Earned governance and transparency not permission lets startups move fast, with trust and accountability.</p>
-            <p style="margin-top:1rem;">Battle-tested. We built LinkedTrust on this model and created a toolkit that works for scrappy startups. Join us and build a better future.</p>
-        </div>
-        <div class="hero-ctas">
-            <a href="#get-involved" class="btn btn-gradient">Get Involved</a>
-            <a href="#how-it-works" class="btn btn-outline">How It Works</a>
-        </div>
-    </div>
-    <div class="hero-visual">
-        <img src="{% static 'img/earnedgov/team.png' %}" alt="LinkedTrust global team">
-    </div>
-</section>
+    <!-- Decorative Background Blobs -->
+    <div class="fixed top-[-10%] left-[-10%] w-96 h-96 bg-brand-400 rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-pulse-slow z-0 pointer-events-none"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-pulse-slow z-0 pointer-events-none" style="animation-delay: 1.5s;"></div>
 
-<div class="gradient-bar"></div>
+    <!-- Header Section -->
+    <header class="relative z-10 bg-gradient-to-br from-brand-950 via-slate-900 to-brand-900 text-white py-20 px-6 lg:px-12 rounded-b-[2.5rem] shadow-2xl mx-auto max-w-6xl mt-0 lg:mt-6 overflow-hidden">
+        <!-- Abstract Background Pattern -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#2dd4bf 1px, transparent 1px); background-size: 30px 30px;"></div>
 
-<!-- THE TENSION -->
-<section class="tension">
-    <div class="section-label" style="font-family:'JetBrains Mono',monospace;">// the tension</div>
-    <h2 class="section-title">Democracies are losing to anonymous capital</h2>
-    <div class="tension-grid">
-        <div class="tension-card">
-            <h3><i class="fa-solid fa-coins"></i> The Liquidity Problem</h3>
-            <p>Democracy (one person one vote, not transferable) is essentially a completely illiquid currency. Money is the opposite: completely transferable, not trackable, any anonymous agent can use it to purchase control over any resource. Naturally there is a tension between democratic control and anonymous control, and currently the democracies seem to be losing.</p>
-        </div>
-        <div class="tension-card tension-solution">
-            <h3><i class="fa-solid fa-tree"></i> Growing as a Tree, Not a Slime Mold</h3>
-            <p>When there is democratic accountability, people feel safer that their rights are protected, and they can focus on longer term goals than merely survival. These structures allow society to grow as a tree rather than as a slime mold engulfing all in its path. The question is: what kinds of structures give us the accountability of democracy with the vigorous growth that earning allows?</p>
-        </div>
-    </div>
-    <div class="founder-quote">
-        <blockquote>Builders and creators deserve ownership. Earned governance through peer-reviewed task tracking means the hardest workers gain more share, without hard feelings. Teams can grow rapidly.</blockquote>
-    </div>
-</section>
+        <div class="max-w-4xl mx-auto text-center relative z-20 flex flex-col items-center">
+            <div class="w-24 h-24 mb-6 rounded-full shadow-lg border-2 border-brand-400/30 overflow-hidden flex items-center justify-center bg-white">
+                <img src="{% static 'img/earnedgov/logo.svg' %}" alt="LinkedTrust" class="w-full h-full">
+            </div>
 
-<!-- HOW IT WORKS -->
-<section class="how-it-works" id="how-it-works">
-    <div class="section-label" style="font-family:'JetBrains Mono',monospace;">// earned governance</div>
-    <h2 class="section-title">How it works</h2>
-    <p class="section-subtitle">Transparency-not-Permission allows leaders to drive ahead while maintaining team trust. Inclusive, fast and battle-tested shared decision making.</p>
-    <div class="elements-grid">
-        <div class="element-card">
-            <div class="element-icon"><i class="fa-solid fa-link"></i></div>
-            <h3>Task-to-Token Equity</h3>
-            <p>Granular earning of governance and equity means the hardest workers gain more share, without hard feelings. Teams can grow rapidly. All work, including mentor meetings, is tracked for equity.</p>
+            <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-brand-100 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-6 shadow-inner">
+                <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
+                Alpha Cohort • Fall 2026
+            </div>
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight">
+                The <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-cyan-300">Earned Governance</span><br /> Accelerator
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-300 font-light max-w-2xl mx-auto">
+                Call for Mentors, Advisors, and Strategic Partners
+            </p>
+            <a href="#committed" class="mt-8 inline-flex items-center gap-2 text-brand-100 border border-white/20 bg-white/5 hover:bg-white/10 px-6 py-3 rounded-full text-sm font-bold transition-colors">
+                See who's committed <i class="fa-solid fa-arrow-down"></i>
+            </a>
         </div>
-        <div class="element-card">
-            <div class="element-icon"><i class="fa-solid fa-eye"></i></div>
-            <h3>Transparency Not Permission</h3>
-            <p>Leaders drive ahead while maintaining team trust. Visibility into decisions and resource allocation is as powerful as voting, without the delay.</p>
-        </div>
-        <div class="element-card">
-            <div class="element-icon"><i class="fa-solid fa-person-booth"></i></div>
-            <h3>Earned Leadership</h3>
-            <p>CEO elected by ranked-choice, work-weighted vote. Profits spent by proposals to rotating steering committee with work-weighted random selection. Contribution-based governance prevents takeover.</p>
-        </div>
-        <div class="element-card">
-            <div class="element-icon"><i class="fa-solid fa-scale-balanced"></i></div>
-            <h3>Legal Equity From Day One</h3>
-            <p>Real ownership via Fairmint or Slicing Pie legal instruments, not vague promises. The accelerator invests via stipends and receives shares through the Rolling SAFE.</p>
-        </div>
-        <div class="element-card">
-            <div class="element-icon"><i class="fa-solid fa-globe"></i></div>
-            <h3>Global, Diverse Teams</h3>
-            <p>Teams are encouraged to recruit globally and stay open to adding members. Built for distributed, async collaboration. Focus on markets with high talent and low capital access where earned equity is a competitive advantage.</p>
-        </div>
-        <div class="element-card">
-            <div class="element-icon"><i class="fa-solid fa-brain"></i></div>
-            <h3>AI-Accelerated Building</h3>
-            <p>Proof of concept is now hours not days or weeks. Integrated task tracker and AI-aligned shared dev environment, credited on the equity table as an in-kind contribution.</p>
-        </div>
-    </div>
-</section>
+    </header>
 
-<div class="gradient-bar"></div>
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-5xl mx-auto px-6 py-16">
 
-<!-- BATTLE TESTED -->
-<section class="battle-tested">
-    <div class="battle-tested-inner">
-        <div>
-            <div class="section-label">// battle-tested</div>
-            <h2 class="section-title">LinkedTrust: Company Zero</h2>
-            <p>We didn't just design this model. We built a company on it. What's Cookin' Inc, DBA LinkedTrust, is a United States Public Benefit Corporation with a global team where all members share equity.</p>
-            <p>Our bylaws require that governance is earned and our CEO is elected by ranked-choice, work-weighted vote. We use transparency-not-permission to stay fast while keeping trust high.</p>
-            <p>Now we're ready to spread this DNA, launching multiple social enterprises with the same principles through an accelerator program.</p>
-            <div class="proof-points">
-                <div class="proof-point">
-                    <div class="proof-value">Elected CEO</div>
-                    <div class="proof-label">Ranked-choice, work-weighted vote</div>
+        <!-- Top Section: What & Why -->
+        <div class="grid md:grid-cols-2 gap-8 mb-16">
+
+            <!-- What We Are Doing -->
+            <div class="glass-card p-8 rounded-3xl shadow-xl shadow-slate-200/50 hover:-translate-y-2 transition-all duration-300 group">
+                <div class="w-14 h-14 bg-gradient-to-br from-brand-100 to-brand-50 text-brand-600 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <i class="fa-solid fa-rocket"></i>
                 </div>
-                <div class="proof-point">
-                    <div class="proof-value">Global Team</div>
-                    <div class="proof-label">All share equity via Rolling SAFE</div>
+                <h2 class="text-2xl font-bold mb-4 text-slate-900">What We Are Doing</h2>
+                <p class="text-slate-600 leading-relaxed">
+                    LinkedTrust is launching an Alpha Cohort of the Earned Governance Accelerator. We are bringing together technical teams for an intensive <strong>4-week sprint</strong> to build their startups using a radically fairer model.
+                </p>
+                <div class="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Instead of waiting for incorporation or giving away early control, teams use our custom AI-assisted toolkit. As participants complete peer-reviewed tasks, the system automatically converts their daily work into verifiable equity and voting weight.
+                    </p>
                 </div>
-                <div class="proof-point">
-                    <div class="proof-value">PBC</div>
-                    <div class="proof-label">Public Benefit Corporation</div>
+            </div>
+
+            <!-- Why It Matters -->
+            <div class="glass-card p-8 rounded-3xl shadow-xl shadow-slate-200/50 hover:-translate-y-2 transition-all duration-300 group">
+                <div class="w-14 h-14 bg-gradient-to-br from-blue-100 to-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <i class="fa-solid fa-earth-americas"></i>
+                </div>
+                <h2 class="text-2xl font-bold mb-4 text-slate-900">Why It Matters</h2>
+                <p class="text-slate-600 leading-relaxed">
+                    In the era of AI, the problem posed to workers is one of resource control. Mainstream accelerators concentrate ownership in the hands of a few founders and investors.
+                </p>
+                <div class="mt-4 p-4 bg-brand-50/50 rounded-xl border border-brand-100/50">
+                    <p class="text-slate-700 text-sm leading-relaxed font-medium">
+                        We are proving that shared-governance, worker-owned startups can bootstrap, compete, and sustain themselves. You are helping to pioneer a model where the people doing the work actually own the future they build.
+                    </p>
                 </div>
             </div>
         </div>
-        <div class="badge-stack">
-            <linked-badge claim-id="124471" layout="row" theme="dark"></linked-badge>
-            <linked-badge claim-id="124470" layout="row" theme="dark"></linked-badge>
-            <linked-badge claim-id="124461" layout="row" theme="dark"></linked-badge>
-        </div>
-    </div>
-</section>
 
-<!-- BETTER FOR EVERYONE -->
-<section class="better">
-    <div class="section-label" style="font-family:'JetBrains Mono',monospace;">// better for everyone</div>
-    <h2 class="section-title">Why partner with us</h2>
-    <p class="section-subtitle">Most accelerators give you a check and a mentor. We give you an Operating System.</p>
-    <div class="better-grid">
-        <div class="better-card">
-            <div class="better-icon"><i class="fa-solid fa-rocket"></i></div>
-            <h3>For Founders</h3>
-            <p>We provide the legal structure and the work-tracking engine so you can recruit the best people in the world today and pay them in real ownership, not just promises. Fair, fast, and legally sound from day one.</p>
-        </div>
-        <div class="better-card">
-            <div class="better-icon"><i class="fa-solid fa-chart-line"></i></div>
-            <h3>For Partners &amp; Funders</h3>
-            <p>Back a model where every shareholder earned their stake. Full transparency via verified contribution history. No dead equity, no silent founders. Aligned teams that ship.</p>
-        </div>
-        <div class="better-card">
-            <div class="better-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-            <h3>For Universities</h3>
-            <p>Turn student internships into actual ownership stakes. Graduates leave with equity in real companies, solving the "unpaid labor" ethical dilemma.</p>
-        </div>
-    </div>
-</section>
+        <!-- The Ask Section -->
+        <div class="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-2xl shadow-slate-200/60 border border-slate-100 relative overflow-hidden mb-16">
+            <!-- Decorative Glow inside the card -->
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-50 rounded-full mix-blend-multiply filter blur-[80px] opacity-60 transform translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
 
-<div class="gradient-bar"></div>
+            <div class="text-center mb-12 relative z-10">
+                <h2 class="text-4xl font-extrabold text-slate-900 mb-4">The Ask: How You Can Help</h2>
+                <p class="text-slate-500">Join us in actively reshaping the startup ecosystem.</p>
+            </div>
 
-<!-- COMMITMENT WALL — live LinkedTrust attestations -->
-<section class="wall" id="committed">
-    <div class="section-label">// who's committed</div>
-    <h2 class="section-title">People are stepping up</h2>
-    <p class="section-subtitle">Every card below is a verifiable attestation on LinkedTrust — a real commitment by a real person, in their own words. This wall grows as the accelerator assembles.</p>
-
-    {% if committed_id %}
-    <div class="wall-banner">
-        ✓ Your commitment is recorded — <a href="{{ lt_api }}/claims/{{ committed_id }}" target="_blank" rel="noopener" style="color:var(--brand-dark);">view your attestation</a>.
-        It may take a minute to appear on the wall.
-    </div>
-    {% endif %}
-
-    {% for group in wall.groups %}
-    <div class="wall-role">
-        <h3>{{ group.label }}</h3>
-        <div class="wall-grid">
-            {% for m in group.members %}
-            <div class="commit-card">
-                <div class="commit-head">
-                    {% if m.image %}<img src="{{ m.image }}" alt="{{ m.name }}" loading="lazy">
-                    {% else %}<div class="commit-avatar">{{ m.name|first|upper }}</div>{% endif %}
-                    <div>
-                        <div class="commit-name"><a href="{{ m.subject_uri }}" target="_blank" rel="noopener">{{ m.name }}</a></div>
-                        <div class="commit-role">{{ m.role }}</div>
+            <div class="grid md:grid-cols-3 gap-6 relative z-10">
+                <!-- Mentors -->
+                <div class="p-8 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:border-brand-200 transition-all duration-300 group">
+                    <div class="w-12 h-12 bg-slate-50 text-brand-500 rounded-full flex items-center justify-center text-xl mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fa-solid fa-user-tie"></i>
                     </div>
+                    <h3 class="font-bold text-xl text-slate-900 mb-3">Mentors</h3>
+                    <p class="text-sm text-slate-600 mb-6 leading-relaxed">Experienced founders or strategists to help our technical teams achieve Product-Market Fit.</p>
+                    <ul class="text-sm text-slate-500 space-y-3 font-medium">
+                        <li class="flex items-center gap-3"><i class="fa-regular fa-clock text-brand-400"></i> 1-2 hours/week</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-chart-pie text-brand-400"></i> Earn startup equity</li>
+                    </ul>
                 </div>
-                {% if m.video %}<video controls preload="metadata" src="{{ m.video }}"></video>{% endif %}
-                {% if m.statement %}<div class="commit-words">{{ m.statement }}</div>{% endif %}
-                <div class="commit-meta">
-                    <span>{% if m.self_attested %}Self-attested{% else %}Vouched{% endif %}{% if m.date %} · {{ m.date }}{% endif %}</span>
-                    <a href="{{ m.claim_url }}" target="_blank" rel="noopener">View attestation ↗</a>
+
+                <!-- Funders -->
+                <div class="p-8 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:border-blue-200 transition-all duration-300 group">
+                    <div class="w-12 h-12 bg-slate-50 text-blue-500 rounded-full flex items-center justify-center text-xl mb-6 group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900 mb-3">Funders</h3>
+                    <p class="text-sm text-slate-600 mb-6 leading-relaxed">Sponsor stipends allowing marginalized and displaced workers to participate without financial ruin.</p>
+                    <ul class="text-sm text-slate-500 space-y-3 font-medium">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-arrow-trend-up text-blue-400"></i> High social impact</li>
+                        <li class="flex items-center gap-3"><i class="fa-regular fa-handshake text-blue-400"></i> Philanthropic alignment</li>
+                    </ul>
                 </div>
-                {% if not m.self_attested %}
-                <div class="commit-stepup"><a href="/earnedgov/commit/?upgrade={{ m.id }}" style="color:var(--brand-dark);">Is this you? Say it in your own words →</a></div>
-                {% endif %}
+
+                <!-- Network -->
+                <div class="p-8 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:border-purple-200 transition-all duration-300 group">
+                    <div class="w-12 h-12 bg-slate-50 text-purple-500 rounded-full flex items-center justify-center text-xl mb-6 group-hover:bg-purple-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fa-solid fa-share-nodes"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900 mb-3">Network</h3>
+                    <p class="text-sm text-slate-600 mb-6 leading-relaxed">Forward this to technical teams or cooperative advocates who should be part of this movement.</p>
+                    <ul class="text-sm text-slate-500 space-y-3 font-medium">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-bullhorn text-purple-400"></i> Share the vision</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-users text-purple-400"></i> Expand the community</li>
+                    </ul>
+                </div>
             </div>
+        </div>
+
+        <!-- Battle-tested: live LinkedTrust claims -->
+        <div class="bg-gradient-to-br from-brand-950 via-slate-900 to-brand-900 text-white p-8 md:p-12 rounded-[2.5rem] shadow-2xl mb-16 relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#2dd4bf 1px, transparent 1px); background-size: 30px 30px;"></div>
+            <div class="relative z-10">
+                <h2 class="text-3xl font-extrabold mb-3">Battle-tested by LinkedTrust</h2>
+                <p class="text-slate-300 mb-8">We run on this model ourselves — a global team sharing equity as a Public Benefit Corporation. These are live, verifiable claims.</p>
+                <div class="flex flex-col gap-4 max-w-2xl">
+                    <linked-badge claim-id="124471" layout="row" theme="dark"></linked-badge>
+                    <linked-badge claim-id="124470" layout="row" theme="dark"></linked-badge>
+                    <linked-badge claim-id="124461" layout="row" theme="dark"></linked-badge>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMMITMENT WALL — live LinkedTrust attestations -->
+        <section id="committed" class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-extrabold text-slate-900 mb-4">People are stepping up</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">Every card below is a verifiable attestation on LinkedTrust — a real commitment by a real person, in their own words. This wall grows as the accelerator assembles.</p>
+            </div>
+
+            {% if committed_id %}
+            <div class="max-w-2xl mx-auto mb-10 p-4 bg-brand-50 border border-brand-100 rounded-xl text-center text-slate-700 text-sm">
+                ✓ Your commitment is recorded — <a href="{{ lt_api }}/claims/{{ committed_id }}" target="_blank" rel="noopener" class="text-brand-600 font-bold hover:underline">view your attestation</a>.
+                It may take a minute to appear on the wall.
+            </div>
+            {% endif %}
+
+            {% for group in wall.groups %}
+            <div class="mb-12">
+                <h3 class="text-sm font-bold uppercase tracking-widest text-brand-600 mb-6">{{ group.label }}</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for m in group.members %}
+                    <div class="glass-card p-6 rounded-2xl shadow-lg shadow-slate-200/50 flex flex-col gap-4">
+                        <div class="flex items-center gap-3">
+                            {% if m.image %}<img src="{{ m.image }}" alt="{{ m.name }}" loading="lazy" class="w-12 h-12 rounded-full object-cover">
+                            {% else %}<div class="w-12 h-12 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-lg">{{ m.name|first|upper }}</div>{% endif %}
+                            <div>
+                                <div class="font-bold text-slate-900"><a href="{{ m.subject_uri }}" target="_blank" rel="noopener" class="hover:text-brand-600 transition-colors">{{ m.name }}</a></div>
+                                <div class="text-sm text-slate-500">{{ m.role }}</div>
+                            </div>
+                        </div>
+                        {% if m.video %}<video controls preload="metadata" src="{{ m.video }}" class="w-full rounded-xl"></video>{% endif %}
+                        {% if m.statement %}<div class="text-sm text-slate-600 leading-relaxed">{{ m.statement }}</div>{% endif %}
+                        <div class="mt-auto flex items-center justify-between gap-2 text-xs text-slate-400 font-medium">
+                            <span>{% if m.self_attested %}Self-attested{% else %}Vouched{% endif %}{% if m.date %} · {{ m.date }}{% endif %}</span>
+                            <a href="{{ m.claim_url }}" target="_blank" rel="noopener" class="text-brand-500 hover:text-brand-600 whitespace-nowrap">View attestation ↗</a>
+                        </div>
+                        {% if not m.self_attested %}
+                        <div class="text-xs"><a href="/earnedgov/commit/?upgrade={{ m.id }}" class="text-brand-600 font-bold hover:underline">Is this you? Say it in your own words →</a></div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center text-slate-500 mb-8">Be the first on this wall.</p>
             {% endfor %}
-        </div>
-    </div>
-    {% empty %}
-    <p class="section-subtitle" style="margin-bottom:0;">Be the first on this wall.</p>
-    {% endfor %}
 
-    <div class="wall-cta">
-        <a href="/earnedgov/commit/" class="btn btn-gradient">Add your commitment</a>
-        <a href="/earnedgov/opportunities/" class="btn btn-outline" style="margin-left:0.75rem;">Adoptable opportunities →</a>
-    </div>
-</section>
+            <div class="text-center flex items-center justify-center gap-4 flex-wrap">
+                <a href="/earnedgov/commit/" class="inline-flex items-center justify-center px-8 py-4 font-bold text-white bg-brand-600 rounded-full hover:bg-brand-500 hover:shadow-[0_0_40px_rgba(20,184,166,0.4)] hover:-translate-y-1 transition-all duration-300">Add your commitment</a>
+                <a href="/earnedgov/opportunities/" class="inline-flex items-center justify-center px-8 py-4 font-bold text-brand-600 border-2 border-brand-500 rounded-full hover:bg-brand-50 transition-colors duration-300">Adoptable opportunities →</a>
+            </div>
+        </section>
 
-<div class="gradient-bar"></div>
+        <!-- Call to Action -->
+        <div class="text-center pb-12 pt-4">
+            <h2 class="text-3xl font-extrabold mb-8 text-slate-900">Ready to shape the next generation?</h2>
 
-<!-- CTA -->
-<section class="cta-banner" id="get-involved">
-    <h2>Builders and creators deserve ownership</h2>
-    <p>We're assembling the board, advisors, and partners to launch this accelerator.</p>
-    <p>If you believe accountable organizations can outcompete the dinosaurs, let's build this together.</p>
-    <div class="cta-btn-row">
-        <a href="mailto:golda@linkedtrust.us" class="btn btn-white">Get in Touch</a>
-    </div>
-    <div class="cta-contacts">
-        <div class="cta-contact">
-            <div class="name">Bianca Momand</div>
-        </div>
-        <div class="cta-contact">
-            <div class="name">Golda Velez</div>
-            <div class="email"><a href="mailto:golda@linkedtrust.us">golda@linkedtrust.us</a></div>
-        </div>
-        <div class="cta-contact">
-            <div class="name">Gitonga Miriam Njeri</div>
-            <div class="email"><a href="mailto:gitonga@linkedtrust.us">gitonga@linkedtrust.us</a></div>
-        </div>
-    </div>
-</section>
+            <a href="https://docs.google.com/forms/d/1HFRKlCnsnR0B_QAwSkYZ34mJVMq1Z3pol7WsB_QilrY/viewform" target="_blank" class="relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-white transition-all duration-300 bg-brand-600 rounded-full hover:bg-brand-500 hover:shadow-[0_0_40px_rgba(20,184,166,0.4)] hover:-translate-y-1 overflow-hidden group">
+                <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
+                <span class="relative flex items-center gap-3">
+                    Apply as a Mentor / Partner
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-2 transition-transform duration-300"></i>
+                </span>
+            </a>
 
-<!-- FOOTER -->
-<footer class="site-footer">
-    <p>&copy; 2026 What's Cookin' Inc DBA <a href="https://linkedtrust.us">LinkedTrust</a> &middot; United States Public Benefit Corporation</p>
-</footer>
+            <div class="mt-8 flex items-center justify-center gap-4 text-sm text-slate-400 font-medium">
+                <span>Built by</span>
+                <div class="h-8 w-8 rounded-full border border-slate-200 shadow-sm overflow-hidden flex items-center justify-center bg-white">
+                    <img src="{% static 'img/earnedgov/logo.svg' %}" alt="LinkedTrust" class="w-full h-full">
+                </div>
+                <a href="https://linkedtrust.us" target="_blank" class="hover:text-brand-500 transition-colors">LinkedTrust.us</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="relative z-10 text-center text-xs text-slate-400 pb-8">
+        <p>&copy; 2026 What's Cookin' Inc DBA <a href="https://linkedtrust.us" class="hover:text-brand-500">LinkedTrust</a> &middot; United States Public Benefit Corporation</p>
+    </footer>
 
 </body>
 </html>
