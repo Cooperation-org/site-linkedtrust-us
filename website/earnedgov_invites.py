@@ -45,3 +45,33 @@ ROLE_STATEMENTS = {
     "founder": "I'm committing to build in the Earned Governance Accelerator cohort.",
     "supporter": "I support the Earned Governance Accelerator.",
 }
+
+
+# ---------------------------------------------------------------------------
+# GovKit magic tokens (the cohort's one-token flow). The dashboard (GovKit)
+# mints them; we can't verify their signature (different secret), so we
+# validate by asking GovKit's public resolve endpoint. A valid resolution
+# carries the preload AND proves the token is genuine.
+# ---------------------------------------------------------------------------
+import requests as _requests
+from django.conf import settings as _settings
+
+
+def resolve_govkit_token(token):
+    """Return {name, link, image_url, role, org_slug, org_name, tier} or None."""
+    base = getattr(_settings, "GOVKIT_BASE_URL", "")
+    if not base or not token:
+        return None
+    try:
+        r = _requests.get(f"{base}/invite/resolve/", params={"token": token}, timeout=6)
+        if r.status_code != 200:
+            return None
+        data = r.json()
+        return data if data.get("org_slug") else None
+    except Exception:
+        return None
+
+
+def govkit_accept_url(token):
+    base = getattr(_settings, "GOVKIT_BASE_URL", "")
+    return f"{base}/invite/accept/?token={token}" if base else ""

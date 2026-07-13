@@ -37,6 +37,13 @@ FORCE_SCRIPT_NAME = config('SCRIPT_NAME', default=None)
 # LinkedTrust claims API used by the earnedgov commitment wall/invite pages.
 # Point at https://dev.linkedtrust.us when testing so no claims hit live.
 EARNEDGOV_LT_API = config('EARNEDGOV_LT_API', default='https://live.linkedtrust.us')
+
+# GovKit (the accelerator dashboard) — base URL used to validate magic invite
+# tokens and to hand committed invitees into the SSO accept flow. Point at the
+# cohort VM's govkit when it exists; demo meanwhile.
+GOVKIT_BASE_URL = config('GOVKIT_BASE_URL', default='https://demos.linkedtrust.us/govkit')
+# Where the post-commit dashboard button on the wall banner points (optional).
+EARNEDGOV_DASHBOARD_URL = config('EARNEDGOV_DASHBOARD_URL', default='')
 if FORCE_SCRIPT_NAME == '':
     FORCE_SCRIPT_NAME = None
 

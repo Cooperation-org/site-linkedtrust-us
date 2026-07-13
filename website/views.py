@@ -158,6 +158,20 @@ def earnedgov_commit_view(request):
     if invite_token:
         invite = earnedgov_invites.read_invite(invite_token)
 
+    # GovKit magic token (the cohort one-token flow): validated by asking the
+    # dashboard's public resolve endpoint. After commit we 302 the person
+    # straight into GovKit's SSO accept flow — commit, then boom, dashboard.
+    gk_token = (request.GET.get('gk') or request.POST.get('gk_token') or '').strip()
+    gk = earnedgov_invites.resolve_govkit_token(gk_token) if gk_token else None
+    if gk and not invite:
+        invite = {
+            'name': gk.get('name') or '',
+            'link': gk.get('link') or '',
+            'role': gk.get('role') if gk.get('role') in earnedgov_claims.ROLES else 'founder',
+            'inviter': gk.get('org_name') or 'the team',
+            'email': '',
+        }
+
     upgrade = None
     upgrade_id = request.GET.get('upgrade')
     if upgrade_id and upgrade_id.isdigit():
@@ -261,6 +275,8 @@ def earnedgov_commit_view(request):
                             'role': role,
                         },
                     )
+                if gk and gk_token:
+                    return redirect(earnedgov_invites.govkit_accept_url(gk_token))
                 if invite:
                     return redirect(f"/earnedgov/?committed={cid}#committed")
                 return redirect(f"/earnedgov/?committed={cid}&pending=1#committed")
@@ -276,7 +292,8 @@ def earnedgov_commit_view(request):
         'upgrade': upgrade,
         'adopt': adopt,
         'invite': invite,
-        'invite_token': invite_token if invite else '',
+        'invite_token': invite_token if (invite and not gk) else '',
+        'gk_token': gk_token if gk else '',
         'roles': earnedgov_claims.ROLES,
         'lt_api': earnedgov_claims.LT_API,
     })

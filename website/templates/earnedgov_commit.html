@@ -102,6 +102,7 @@
         {% csrf_token %}
         <input type="hidden" name="video_url" id="video_url" value="{{ form.video_url }}">
         {% if invite_token %}<input type="hidden" name="invite_token" value="{{ invite_token }}">{% endif %}
+        {% if gk_token %}<input type="hidden" name="gk_token" value="{{ gk_token }}">{% endif %}
 
         {% if not upgrade and not invite %}
         <div class="mode-row">
