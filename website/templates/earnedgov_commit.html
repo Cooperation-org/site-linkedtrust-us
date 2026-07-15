@@ -69,8 +69,8 @@
         Someone vouched for you. Replace their record with your own attestation:
         your words, and your face or voice if you like. Yours takes precedence on the wall.
         {% else %}
-        Your declaration becomes a <strong>verifiable attestation on LinkedTrust</strong>:
-        your words, attributable and permanent, shown on the accelerator page.
+        Your words go up as a <strong>signed public statement on LinkedTrust</strong>
+        and you go on the cohort page.
         {% endif %}
     </p>
 
@@ -121,7 +121,7 @@
         </fieldset>
         <fieldset>
             <label>In {% if upgrade %}your{% else %}their/your{% endif %} own words</label>
-            <textarea name="statement" required placeholder="What are you doing with the accelerator, and why does it matter to you?">{{ form.statement }}</textarea>
+            <textarea name="statement" required placeholder="What are you doing with the accelerator, and why?">{{ form.statement }}</textarea>
         </fieldset>
 
         <fieldset class="vouch-only">
@@ -158,12 +158,11 @@
         </fieldset>
         {% endif %}
 
-        <button type="submit" class="btn btn-gradient" id="submit-btn">Count me in</button>
-        <p class="fine">This publishes your declaration of intent as a public attestation (your name, words, and any media)
-            to <a href="{{ lt_api }}" target="_blank" rel="noopener">LinkedTrust</a>, lists you on the
-            <a href="{% url 'earnedgov' %}#committed">accelerator page</a>, and we'd love to share the news on social
-            media, and <strong>we'll check with you first</strong>. Prefer not to be listed?
-            <a href="mailto:golda@linkedtrust.us">Tell us</a> and we'll keep it quiet.</p>
+        <button type="submit" class="btn btn-gradient" id="submit-btn">I'm in</button>
+        <p class="fine">Your words go up as a signed public statement on
+            <a href="{{ lt_api }}" target="_blank" rel="noopener">LinkedTrust</a> and you go on the
+            <a href="{% url 'earnedgov' %}#committed">cohort page</a>. We like to make noise when good people
+            join. We check with you before posting anywhere else. Change your mind later and it comes down.</p>
     </form>
 </div>
 

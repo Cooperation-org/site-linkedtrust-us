@@ -206,7 +206,7 @@ def earnedgov_commit_view(request):
         if not name:
             errors.append("Please give the person's name.")
         if not statement:
-            errors.append("Your declaration needs words. Write what was actually said.")
+            errors.append("It needs words. Write what was actually said.")
         if link and not link.startswith(('http://', 'https://')):
             link = 'https://' + link
         if not link:
@@ -263,7 +263,7 @@ def earnedgov_commit_view(request):
                 errors.append(str(e))
             except Exception:
                 logger.exception("earnedgov: claim creation failed")
-                errors.append("Could not reach LinkedTrust to record your declaration. Please try again in a minute.")
+                errors.append("Could not reach LinkedTrust. Please try again in a minute.")
 
     return render(request, 'earnedgov_commit.html', {
         'form': form,
@@ -342,7 +342,7 @@ def earnedgov_invite_view(request, code):
         if not name:
             errors.append("Please give your name.")
         if not statement:
-            errors.append("Your declaration needs words. A sentence is plenty.")
+            errors.append("It needs words. A sentence is plenty.")
         if link and not link.startswith(('http://', 'https://')):
             link = 'https://' + link
         if not link:
@@ -382,18 +382,17 @@ def earnedgov_invite_view(request, code):
                 errors.append(str(e))
             except Exception:
                 logger.exception("earnedgov: invited claim creation failed")
-                errors.append("Could not reach LinkedTrust to record your declaration. Please try again in a minute.")
+                errors.append("Could not reach LinkedTrust. Please try again in a minute.")
 
     return render(request, 'earnedgov_invite.html', {
         'state': 'form',
         'invite': invite,
         'audience': audience,
-        # Per-audience language (2026-07-15 pin): founders share a launch,
-        # mentors/advisors join, funders back — never "commit".
-        'invite_lede': earnedgov_claims.ROLE_INVITE_LEDES.get(
-            audience, 'Join the Earned Governance Accelerator.'),
+        # Per-audience language (2026-07-15 pin): the headline is the ask.
+        'invite_ask': earnedgov_claims.ROLE_INVITE_ASKS.get(
+            audience, 'Join the first cohort.'),
         'button_label': earnedgov_claims.ROLE_INVITE_BUTTONS.get(
-            audience, 'Count me in'),
+            audience, "I'm in"),
         'form': form,
         'errors': errors,
         'lt_api': lt_api,
@@ -466,7 +465,7 @@ def _render_commit_card(c):
                font=f_quote, fill=(200, 200, 205))
         y += 52
 
-    d.text((70, H - 70), 'linkedtrust.us/earnedgov · a verifiable declaration on LinkedTrust',
+    d.text((70, H - 70), 'linkedtrust.us/earnedgov · signed statement on LinkedTrust',
            font=f_foot, fill=(136, 136, 153))
 
     buf = BytesIO()

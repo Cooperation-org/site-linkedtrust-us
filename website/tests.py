@@ -42,6 +42,10 @@ class FakeResponse:
     def json(self):
         return self._data
 
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise requests.HTTPError(str(self.status_code))
+
 
 @override_settings(**GOVKIT_SETTINGS)
 class GovKitClientTests(TestCase):
@@ -123,8 +127,8 @@ class InvitePageTests(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertContains(r, 'Ada Example, you\'re invited')
         # Per-audience language (2026-07-15 pin): mentors join, nobody "commits".
-        self.assertContains(r, 'Join the Earned Governance Accelerator as a mentor.')
-        self.assertContains(r, 'Join as a mentor')
+        self.assertContains(r, 'Mentor the first cohort.')
+        self.assertContains(r, "I&#x27;m in")
         self.assertContains(r, 'I am committing to mentor teams in the alpha cohort.')
         self.assertContains(r, 'https://linkedin.com/in/ada')
 
@@ -132,8 +136,8 @@ class InvitePageTests(TestCase):
     def test_founder_invite_says_share_my_launch(self, resolve):
         resolve.return_value = {**INVITE, 'audience': 'founder'}
         r = self.client.get(self.URL)
-        self.assertContains(r, 'Share my launch')
-        self.assertContains(r, 'Share your launch in the Earned Governance Accelerator.')
+        self.assertContains(r, 'Post our launch')
+        self.assertContains(r, 'Take your venture through the first cohort.')
 
     @patch('website.earnedgov_govkit.resolve_invite')
     def test_empty_draft_gets_factual_placeholder(self, resolve):
@@ -159,7 +163,7 @@ class InvitePageTests(TestCase):
         resolve.side_effect = GovKitUnavailable()
         r = self.client.get(self.URL)
         self.assertEqual(r.status_code, 503)
-        self.assertContains(r, 'try again in a minute', status_code=503)
+        self.assertContains(r, 'Try again in a minute', status_code=503)
 
     @patch('website.earnedgov_govkit.resolve_invite')
     def test_accepted_shows_dashboard_link(self, resolve):
@@ -173,7 +177,7 @@ class InvitePageTests(TestCase):
         resolve.return_value = {**INVITE, 'status': 'committed', 'committed_claim_id': 777}
         r = self.client.get(self.URL)
         self.assertContains(r, INVITE['accept_url'])
-        self.assertContains(r, 'Continue to your dashboard')
+        self.assertContains(r, 'Go to your dashboard')
         self.assertContains(r, '/earnedgov/?committed=777#committed')
 
     @patch('website.earnedgov_govkit.report_committed')
@@ -249,6 +253,21 @@ class HostRoutingTests(TestCase):
     def test_earnedgov_paths_serve_normally_before_live(self):
         r = self.client.get('/earnedgov/commit/', HTTP_HOST='linkedtrust.us')
         self.assertEqual(r.status_code, 200)
+
+
+class ClaimVerbTests(TestCase):
+    """New claims use per-audience verbs (7/15 pin); COMMITS_TO grandfathered."""
+
+    @patch('website.earnedgov_claims.requests.post')
+    def test_verb_per_audience(self, post):
+        from . import earnedgov_claims as ec
+        post.return_value = FakeResponse(200, {'claim': {'id': 1}})
+        for role, verb in [('mentor', 'JOINS'), ('founder', 'LAUNCHES_IN'),
+                           ('partner', 'PARTNERS_WITH'), ('funder', 'SUPPORTS'),
+                           ('supporter', 'SUPPORTS'), ('advisor', 'JOINS')]:
+            ec.create_commitment(subject_uri='https://x.example', name='X',
+                                 role=role, statement='w', self_attested=True)
+            self.assertEqual(post.call_args[1]['json']['claim'], verb)
 
 
 class WalkUpModerationTests(TestCase):

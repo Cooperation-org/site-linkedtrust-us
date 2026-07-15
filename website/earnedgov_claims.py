@@ -63,20 +63,31 @@ ROLE_CARD_LABELS = {
 # Invite-page language per audience (button + lede). The founder artifact is a
 # launch announcement centering THEIR venture, not the program.
 ROLE_INVITE_BUTTONS = {
-    "advisor": "Join as an advisor",
-    "mentor": "Join as a mentor",
-    "partner": "Partner with us",
-    "funder": "Count me in",
-    "founder": "Share my launch",
-    "supporter": "Count me in",
+    "advisor": "I'm in",
+    "mentor": "I'm in",
+    "partner": "I'm in",
+    "funder": "I'm in",
+    "founder": "Post our launch",
+    "supporter": "I'm in",
 }
-ROLE_INVITE_LEDES = {
-    "advisor": "Join the Earned Governance Accelerator as an advisor.",
-    "mentor": "Join the Earned Governance Accelerator as a mentor.",
-    "partner": "Partner with the Earned Governance Accelerator.",
-    "funder": "Back the Earned Governance Accelerator.",
-    "founder": "Share your launch in the Earned Governance Accelerator.",
-    "supporter": "Support the Earned Governance Accelerator.",
+# The page headline is the ask itself; no inviter names in page copy.
+ROLE_INVITE_ASKS = {
+    "advisor": "Advise the first cohort.",
+    "mentor": "Mentor the first cohort.",
+    "partner": "Partner with the first cohort.",
+    "funder": "Back the first cohort.",
+    "founder": "Take your venture through the first cohort.",
+    "supporter": "Support the first cohort.",
+}
+# Claim verb per audience (confirmed in the 7/15 language pin). COMMITS_TO
+# stays grandfathered on display; new claims use these.
+ROLE_VERBS = {
+    "advisor": "JOINS",
+    "mentor": "JOINS",
+    "partner": "PARTNERS_WITH",
+    "funder": "SUPPORTS",
+    "founder": "LAUNCHES_IN",
+    "supporter": "SUPPORTS",
 }
 _CACHE_KEY = "earnedgov_commitments_v1"
 _TIMEOUT = 8
@@ -372,7 +383,7 @@ def create_commitment(
     """
     payload = {
         "subject": subject_uri,
-        "claim": COMMIT_VERB,
+        "claim": ROLE_VERBS.get(role, COMMIT_VERB),
         "object": EFFORT_URI,
         "statement": statement,
         "aspect": role,
