@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Count me in — Earned Governance Accelerator</title>
-    <meta name="description" content="Join the Earned Governance Accelerator — your declaration becomes a verifiable LinkedTrust attestation, in your own words: text, photo, or video.">
+    <title>Count me in · Earned Governance Accelerator</title>
+    <meta name="description" content="Join the Earned Governance Accelerator. Your declaration becomes a verifiable LinkedTrust attestation, in your own words: text, photo, or video.">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Join the Earned Governance Accelerator">
     <meta property="og:description" content="Say it in your own words. Your declaration becomes a verifiable attestation on LinkedTrust.">
@@ -66,10 +66,10 @@
     <h1>{% if upgrade %}Say it in your own words{% else %}Count me in{% endif %}</h1>
     <p class="lede">
         {% if upgrade %}
-        Someone vouched for you. Replace their record with your own attestation —
+        Someone vouched for you. Replace their record with your own attestation:
         your words, and your face or voice if you like. Yours takes precedence on the wall.
         {% else %}
-        Your declaration becomes a <strong>verifiable attestation on LinkedTrust</strong> —
+        Your declaration becomes a <strong>verifiable attestation on LinkedTrust</strong>:
         your words, attributable and permanent, shown on the accelerator page.
         {% endif %}
     </p>
@@ -82,7 +82,7 @@
     {% if adopt %}
     <div class="upgrade-note">
         You're {% if adopt.adoptable %}adopting{% else %}asking to join{% endif %}:
-        <strong>{{ adopt.name }}</strong> — “{{ adopt.statement|truncatechars:180 }}”
+        <strong>{{ adopt.name }}</strong>: “{{ adopt.statement|truncatechars:180 }}”
         (<a href="{{ lt_api }}/claims/{{ adopt.id }}" target="_blank" rel="noopener">the opportunity</a>).
         {% if adopt.owner %}Owned by {{ adopt.owner }}.{% endif %}
         Your declaration below links you to it.
@@ -106,11 +106,11 @@
         {% endif %}
 
         <fieldset>
-            <label>Name <span class="hint">— of the person committing</span></label>
+            <label>Name <span class="hint">(the person joining)</span></label>
             <input type="text" name="name" required value="{{ form.name }}">
         </fieldset>
         <fieldset>
-            <label>Their link <span class="hint">— LinkedIn, website, or profile (identifies the person)</span></label>
+            <label>Their link <span class="hint">(LinkedIn, website, or profile that identifies the person)</span></label>
             <input type="text" name="link" placeholder="https://linkedin.com/in/…" value="{{ form.link }}">
         </fieldset>
         <fieldset>
@@ -125,20 +125,20 @@
         </fieldset>
 
         <fieldset class="vouch-only">
-            <label>Your name <span class="hint">— you heard this directly; the attestation records that</span></label>
+            <label>Your name <span class="hint">(you heard this directly; the attestation records that)</span></label>
             <input type="text" name="voucher_name" value="{{ form.voucher_name }}">
         </fieldset>
         <fieldset class="vouch-only">
-            <label>Your link <span class="hint">— optional</span></label>
+            <label>Your link <span class="hint">(optional)</span></label>
             <input type="text" name="voucher_link" value="{{ form.voucher_link }}">
         </fieldset>
 
         <fieldset>
-            <label>Photo <span class="hint">— optional, shown on the wall</span></label>
+            <label>Photo <span class="hint">(optional, shown on the wall)</span></label>
             <input type="file" name="photo" accept="image/*">
         </fieldset>
         <fieldset>
-            <label>Video <span class="hint">— optional; say it on camera (up to ~60s)</span></label>
+            <label>Video <span class="hint">(optional: say it on camera, up to a minute)</span></label>
             <div class="media-row">
                 <button type="button" class="btn btn-quiet" id="rec-btn">● Record video</button>
                 <input type="file" id="video-file" accept="video/*" style="display:none">
@@ -162,7 +162,7 @@
         <p class="fine">This publishes your declaration of intent as a public attestation (your name, words, and any media)
             to <a href="{{ lt_api }}" target="_blank" rel="noopener">LinkedTrust</a>, lists you on the
             <a href="{% url 'earnedgov' %}#committed">accelerator page</a>, and we'd love to share the news on social
-            media — <strong>we'll check with you first</strong>. Prefer not to be listed?
+            media, and <strong>we'll check with you first</strong>. Prefer not to be listed?
             <a href="mailto:golda@linkedtrust.us">Tell us</a> and we'll keep it quiet.</p>
     </form>
 </div>
@@ -192,9 +192,9 @@
             .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
             .then(function (d) {
                 urlField.value = d.videoUrl || d.url || '';
-                status.textContent = urlField.value ? '✓ Video attached' : 'Upload failed — try again';
+                status.textContent = urlField.value ? '✓ Video attached' : 'Upload failed. Try again.';
             })
-            .catch(function () { status.textContent = 'Upload failed — you can still submit without video.'; });
+            .catch(function () { status.textContent = 'Upload failed. You can still submit without video.'; });
     }
 
     document.getElementById('upload-video-btn').addEventListener('click', function () { fileInput.click(); });
@@ -223,7 +223,7 @@
             recBtn.textContent = '■ Stop recording';
             status.textContent = 'Recording… click stop when done (keep it under a minute).';
             setTimeout(function () { if (recorder.state === 'recording') recorder.stop(); }, 90000);
-        }).catch(function () { status.textContent = 'Camera unavailable — upload a file instead.'; });
+        }).catch(function () { status.textContent = 'Camera unavailable. Upload a file instead.'; });
     });
 
     form.addEventListener('submit', function () {

@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Opportunities — Earned Governance Accelerator</title>
-    <meta name="description" content="Adoptable opportunities — ventures, projects, partnerships, grants and roles that can become part of the Earned Governance Accelerator cohort.">
+    <title>Opportunities · Earned Governance Accelerator</title>
+    <meta name="description" content="Adoptable opportunities: ventures, projects, partnerships, grants and roles that can become part of the Earned Governance Accelerator cohort.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Adoptable Opportunities — Earned Governance Accelerator">
-    <meta property="og:description" content="Openings that can turn into cohort ventures. Adopt one and it becomes yours to build — with earned ownership from day one.">
+    <meta property="og:title" content="Adoptable Opportunities · Earned Governance Accelerator">
+    <meta property="og:description" content="Openings that can turn into cohort ventures. Adopt one and it becomes yours to build, with earned ownership from day one.">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="{% static 'img/earnedgov/logo.svg' %}" type="image/svg+xml">
     <style>
@@ -73,10 +73,10 @@
     <h1>Adoptable opportunities</h1>
     <p class="lede">Openings that can turn into cohort ventures: ideas seeking founders, partnerships seeking a team,
     grants seeking a builder, roles seeking a person. Each is a public attestation on LinkedTrust.
-    <strong>Adopt one and it becomes yours to build</strong> — with earned ownership from day one.</p>
+    <strong>Adopt one and it becomes yours to build</strong>, with earned ownership from day one.</p>
 
     {% if posted_id %}
-    <div class="banner">✓ Opportunity posted — <a href="{{ lt_api }}/claims/{{ posted_id }}" target="_blank" rel="noopener">view its attestation</a>.</div>
+    <div class="banner">✓ Opportunity posted. <a href="{{ lt_api }}/claims/{{ posted_id }}" target="_blank" rel="noopener">view its attestation</a>.</div>
     {% endif %}
     {% if errors %}<div class="errors">{% for e in errors %}<div>{{ e }}</div>{% endfor %}</div>{% endif %}
 
@@ -103,12 +103,12 @@
             </div>
         </div>
         {% empty %}
-        <p class="empty">No open opportunities posted yet — add the first one below.</p>
+        <p class="empty">No open opportunities posted yet. Add the first one below.</p>
         {% endfor %}
     </div>
 
     <h2>Post an opportunity</h2>
-    <p class="lede" style="margin-bottom:1.25rem;">Know something that should exist — a venture idea, a partnership on the table, a grant that fits, a role that needs a person? Put it where a builder can pick it up.</p>
+    <p class="lede" style="margin-bottom:1.25rem;">Know something that should exist? A venture idea, a partnership on the table, a grant that fits, a role that needs a person. Put it where a builder can pick it up.</p>
     <div class="formwrap">
         <form method="post">
             {% csrf_token %}
@@ -123,49 +123,49 @@
                 </select>
             </fieldset>
             <fieldset>
-                <label>What is it? <span class="hint">— and what would adopting it mean</span></label>
+                <label>What is it? <span class="hint">(and what would adopting it mean)</span></label>
                 <textarea name="statement" required>{{ form.statement }}</textarea>
             </fieldset>
             <fieldset>
-                <label>Link <span class="hint">— optional, if it exists somewhere (doc, site, grant page)</span></label>
+                <label>Link <span class="hint">(optional, if it exists somewhere: doc, site, grant page)</span></label>
                 <input type="text" name="link" value="{{ form.link }}">
             </fieldset>
             <fieldset>
-                <label>Your link <span class="hint">— optional, so adopters know who posted it</span></label>
+                <label>Your link <span class="hint">(optional, so adopters know who posted it)</span></label>
                 <input type="text" name="poster_link" value="{{ form.poster_link }}">
             </fieldset>
             <details class="more" {% if form.owner or form.gate_type or form.valuation %}open{% endif %}>
                 <summary>Ownership, IP, valuation, join gate (if any)</summary>
                 <fieldset>
-                    <label>Owner <span class="hint">— leave blank if this is fully adoptable (no owner)</span></label>
+                    <label>Owner <span class="hint">(leave blank if this is fully adoptable (no owner))</span></label>
                     <input type="text" name="owner" value="{{ form.owner }}" placeholder="Person or org that owns it">
                 </fieldset>
                 <fieldset>
-                    <label>Owner link <span class="hint">— optional</span></label>
+                    <label>Owner link <span class="hint">(optional)</span></label>
                     <input type="text" name="owner_link" value="{{ form.owner_link }}">
                 </fieldset>
                 <fieldset>
-                    <label>Lead <span class="hint">— if someone is already leading it</span></label>
+                    <label>Lead <span class="hint">(if someone is already leading it)</span></label>
                     <input type="text" name="lead" value="{{ form.lead }}">
                 </fieldset>
                 <fieldset>
-                    <label>Existing IP <span class="hint">— what exists already (code, brand, patents, users)</span></label>
+                    <label>Existing IP <span class="hint">(what exists already (code, brand, patents, users))</span></label>
                     <input type="text" name="ip" value="{{ form.ip }}">
                 </fieldset>
                 <fieldset>
-                    <label>Valuation <span class="hint">— USD, if there's an existing team/IP</span></label>
+                    <label>Valuation <span class="hint">(USD, if there's an existing team/IP)</span></label>
                     <input type="text" name="valuation" value="{{ form.valuation }}" placeholder="e.g. 250000">
                 </fieldset>
                 <fieldset>
                     <label>Join gate</label>
                     <select name="gate_type">
-                        <option value="" {% if not form.gate_type %}selected{% endif %}>None — open to join</option>
-                        <option value="purpose" {% if form.gate_type == 'purpose' %}selected{% endif %}>Purpose gate — joiners must share the purpose</option>
-                        <option value="agreement" {% if form.gate_type == 'agreement' %}selected{% endif %}>Agreement gate — joiners must accept terms</option>
+                        <option value="" {% if not form.gate_type %}selected{% endif %}>None: open to join</option>
+                        <option value="purpose" {% if form.gate_type == 'purpose' %}selected{% endif %}>Purpose gate: joiners must share the purpose</option>
+                        <option value="agreement" {% if form.gate_type == 'agreement' %}selected{% endif %}>Agreement gate: joiners must accept terms</option>
                     </select>
                 </fieldset>
                 <fieldset>
-                    <label>Gate terms <span class="hint">— what a joiner must agree to (required if gated)</span></label>
+                    <label>Gate terms <span class="hint">(what a joiner must agree to (required if gated))</span></label>
                     <textarea name="gate_terms" style="min-height:70px;">{{ form.gate_terms }}</textarea>
                 </fieldset>
             </details>

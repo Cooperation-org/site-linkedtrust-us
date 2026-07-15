@@ -206,7 +206,7 @@ def earnedgov_commit_view(request):
         if not name:
             errors.append("Please give the person's name.")
         if not statement:
-            errors.append("Your declaration needs words — what was actually said.")
+            errors.append("Your declaration needs words. Write what was actually said.")
         if link and not link.startswith(('http://', 'https://')):
             link = 'https://' + link
         if not link:
@@ -263,7 +263,7 @@ def earnedgov_commit_view(request):
                 errors.append(str(e))
             except Exception:
                 logger.exception("earnedgov: claim creation failed")
-                errors.append("Could not reach LinkedTrust to record your declaration — please try again in a minute.")
+                errors.append("Could not reach LinkedTrust to record your declaration. Please try again in a minute.")
 
     return render(request, 'earnedgov_commit.html', {
         'form': form,
@@ -342,7 +342,7 @@ def earnedgov_invite_view(request, code):
         if not name:
             errors.append("Please give your name.")
         if not statement:
-            errors.append("Your declaration needs words — say it your way, a sentence is plenty.")
+            errors.append("Your declaration needs words. A sentence is plenty.")
         if link and not link.startswith(('http://', 'https://')):
             link = 'https://' + link
         if not link:
@@ -382,7 +382,7 @@ def earnedgov_invite_view(request, code):
                 errors.append(str(e))
             except Exception:
                 logger.exception("earnedgov: invited claim creation failed")
-                errors.append("Could not reach LinkedTrust to record your declaration — please try again in a minute.")
+                errors.append("Could not reach LinkedTrust to record your declaration. Please try again in a minute.")
 
     return render(request, 'earnedgov_invite.html', {
         'state': 'form',
@@ -466,7 +466,7 @@ def _render_commit_card(c):
                font=f_quote, fill=(200, 200, 205))
         y += 52
 
-    d.text((70, H - 70), 'linkedtrust.us/earnedgov — a verifiable declaration on LinkedTrust',
+    d.text((70, H - 70), 'linkedtrust.us/earnedgov · a verifiable declaration on LinkedTrust',
            font=f_foot, fill=(136, 136, 153))
 
     buf = BytesIO()
@@ -495,7 +495,7 @@ def earnedgov_opps_view(request):
         if not form['title']:
             errors.append("The opportunity needs a short title.")
         if not form['statement']:
-            errors.append("Describe the opportunity — what is it, and what would adopting it mean?")
+            errors.append("Describe the opportunity: what is it, and what would adopting it mean?")
         link = form['link']
         if link and not link.startswith(('http://', 'https://')):
             link = 'https://' + link
@@ -515,7 +515,7 @@ def earnedgov_opps_view(request):
         if form['gate_type'] and form['gate_type'] not in ('purpose', 'agreement'):
             form['gate_type'] = ''
         if form['gate_type'] and not form['gate_terms']:
-            errors.append("A join gate needs its terms — what must a joiner agree to?")
+            errors.append("A join gate needs its terms: what must a joiner agree to?")
         if not errors:
             try:
                 claim = earnedgov_claims.create_opportunity(
@@ -535,7 +535,7 @@ def earnedgov_opps_view(request):
                 return redirect(f"{reverse('earnedgov_opps')}?posted={claim.get('id', '')}")
             except Exception:
                 logger.exception("earnedgov: opportunity creation failed")
-                errors.append("Could not reach LinkedTrust — please try again in a minute.")
+                errors.append("Could not reach LinkedTrust. Please try again in a minute.")
 
     return render(request, 'earnedgov_opps.html', {
         'board': earnedgov_claims.fetch_opportunities(),
