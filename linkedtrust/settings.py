@@ -16,9 +16,18 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-h-sr3w1qhe3pbbgl34lz)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['linkedtrust.us', 'www.linkedtrust.us', 'demos.linkedtrust.us', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['linkedtrust.us', 'www.linkedtrust.us', 'demos.linkedtrust.us', '127.0.0.1', 'localhost',
+                 'workers.vc', 'www.workers.vc']
 
-CSRF_TRUSTED_ORIGINS = ['https://linkedtrust.us', 'https://demos.linkedtrust.us']
+CSRF_TRUSTED_ORIGINS = ['https://linkedtrust.us', 'https://demos.linkedtrust.us',
+                        'https://workers.vc', 'https://www.workers.vc']
+
+# workers.vc is the accelerator's own public surface (board: domain rev 3).
+# Requests on these hosts get the accelerator urlconf (landing at the root).
+ACCELERATOR_HOSTS = ['workers.vc', 'www.workers.vc']
+# Flip on (env) once workers.vc DNS + routing are live: linkedtrust.us/earnedgov/*
+# then 301s to the workers.vc equivalents. Off = both surfaces serve normally.
+WORKERSVC_LIVE = config('WORKERSVC_LIVE', default=False, cast=bool)
 
 # Google Search Console site-verification token (public; rendered in <head>).
 # Override or blank out per environment via the GSC_VERIFICATION env var.
@@ -38,10 +47,16 @@ FORCE_SCRIPT_NAME = config('SCRIPT_NAME', default=None)
 # Point at https://dev.linkedtrust.us when testing so no claims hit live.
 EARNEDGOV_LT_API = config('EARNEDGOV_LT_API', default='https://live.linkedtrust.us')
 
-# GovKit (the accelerator dashboard) — base URL used to validate magic invite
-# tokens and to hand committed invitees into the SSO accept flow. Point at the
-# cohort VM's govkit when it exists; demo meanwhile.
+# GovKit (the accelerator dashboard) — GovKit mints and owns invites; the
+# doorway resolves them server-to-server and hands committed invitees into
+# GovKit's SSO accept flow. Contract: govkit/scratch.md 2026-07-13. Point at
+# the cohort VM's govkit when it exists; demo meanwhile.
 GOVKIT_BASE_URL = config('GOVKIT_BASE_URL', default='https://demos.linkedtrust.us/govkit')
+# Org slug of the accelerator itself inside GovKit (confirmed by Golda 7/13).
+GOVKIT_ORG_SLUG = config('GOVKIT_ORG_SLUG', default='earnedgov')
+# Shared server-to-server secret for the invite API (same env var name on the
+# GovKit side). Production value supplied by Golda; empty disables the client.
+GOVKIT_S2S_TOKEN = config('GOVKIT_S2S_TOKEN', default='')
 # Where the post-commit dashboard button on the wall banner points (optional).
 EARNEDGOV_DASHBOARD_URL = config('EARNEDGOV_DASHBOARD_URL', default='')
 if FORCE_SCRIPT_NAME == '':
@@ -74,6 +89,8 @@ MIDDLEWARE = [
     # Runs last on the response path → stamps CSP / Link / nosniff headers on
     # every response, including static files served by WhiteNoise below.
     'website.middleware.SecurityHeadersMiddleware',
+    # Host-aware routing: workers.vc serves the accelerator at its root.
+    'website.middleware.HostRoutingMiddleware',
     'website.middleware.MarkdownNegotiationMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -135,6 +152,17 @@ DATABASES = {
         'PORT': config('PG_PORT', default='5432'),
     }
 }
+
+# The shared-VM Postgres user has no CREATEDB, so `manage.py test` cannot make
+# its throwaway test database there. Tests run on sqlite instead (external
+# services are mocked in tests; no PG-specific fields in these models). If
+# cobox is ever granted CREATEDB on VM 100, delete this block.
+import sys
+if sys.argv[1:2] == ['test']:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [

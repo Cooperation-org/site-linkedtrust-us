@@ -8,13 +8,13 @@
 
     <meta property="og:type" content="website">
     {% if share %}
-    <meta property="og:title" content="{{ share.name }} committed as {{ share.role }} — Earned Governance Accelerator">
+    <meta property="og:title" content="{{ share.name }} {{ share_phrase }}">
     <meta property="og:description" content="{{ share.statement|truncatechars:180 }}">
-    <meta property="og:image" content="https://linkedtrust.us/earnedgov/card/{{ share.id }}.png">
+    <meta property="og:image" content="{{ card_url }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://linkedtrust.us/earnedgov/card/{{ share.id }}.png">
+    <meta name="twitter:image" content="{{ card_url }}">
     {% else %}
     <meta property="og:title" content="Earned Governance Accelerator">
     <meta property="og:description" content="Call for mentors, advisors, and strategic partners. Teams build startups whose daily work converts into verifiable equity and voting weight.">
@@ -99,7 +99,7 @@
                 Call for Mentors, Advisors, and Strategic Partners
             </p>
             <a href="#committed" class="mt-8 inline-flex items-center gap-2 text-brand-100 border border-white/20 bg-white/5 hover:bg-white/10 px-6 py-3 rounded-full text-sm font-bold transition-colors">
-                See who's committed <i class="fa-solid fa-arrow-down"></i>
+                See who's in <i class="fa-solid fa-arrow-down"></i>
             </a>
         </div>
     </header>
@@ -212,21 +212,21 @@
         <!-- COMMITMENT WALL — live LinkedTrust attestations -->
         <section id="committed" class="mb-16">
             <div class="text-center mb-12">
-                <h2 class="text-4xl font-extrabold text-slate-900 mb-4">People are stepping up</h2>
-                <p class="text-slate-500 max-w-2xl mx-auto">Every card below is a verifiable attestation on LinkedTrust — a real commitment by a real person, in their own words. This wall grows as the accelerator assembles.</p>
+                <h2 class="text-4xl font-extrabold text-slate-900 mb-4">Who's in</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">The cohort is assembling. Every card below is a verifiable attestation on LinkedTrust — a real person, in their own words.</p>
             </div>
 
             {% if committed_id %}
             <div class="max-w-2xl mx-auto mb-10 p-6 bg-brand-50 border border-brand-100 rounded-xl text-center text-slate-700 text-sm">
                 {% if pending %}
-                ✓ Thank you — your commitment is recorded
+                ✓ Thank you — your declaration is recorded
                 (<a href="{{ lt_api }}/claims/{{ committed_id }}" target="_blank" rel="noopener" class="text-brand-600 font-bold hover:underline">your attestation</a>).
-                A human reviews walk-up commitments before they join the wall — usually within a day.
+                A human takes a quick look before new declarations join the wall — usually within a day.
                 {% else %}
                 ✓ You're on the wall — <a href="{{ lt_api }}/claims/{{ committed_id }}" target="_blank" rel="noopener" class="text-brand-600 font-bold hover:underline">view your attestation</a>
                 (it may take a minute to show below).
                 <div class="mt-3 flex flex-wrap gap-3 justify-center">
-                    <button onclick="navigator.clipboard.writeText('https://linkedtrust.us/earnedgov/?committed={{ committed_id }}'); this.textContent='✓ Link copied'" class="px-5 py-2 rounded-full border border-brand-500 text-brand-600 font-bold text-sm">Copy your share link</button>
+                    <button onclick="navigator.clipboard.writeText('{{ share_link|escapejs }}'); this.textContent='✓ Link copied'" class="px-5 py-2 rounded-full border border-brand-500 text-brand-600 font-bold text-sm">Copy your share link</button>
                     {% if dashboard_url %}
                     <a href="{{ dashboard_url }}" class="px-5 py-2 rounded-full bg-brand-600 text-white font-bold text-sm hover:bg-brand-500">Continue with LinkedTrust → your dashboard</a>
                     {% endif %}
@@ -256,7 +256,7 @@
                             <a href="{{ m.claim_url }}" target="_blank" rel="noopener" class="text-brand-500 hover:text-brand-600 whitespace-nowrap">View attestation ↗</a>
                         </div>
                         {% if not m.self_attested %}
-                        <div class="text-xs"><a href="/earnedgov/commit/?upgrade={{ m.id }}" class="text-brand-600 font-bold hover:underline">Is this you? Say it in your own words →</a></div>
+                        <div class="text-xs"><a href="{% url 'earnedgov_commit' %}?upgrade={{ m.id }}" class="text-brand-600 font-bold hover:underline">Is this you? Say it in your own words →</a></div>
                         {% endif %}
                     </div>
                     {% endfor %}
@@ -267,8 +267,8 @@
             {% endfor %}
 
             <div class="text-center flex items-center justify-center gap-4 flex-wrap">
-                <a href="/earnedgov/commit/" class="inline-flex items-center justify-center px-8 py-4 font-bold text-white bg-brand-600 rounded-full hover:bg-brand-500 hover:shadow-[0_0_40px_rgba(20,184,166,0.4)] hover:-translate-y-1 transition-all duration-300">Add your commitment</a>
-                <a href="/earnedgov/opportunities/" class="inline-flex items-center justify-center px-8 py-4 font-bold text-brand-600 border-2 border-brand-500 rounded-full hover:bg-brand-50 transition-colors duration-300">Adoptable opportunities →</a>
+                <a href="{% url 'earnedgov_commit' %}" class="inline-flex items-center justify-center px-8 py-4 font-bold text-white bg-brand-600 rounded-full hover:bg-brand-500 hover:shadow-[0_0_40px_rgba(20,184,166,0.4)] hover:-translate-y-1 transition-all duration-300">Count me in</a>
+                <a href="{% url 'earnedgov_opps' %}" class="inline-flex items-center justify-center px-8 py-4 font-bold text-brand-600 border-2 border-brand-500 rounded-full hover:bg-brand-50 transition-colors duration-300">Adoptable opportunities →</a>
             </div>
         </section>
 

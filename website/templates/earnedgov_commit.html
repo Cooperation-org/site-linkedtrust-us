@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Commit — Earned Governance Accelerator</title>
-    <meta name="description" content="Add your commitment to the Earned Governance Accelerator as a verifiable LinkedTrust attestation, in your own words — text, photo, or video.">
+    <title>Count me in — Earned Governance Accelerator</title>
+    <meta name="description" content="Join the Earned Governance Accelerator — your declaration becomes a verifiable LinkedTrust attestation, in your own words: text, photo, or video.">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Join the Earned Governance Accelerator">
-    <meta property="og:description" content="Say it in your own words. Your commitment becomes a verifiable attestation on LinkedTrust.">
+    <meta property="og:description" content="Say it in your own words. Your declaration becomes a verifiable attestation on LinkedTrust.">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="{% static 'img/earnedgov/logo.svg' %}" type="image/svg+xml">
     <style>
@@ -62,20 +62,15 @@
 </head>
 <body>
 <div class="page">
-    <div class="crumb">// <a href="/earnedgov/#committed">earned governance accelerator</a></div>
-    <h1>{% if invite %}{{ invite.name }}, you're invited{% elif upgrade %}Say it in your own words{% else %}Add your commitment{% endif %}</h1>
+    <div class="crumb">// <a href="{% url 'earnedgov' %}#committed">earned governance accelerator</a></div>
+    <h1>{% if upgrade %}Say it in your own words{% else %}Count me in{% endif %}</h1>
     <p class="lede">
-        {% if invite %}
-        <strong>{{ invite.inviter }}</strong> invited you to join the Earned Governance
-        Accelerator as {% if invite.role == 'advisor' %}an{% else %}a{% endif %} <strong>{{ invite.role }}</strong>.
-        Everything below is prefilled — check it, make the words yours if you like
-        (add a photo or a short video if you want), and click commit. That's it.
-        {% elif upgrade %}
-        Someone vouched for your commitment. Replace their record with your own attestation —
+        {% if upgrade %}
+        Someone vouched for you. Replace their record with your own attestation —
         your words, and your face or voice if you like. Yours takes precedence on the wall.
         {% else %}
-        Your commitment becomes a <strong>verifiable attestation on LinkedTrust</strong> —
-        your words, attributable and permanent, shown on the accelerator wall.
+        Your declaration becomes a <strong>verifiable attestation on LinkedTrust</strong> —
+        your words, attributable and permanent, shown on the accelerator page.
         {% endif %}
     </p>
 
@@ -90,7 +85,7 @@
         <strong>{{ adopt.name }}</strong> — “{{ adopt.statement|truncatechars:180 }}”
         (<a href="{{ lt_api }}/claims/{{ adopt.id }}" target="_blank" rel="noopener">the opportunity</a>).
         {% if adopt.owner %}Owned by {{ adopt.owner }}.{% endif %}
-        Your commitment below links you to it.
+        Your declaration below links you to it.
     </div>
     {% endif %}
 
@@ -101,13 +96,10 @@
     <form method="post" enctype="multipart/form-data" id="commit-form" class="{% if form.mode == 'vouch' %}vouch{% endif %}">
         {% csrf_token %}
         <input type="hidden" name="video_url" id="video_url" value="{{ form.video_url }}">
-        {% if invite_token %}<input type="hidden" name="invite_token" value="{{ invite_token }}">{% endif %}
-        {% if gk_token %}<input type="hidden" name="gk_token" value="{{ gk_token }}">{% endif %}
-
-        {% if not upgrade and not invite %}
+        {% if not upgrade %}
         <div class="mode-row">
-            <label><input type="radio" name="mode" value="self" {% if form.mode != 'vouch' %}checked{% endif %}>This is my commitment</label>
-            <label><input type="radio" name="mode" value="vouch" {% if form.mode == 'vouch' %}checked{% endif %}>Someone told me theirs</label>
+            <label><input type="radio" name="mode" value="self" {% if form.mode != 'vouch' %}checked{% endif %}>This is me</label>
+            <label><input type="radio" name="mode" value="vouch" {% if form.mode == 'vouch' %}checked{% endif %}>I'm vouching for someone</label>
         </div>
         {% else %}
         <input type="hidden" name="mode" value="self">
@@ -128,8 +120,8 @@
             </select>
         </fieldset>
         <fieldset>
-            <label>The commitment, in {% if upgrade %}your{% else %}their/your{% endif %} own words</label>
-            <textarea name="statement" required placeholder="What are you committing to, and why does this matter to you?">{{ form.statement }}</textarea>
+            <label>In {% if upgrade %}your{% else %}their/your{% endif %} own words</label>
+            <textarea name="statement" required placeholder="What are you doing with the accelerator, and why does it matter to you?">{{ form.statement }}</textarea>
         </fieldset>
 
         <fieldset class="vouch-only">
@@ -166,11 +158,11 @@
         </fieldset>
         {% endif %}
 
-        <button type="submit" class="btn btn-gradient" id="submit-btn">{% if invite %}Commit — I'm in{% else %}Record my commitment{% endif %}</button>
-        <p class="fine">Committing publishes a public attestation (your name, words, and any media)
+        <button type="submit" class="btn btn-gradient" id="submit-btn">Count me in</button>
+        <p class="fine">This publishes your declaration of intent as a public attestation (your name, words, and any media)
             to <a href="{{ lt_api }}" target="_blank" rel="noopener">LinkedTrust</a>, lists you on the
-            <a href="/earnedgov/#committed">accelerator page</a>, and we may share the news on social
-            media — <strong>we'll check with you before posting</strong>. Prefer not to be listed?
+            <a href="{% url 'earnedgov' %}#committed">accelerator page</a>, and we'd love to share the news on social
+            media — <strong>we'll check with you first</strong>. Prefer not to be listed?
             <a href="mailto:golda@linkedtrust.us">Tell us</a> and we'll keep it quiet.</p>
     </form>
 </div>
@@ -195,7 +187,7 @@
     function uploadVideo(blob, name) {
         status.textContent = 'Uploading video…';
         var fd = new FormData();
-        fd.append('video', blob, name || 'commitment.webm');
+        fd.append('video', blob, name || 'declaration.webm');
         fetch(LT + '/api/video/upload', { method: 'POST', body: fd })
             .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
             .then(function (d) {

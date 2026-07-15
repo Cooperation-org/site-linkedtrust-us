@@ -30,7 +30,9 @@ urlpatterns = [
     path('earnedgov/commit/', earnedgov_commit_view, name='earnedgov_commit'),
     path('earnedgov/opportunities/', earnedgov_opps_view, name='earnedgov_opps'),
     path('earnedgov/card/<int:claim_id>.png', earnedgov_card_view, name='earnedgov_card'),
-    path('earnedgov/invite/new/', earnedgov_invite_new_view, name='earnedgov_invite_new'),
+    # Magic invite links minted by GovKit (the accelerator dashboard) —
+    # personalized one-click commit, then SSO into the dashboard.
+    path('earnedgov/i/<slug:code>/', earnedgov_invite_view, name='earnedgov_invite'),
 
     # Core pages
     path('about/', about_view, name='about'),

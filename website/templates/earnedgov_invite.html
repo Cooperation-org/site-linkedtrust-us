@@ -1,0 +1,220 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>You're invited — Earned Governance Accelerator</title>
+    <meta name="robots" content="noindex">
+    <link rel="shortcut icon" href="{% static 'img/earnedgov/logo.svg' %}" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brand: {
+            50: '#f0fdfa', 100: '#ccfbf1', 400: '#2dd4bf', 500: '#14b8a6',
+            600: '#0d9488', 900: '#134e4a', 950: '#042f2e'
+        } } } } }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        #video-preview { display:none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white min-h-screen">
+
+    <div class="fixed top-[-10%] left-[-10%] w-96 h-96 bg-brand-400 rounded-full mix-blend-multiply filter blur-[128px] opacity-20 z-0 pointer-events-none"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-[128px] opacity-20 z-0 pointer-events-none"></div>
+
+    <main class="relative z-10 max-w-xl mx-auto px-6 py-12">
+
+        <a href="{% url 'earnedgov' %}" class="inline-flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-brand-600 transition-colors mb-6">
+            <span class="w-6 h-6 rounded-full overflow-hidden bg-white border border-slate-200 inline-flex items-center justify-center">
+                <img src="{% static 'img/earnedgov/logo.svg' %}" alt="" class="w-full h-full">
+            </span>
+            Earned Governance Accelerator
+        </a>
+
+        {% if state == 'unavailable' %}
+        <div class="bg-white p-10 rounded-3xl shadow-xl border border-slate-100 text-center">
+            <h1 class="text-2xl font-extrabold text-slate-900 mb-3">One moment…</h1>
+            <p class="text-slate-600 mb-6">We can't reach the accelerator right now to look up your
+                invitation. Nothing is wrong with your link — please try again in a minute.</p>
+            <a href="" class="inline-flex px-8 py-3 font-bold text-white bg-brand-600 rounded-full hover:bg-brand-500 transition-colors">Try again</a>
+        </div>
+
+        {% elif state == 'invalid' %}
+        <div class="bg-white p-10 rounded-3xl shadow-xl border border-slate-100 text-center">
+            <h1 class="text-2xl font-extrabold text-slate-900 mb-3">This invitation link isn't valid</h1>
+            <p class="text-slate-600 mb-6">It may have expired or been superseded. If you were expecting
+                an invitation, write to <a href="mailto:golda@linkedtrust.us" class="text-brand-600 font-bold hover:underline">golda@linkedtrust.us</a>
+                and we'll send a fresh one.</p>
+            <a href="{% url 'earnedgov' %}" class="inline-flex px-8 py-3 font-bold text-brand-600 border-2 border-brand-500 rounded-full hover:bg-brand-50 transition-colors">About the accelerator</a>
+        </div>
+
+        {% elif state == 'accepted' %}
+        <div class="bg-white p-10 rounded-3xl shadow-xl border border-slate-100 text-center">
+            <h1 class="text-2xl font-extrabold text-slate-900 mb-3">You're already in{% if invite.name %}, {{ invite.name }}{% endif %}</h1>
+            <p class="text-slate-600 mb-6">This invitation has been used — you're a member of the accelerator.</p>
+            {% if dashboard_url %}
+            <a href="{{ dashboard_url }}" class="inline-flex px-8 py-3 font-bold text-white bg-brand-600 rounded-full hover:bg-brand-500 transition-colors">Go to your dashboard →</a>
+            {% endif %}
+        </div>
+
+        {% elif state == 'committed' %}
+        <div class="bg-gradient-to-br from-brand-950 via-slate-900 to-brand-900 text-white p-10 rounded-3xl shadow-2xl text-center relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#2dd4bf 1px, transparent 1px); background-size: 30px 30px;"></div>
+            <div class="relative z-10">
+                <div class="text-5xl mb-4">✓</div>
+                <h1 class="text-3xl font-extrabold mb-3">You're on the wall{% if invite.name %}, {{ invite.name }}{% endif %}</h1>
+                <p class="text-slate-300 mb-8">Your declaration is live on the accelerator page as a
+                    verifiable attestation. One more click and you're inside.</p>
+                {% if accept_url %}
+                <a href="{{ accept_url }}" class="inline-flex px-10 py-4 text-lg font-bold text-white bg-brand-600 rounded-full hover:bg-brand-500 hover:shadow-[0_0_40px_rgba(20,184,166,0.4)] transition-all">Continue to your dashboard →</a>
+                <p class="text-xs text-slate-400 mt-3">Sign in with LinkedTrust — your membership is waiting.</p>
+                {% endif %}
+                <div class="mt-8 flex items-center justify-center gap-6 text-sm">
+                    {% if claim_id %}
+                    <a href="{% url 'earnedgov' %}?committed={{ claim_id }}#committed" class="text-brand-100 hover:text-white underline underline-offset-4">See yourself on the wall</a>
+                    <a href="{{ lt_api }}/claims/{{ claim_id }}" target="_blank" rel="noopener" class="text-brand-100 hover:text-white underline underline-offset-4">Your attestation</a>
+                    {% endif %}
+                </div>
+                <p class="text-xs text-slate-400 mt-8">You're listed on the accelerator page, and we'd love to
+                    share the news on social media — we'll check with you first. Prefer it quiet?
+                    <a href="mailto:golda@linkedtrust.us" class="underline">Tell us.</a></p>
+            </div>
+        </div>
+
+        {% else %}
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+            <div class="bg-gradient-to-br from-brand-950 via-slate-900 to-brand-900 text-white px-8 py-10 text-center relative overflow-hidden">
+                <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#2dd4bf 1px, transparent 1px); background-size: 30px 30px;"></div>
+                <div class="relative z-10 flex flex-col items-center">
+                    {% if invite.image_url %}
+                    <img src="{{ invite.image_url }}" alt="" class="w-20 h-20 rounded-full object-cover border-2 border-brand-400/40 shadow-lg mb-4">
+                    {% elif invite.name %}
+                    <div class="w-20 h-20 rounded-full bg-brand-500 text-white flex items-center justify-center font-extrabold text-3xl border-2 border-brand-400/40 shadow-lg mb-4">{{ invite.name|first|upper }}</div>
+                    {% endif %}
+                    <h1 class="text-3xl font-extrabold mb-2">{% if invite.name %}{{ invite.name }}, you're{% else %}You're{% endif %} invited</h1>
+                    <p class="text-slate-300">{{ invite_lede }}</p>
+                </div>
+            </div>
+
+            <form method="post" enctype="multipart/form-data" id="commit-form" class="p-8">
+                {% csrf_token %}
+                <input type="hidden" name="video_url" id="video_url" value="{{ form.video_url }}">
+                <input type="hidden" name="name" value="{{ form.name }}">
+
+                {% if errors %}
+                <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700">
+                    {% for e in errors %}<div>{{ e }}</div>{% endfor %}
+                </div>
+                {% endif %}
+
+                <label class="block font-bold text-sm text-slate-900 mb-2">Your words
+                    <span class="font-normal text-slate-400">— edit them or keep them; they're yours</span></label>
+                <textarea name="statement" required rows="4"
+                    class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent resize-y mb-5">{{ form.statement }}</textarea>
+
+                <label class="block font-bold text-sm text-slate-900 mb-2">Your link
+                    <span class="font-normal text-slate-400">— identifies you (LinkedIn, website…)</span></label>
+                <input type="text" name="link" value="{{ form.link }}"
+                    class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent mb-5">
+
+                <details class="mb-6 group">
+                    <summary class="cursor-pointer text-sm font-bold text-brand-600 hover:text-brand-500 select-none">Add a photo or say it on video (optional)</summary>
+                    <div class="mt-4 space-y-4">
+                        {% if not invite.image_url %}
+                        <div>
+                            <label class="block font-bold text-sm text-slate-900 mb-2">Photo <span class="font-normal text-slate-400">— shown on the wall</span></label>
+                            <input type="file" name="photo" accept="image/*" class="text-sm">
+                        </div>
+                        {% endif %}
+                        <div>
+                            <label class="block font-bold text-sm text-slate-900 mb-2">Video <span class="font-normal text-slate-400">— up to ~60s; people love these</span></label>
+                            <div class="flex flex-wrap items-center gap-3">
+                                <button type="button" id="rec-btn" class="px-4 py-2 text-sm font-bold border border-slate-200 rounded-full hover:border-brand-500 transition-colors">● Record video</button>
+                                <input type="file" id="video-file" accept="video/*" class="hidden">
+                                <button type="button" id="upload-video-btn" class="px-4 py-2 text-sm font-bold border border-slate-200 rounded-full hover:border-brand-500 transition-colors">Upload a file</button>
+                                <span id="video-status" class="text-xs text-slate-400"></span>
+                            </div>
+                            <video id="video-preview" controls class="w-full rounded-xl mt-3"></video>
+                        </div>
+                    </div>
+                </details>
+
+                <button type="submit" id="submit-btn"
+                    class="w-full py-4 text-lg font-bold text-white bg-brand-600 rounded-full hover:bg-brand-500 hover:shadow-[0_0_40px_rgba(20,184,166,0.4)] transition-all">
+                    {{ button_label }}
+                </button>
+
+                <p class="text-xs text-slate-400 mt-5 leading-relaxed">This publishes your declaration of intent as a
+                    public attestation (your name, words, and any media) on <a href="{{ lt_api }}" target="_blank" rel="noopener" class="underline">LinkedTrust</a>
+                    and lists you on the <a href="{% url 'earnedgov' %}#committed" class="underline">accelerator page</a>.
+                    We'd love to share the news on social media — <strong>we'll check with you first</strong>.
+                    Prefer it quiet? <a href="mailto:golda@linkedtrust.us" class="underline">Tell us</a>.</p>
+            </form>
+        </div>
+        {% endif %}
+
+    </main>
+
+    {% if state == 'form' %}
+    <script>
+    (function () {
+        var LT = '{{ lt_api|escapejs }}';
+        var status = document.getElementById('video-status');
+        var preview = document.getElementById('video-preview');
+        var urlField = document.getElementById('video_url');
+        var recBtn = document.getElementById('rec-btn');
+        var fileInput = document.getElementById('video-file');
+        var recorder = null, chunks = [], stream = null;
+
+        function uploadVideo(blob, name) {
+            status.textContent = 'Uploading video…';
+            var fd = new FormData();
+            fd.append('video', blob, name || 'declaration.webm');
+            fetch(LT + '/api/video/upload', { method: 'POST', body: fd })
+                .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+                .then(function (d) {
+                    urlField.value = d.videoUrl || d.url || '';
+                    status.textContent = urlField.value ? '✓ Video attached' : 'Upload failed — try again';
+                })
+                .catch(function () { status.textContent = 'Upload failed — you can still send it without video.'; });
+        }
+
+        document.getElementById('upload-video-btn').addEventListener('click', function () { fileInput.click(); });
+        fileInput.addEventListener('change', function () {
+            if (!this.files.length) return;
+            preview.src = URL.createObjectURL(this.files[0]);
+            preview.style.display = 'block';
+            uploadVideo(this.files[0], this.files[0].name);
+        });
+
+        recBtn.addEventListener('click', function () {
+            if (recorder && recorder.state === 'recording') { recorder.stop(); return; }
+            navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(function (s) {
+                stream = s; chunks = [];
+                recorder = new MediaRecorder(s);
+                recorder.ondataavailable = function (e) { if (e.data.size) chunks.push(e.data); };
+                recorder.onstop = function () {
+                    stream.getTracks().forEach(function (t) { t.stop(); });
+                    var blob = new Blob(chunks, { type: 'video/webm' });
+                    preview.src = URL.createObjectURL(blob);
+                    preview.style.display = 'block';
+                    recBtn.textContent = '● Record again';
+                    uploadVideo(blob);
+                };
+                recorder.start();
+                recBtn.textContent = '■ Stop recording';
+                status.textContent = 'Recording… click stop when done (keep it under a minute).';
+                setTimeout(function () { if (recorder.state === 'recording') recorder.stop(); }, 90000);
+            }).catch(function () { status.textContent = 'Camera unavailable — upload a file instead.'; });
+        });
+
+        document.getElementById('commit-form').addEventListener('submit', function () {
+            document.getElementById('submit-btn').disabled = true;
+        });
+    })();
+    </script>
+    {% endif %}
+</body>
+</html>

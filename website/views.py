@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.utils.text import slugify
 from django.http import JsonResponse
 from django.core.mail import EmailMessage
@@ -112,7 +113,7 @@ def earnedgov_view(request):
     committed_id = request.GET.get('committed')
     share = None
     if committed_id and committed_id.isdigit():
-        share = earnedgov_claims.fetch_claim(committed_id, verbs=(earnedgov_claims.COMMIT_VERB,))
+        share = earnedgov_claims.fetch_claim(committed_id, verbs=earnedgov_claims.WALL_VERBS)
 
     # Moderation: claims with a ledger row that is not approved stay off the
     # wall (walk-ups pending review, or explicitly hidden). No row = visible
@@ -134,6 +135,15 @@ def earnedgov_view(request):
         'wall': wall,
         'committed_id': committed_id,
         'share': share,
+        # "<Name> joined … as a mentor" — never "committed as" (language pin).
+        'share_phrase': earnedgov_claims.ROLE_PHRASES.get(
+            (share or {}).get('role'), 'is in the Earned Governance Accelerator'),
+        # Absolute URLs built from the request so they follow the serving host
+        # (linkedtrust.us/earnedgov today, workers.vc root when DNS lands).
+        'card_url': request.build_absolute_uri(
+            reverse('earnedgov_card', kwargs={'claim_id': share['id']})) if share else '',
+        'share_link': request.build_absolute_uri(
+            f"{reverse('earnedgov')}?committed={committed_id}") if committed_id else '',
         'lt_api': earnedgov_claims.LT_API,
         'dashboard_url': getattr(settings, 'EARNEDGOV_DASHBOARD_URL', ''),
         'pending': request.GET.get('pending'),
@@ -150,32 +160,12 @@ def earnedgov_commit_view(request):
     person can replace it with their own self-attested (step-up) version.
     """
     from . import earnedgov_claims
-    from . import earnedgov_invites
     from .models import EarnedgovCommitment
-
-    invite = None
-    invite_token = (request.GET.get('invite') or request.POST.get('invite_token') or '').strip()
-    if invite_token:
-        invite = earnedgov_invites.read_invite(invite_token)
-
-    # GovKit magic token (the cohort one-token flow): validated by asking the
-    # dashboard's public resolve endpoint. After commit we 302 the person
-    # straight into GovKit's SSO accept flow — commit, then boom, dashboard.
-    gk_token = (request.GET.get('gk') or request.POST.get('gk_token') or '').strip()
-    gk = earnedgov_invites.resolve_govkit_token(gk_token) if gk_token else None
-    if gk and not invite:
-        invite = {
-            'name': gk.get('name') or '',
-            'link': gk.get('link') or '',
-            'role': gk.get('role') if gk.get('role') in earnedgov_claims.ROLES else 'founder',
-            'inviter': gk.get('org_name') or 'the team',
-            'email': '',
-        }
 
     upgrade = None
     upgrade_id = request.GET.get('upgrade')
     if upgrade_id and upgrade_id.isdigit():
-        upgrade = earnedgov_claims.fetch_claim(upgrade_id, verbs=(earnedgov_claims.COMMIT_VERB,))
+        upgrade = earnedgov_claims.fetch_claim(upgrade_id, verbs=earnedgov_claims.WALL_VERBS)
 
     adopt = None
     adopt_id = request.GET.get('adopt')
@@ -194,14 +184,6 @@ def earnedgov_commit_view(request):
             'link': upgrade.get('subject_uri') or '',
             'role': upgrade.get('role') or 'supporter',
             'statement': upgrade.get('statement') or '',
-        })
-    elif invite and request.method != 'POST':
-        role = invite['role'] if invite['role'] in earnedgov_claims.ROLES else 'supporter'
-        form.update({
-            'name': invite['name'],
-            'link': invite['link'],
-            'role': role,
-            'statement': earnedgov_invites.ROLE_STATEMENTS.get(role, ''),
         })
     elif adopt:
         verb = 'Adopting' if adopt.get('adoptable', True) else 'Joining'
@@ -224,7 +206,7 @@ def earnedgov_commit_view(request):
         if not name:
             errors.append("Please give the person's name.")
         if not statement:
-            errors.append("The commitment needs words — what was actually said.")
+            errors.append("Your declaration needs words — what was actually said.")
         if link and not link.startswith(('http://', 'https://')):
             link = 'https://' + link
         if not link:
@@ -265,64 +247,156 @@ def earnedgov_commit_view(request):
                 )
                 cid = claim.get('id')
                 if cid:
+                    # Walk-ups are held for review; only GovKit-invited commits
+                    # (the /earnedgov/i/<code>/ page) auto-approve to the wall.
                     EarnedgovCommitment.objects.get_or_create(
                         claim_id=cid,
                         defaults={
-                            'status': 'approved' if invite else 'pending',
-                            'invited': bool(invite),
-                            'inviter': (invite or {}).get('inviter', ''),
+                            'status': 'pending',
+                            'invited': False,
                             'person_name': name,
                             'role': role,
                         },
                     )
-                if gk and gk_token:
-                    return redirect(earnedgov_invites.govkit_accept_url(gk_token))
-                if invite:
-                    return redirect(f"/earnedgov/?committed={cid}#committed")
-                return redirect(f"/earnedgov/?committed={cid}&pending=1#committed")
+                return redirect(f"{reverse('earnedgov')}?committed={cid}&pending=1#committed")
             except ValueError as e:
                 errors.append(str(e))
             except Exception:
                 logger.exception("earnedgov: claim creation failed")
-                errors.append("Could not reach LinkedTrust to record the commitment — please try again in a minute.")
+                errors.append("Could not reach LinkedTrust to record your declaration — please try again in a minute.")
 
     return render(request, 'earnedgov_commit.html', {
         'form': form,
         'errors': errors,
         'upgrade': upgrade,
         'adopt': adopt,
-        'invite': invite,
-        'invite_token': invite_token if (invite and not gk) else '',
-        'gk_token': gk_token if gk else '',
         'roles': earnedgov_claims.ROLES,
         'lt_api': earnedgov_claims.LT_API,
     })
 
 
-def earnedgov_invite_new_view(request):
+@csrf_protect
+def earnedgov_invite_view(request, code):
     """
-    Staff-only: mint a personal invite link. Golda sends it in her own email;
-    the link greets the person by name and one-click prefills their commitment.
+    Personal magic-link page for a GovKit-minted invite: greets the person by
+    name, prefills the commitment the inviter drafted, and takes one click.
+    The claim publishes to the wall instantly (possession of a valid code is
+    the spam gate), GovKit is told, and the success screen hands the person
+    GovKit's SSO accept link — commit, then straight to the dashboard.
     """
-    from django.contrib.admin.views.decorators import staff_member_required as _smr
-    return _smr(_earnedgov_invite_new)(request)
+    from . import earnedgov_claims, earnedgov_govkit
+    from .models import EarnedgovCommitment
 
+    try:
+        invite = earnedgov_govkit.resolve_invite(code)
+    except earnedgov_govkit.GovKitUnavailable:
+        return render(request, 'earnedgov_invite.html', {'state': 'unavailable'}, status=503)
+    if invite is None or invite.get('status') == 'revoked':
+        return render(request, 'earnedgov_invite.html', {'state': 'invalid'}, status=404)
 
-def _earnedgov_invite_new(request):
-    from . import earnedgov_claims, earnedgov_invites
-    link = None
-    form = {'name': '', 'link': '', 'role': 'mentor', 'inviter': 'Golda'}
+    audience = invite.get('audience') or 'supporter'
+    if audience not in earnedgov_claims.ROLES:
+        audience = 'supporter'
+    lt_api = earnedgov_claims.LT_API
+
+    if invite.get('status') == 'accepted':
+        return render(request, 'earnedgov_invite.html', {
+            'state': 'accepted',
+            'invite': invite,
+            'dashboard_url': getattr(settings, 'GOVKIT_BASE_URL', ''),
+        })
+
+    # Already committed (GovKit knows), or just committed via the redirect
+    # below. GovKit's accept works from 'created' too, so a failed callback
+    # never strands the person — it only delays the status column.
+    just_committed = request.GET.get('committed', '')
+    claim_id = invite.get('committed_claim_id') or (
+        just_committed if just_committed.isdigit() else None
+    )
+    if invite.get('status') == 'committed' or (just_committed and claim_id):
+        return render(request, 'earnedgov_invite.html', {
+            'state': 'committed',
+            'invite': invite,
+            'claim_id': claim_id,
+            'accept_url': invite.get('accept_url', ''),
+            'lt_api': lt_api,
+        })
+
+    errors = []
+    form = {
+        'name': invite.get('name') or '',
+        'link': invite.get('link') or '',
+        'statement': (invite.get('drafted_statement') or '').strip()
+                     or earnedgov_govkit.AUDIENCE_STATEMENTS.get(audience, ''),
+        'video_url': '',
+    }
+
     if request.method == 'POST':
-        for k in form:
-            form[k] = (request.POST.get(k) or '').strip()
-        if form['name']:
-            token = earnedgov_invites.make_invite(
-                name=form['name'], link=form['link'],
-                role=form['role'], inviter=form['inviter'] or 'Golda',
-            )
-            link = f"https://linkedtrust.us/earnedgov/commit/?invite={token}"
-    return render(request, 'earnedgov_invite_new.html', {
-        'form': form, 'link': link, 'roles': earnedgov_claims.ROLES,
+        for key in form:
+            form[key] = (request.POST.get(key) or '').strip()
+        name = form['name']
+        statement = form['statement']
+        link = form['link']
+        video_url = form['video_url']
+
+        if not name:
+            errors.append("Please give your name.")
+        if not statement:
+            errors.append("Your declaration needs words — say it your way, a sentence is plenty.")
+        if link and not link.startswith(('http://', 'https://')):
+            link = 'https://' + link
+        if not link:
+            link = f"https://linkedtrust.us/earnedgov#{slugify(name)}"
+        if video_url and not video_url.startswith(lt_api):
+            errors.append("Video URL doesn't look like a LinkedTrust upload.")
+
+        if not errors:
+            try:
+                claim = earnedgov_claims.create_commitment(
+                    subject_uri=link,
+                    name=name,
+                    role=audience,
+                    statement=statement,
+                    self_attested=True,
+                    photo_file=request.FILES.get('photo'),
+                    video_url=video_url or None,
+                )
+                cid = claim.get('id')
+                if cid:
+                    EarnedgovCommitment.objects.get_or_create(
+                        claim_id=cid,
+                        defaults={
+                            'status': 'approved',
+                            'invited': True,
+                            'inviter': 'govkit',
+                            'person_name': name,
+                            'role': audience,
+                        },
+                    )
+                    earnedgov_govkit.report_committed(
+                        code, claim_id=cid, statement=statement,
+                        video_url=video_url or None,
+                    )
+                return redirect(f"{request.path}?committed={cid or ''}")
+            except ValueError as e:
+                errors.append(str(e))
+            except Exception:
+                logger.exception("earnedgov: invited claim creation failed")
+                errors.append("Could not reach LinkedTrust to record your declaration — please try again in a minute.")
+
+    return render(request, 'earnedgov_invite.html', {
+        'state': 'form',
+        'invite': invite,
+        'audience': audience,
+        # Per-audience language (2026-07-15 pin): founders share a launch,
+        # mentors/advisors join, funders back — never "commit".
+        'invite_lede': earnedgov_claims.ROLE_INVITE_LEDES.get(
+            audience, 'Join the Earned Governance Accelerator.'),
+        'button_label': earnedgov_claims.ROLE_INVITE_BUTTONS.get(
+            audience, 'Count me in'),
+        'form': form,
+        'errors': errors,
+        'lt_api': lt_api,
     })
 
 
@@ -338,7 +412,7 @@ def earnedgov_card_view(request, claim_id):
     cache_key = f"earnedgov_card_{claim_id}"
     png = cache.get(cache_key)
     if png is None:
-        c = earnedgov_claims.fetch_claim(claim_id, verbs=(earnedgov_claims.COMMIT_VERB,))
+        c = earnedgov_claims.fetch_claim(claim_id, verbs=earnedgov_claims.WALL_VERBS)
         if not c:
             raise Http404
         png = _render_commit_card(c)
@@ -367,8 +441,9 @@ def _render_commit_card(c):
     f_foot = ImageFont.truetype(fp + 'DejaVuSans.ttf', 26)
 
     d.text((70, 60), '// earned governance accelerator', font=f_label, fill=(0, 178, 229))
-    d.text((70, 130), c['name'] or 'A new commitment', font=f_name, fill=(240, 240, 240))
-    d.text((70, 215), (c['role'] or '').upper(), font=f_role, fill=(102, 126, 234))
+    d.text((70, 130), c['name'] or 'Someone new is in', font=f_name, fill=(240, 240, 240))
+    from .earnedgov_claims import ROLE_CARD_LABELS
+    d.text((70, 215), ROLE_CARD_LABELS.get(c['role'] or '', (c['role'] or '').title()).upper(), font=f_role, fill=(102, 126, 234))
 
     # word-wrapped quote, max 4 lines
     words = (c['statement'] or '').replace('\n', ' ').split()
@@ -391,7 +466,7 @@ def _render_commit_card(c):
                font=f_quote, fill=(200, 200, 205))
         y += 52
 
-    d.text((70, H - 70), 'linkedtrust.us/earnedgov — verifiable commitment on LinkedTrust',
+    d.text((70, H - 70), 'linkedtrust.us/earnedgov — a verifiable declaration on LinkedTrust',
            font=f_foot, fill=(136, 136, 153))
 
     buf = BytesIO()
@@ -457,7 +532,7 @@ def earnedgov_opps_view(request):
                     gate_type=form['gate_type'] or None,
                     gate_terms=form['gate_terms'] or None,
                 )
-                return redirect(f"/earnedgov/opportunities/?posted={claim.get('id', '')}")
+                return redirect(f"{reverse('earnedgov_opps')}?posted={claim.get('id', '')}")
             except Exception:
                 logger.exception("earnedgov: opportunity creation failed")
                 errors.append("Could not reach LinkedTrust — please try again in a minute.")
