@@ -33,6 +33,15 @@ jobs:
             git fetch origin
             git pull origin main
 
+            echo "Syncing environment secrets..."
+            if [ -n "${{ secrets.GOVKIT_S2S_TOKEN }}" ]; then
+              if grep -q '^GOVKIT_S2S_TOKEN=' .env 2>/dev/null; then
+                sed -i 's|^GOVKIT_S2S_TOKEN=.*|GOVKIT_S2S_TOKEN=${{ secrets.GOVKIT_S2S_TOKEN }}|' .env
+              else
+                echo 'GOVKIT_S2S_TOKEN=${{ secrets.GOVKIT_S2S_TOKEN }}' >> .env
+              fi
+            fi
+
             echo "Installing dependencies..."
             source .venv/bin/activate
             pip install -r requirements.txt --quiet
