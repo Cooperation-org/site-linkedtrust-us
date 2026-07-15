@@ -16,9 +16,18 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-h-sr3w1qhe3pbbgl34lz)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['linkedtrust.us', 'www.linkedtrust.us', 'demos.linkedtrust.us', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['linkedtrust.us', 'www.linkedtrust.us', 'demos.linkedtrust.us', '127.0.0.1', 'localhost',
+                 'workers.vc', 'www.workers.vc']
 
-CSRF_TRUSTED_ORIGINS = ['https://linkedtrust.us', 'https://demos.linkedtrust.us']
+CSRF_TRUSTED_ORIGINS = ['https://linkedtrust.us', 'https://demos.linkedtrust.us',
+                        'https://workers.vc', 'https://www.workers.vc']
+
+# workers.vc is the accelerator's own public surface (board: domain rev 3).
+# Requests on these hosts get the accelerator urlconf (landing at the root).
+ACCELERATOR_HOSTS = ['workers.vc', 'www.workers.vc']
+# Flip on (env) once workers.vc DNS + routing are live: linkedtrust.us/earnedgov/*
+# then 301s to the workers.vc equivalents. Off = both surfaces serve normally.
+WORKERSVC_LIVE = config('WORKERSVC_LIVE', default=False, cast=bool)
 
 # Google Search Console site-verification token (public; rendered in <head>).
 # Override or blank out per environment via the GSC_VERIFICATION env var.
@@ -80,6 +89,8 @@ MIDDLEWARE = [
     # Runs last on the response path → stamps CSP / Link / nosniff headers on
     # every response, including static files served by WhiteNoise below.
     'website.middleware.SecurityHeadersMiddleware',
+    # Host-aware routing: workers.vc serves the accelerator at its root.
+    'website.middleware.HostRoutingMiddleware',
     'website.middleware.MarkdownNegotiationMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

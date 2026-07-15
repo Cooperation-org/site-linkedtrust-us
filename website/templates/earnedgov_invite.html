@@ -26,7 +26,7 @@
 
     <main class="relative z-10 max-w-xl mx-auto px-6 py-12">
 
-        <a href="/earnedgov/" class="inline-flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-brand-600 transition-colors mb-6">
+        <a href="{% url 'earnedgov' %}" class="inline-flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-brand-600 transition-colors mb-6">
             <span class="w-6 h-6 rounded-full overflow-hidden bg-white border border-slate-200 inline-flex items-center justify-center">
                 <img src="{% static 'img/earnedgov/logo.svg' %}" alt="" class="w-full h-full">
             </span>
@@ -47,7 +47,7 @@
             <p class="text-slate-600 mb-6">It may have expired or been superseded. If you were expecting
                 an invitation, write to <a href="mailto:golda@linkedtrust.us" class="text-brand-600 font-bold hover:underline">golda@linkedtrust.us</a>
                 and we'll send a fresh one.</p>
-            <a href="/earnedgov/" class="inline-flex px-8 py-3 font-bold text-brand-600 border-2 border-brand-500 rounded-full hover:bg-brand-50 transition-colors">About the accelerator</a>
+            <a href="{% url 'earnedgov' %}" class="inline-flex px-8 py-3 font-bold text-brand-600 border-2 border-brand-500 rounded-full hover:bg-brand-50 transition-colors">About the accelerator</a>
         </div>
 
         {% elif state == 'accepted' %}
@@ -65,20 +65,20 @@
             <div class="relative z-10">
                 <div class="text-5xl mb-4">✓</div>
                 <h1 class="text-3xl font-extrabold mb-3">You're on the wall{% if invite.name %}, {{ invite.name }}{% endif %}</h1>
-                <p class="text-slate-300 mb-8">Your commitment is recorded as a verifiable attestation and
-                    is live on the accelerator page. One more click and you're inside.</p>
+                <p class="text-slate-300 mb-8">Your declaration is live on the accelerator page as a
+                    verifiable attestation. One more click and you're inside.</p>
                 {% if accept_url %}
                 <a href="{{ accept_url }}" class="inline-flex px-10 py-4 text-lg font-bold text-white bg-brand-600 rounded-full hover:bg-brand-500 hover:shadow-[0_0_40px_rgba(20,184,166,0.4)] transition-all">Continue to your dashboard →</a>
                 <p class="text-xs text-slate-400 mt-3">Sign in with LinkedTrust — your membership is waiting.</p>
                 {% endif %}
                 <div class="mt-8 flex items-center justify-center gap-6 text-sm">
                     {% if claim_id %}
-                    <a href="/earnedgov/?committed={{ claim_id }}#committed" class="text-brand-100 hover:text-white underline underline-offset-4">See yourself on the wall</a>
+                    <a href="{% url 'earnedgov' %}?committed={{ claim_id }}#committed" class="text-brand-100 hover:text-white underline underline-offset-4">See yourself on the wall</a>
                     <a href="{{ lt_api }}/claims/{{ claim_id }}" target="_blank" rel="noopener" class="text-brand-100 hover:text-white underline underline-offset-4">Your attestation</a>
                     {% endif %}
                 </div>
-                <p class="text-xs text-slate-400 mt-8">We'll list you on the accelerator page and may share
-                    the news on social media — we'll check with you before posting. Prefer it quiet?
+                <p class="text-xs text-slate-400 mt-8">You're listed on the accelerator page, and we'd love to
+                    share the news on social media — we'll check with you first. Prefer it quiet?
                     <a href="mailto:golda@linkedtrust.us" class="underline">Tell us.</a></p>
             </div>
         </div>
@@ -94,8 +94,7 @@
                     <div class="w-20 h-20 rounded-full bg-brand-500 text-white flex items-center justify-center font-extrabold text-3xl border-2 border-brand-400/40 shadow-lg mb-4">{{ invite.name|first|upper }}</div>
                     {% endif %}
                     <h1 class="text-3xl font-extrabold mb-2">{% if invite.name %}{{ invite.name }}, you're{% else %}You're{% endif %} invited</h1>
-                    <p class="text-slate-300">Join the Earned Governance Accelerator as
-                        {% if audience == 'advisor' %}an{% else %}a{% endif %} <strong class="text-brand-100">{{ audience }}</strong>.</p>
+                    <p class="text-slate-300">{{ invite_lede }}</p>
                 </div>
             </div>
 
@@ -110,8 +109,8 @@
                 </div>
                 {% endif %}
 
-                <label class="block font-bold text-sm text-slate-900 mb-2">Your commitment
-                    <span class="font-normal text-slate-400">— these words are yours; edit them or keep them</span></label>
+                <label class="block font-bold text-sm text-slate-900 mb-2">Your words
+                    <span class="font-normal text-slate-400">— edit them or keep them; they're yours</span></label>
                 <textarea name="statement" required rows="4"
                     class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent resize-y mb-5">{{ form.statement }}</textarea>
 
@@ -144,14 +143,14 @@
 
                 <button type="submit" id="submit-btn"
                     class="w-full py-4 text-lg font-bold text-white bg-brand-600 rounded-full hover:bg-brand-500 hover:shadow-[0_0_40px_rgba(20,184,166,0.4)] transition-all">
-                    Commit — I'm in
+                    {{ button_label }}
                 </button>
 
-                <p class="text-xs text-slate-400 mt-5 leading-relaxed">Committing publishes a public attestation
-                    (your name, words, and any media) to <a href="{{ lt_api }}" target="_blank" rel="noopener" class="underline">LinkedTrust</a>,
-                    lists you on the <a href="/earnedgov/#committed" class="underline">accelerator page</a>, and we may
-                    share the news on social media — <strong>we'll check with you before posting</strong>.
-                    Prefer not to be listed? <a href="mailto:golda@linkedtrust.us" class="underline">Tell us</a> and we'll keep it quiet.</p>
+                <p class="text-xs text-slate-400 mt-5 leading-relaxed">This publishes your declaration of intent as a
+                    public attestation (your name, words, and any media) on <a href="{{ lt_api }}" target="_blank" rel="noopener" class="underline">LinkedTrust</a>
+                    and lists you on the <a href="{% url 'earnedgov' %}#committed" class="underline">accelerator page</a>.
+                    We'd love to share the news on social media — <strong>we'll check with you first</strong>.
+                    Prefer it quiet? <a href="mailto:golda@linkedtrust.us" class="underline">Tell us</a>.</p>
             </form>
         </div>
         {% endif %}
@@ -172,14 +171,14 @@
         function uploadVideo(blob, name) {
             status.textContent = 'Uploading video…';
             var fd = new FormData();
-            fd.append('video', blob, name || 'commitment.webm');
+            fd.append('video', blob, name || 'declaration.webm');
             fetch(LT + '/api/video/upload', { method: 'POST', body: fd })
                 .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
                 .then(function (d) {
                     urlField.value = d.videoUrl || d.url || '';
                     status.textContent = urlField.value ? '✓ Video attached' : 'Upload failed — try again';
                 })
-                .catch(function () { status.textContent = 'Upload failed — you can still commit without video.'; });
+                .catch(function () { status.textContent = 'Upload failed — you can still send it without video.'; });
         }
 
         document.getElementById('upload-video-btn').addEventListener('click', function () { fileInput.click(); });

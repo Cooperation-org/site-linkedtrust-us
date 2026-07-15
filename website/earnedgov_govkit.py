@@ -95,12 +95,13 @@ def report_committed(code, *, claim_id, statement, video_url=None):
 
 # Factual, audience-scoped starter statements, used ONLY when the inviter left
 # the drafted statement empty. The invitee is told these are replaceable with
-# their own words — we never publish enthusiasm we invented.
+# their own words — we never publish enthusiasm we invented. Language per the
+# 2026-07-15 pin: joins/launch/backing, never "committing".
 AUDIENCE_STATEMENTS = {
-    "mentor": "I'm committing to mentor teams in the Earned Governance Accelerator.",
-    "advisor": "I'm committing as an advisor to the Earned Governance Accelerator.",
-    "partner": "We're committing as a partner of the Earned Governance Accelerator.",
-    "funder": "I'm committing as a funder/supporter of the Earned Governance Accelerator.",
-    "founder": "I'm committing to build in the Earned Governance Accelerator cohort.",
+    "mentor": "I'm joining the Earned Governance Accelerator as a mentor.",
+    "advisor": "I'm joining the Earned Governance Accelerator as an advisor.",
+    "partner": "We're partnering with the Earned Governance Accelerator.",
+    "funder": "I'm backing the Earned Governance Accelerator.",
+    "founder": "We're taking our venture through the Earned Governance Accelerator.",
     "supporter": "I support the Earned Governance Accelerator.",
 }

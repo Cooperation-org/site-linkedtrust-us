@@ -55,6 +55,37 @@ _LINK_HEADER = ", ".join([
 ])
 
 
+class HostRoutingMiddleware(MiddlewareMixin):
+    """Serve the accelerator's own host (workers.vc) from this app.
+
+    On an accelerator host, swap in the accelerator urlconf (landing at the
+    root, matching URL names — see linkedtrust/urls_workersvc.py). Once
+    WORKERSVC_LIVE is on, the old linkedtrust.us/earnedgov/* paths 301 to
+    their workers.vc equivalents so every link already shared keeps working.
+    Claims' effort URI is untouched by any of this — display domain moves,
+    the semantic anchor doesn't.
+    """
+
+    def process_request(self, request):
+        from django.conf import settings
+        from django.http import HttpResponsePermanentRedirect
+
+        host = request.get_host().split(':')[0].lower()
+        if host in settings.ACCELERATOR_HOSTS:
+            request.urlconf = 'linkedtrust.urls_workersvc'
+            return None
+
+        if settings.WORKERSVC_LIVE and request.path.startswith('/earnedgov'):
+            rest = request.path[len('/earnedgov'):].lstrip('/')
+            # /earnedgov/i/... etc. map 1:1 under the root; the landing maps to /.
+            target = f"https://{settings.ACCELERATOR_HOSTS[0]}/{rest}"
+            qs = request.META.get('QUERY_STRING')
+            if qs:
+                target = f"{target}?{qs}"
+            return HttpResponsePermanentRedirect(target)
+        return None
+
+
 class SecurityHeadersMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         response.setdefault("Content-Security-Policy", _CSP)

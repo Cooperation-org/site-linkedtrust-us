@@ -24,6 +24,13 @@ EFFORT_URI = "https://linkedtrust.us/earnedgov"
 # Older anchor claims used the demos URL for the same effort.
 EFFORT_URIS = {EFFORT_URI, "https://demos.linkedtrust.us/earnedgov"}
 COMMIT_VERB = "COMMITS_TO"
+# Language directive (Golda 2026-07-15, Internal/7-15-2026-accelerator-launch-
+# chain-and-language-pin.md): public copy never says "commitment" — per-audience
+# verbs, umbrella noun "declaration of intent". Existing COMMITS_TO claims are
+# grandfathered (immutable) and translated on display; the wall accepts the
+# whole verb set. New claims stay COMMITS_TO until Golda confirms the new-verb
+# recommendation in that doc — display is identical either way.
+WALL_VERBS = (COMMIT_VERB, "JOINS", "LAUNCHES_IN", "PARTNERS_WITH", "SUPPORTS")
 OPP_VERB = "OPPORTUNITY"
 OPP_KINDS = ["venture", "project", "partnership", "grant", "role"]
 ROLES = ["advisor", "mentor", "partner", "funder", "founder", "supporter"]
@@ -34,6 +41,42 @@ ROLE_LABELS = {
     "funder": "Funders",
     "founder": "Founders",
     "supporter": "Supporters",
+}
+# Display phrase per audience: "<Name> <phrase>". Momentum, never obligation.
+ROLE_PHRASES = {
+    "advisor": "joined the Earned Governance Accelerator as an advisor",
+    "mentor": "joined the Earned Governance Accelerator as a mentor",
+    "partner": "is partnering with the Earned Governance Accelerator",
+    "funder": "is backing the Earned Governance Accelerator",
+    "founder": "is launching in the Earned Governance Accelerator",
+    "supporter": "is supporting the Earned Governance Accelerator",
+}
+# Short label shown on wall cards next to the name (instead of the bare role).
+ROLE_CARD_LABELS = {
+    "advisor": "Advisor",
+    "mentor": "Mentor",
+    "partner": "Partner",
+    "funder": "Backer",
+    "founder": "Launching",
+    "supporter": "Supporter",
+}
+# Invite-page language per audience (button + lede). The founder artifact is a
+# launch announcement centering THEIR venture, not the program.
+ROLE_INVITE_BUTTONS = {
+    "advisor": "Join as an advisor",
+    "mentor": "Join as a mentor",
+    "partner": "Partner with us",
+    "funder": "Count me in",
+    "founder": "Share my launch",
+    "supporter": "Count me in",
+}
+ROLE_INVITE_LEDES = {
+    "advisor": "Join the Earned Governance Accelerator as an advisor.",
+    "mentor": "Join the Earned Governance Accelerator as a mentor.",
+    "partner": "Partner with the Earned Governance Accelerator.",
+    "funder": "Back the Earned Governance Accelerator.",
+    "founder": "Share your launch in the Earned Governance Accelerator.",
+    "supporter": "Support the Earned Governance Accelerator.",
 }
 _CACHE_KEY = "earnedgov_commitments_v1"
 _TIMEOUT = 8
@@ -94,7 +137,7 @@ def fetch_commitments():
         ids = [
             e["id"]
             for e in feed.get("entries", [])
-            if e.get("claim") == COMMIT_VERB
+            if e.get("claim") in WALL_VERBS
             and (e.get("object") or {}).get("uri") in EFFORT_URIS
         ]
         by_subject = {}

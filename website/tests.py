@@ -122,16 +122,25 @@ class InvitePageTests(TestCase):
         r = self.client.get(self.URL)
         self.assertEqual(r.status_code, 200)
         self.assertContains(r, 'Ada Example, you\'re invited')
-        self.assertContains(r, 'mentor')
+        # Per-audience language (2026-07-15 pin): mentors join, nobody "commits".
+        self.assertContains(r, 'Join the Earned Governance Accelerator as a mentor.')
+        self.assertContains(r, 'Join as a mentor')
         self.assertContains(r, 'I am committing to mentor teams in the alpha cohort.')
         self.assertContains(r, 'https://linkedin.com/in/ada')
+
+    @patch('website.earnedgov_govkit.resolve_invite')
+    def test_founder_invite_says_share_my_launch(self, resolve):
+        resolve.return_value = {**INVITE, 'audience': 'founder'}
+        r = self.client.get(self.URL)
+        self.assertContains(r, 'Share my launch')
+        self.assertContains(r, 'Share your launch in the Earned Governance Accelerator.')
 
     @patch('website.earnedgov_govkit.resolve_invite')
     def test_empty_draft_gets_factual_placeholder(self, resolve):
         resolve.return_value = {**INVITE, 'drafted_statement': ''}
         r = self.client.get(self.URL)
         self.assertContains(
-            r, "I&#x27;m committing to mentor teams in the Earned Governance Accelerator.")
+            r, "I&#x27;m joining the Earned Governance Accelerator as a mentor.")
 
     @patch('website.earnedgov_govkit.resolve_invite')
     def test_invalid_code_404s_kindly(self, resolve):
@@ -203,6 +212,43 @@ class InvitePageTests(TestCase):
         self.assertContains(r, 'needs words')
         create.assert_not_called()
         report.assert_not_called()
+
+
+@override_settings(**GOVKIT_SETTINGS)
+class HostRoutingTests(TestCase):
+    """workers.vc serves the accelerator at its root (board: domain rev 3)."""
+
+    @patch('website.earnedgov_claims.fetch_commitments')
+    def test_workersvc_root_is_the_accelerator_landing(self, wall):
+        wall.return_value = {'groups': [], 'count': 0}
+        r = self.client.get('/', HTTP_HOST='workers.vc')
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, 'Earned Governance')
+
+    @patch('website.earnedgov_govkit.resolve_invite')
+    def test_workersvc_invite_path_is_at_root(self, resolve):
+        resolve.return_value = dict(INVITE)
+        r = self.client.get('/i/AB3xK9dQ/', HTTP_HOST='workers.vc')
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, "Ada Example, you're invited")
+
+    def test_workersvc_does_not_serve_the_main_site(self):
+        r = self.client.get('/about/', HTTP_HOST='workers.vc')
+        self.assertEqual(r.status_code, 404)
+
+    @override_settings(WORKERSVC_LIVE=True)
+    def test_earnedgov_paths_redirect_once_live(self):
+        r = self.client.get('/earnedgov/?committed=5', HTTP_HOST='linkedtrust.us')
+        self.assertEqual(r.status_code, 301)
+        self.assertEqual(r['Location'], 'https://workers.vc/?committed=5')
+        r = self.client.get('/earnedgov/commit/', HTTP_HOST='linkedtrust.us')
+        self.assertEqual(r['Location'], 'https://workers.vc/commit/')
+        r = self.client.get('/earnedgov/i/AB3xK9dQ/', HTTP_HOST='linkedtrust.us')
+        self.assertEqual(r['Location'], 'https://workers.vc/i/AB3xK9dQ/')
+
+    def test_earnedgov_paths_serve_normally_before_live(self):
+        r = self.client.get('/earnedgov/commit/', HTTP_HOST='linkedtrust.us')
+        self.assertEqual(r.status_code, 200)
 
 
 class WalkUpModerationTests(TestCase):

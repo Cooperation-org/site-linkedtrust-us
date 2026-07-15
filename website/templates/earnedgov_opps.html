@@ -69,7 +69,7 @@
 </head>
 <body>
 <div class="page">
-    <div class="crumb">// <a href="/earnedgov/">earned governance accelerator</a> / opportunities</div>
+    <div class="crumb">// <a href="{% url 'earnedgov' %}">earned governance accelerator</a> / opportunities</div>
     <h1>Adoptable opportunities</h1>
     <p class="lede">Openings that can turn into cohort ventures: ideas seeking founders, partnerships seeking a team,
     grants seeking a builder, roles seeking a person. Each is a public attestation on LinkedTrust.
@@ -96,7 +96,7 @@
             <div class="opp-words">{{ o.statement }}</div>
             {% if o.ip %}<div class="opp-words" style="font-size:0.85rem;"><strong>IP:</strong> {{ o.ip }}</div>{% endif %}
             {% if o.gate_type %}<div class="opp-words" style="font-size:0.85rem;"><strong>To join, agree to:</strong> {{ o.gate_terms }}</div>{% endif %}
-            <a class="btn btn-gradient btn-adopt" href="/earnedgov/commit/?adopt={{ o.id }}">{% if o.adoptable %}Adopt this →{% else %}Ask to join →{% endif %}</a>
+            <a class="btn btn-gradient btn-adopt" href="{% url 'earnedgov_commit' %}?adopt={{ o.id }}">{% if o.adoptable %}Adopt this →{% else %}Ask to join →{% endif %}</a>
             <div class="opp-meta">
                 <span>{{ o.date }}</span>
                 <a href="{{ o.claim_url }}" target="_blank" rel="noopener">View attestation ↗</a>
