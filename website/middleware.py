@@ -77,7 +77,10 @@ class HostRoutingMiddleware(MiddlewareMixin):
 
         if settings.WORKERSVC_LIVE and request.path.startswith('/earnedgov'):
             rest = request.path[len('/earnedgov'):].lstrip('/')
-            # /earnedgov/i/... etc. map 1:1 under the root; the landing maps to /.
+            # workers.vc root is the VC, not the wall (plan 2026-07-16): the
+            # old landing maps to /accelerator/; /i/, /commit/ etc. map 1:1.
+            if not rest:
+                rest = 'accelerator/'
             target = f"https://{settings.ACCELERATOR_HOSTS[0]}/{rest}"
             qs = request.META.get('QUERY_STRING')
             if qs:

@@ -240,7 +240,8 @@ class HostRoutingTests(TestCase):
     def test_earnedgov_paths_redirect_once_live(self):
         r = self.client.get('/earnedgov/?committed=5', HTTP_HOST='linkedtrust.us')
         self.assertEqual(r.status_code, 301)
-        self.assertEqual(r['Location'], 'https://workers.vc/?committed=5')
+        # workers.vc root is the VC; the old landing is the accelerator page.
+        self.assertEqual(r['Location'], 'https://workers.vc/accelerator/?committed=5')
         r = self.client.get('/earnedgov/commit/', HTTP_HOST='linkedtrust.us')
         self.assertEqual(r['Location'], 'https://workers.vc/commit/')
         r = self.client.get('/earnedgov/i/AB3xK9dQ/', HTTP_HOST='linkedtrust.us')
