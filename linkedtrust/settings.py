@@ -201,8 +201,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # WhiteNoise Configuration (only for production)
 if not DEBUG:
-    # CompressedStaticFilesStorage serves from static/ without collectstatic
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+    # Manifest storage gives every static file a content-hashed filename, so
+    # browsers can cache aggressively yet always fetch changed files. Without
+    # it, the 30-day max-age below serves stale CSS/JS for up to a month
+    # after a deploy. Requires collectstatic on deploy.
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     # WhiteNoise Compression and Caching Settings
     WHITENOISE_AUTOREFRESH = True
     WHITENOISE_USE_FINDERS = True
