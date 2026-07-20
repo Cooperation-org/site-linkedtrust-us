@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Case Studies | LinkedTrust{% endblock %}
+{% block meta_description %}In-depth case studies of LinkedTrust client work — the full story behind the projects in our portfolio.{% endblock %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "LinkedTrust Case Studies",
+  "url": "https://linkedtrust.us{% url 'case_studies_list' %}",
+  "itemListElement": [
+    {% for cs in case_studies %}{
+      "@type": "ListItem",
+      "position": {{ forloop.counter }},
+      "name": "{{ cs.title|escapejs }}",
+      "url": "https://linkedtrust.us{% url 'case_study' cs.project.slug %}"
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="container" style="padding-top:2rem;padding-bottom:1.5rem;">
+    <h1 class="section-title">Case studies</h1>
+    <p style="color:var(--text-secondary);max-width:620px;">The full story behind selected projects from <a href="{% url 'work_list' %}" style="color:var(--brand-primary);">our portfolio</a>.</p>
+</section>
+
+<section class="container portfolio-light" style="padding-bottom:4rem;">
+    <div class="portfolio-grid">
+        {% for cs in case_studies %}
+        <a href="{% url 'case_study' cs.project.slug %}" class="project-card">
+            <div class="project-thumb" {% if cs.hero_image %}style="background:var(--bg-primary);"{% else %}style="background: linear-gradient(135deg, rgba(0,178,229,0.1), rgba(102,126,234,0.1));"{% endif %}>
+                {% if cs.hero_image %}
+                    <img src="{{ cs.hero_image.url }}" alt="{{ cs.title }}" loading="lazy" decoding="async">
+                {% endif %}
+            </div>
+            <div class="project-body">
+                <div class="project-client">{{ cs.project.client_name }}</div>
+                <h3>{{ cs.title }}</h3>
+                {% if cs.client_quote %}<p>"{{ cs.client_quote|truncatechars:140 }}"</p>{% endif %}
+            </div>
+        </a>
+        {% empty %}
+        <p style="color:var(--text-muted);grid-column:1/-1;">Case studies coming soon.</p>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

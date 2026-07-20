@@ -11,6 +11,8 @@ urlpatterns = [
     path('portfolio/', RedirectView.as_view(url='/work/', permanent=True)),
     path('portfolio', RedirectView.as_view(url='/work/', permanent=True)),
     path('work/', work_list_view, name='work_list'),
+    # Must precede the slug route so 'case-studies' isn't matched as a project.
+    path('work/case-studies/', case_studies_list_view, name='case_studies_list'),
     path('work/<slug:slug>/', work_detail_view, name='work_detail'),
     path('work/<slug:slug>/case-study/', case_study_view, name='case_study'),
 

@@ -714,9 +714,16 @@ def work_list_view(request):
         'projects': projects,
         'categories': PortfolioProject.CATEGORY_CHOICES,
         'active_category': category,
-        'featured_case_studies': CaseStudy.objects.filter(featured=True).select_related('project'),
     }
     return render(request, 'work_list.html', context)
+
+
+def case_studies_list_view(request):
+    """Case studies index — linked from the Portfolio page tabs."""
+    context = {
+        'case_studies': CaseStudy.objects.select_related('project'),
+    }
+    return render(request, 'case_studies.html', context)
 
 
 def work_detail_view(request, slug):
