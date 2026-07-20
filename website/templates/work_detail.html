@@ -57,7 +57,7 @@
 
     <div class="project-links">
         {% if project.demo_url %}
-        <a href="{{ project.demo_url }}" class="btn btn-gradient" target="_blank" rel="noopener">Live Demo</a>
+        <a href="{{ project.demo_url }}" class="btn btn-gradient" target="_blank" rel="noopener">Visit {{ project.title }}</a>
         {% endif %}
         {% if project.repo_url %}
         <a href="{{ project.repo_url }}" class="btn btn-outline" target="_blank" rel="noopener">Source Code</a>
@@ -114,6 +114,10 @@
         <blockquote>"{{ case_study.client_quote }}"</blockquote>
         <cite>— {{ case_study.client_name }}{% if case_study.client_title %}, {{ case_study.client_title }}{% endif %}</cite>
     </div>
+    {% endif %}
+
+    {% if has_full_case_study %}
+    <a href="{% url 'case_study' project.slug %}" class="btn btn-outline" style="margin-top:1.5rem;">Read the Case Study</a>
     {% endif %}
 </section>
 {% endif %}

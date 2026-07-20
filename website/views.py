@@ -733,6 +733,7 @@ def work_detail_view(request, slug):
         'project': project,
         'testimonials': project.testimonials.all(),
         'case_study': getattr(project, 'case_study', None),
+        'has_full_case_study': slug in CASE_STUDY_TEMPLATES,
     }
     return render(request, 'work_detail.html', context)
 
