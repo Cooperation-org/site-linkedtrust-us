@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}Case Studies | LinkedTrust{% endblock %}
-{% block meta_description %}In-depth case studies of LinkedTrust client work — the full story behind the projects in our portfolio.{% endblock %}
+{% block meta_description %}Case studies of LinkedTrust client work. The full story behind the projects in our portfolio.{% endblock %}
 
 {% block structured_data %}
 <script type="application/ld+json">
@@ -35,7 +35,7 @@
     <div class="portfolio-grid">
         {% for cs in case_studies %}
         <a href="{% url 'case_study' cs.project.slug %}" class="project-card">
-            <div class="project-thumb" {% if cs.hero_image %}style="background:var(--bg-primary);"{% else %}style="background: linear-gradient(135deg, rgba(0,178,229,0.1), rgba(102,126,234,0.1));"{% endif %}>
+            <div class="project-thumb cs-thumb" {% if cs.hero_image %}style="background:var(--bg-primary);"{% else %}style="background: linear-gradient(135deg, rgba(0,178,229,0.1), rgba(102,126,234,0.1));"{% endif %}>
                 {% if cs.hero_image %}
                     <img src="{{ cs.hero_image.url }}" alt="{{ cs.title }}" loading="lazy" decoding="async">
                 {% endif %}

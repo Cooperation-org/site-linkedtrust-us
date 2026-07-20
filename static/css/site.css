@@ -513,7 +513,9 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    /* auto-fill (not auto-fit) so a sparsely filled grid keeps normal card
+       width instead of stretching one card across the row */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.25rem;
 }
 
@@ -1531,6 +1533,9 @@ linked-badge[layout="card"]:not(:defined) {
     background: #fff;
     min-height: 60vh;
 }
+/* Case-study cards: document screenshots read best cropped from the top
+   (title band), not the default center crop. */
+.cs-thumb img { object-position: top; }
 @media (max-width: 900px) {
     .casedoc-bar { padding: 0.6rem 1rem; }
 }
