@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grunt-Lead Methodology | IntegralMASS</title>
+  <style>
+    @page {
+      size: letter;
+      margin: 0.6in;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 11px;
+      line-height: 1.45;
+      color: #1a1a2e;
+      background: #fff;
+      padding: 0.5in;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 3px solid #2d6a4f;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+    .header h1 {
+      font-size: 20px;
+      color: #2d6a4f;
+      font-weight: 700;
+    }
+    .header .subtitle {
+      font-size: 10px;
+      color: #555;
+    }
+
+    /* Section Headers */
+    h2 {
+      font-size: 12px;
+      color: #2d6a4f;
+      border-bottom: 1px solid #b7e4c7;
+      padding-bottom: 3px;
+      margin: 12px 0 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Two-column layout */
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    /* Content */
+    p {
+      margin-bottom: 6px;
+    }
+    ul {
+      padding-left: 14px;
+      margin-bottom: 6px;
+    }
+    li {
+      margin-bottom: 3px;
+    }
+    strong {
+      color: #2d6a4f;
+    }
+
+    /* Gantt Chart */
+    .gantt-container {
+      margin: 8px 0;
+      overflow-x: auto;
+    }
+    .gantt {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9.5px;
+    }
+    .gantt th {
+      background: #2d6a4f;
+      color: #fff;
+      padding: 4px 3px;
+      text-align: center;
+      font-weight: 600;
+      border: 1px solid #1b4332;
+    }
+    .gantt td {
+      padding: 4px 3px;
+      border: 1px solid #ddd;
+      vertical-align: middle;
+    }
+    .gantt .phase-name {
+      font-weight: 600;
+      white-space: nowrap;
+      min-width: 130px;
+      background: #f8f9fa;
+    }
+    .gantt .bar-cell {
+      position: relative;
+      height: 18px;
+      padding: 0;
+    }
+    .bar {
+      position: absolute;
+      top: 3px;
+      height: 12px;
+      border-radius: 3px;
+      opacity: 0.85;
+    }
+    .bar-req { background: #40916c; }
+    .bar-feas { background: #52b788; }
+    .bar-design { background: #74c69d; }
+    .bar-demo { background: #1b4332; }
+    .bar-test { background: #d4a373; }
+    .bar-feedback { background: #e9c46a; }
+    .bar-decel { background: #264653; }
+    .bar-handoff { background: #2a9d8f; }
+    .bar-sla { background: #e76f51; }
+
+    /* Key Points Box */
+    .callout {
+      background: #f0fdf4;
+      border-left: 4px solid #2d6a4f;
+      padding: 8px 10px;
+      margin: 6px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .callout p {
+      margin-bottom: 3px;
+      font-style: italic;
+    }
+
+    /* Next Steps */
+    .next-steps {
+      background: #fff8e1;
+      border: 1px solid #e9c46a;
+      border-radius: 4px;
+      padding: 8px 10px;
+      margin-top: 6px;
+    }
+    .next-steps ol {
+      padding-left: 16px;
+    }
+    .next-steps li {
+      margin-bottom: 3px;
+    }
+
+    /* Signature */
+    .signature {
+      margin-top: 16px;
+      padding: 10px 0;
+      border-top: 1px solid #b7e4c7;
+    }
+    .signature .sig-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 3px;
+    }
+    .signature a {
+      color: #2d6a4f;
+      text-decoration: none;
+    }
+    .signature a:hover {
+      text-decoration: underline;
+    }
+    .signature p {
+      margin-bottom: 2px;
+      font-size: 10.5px;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 14px;
+      padding-top: 6px;
+      border-top: 1px solid #ccc;
+      font-size: 9px;
+      color: #777;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>The Grunt-Lead Methodology</h1>
+    <span class="subtitle">Supplemental Document for the Earned Governance Incubator &mdash; Prepared for Golda | July 2026</span>
+  </div>
+
+  <div class="columns">
+
+    <!-- Left Column -->
+    <div>
+      <h2>Overview &amp; Intent</h2>
+      <p>This document outlines how <strong>IntegralMASS</strong> navigated the initial lifecycle of building a minimum viable product (MVP) with a team of unknown collaborators&mdash;without prematurely slicing equity. It follows <strong>Mike Moyer's Slicing Pie</strong> principle: <em>don't slice the pie before it's baked.</em></p>
+      <p>The approach used incremental independent contractor agreements ($1,000&ndash;$3,000 each, ~$13,500 total) with clear line-item deliverables tied to each payment, executed over a <strong>13-week lifecycle</strong> aligned perfectly with the Grunt Fund spreadsheet calculator's 3-month window.</p>
+
+      <h2>Key Principles</h2>
+      <ul>
+        <li><strong>Incremental contracts</strong> &mdash; Small, scoped agreements with clear deliverables reduce risk for all parties.</li>
+        <li><strong>Flexibility within structure</strong> &mdash; Deliverables are documented, but the team agreed to adapt as market feedback shaped the product.</li>
+        <li><strong>Trust through responsiveness</strong> &mdash; Core grunts integrated feedback in a timely manner, which built relational trust organically.</li>
+        <li><strong>Code &amp; data access</strong> &mdash; Contracts emphasized the grunt leader's ability to pull code at any point, plus secure data transfers (SCP) with deployment documentation.</li>
+        <li><strong>Cash first, equity later</strong> &mdash; Upfront cash rationalized everyone's participation without equity stress. Now that cash has run out, we enter the equity conversation <em>informed</em>.</li>
+      </ul>
+
+      <div class="callout">
+        <p>"Getting equity in a project is also a risk&mdash;an energy risk, a time risk, an open loop. This methodology gives every grunt the chance to understand that risk before committing."</p>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div>
+      <h2>What This Enables</h2>
+      <p>By running the paid-contract phase first, we now have:</p>
+      <ul>
+        <li>A precise 3-month snapshot of who provided the most value</li>
+        <li>An informed basis for retrospective labor valuation</li>
+        <li>Each grunt can evaluate the risk/reward of equity participation</li>
+        <li>No absentee-owner baggage&mdash;everyone can part ways with value rendered</li>
+        <li>A working MVP with market feedback already integrated</li>
+      </ul>
+
+      <h2>Next Steps: Slicing the Pie</h2>
+      <div class="next-steps">
+        <ol>
+          <li><strong>3-Month Retrospective</strong> &mdash; Value each grunt's labor with appropriate hourly resource rates</li>
+          <li><strong>Create a Harvest Account</strong> &mdash; Begin formal time tracking under the Grunt Fund model</li>
+          <li><strong>Share Calendars</strong> &mdash; Provide validation layer for how time is spent</li>
+          <li><strong>Generate a Pitch Deck</strong> &mdash; Formalize the product/market/geography fit</li>
+          <li><strong>Market Validation</strong> &mdash; Continue validating demand and scalability</li>
+          <li><strong>Operating Agreement</strong> &mdash; Develop through the incubator process</li>
+          <li><strong>Rebranding</strong> &mdash; Plan for a new identity if product direction diverges from the original trade name/sole-owner LLC</li>
+        </ol>
+      </div>
+
+      <h2>Legal Note</h2>
+      <p>The current entity is a <strong>trade name under a sole-owner LLC</strong>, providing legal protection for the tool's public-data crawling operations. A rebranding and new entity formation should be anticipated as part of the incubator's output if the team commits to a shared direction.</p>
+    </div>
+
+  </div>
+
+  <!-- Full-width Gantt Chart -->
+  <h2>13-Week Lifecycle &mdash; Gantt Chart</h2>
+  <div class="gantt-container">
+    <table class="gantt">
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>W1</th><th>W2</th><th>W3</th><th>W4</th><th>W5</th><th>W6</th><th>W7</th><th>W8</th><th>W9</th><th>W10</th><th>W11</th><th>W12</th><th>W13</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="phase-name">Requirements Gathering</td>
+          <td style="background:#40916c; border-radius:3px;"></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td class="phase-name">Feasibility Analysis</td>
+          <td></td>
+          <td style="background:#52b788; border-radius:3px;"></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td class="phase-name">SRVDD (Design Doc)</td>
+          <td></td><td></td>
+          <td style="background:#74c69d; border-radius:3px;"></td>
+          <td style="background:#74c69d; border-radius:3px;"></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td class="phase-name">Working Demo</td>
+          <td></td><td></td><td></td><td></td>
+          <td style="background:#1b4332; border-radius:3px;"></td>
+          <td style="background:#1b4332; border-radius:3px;"></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td class="phase-name">Networking &amp; Feedback</td>
+          <td></td><td></td><td></td><td></td><td></td>
+          <td style="background:#e9c46a; border-radius:3px;"></td>
+          <td style="background:#e9c46a; border-radius:3px;"></td>
+          <td style="background:#e9c46a; border-radius:3px;"></td>
+          <td></td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td class="phase-name">E2E Testing &amp; Integration</td>
+          <td></td><td></td><td></td><td></td><td></td><td></td>
+          <td style="background:#d4a373; border-radius:3px;"></td>
+          <td style="background:#d4a373; border-radius:3px;"></td>
+          <td style="background:#d4a373; border-radius:3px;"></td>
+          <td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td class="phase-name">Deceleration &amp; Stabilization</td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <td style="background:#264653; border-radius:3px;"></td>
+          <td style="background:#264653; border-radius:3px;"></td>
+          <td></td><td></td>
+        </tr>
+        <tr>
+          <td class="phase-name">Code/Data Handoff &amp; Analytics</td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <td style="background:#2a9d8f; border-radius:3px;"></td>
+          <td style="background:#2a9d8f; border-radius:3px;"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="phase-name">SLA &amp; Uptime Agreement</td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <td style="background:#e76f51; border-radius:3px;"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="signature">
+    <p class="sig-name">Jefferson Richards</p>
+    <p><a href="https://jeffersonrichards.com" target="_blank">jeffersonrichards.com</a> &bull; <a href="mailto:jefferson@richards.plus" target="_blank">jefferson@richards.plus</a></p>
+    <p><a href="https://time-with.richards.plus" target="_blank">time-with.richards.plus</a></p>
+  </div>
+
+  <div class="footer">
+    IntegralMASS &bull; Grunt-Lead Methodology &bull; Supplemental for Earned Governance Incubator &bull; July 2026
+  </div>
+
+</body>
+</html>

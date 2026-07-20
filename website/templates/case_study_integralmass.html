@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{# The case study itself is Jefferson Richards' document, served byte-for-byte
+   from static/casestudies/grunt-lead-methodology/ — do NOT restyle or edit it.
+   It renders in a same-origin iframe so its CSS and the site's never touch. #}
+
+{% block title %}The Grunt-Lead Methodology — IntegralMASS Case Study | LinkedTrust{% endblock %}
+{% block meta_description %}How IntegralMASS built an MVP with a team of unknown collaborators using incremental contractor agreements over a 13-week lifecycle — without prematurely slicing equity. By Jefferson Richards.{% endblock %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "The Grunt-Lead Methodology",
+      "url": "https://linkedtrust.us{% url 'case_study' project.slug %}",
+      "author": {
+        "@type": "Person",
+        "name": "Jefferson Richards",
+        "url": "https://jeffersonrichards.com"
+      },
+      "about": {
+        "@type": "CreativeWork",
+        "name": "{{ project.title|escapejs }}",
+        "url": "https://linkedtrust.us{% url 'work_detail' project.slug %}"
+      },
+      "publisher": { "@id": "https://linkedtrust.us/#org" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://linkedtrust.us{% url 'home' %}" },
+        { "@type": "ListItem", "position": 2, "name": "Our Work", "item": "https://linkedtrust.us{% url 'work_list' %}" },
+        { "@type": "ListItem", "position": 3, "name": "{{ project.title|escapejs }}", "item": "https://linkedtrust.us{% url 'work_detail' project.slug %}" },
+        { "@type": "ListItem", "position": 4, "name": "Case Study", "item": "https://linkedtrust.us{% url 'case_study' project.slug %}" }
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="casedoc-bar">
+    <a href="{% url 'work_detail' project.slug %}" class="casedoc-back">&larr; {{ project.client_name|default:project.title }}</a>
+    <a href="{% get_media_prefix %}case_studies/2026-07-16_Grunt-Lead_Methodology_iMASS.pdf" class="btn btn-outline casedoc-pdf" download>Download PDF</a>
+</div>
+
+<iframe id="casedoc-frame"
+        class="casedoc-frame"
+        src="{% static 'casestudies/grunt-lead-methodology/index.html' %}"
+        title="The Grunt-Lead Methodology — IntegralMASS (document by Jefferson Richards)"></iframe>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    var frame = document.getElementById('casedoc-frame');
+    function size() {
+        var doc = frame.contentDocument;
+        if (doc && doc.documentElement) {
+            frame.style.height = doc.documentElement.scrollHeight + 'px';
+        }
+    }
+    frame.addEventListener('load', function () {
+        size();
+        // Re-measure once fonts and layout settle inside the document.
+        setTimeout(size, 300);
+    });
+    window.addEventListener('resize', size);
+})();
+</script>
+{% endblock %}

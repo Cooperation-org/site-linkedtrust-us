@@ -31,6 +31,29 @@
     <p style="color:var(--text-secondary);max-width:620px;">Real projects across client work, open source, and research — filter by category.</p>
 </section>
 
+{% if featured_case_studies %}
+<section class="container" style="padding-top:1rem;padding-bottom:1.5rem;">
+    <div class="section-label mono">// case studies</div>
+    <h2 class="section-title" style="margin-bottom:1.5rem;">Case studies</h2>
+    {% for cs in featured_case_studies %}
+    <a href="{% url 'case_study' cs.project.slug %}" class="case-study-feature" {% if not forloop.last %}style="margin-bottom:1.5rem;"{% endif %}>
+        <div class="csf-image">
+            {% if cs.hero_image %}<img src="{{ cs.hero_image.url }}" alt="{{ cs.title }}" loading="lazy" decoding="async">{% endif %}
+        </div>
+        <div class="csf-body">
+            <div class="project-client">{{ cs.project.client_name }}</div>
+            <h3>{{ cs.title }}</h3>
+            {% if cs.client_quote %}
+            <blockquote>"{{ cs.client_quote }}"</blockquote>
+            <cite>&mdash; {{ cs.client_name }}{% if cs.client_title %}, {{ cs.client_title }}{% endif %}</cite>
+            {% endif %}
+            <span class="btn btn-outline" style="align-self:flex-start;">Read the case study &rarr;</span>
+        </div>
+    </a>
+    {% endfor %}
+</section>
+{% endif %}
+
 <section class="container" style="padding-top:0.5rem;padding-bottom:1rem;">
     <div class="filter-tabs">
         <a href="{% url 'work_list' %}" class="filter-tab {% if not active_category %}active{% endif %}">All</a>

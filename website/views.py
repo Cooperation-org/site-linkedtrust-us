@@ -695,6 +695,15 @@ def linkedclaims_view(request):
 
 # --- New portfolio & service views ---
 
+# Case studies that are a standalone client-authored document get a dedicated
+# template (keyed by project slug — same pattern as service_detail_view's
+# dedicated_templates). The default 'case_study.html' renders the DB
+# Problem → Solution → Result fields.
+CASE_STUDY_TEMPLATES = {
+    'integralmass': 'case_study_integralmass.html',
+}
+
+
 def work_list_view(request):
     """Portfolio grid — all projects, optionally filtered by category."""
     category = request.GET.get('category')
@@ -705,6 +714,7 @@ def work_list_view(request):
         'projects': projects,
         'categories': PortfolioProject.CATEGORY_CHOICES,
         'active_category': category,
+        'featured_case_studies': CaseStudy.objects.filter(featured=True).select_related('project'),
     }
     return render(request, 'work_list.html', context)
 
@@ -728,7 +738,8 @@ def case_study_view(request, slug):
         'project': project,
         'case_study': case_study,
     }
-    return render(request, 'case_study.html', context)
+    template = CASE_STUDY_TEMPLATES.get(slug, 'case_study.html')
+    return render(request, template, context)
 
 
 def service_detail_view(request, slug):
