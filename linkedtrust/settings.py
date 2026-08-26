@@ -145,7 +145,9 @@ if not DEBUG:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'linkedtrust_site',
+        # PG_DB lets the site-dev preview instance point at a copy of the
+        # database so content edits can be reviewed without touching prod.
+        'NAME': config('PG_DB', default='linkedtrust_site'),
         'USER': config('PG_USER', default='cobox'),
         'PASSWORD': config('PG_PASSWORD', default=''),
         'HOST': config('PG_HOST', default='10.0.0.100'),

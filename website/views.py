@@ -19,7 +19,7 @@ def home_view(request):
     Render the home page: hero + trust badges + featured work + services + trusted by.
     """
     context = {
-        'featured_projects': PortfolioProject.objects.filter(featured=True)[:4],
+        'featured_projects': PortfolioProject.objects.filter(featured=True)[:6],
         'hero_badges': Testimonial.objects.filter(placement='hero', linked_claim_id__gt='')[:2],
         'homepage_badges': Testimonial.objects.filter(placement='homepage', linked_claim_id__gt=''),
         'featured_testimonials': Testimonial.objects.filter(featured=True)[:3],
@@ -710,9 +710,11 @@ def work_list_view(request):
     projects = PortfolioProject.objects.all()
     if category:
         projects = projects.filter(category=category)
+    # Only offer tabs for categories that actually contain projects
+    present = set(PortfolioProject.objects.values_list('category', flat=True))
     context = {
         'projects': projects,
-        'categories': PortfolioProject.CATEGORY_CHOICES,
+        'categories': [(v, l) for v, l in PortfolioProject.CATEGORY_CHOICES if v in present],
         'active_category': category,
     }
     return render(request, 'work_list.html', context)

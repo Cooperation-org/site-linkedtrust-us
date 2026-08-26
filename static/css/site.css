@@ -1539,3 +1539,226 @@ linked-badge[layout="card"]:not(:defined) {
 @media (max-width: 900px) {
     .casedoc-bar { padding: 0.6rem 1rem; }
 }
+
+/* ---- LIVE PROJECT CARDS ---- */
+/* Card = screenshot preview + direct link to the live client site.
+   The thumb and the Visit button both go to the live site; a quiet
+   "details" link goes to the internal project page. */
+
+.project-thumb-link { display: block; position: relative; }
+.project-thumb-link .project-thumb { height: 180px; }
+.project-thumb-link img { transition: transform 0.35s ease; }
+.project-card:hover .project-thumb-link img { transform: scale(1.04); }
+
+.live-pill {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(10, 12, 18, 0.72);
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    backdrop-filter: blur(4px);
+}
+.live-pill::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.9);
+}
+
+.card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 0.9rem;
+}
+.btn-visit { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+.btn-visit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--gradient);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    white-space: nowrap;
+}
+.btn-visit:hover { opacity: 0.9; }
+.card-details-link {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-on-dark-muted);
+    white-space: nowrap;
+}
+.card-details-link:hover { color: #fff; }
+.portfolio-light .card-details-link { color: var(--text-muted); }
+.portfolio-light .card-details-link:hover { color: var(--brand-primary); }
+
+/* ---- BROWSER FRAME (project detail hero) ---- */
+.browser-frame {
+    border-radius: var(--radius-lg, 14px);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 50px rgba(15, 17, 23, 0.18);
+    background: var(--bg-white);
+}
+.browser-frame-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.9rem;
+    background: #1a1d27;
+}
+.browser-frame-bar .dot { width: 10px; height: 10px; border-radius: 50%; }
+.browser-frame-bar .dot:nth-child(1) { background: #ff5f57; }
+.browser-frame-bar .dot:nth-child(2) { background: #febc2e; }
+.browser-frame-bar .dot:nth-child(3) { background: #28c840; }
+.browser-frame-url {
+    flex: 1;
+    margin-left: 0.5rem;
+    background: rgba(255,255,255,0.08);
+    color: #b7bcc9;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.browser-frame-url:hover { color: #fff; }
+.browser-frame img { display: block; width: 100%; }
+
+/* ---- OPEN SOURCE STRIP ---- */
+.oss-strip {
+    background: var(--bg-dark);
+    color: var(--text-on-dark);
+    padding: 4rem 2rem;
+}
+.oss-strip .section-label { color: var(--brand-accent); }
+.oss-strip .section-title { color: #fff; }
+.oss-inner { max-width: 1200px; margin: 0 auto; }
+.repo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.repo-card {
+    display: block;
+    background: var(--bg-dark-card);
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    color: var(--text-on-dark);
+}
+.repo-card:hover { border-color: rgba(102, 126, 234, 0.5); }
+.repo-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+.repo-name i { color: var(--text-on-dark-muted); font-size: 0.8rem; }
+.repo-desc {
+    font-size: 0.78rem;
+    color: var(--text-on-dark-muted);
+    line-height: 1.5;
+    margin-bottom: 0.7rem;
+}
+.repo-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-on-dark-muted);
+}
+.repo-meta .lang-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 0.3rem;
+}
+.lang-dot--ts { background: #3178c6; }
+.lang-dot--py { background: #3572A5; }
+.lang-dot--sh { background: #89e051; }
+.repo-meta .pkg-pill {
+    background: rgba(255,255,255,0.08);
+    padding: 0.12rem 0.5rem;
+    border-radius: 999px;
+}
+.code-preview {
+    background: #0b0d13;
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+}
+.code-preview pre {
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.65;
+    color: #d6dae3;
+}
+.code-preview .c-com { color: #6a737d; }
+.code-preview .c-str { color: #9ecbff; }
+.code-preview .c-kw { color: #b392f0; }
+.code-preview .c-fn { color: #79b8ff; }
+
+/* ---- RELATED PREVIEWS (service pages) ---- */
+/* Small live-site thumbnails inside a service card, each linking out
+   to the actual client site. */
+.related-previews {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+.related-preview {
+    display: block;
+    width: 150px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg-white);
+}
+.related-preview:hover { border-color: var(--brand-primary); }
+.related-preview img {
+    display: block;
+    width: 100%;
+    height: 84px;
+    object-fit: cover;
+    object-position: top;
+}
+.related-preview span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.related-preview span i { font-size: 0.6rem; color: var(--text-muted); }

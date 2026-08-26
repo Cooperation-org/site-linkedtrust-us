@@ -25,6 +25,7 @@ class TeamMember(models.Model):
 class PortfolioProject(models.Model):
     CATEGORY_CHOICES = [
         ('client_work', 'Client Work'),
+        ('internal_product', 'Our Products'),
         ('open_source', 'Open Source'),
         ('research', 'Research'),
     ]

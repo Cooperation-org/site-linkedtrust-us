@@ -74,8 +74,16 @@
     </div>
 
     {% if project.hero_image or project.thumbnail_image %}
-    <div class="project-hero-image">
-        <img src="{% if project.hero_image %}{{ project.hero_image.url }}{% else %}{{ project.thumbnail_image.url }}{% endif %}" alt="{{ project.title }}" fetchpriority="high">
+    <div class="browser-frame">
+        <div class="browser-frame-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            {% if project.demo_url %}
+            <a href="{{ project.demo_url }}" class="browser-frame-url" target="_blank" rel="noopener">{{ project.demo_url|cut:"https://"|cut:"http://" }}</a>
+            {% endif %}
+        </div>
+        {% if project.demo_url %}<a href="{{ project.demo_url }}" target="_blank" rel="noopener">{% endif %}
+        <img src="{% if project.hero_image %}{{ project.hero_image.url }}{% else %}{{ project.thumbnail_image.url }}{% endif %}" alt="{{ project.title }} — live site" fetchpriority="high">
+        {% if project.demo_url %}</a>{% endif %}
     </div>
     {% endif %}
 </section>
