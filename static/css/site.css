@@ -1796,3 +1796,30 @@ linked-badge[layout="card"]:not(:defined) {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/* Get-started cards */
+.get-started-image img {
+    width: 100%;
+    height: 140px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+.service-card .btn { margin-top: 1rem; display: inline-block; }
+a.nodec { color: var(--brand-primary); font-weight: 600; }
+a.nodec:hover { text-decoration: underline; }
+
+/* Uniform card action rows: full-width Visit button, details right-aligned
+   beneath — identical layout no matter how long the domain is. */
+.card-actions {
+    flex-direction: column;
+    align-items: stretch;
+}
+.btn-visit { justify-content: center; }
+.card-actions .card-details-link { align-self: flex-end; }
+
+/* Featured six on the homepage: 3+3 instead of a lopsided 4+2 */
+.portfolio-grid--3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 900px) { .portfolio-grid--3 { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); } }
+
+/* Let two related previews sit side by side inside a service card */
+.related-preview { flex: 1 1 130px; min-width: 120px; max-width: 180px; width: auto; }
