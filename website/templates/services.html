@@ -89,9 +89,20 @@
             {% if service.icon %}<div class="service-icon"><i class="{{ service.get_icon_class }}"></i></div>{% endif %}
             <h3>{{ service.title }}</h3>
             <p>{{ service.short_description }}</p>
-            {% if service.price_range %}
-            <div class="price-range">{{ service.price_range }}</div>
+            {% with examples=service.example_projects.all|slice:":2" %}
+            {% if examples %}
+            <div class="service-example-thumbs">
+                {% for p in examples %}
+                {% if p.thumbnail_image %}
+                <span class="service-example-thumb">
+                    <img src="{{ p.thumbnail_image.url }}" alt="{{ p.title }}" loading="lazy">
+                    <span>{{ p.title }}</span>
+                </span>
+                {% endif %}
+                {% endfor %}
+            </div>
             {% endif %}
+            {% endwith %}
         </a>
         {% empty %}
         <div class="service-card">

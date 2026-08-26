@@ -78,6 +78,20 @@
             {% if service.icon %}<div class="service-icon"><i class="{{ service.get_icon_class }}"></i></div>{% endif %}
             <h3>{{ service.title }}</h3>
             <p>{{ service.short_description }}</p>
+            {% with examples=service.example_projects.all|slice:":2" %}
+            {% if examples %}
+            <div class="service-example-thumbs">
+                {% for p in examples %}
+                {% if p.thumbnail_image %}
+                <span class="service-example-thumb">
+                    <img src="{{ p.thumbnail_image.url }}" alt="{{ p.title }}" loading="lazy">
+                    <span>{{ p.title }}</span>
+                </span>
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
         </a>
         {% empty %}
         <!-- Default services until admin populates them -->
@@ -112,36 +126,7 @@
         <h2 class="section-title">Selected work</h2>
         <div class="portfolio-grid">
             {% for project in featured_projects %}
-            <div class="project-card">
-                {% if project.demo_url %}
-                <a href="{{ project.demo_url }}" class="project-thumb-link" target="_blank" rel="noopener" aria-label="Visit {{ project.title }} live site">
-                {% else %}
-                <a href="{% url 'work_detail' project.slug %}" class="project-thumb-link">
-                {% endif %}
-                    <div class="project-thumb" style="background:#1a1d27;">
-                        {% if project.thumbnail_image %}
-                        <img src="{{ project.thumbnail_image.url }}" alt="{{ project.title }} — live site" loading="lazy" decoding="async">
-                        {% endif %}
-                        {% if project.demo_url %}<span class="live-pill">LIVE</span>{% endif %}
-                    </div>
-                </a>
-                <div class="project-body">
-                    <div class="project-client">{{ project.client_name }}</div>
-                    <h3>{{ project.title }}</h3>
-                    <p>{{ project.short_description }}</p>
-                    <div class="tech-tags">
-                        {% for tag in project.get_tech_list %}
-                        <span class="tech-tag">{{ tag }}</span>
-                        {% endfor %}
-                    </div>
-                    <div class="card-actions">
-                        {% if project.demo_url %}
-                        <a href="{{ project.demo_url }}" class="btn-visit" target="_blank" rel="noopener">Visit {{ project.demo_url|cut:"https://"|cut:"http://"|cut:"www."|slice:":40"|cut:"/" }} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.65rem;"></i></a>
-                        {% endif %}
-                        <a href="{% url 'work_detail' project.slug %}" class="card-details-link">details &rarr;</a>
-                    </div>
-                </div>
-            </div>
+            {% include 'project_card.html' %}
             {% empty %}
             <!-- Placeholder projects until admin populates -->
             <div class="project-card">

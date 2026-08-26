@@ -63,18 +63,7 @@
         <h2 class="section-title">Projects using this service</h2>
         <div class="portfolio-grid">
             {% for project in example_projects %}
-            <a href="{% url 'work_detail' project.slug %}" class="project-card">
-                <div class="project-thumb" style="background: linear-gradient(135deg, rgba(0,178,229,0.15), rgba(102,126,234,0.15));">
-                    {% if project.thumbnail_image %}
-                        <img src="{{ project.thumbnail_image.url }}" alt="{{ project.title }}" loading="lazy" decoding="async">
-                    {% endif %}
-                </div>
-                <div class="project-body">
-                    <div class="project-client">{{ project.client_name }}</div>
-                    <h3>{{ project.title }}</h3>
-                    <p>{{ project.short_description }}</p>
-                </div>
-            </a>
+            {% include 'project_card.html' %}
             {% endfor %}
         </div>
     </div>
