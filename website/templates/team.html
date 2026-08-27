@@ -206,7 +206,8 @@
       "@type": "Person",
       "name": "{{ member.name|escapejs }}",
       "jobTitle": "{{ member.title|escapejs }}",
-      "description": "{{ member.description|escapejs }}",
+      {% if member.description %}"description": "{{ member.description|escapejs }}",
+      {% endif %}
       {% if member.image %}"image": "https://linkedtrust.us{{ member.image.url }}",
       {% endif %}"worksFor": {"@id": "https://linkedtrust.us/#org"},
       "url": "https://linkedtrust.us/team/"
@@ -224,7 +225,7 @@
 
 <section class="container" style="padding-top:1.5rem;padding-bottom:3rem;">
     <div class="team-grid">
-        {% for member in team_members %}
+        {% for member in team_with_bios %}
         <div class="team-card" data-member-id="{{ member.id }}">
             {% if member.image %}
             <img src="{{ member.image.url }}" alt="{{ member.name }}" class="team-card-image" loading="lazy" decoding="async">
@@ -234,13 +235,30 @@
             <div class="team-card-body">
                 <h3>{{ member.name }}</h3>
                 <div class="team-title">{{ member.title }}</div>
-                <p>{{ member.truncated_description }}</p>
+                <p>{{ member.description }}</p>
             </div>
         </div>
         {% empty %}
         <p style="color:var(--text-muted);grid-column:1/-1;">Team profiles coming soon.</p>
         {% endfor %}
     </div>
+    {% if team_without_bios %}
+    <div class="team-thin-grid">
+        {% for member in team_without_bios %}
+        <div class="team-thin-card" data-member-id="{{ member.id }}">
+            {% if member.image %}
+            <img src="{{ member.image.url }}" alt="{{ member.name }}" loading="lazy" decoding="async">
+            {% else %}
+            <div class="team-thin-noimg"></div>
+            {% endif %}
+            <div>
+                <div class="team-thin-name">{{ member.name }}</div>
+                <div class="team-thin-title">{{ member.title }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 </section>
 
 <!-- Team Modal -->

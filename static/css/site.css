@@ -1823,3 +1823,34 @@ a.nodec:hover { text-decoration: underline; }
 
 /* Let two related previews sit side by side inside a service card */
 .related-preview { flex: 1 1 130px; min-width: 120px; max-width: 180px; width: auto; }
+
+/* ---- THIN TEAM GRID ---- */
+/* Compact name+role cards for team members without their own written bio.
+   Bio text on people is never generated or filled in. */
+.team-thin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+.team-thin-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.6rem 0.8rem;
+}
+.team-thin-card:hover { border-color: var(--brand-primary); }
+.team-thin-card img,
+.team-thin-noimg {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.team-thin-noimg { background: linear-gradient(135deg, rgba(0,178,229,0.15), rgba(102,126,234,0.15)); }
+.team-thin-name { font-weight: 700; font-size: 0.85rem; }
+.team-thin-title { font-size: 0.72rem; color: var(--text-muted); }

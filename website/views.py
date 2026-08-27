@@ -32,8 +32,12 @@ def about_view(request):
     """
     Render the about page with team members inline.
     """
+    members = TeamMember.objects.all().order_by('created_at')
     context = {
-        'team_members': TeamMember.objects.all().order_by('created_at'),
+        # Bio cards only for people with their own written text; everyone
+        # else appears in a compact name+role grid. Never filler on people.
+        'team_with_bios': [m for m in members if m.description.strip()],
+        'team_without_bios': [m for m in members if not m.description.strip()],
     }
     return render(request, 'about.html', context)
 
@@ -552,10 +556,17 @@ def team_view(request):
     try:
         team_members = TeamMember.objects.all().order_by('created_at')
         logger.info(f"Retrieved {team_members.count()} team members")
-        return render(request, 'team.html', {'team_members': team_members})
+        context = {
+            'team_members': team_members,
+            # Bio cards only for people with their own written text; everyone
+            # else appears in a compact name+role grid. Never filler on people.
+            'team_with_bios': [m for m in team_members if m.description.strip()],
+            'team_without_bios': [m for m in team_members if not m.description.strip()],
+        }
+        return render(request, 'team.html', context)
     except Exception as e:
         logger.error(f"Error retrieving team members: {str(e)}")
-        return render(request, 'team.html', {'team_members': [], 'error': 'Unable to load team members'})
+        return render(request, 'team.html', {'team_members': [], 'team_with_bios': [], 'team_without_bios': [], 'error': 'Unable to load team members'})
 
 @require_http_methods(["GET"])
 def team_member_detail_view(request, member_id):
