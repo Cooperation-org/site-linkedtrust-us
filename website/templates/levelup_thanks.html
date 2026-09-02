@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}You are in: LevelUp, Sept 9 | LinkedTrust{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block extra_css %}
+<style>
+.lu-thanks { max-width: 680px; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
+.lu-thanks-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 2.25rem 1.5rem;
+    position: relative; overflow: hidden;
+}
+@media (min-width: 480px) { .lu-thanks-card { padding: 2.75rem 2.5rem; } }
+.lu-thanks-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient); }
+.lu-check {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: rgba(16,185,129,0.12); color: var(--success);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;
+}
+.lu-check svg { width: 28px; height: 28px; }
+.lu-thanks h1 { font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.6rem; }
+.lu-thanks p { color: var(--text-secondary); line-height: 1.7; }
+.lu-thanks dl { margin-top: 1.5rem; display: grid; grid-template-columns: max-content 1fr; gap: 0.5rem 1.25rem; font-size: 0.95rem; }
+.lu-thanks dt { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); padding-top: 0.2rem; }
+.lu-thanks dd { font-weight: 600; }
+.lu-next { margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.lu-next h2 { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
+.lu-next ol { padding-left: 1.2rem; color: var(--text-secondary); line-height: 1.7; }
+.lu-actions { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.lu-actions .btn { min-height: 46px; display: inline-flex; align-items: center; }
+.lu-pay {
+    margin-top: 1.5rem; padding: 1rem 1.15rem; border-radius: 10px;
+    background: rgba(102,126,234,0.08); border: 1px solid rgba(102,126,234,0.3); font-size: 0.92rem; line-height: 1.6;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="lu-thanks">
+    <div class="lu-thanks-card">
+        <div class="lu-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h1>You are in{% if first_name %}, {{ first_name }}{% endif %}.</h1>
+        <p>{% if paid %}Payment received, thank you. {% endif %}Your seat at LevelUp is saved. A confirmation is on its way to {% if reg %}<strong>{{ reg.email }}</strong>{% else %}your inbox{% endif %}.</p>
+
+        <dl>
+            <dt>Date</dt><dd>{{ event.date_label }}</dd>
+            <dt>Time</dt><dd>{{ event.time_label }} ({{ event.time_utc }})</dd>
+            <dt>Where</dt><dd>Online. The link comes by email before the day.</dd>
+            {% if reg %}<dt>Project</dt><dd>{{ reg.organization }}</dd>{% endif %}
+        </dl>
+
+        {% if reg and reg.payment_status == 'pending' and not paid %}
+        <div class="lu-pay">Your ticket is $100. We will send a payment link to your email shortly. Your seat is held in the meantime.</div>
+        {% endif %}
+
+        <div class="lu-next">
+            <h2>What happens next</h2>
+            <ol>
+                <li>We read what you told us and put you in the right breakout group.</li>
+                {% if reg and reg.wants_checkin %}<li>Someone from the team emails you to set up your 15-minute check-in.</li>{% endif %}
+                <li>You get the video link and a calendar invite before September 9.</li>
+            </ol>
+        </div>
+
+        <div class="lu-actions">
+            <a class="btn btn-gradient" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=LevelUp%3A+live+build+workshop+with+LinkedTrust&dates=20260909T140000Z%2F20260909T160000Z&details=Video+link+arrives+by+email+from+LinkedTrust+before+the+day.&location=Online" target="_blank" rel="noopener">Add to Google Calendar</a>
+            <a class="btn" style="border:1.5px solid var(--border);" href="{% url 'services' %}">See what we build</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

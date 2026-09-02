@@ -1,0 +1,480 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}LevelUp: a live build workshop with LinkedTrust engineers | Sept 9{% endblock %}
+{% block meta_description %}Two hours, live, with engineers who ship. Bring your idea or your existing site and leave with real progress: unblocked, modern, live. Free for teams under 10 and nonprofits.{% endblock %}
+{% block og_title %}LevelUp: make your idea live. Sept 9, 7 to 9am PT{% endblock %}
+{% block og_description %}A live build workshop with LinkedTrust engineers. Bring what is stuck, leave with it moving. Free for teams under 10 and nonprofits.{% endblock %}
+{% block twitter_title %}LevelUp: make your idea live. Sept 9, 7 to 9am PT{% endblock %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "LevelUp: live build workshop with LinkedTrust engineers",
+  "description": "Two hours, live, in small groups with engineers who do infra, DevOps and product. Bring your idea or your existing site and leave with real progress.",
+  "startDate": "{{ event.iso_start }}",
+  "endDate": "{{ event.iso_end }}",
+  "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "location": { "@type": "VirtualLocation", "url": "https://linkedtrust.us/levelup/" },
+  "organizer": { "@id": "https://linkedtrust.us/#org" },
+  "offers": [
+    { "@type": "Offer", "price": "0", "priceCurrency": "USD", "url": "https://linkedtrust.us/levelup/", "availability": "https://schema.org/InStock", "description": "Free for teams with fewer than 10 employees and for nonprofits" },
+    { "@type": "Offer", "price": "100", "priceCurrency": "USD", "url": "https://linkedtrust.us/levelup/", "availability": "https://schema.org/InStock" }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ---- LEVELUP: campaign page. Same tokens as the site, its own rhythm. ---- */
+.lu-hero {
+    background: var(--bg-dark);
+    color: var(--text-on-dark);
+    position: relative;
+    overflow: hidden;
+}
+.lu-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(60% 60% at 85% 10%, rgba(102,126,234,0.28), transparent 70%),
+        radial-gradient(50% 50% at 10% 90%, rgba(0,178,229,0.22), transparent 70%);
+    pointer-events: none;
+}
+.lu-hero-inner {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 3.5rem;
+}
+.lu-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand-primary);
+    margin-bottom: 1.25rem;
+}
+.lu-kicker::before {
+    content: '';
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--brand-primary);
+    box-shadow: 0 0 0 4px rgba(0,178,229,0.2);
+}
+.lu-hero h1 {
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    max-width: 14ch;
+    color: #fff;
+}
+.lu-hero h1 span {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.lu-hero-lede {
+    margin-top: 1.25rem;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    max-width: 52ch;
+    color: var(--text-on-dark-muted);
+}
+.lu-when {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, max-content));
+    gap: 0.75rem 2.5rem;
+}
+.lu-when dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-on-dark-muted);
+}
+.lu-when dd {
+    font-weight: 700;
+    color: #fff;
+    margin-top: 0.15rem;
+}
+.lu-hero-cta {
+    margin-top: 2.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+}
+.lu-hero-cta .btn-gradient { min-height: 48px; padding: 0.85rem 1.6rem; display: inline-flex; align-items: center; }
+.lu-hero-note { font-size: 0.85rem; color: var(--text-on-dark-muted); }
+
+/* ---- body layout: story left, form right; stacks on phones ---- */
+.lu-body {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3rem;
+}
+@media (min-width: 900px) {
+    .lu-body { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 4rem; align-items: start; }
+    .lu-form-col { position: sticky; top: 88px; }
+}
+.lu-story h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+}
+.lu-story > p { color: var(--text-secondary); max-width: 58ch; line-height: 1.7; }
+.lu-story section + section { margin-top: 2.75rem; }
+
+.lu-steps { list-style: none; counter-reset: step; margin-top: 1.5rem; display: grid; gap: 1rem; }
+.lu-steps li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+.lu-steps li::before {
+    content: counter(step, decimal-leading-zero);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--brand-primary);
+    font-size: 0.95rem;
+    padding-top: 0.15rem;
+}
+.lu-steps strong { display: block; font-weight: 700; margin-bottom: 0.2rem; }
+.lu-steps p { color: var(--text-secondary); font-size: 0.93rem; line-height: 1.6; margin: 0; }
+
+.lu-fit { display: grid; gap: 0.6rem; margin-top: 1.25rem; }
+.lu-fit li {
+    list-style: none;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+.lu-fit svg { flex: none; width: 20px; height: 20px; margin-top: 0.2rem; color: var(--success); }
+
+.lu-price {
+    margin-top: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--bg-white);
+}
+.lu-price div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 1.25rem;
+    font-size: 0.95rem;
+}
+.lu-price div + div { border-top: 1px solid var(--border); }
+.lu-price b { font-family: 'JetBrains Mono', monospace; font-weight: 700; white-space: nowrap; }
+.lu-price .free b { color: var(--success); }
+
+/* ---- form card ---- */
+.lu-form-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+@media (min-width: 480px) { .lu-form-card { padding: 2.25rem 2rem; } }
+.lu-form-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: var(--gradient);
+}
+.lu-form-card h2 { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.25rem; }
+.lu-form-card > p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+
+.lu-field { margin-bottom: 1.25rem; }
+.lu-field > label, .lu-field > legend {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 0.45rem;
+}
+.lu-field .req { color: #dc2626; margin-left: 2px; }
+.lu-field input[type=text], .lu-field input[type=email], .lu-field input[type=url], .lu-field textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.75rem 1rem;
+    font: inherit;
+    font-size: 1rem; /* 16px: stops iOS zooming into the field */
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.lu-field textarea { resize: vertical; min-height: 96px; }
+.lu-field input:focus, .lu-field textarea:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(0,178,229,0.18);
+}
+.lu-field input:focus-visible, .lu-field textarea:focus-visible, .lu-choice input:focus-visible + span {
+    outline: 3px solid rgba(0,178,229,0.45);
+    outline-offset: 2px;
+}
+.lu-field input::placeholder, .lu-field textarea::placeholder { color: var(--text-muted); }
+.lu-field.has-error input, .lu-field.has-error textarea { border-color: #dc2626; }
+.lu-error {
+    color: #b91c1c;
+    font-size: 0.8rem;
+    margin-top: 0.35rem;
+    display: flex; gap: 0.35rem; align-items: flex-start;
+}
+.lu-hint { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.35rem; }
+fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
+
+/* choice groups render as tappable rows, not bare checkboxes */
+.lu-choices { display: grid; gap: 0.5rem; }
+.lu-choices.two { grid-template-columns: 1fr; }
+@media (min-width: 480px) { .lu-choices.two { grid-template-columns: 1fr 1fr; } }
+.lu-choice { position: relative; display: block; }
+.lu-choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.lu-choice span {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 44px;
+    padding: 0.6rem 0.85rem;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg-primary);
+    font-size: 0.9rem;
+    line-height: 1.35;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+}
+.lu-choice span::before {
+    content: '';
+    flex: none;
+    width: 18px; height: 18px;
+    border: 1.5px solid #c9c9c6;
+    border-radius: 5px;
+    background: #fff;
+    transition: background 0.15s, border-color 0.15s;
+}
+.lu-choice.radio span::before { border-radius: 50%; }
+.lu-choice input:checked + span { border-color: var(--brand-primary); background: rgba(0,178,229,0.06); }
+.lu-choice input:checked + span::before {
+    border-color: var(--brand-primary);
+    background: var(--brand-primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 8.5l3 3 6-7'/%3E%3C/svg%3E") center/12px no-repeat;
+}
+.lu-choice.radio input:checked + span::before {
+    background: #fff;
+    box-shadow: inset 0 0 0 5px var(--brand-primary);
+}
+.lu-choice em { font-style: normal; color: var(--text-muted); font-size: 0.8rem; margin-left: auto; white-space: nowrap; }
+
+.lu-submit {
+    width: 100%;
+    min-height: 52px;
+    margin-top: 0.5rem;
+    font: inherit;
+    font-weight: 700;
+    font-size: 1rem;
+    border: 0;
+    border-radius: 10px;
+    background: var(--gradient);
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.15s;
+}
+.lu-submit:hover { opacity: 0.92; }
+.lu-submit:active { transform: scale(0.99); }
+.lu-submit:focus-visible { outline: 3px solid rgba(0,178,229,0.45); outline-offset: 3px; }
+.lu-submit[disabled] { opacity: 0.6; cursor: progress; }
+.lu-fineprint { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.9rem; text-align: center; line-height: 1.5; }
+
+.lu-alert {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    font-size: 0.88rem;
+    margin-bottom: 1.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lu-submit, .lu-choice span, .lu-field input, .lu-field textarea { transition: none; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="lu-hero" aria-labelledby="lu-title">
+    <div class="lu-hero-inner">
+        <p class="lu-kicker">Live workshop with LinkedTrust engineers</p>
+        <h1 id="lu-title">Make your idea <span>actually live.</span></h1>
+        <p class="lu-hero-lede">Two hours in a small group with engineers who do infra, DevOps and product for a living. Bring the thing that is stuck. Leave with it moving.</p>
+        <dl class="lu-when">
+            <div><dt>Date</dt><dd>{{ event.date_label }}</dd></div>
+            <div><dt>Time</dt><dd>{{ event.time_label }}<br><span style="font-weight:400;color:var(--text-on-dark-muted);font-size:0.85rem;">{{ event.time_utc }}</span></dd></div>
+            <div><dt>Where</dt><dd>Online, breakout rooms</dd></div>
+            <div><dt>Cost</dt><dd>Free for teams under 10<br><span style="font-weight:400;color:var(--text-on-dark-muted);font-size:0.85rem;">and nonprofits, else {{ event.price }}</span></dd></div>
+        </dl>
+        <div class="lu-hero-cta">
+            <a href="#register" class="btn btn-gradient">Save my seat</a>
+            <span class="lu-hero-note">Seats are limited so every room stays small.</span>
+        </div>
+    </div>
+</section>
+
+<div class="lu-body">
+    <div class="lu-story">
+        <section aria-labelledby="lu-how">
+            <h2 id="lu-how">What happens in the room</h2>
+            <p>This is not a talk. You work on your own project, with our developers next to you, and we make progress on the call.</p>
+            <ol class="lu-steps">
+                <li><div><strong>You show us where it is</strong><p>Your idea, your half-built app, or the site you have had for years. Whatever state it is in.</p></div></li>
+                <li><div><strong>We work on it together</strong><p>Small breakout groups by need: getting live, infrastructure, reliability, user experience, go to market.</p></div></li>
+                <li><div><strong>You leave unblocked</strong><p>Something deployed, a decision made, or a clear next step you can do yourself. Plus a team you can come back to.</p></div></li>
+            </ol>
+        </section>
+
+        <section aria-labelledby="lu-who">
+            <h2 id="lu-who">Who it is for</h2>
+            <ul class="lu-fit">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>You have an idea and AI already told you how to build it, but it is still not live, robust, or scalable.</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>You run a small business or nonprofit whose site was built years ago and the bar has moved.</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>You started a project, a launch or a campaign and stalled at the last technical steps.</span></li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="lu-cost">
+            <h2 id="lu-cost">What it costs</h2>
+            <p>Most people who come will pay nothing. The fee exists for larger teams so the small ones stay free.</p>
+            <div class="lu-price">
+                <div class="free"><span>Fewer than 10 employees</span><b>Free</b></div>
+                <div class="free"><span>Nonprofits</span><b>Free</b></div>
+                <div class="free"><span>Invited through a partner (with code)</span><b>Free</b></div>
+                <div><span>10 or more employees</span><b>{{ event.price }}</b></div>
+            </div>
+        </section>
+    </div>
+
+    <div class="lu-form-col" id="register">
+        <form method="post" class="lu-form-card" novalidate id="lu-form" aria-labelledby="lu-form-title">
+            {% csrf_token %}
+            <h2 id="lu-form-title">Save your seat</h2>
+            <p>Takes about a minute. We send the video link and a calendar invite to everyone registered before the day.</p>
+
+            {% if form.non_field_errors %}
+            <div class="lu-alert" role="alert">{{ form.non_field_errors.0 }}</div>
+            {% elif form.errors %}
+            <div class="lu-alert" role="alert">A couple of fields need a look. They are marked below.</div>
+            {% endif %}
+
+            <div class="lu-field {% if form.name.errors %}has-error{% endif %}">
+                <label for="{{ form.name.id_for_label }}">Name<span class="req" aria-hidden="true">*</span></label>
+                {{ form.name }}
+                {% for e in form.name.errors %}<p class="lu-error" id="err-name">{{ e }}</p>{% endfor %}
+            </div>
+
+            <div class="lu-field {% if form.email.errors %}has-error{% endif %}">
+                <label for="{{ form.email.id_for_label }}">Email<span class="req" aria-hidden="true">*</span></label>
+                {{ form.email }}
+                {% for e in form.email.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
+            </div>
+
+            <div class="lu-field {% if form.organization.errors %}has-error{% endif %}">
+                <label for="{{ form.organization.id_for_label }}">Company or project<span class="req" aria-hidden="true">*</span></label>
+                {{ form.organization }}
+                {% for e in form.organization.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
+            </div>
+
+            <div class="lu-field {% if form.link.errors %}has-error{% endif %}">
+                <label for="{{ form.link.id_for_label }}">Link to your site, deck or docs</label>
+                {{ form.link }}
+                <p class="lu-hint">Optional. Anything you want us to look at before the day.</p>
+                {% for e in form.link.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
+            </div>
+
+            <fieldset class="lu-field {% if form.help_with.errors %}has-error{% endif %}">
+                <legend>What do you want help with?<span class="req" aria-hidden="true">*</span></legend>
+                <div class="lu-choices two">
+                    {% for choice in form.help_with %}
+                    <label class="lu-choice">{{ choice.tag }}<span>{{ choice.choice_label }}</span></label>
+                    {% endfor %}
+                </div>
+                {% for e in form.help_with.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
+            </fieldset>
+
+            <div class="lu-field {% if form.goal.errors %}has-error{% endif %}">
+                <label for="{{ form.goal.id_for_label }}">What do you want to walk out with?<span class="req" aria-hidden="true">*</span></label>
+                {{ form.goal }}
+                {% for e in form.goal.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
+            </div>
+
+            <div class="lu-field">
+                <label class="lu-choice">{{ form.wants_checkin }}<span>I would like a 15-minute 1-1 check-in before the workshop</span></label>
+            </div>
+
+            <fieldset class="lu-field {% if form.tier.errors %}has-error{% endif %}">
+                <legend>Pricing<span class="req" aria-hidden="true">*</span></legend>
+                <div class="lu-choices">
+                    {% for choice in form.tier %}
+                    <label class="lu-choice radio">{{ choice.tag }}<span>{{ choice.choice_label }}</span></label>
+                    {% endfor %}
+                </div>
+                {% for e in form.tier.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
+            </fieldset>
+
+            <div class="lu-field {% if form.code.errors %}has-error{% endif %}">
+                <label for="{{ form.code.id_for_label }}">Access code</label>
+                {{ form.code }}
+                <p class="lu-hint">Got one from a partner? It makes your seat free whatever the size of your team.</p>
+                {% for e in form.code.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
+            </div>
+
+            <div hidden aria-hidden="true">{{ form.company_fax }}</div>
+
+            <button type="submit" class="lu-submit" id="lu-submit">Register for LevelUp</button>
+            <p class="lu-fineprint">You will get a confirmation email right away. The video link follows before the day. No newsletter, no spam.</p>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    var form = document.getElementById('lu-form');
+    var btn = document.getElementById('lu-submit');
+    if (!form || !btn) return;
+    form.addEventListener('submit', function () {
+        btn.disabled = true;
+        btn.textContent = 'Saving your seat...';
+    });
+    var firstError = form.querySelector('.has-error input, .has-error textarea');
+    if (firstError) { firstError.focus(); }
+})();
+</script>
+{% endblock %}

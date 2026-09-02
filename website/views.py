@@ -782,3 +782,121 @@ def services_nonprofits_view(request):
 def services_launch_view(request):
     """Landing page for MVP/launch services."""
     return render(request, 'services_launch.html')
+
+# ---------------------------------------------------------------------------
+# LevelUp workshop registration
+# ---------------------------------------------------------------------------
+
+LEVELUP_EVENT = {
+    'name': 'LevelUp',
+    'date_label': 'Tuesday, September 9, 2026',
+    'time_label': '7:00 to 9:00 am PT',
+    'time_utc': '14:00 to 16:00 UTC',
+    'iso_start': '2026-09-09T14:00:00Z',
+    'iso_end': '2026-09-09T16:00:00Z',
+    'price': '$100',
+}
+
+
+def _levelup_notify(reg):
+    """Tell the team, and confirm to the attendee. Both fail silently: a mail
+    hiccup must never lose a registration that is already in the database."""
+    from .forms import LevelUpRegistrationForm  # noqa: F401  (keeps import graph obvious)
+    help_list = ', '.join(reg.help_with_labels()) or '(none)'
+    team_body = (
+        f"Name: {reg.name}\nEmail: {reg.email}\nOrganization: {reg.organization}\n"
+        f"Link: {reg.link or '(none)'}\nHelp with: {help_list}\n"
+        f"Goal: {reg.goal}\n1-1 check-in: {'yes' if reg.wants_checkin else 'no'}\n"
+        f"Tier: {reg.get_tier_display()}\nCode: {reg.access_code.code if reg.access_code else '(none)'}\n"
+        f"Payment: {reg.get_payment_status_display()}\n\n"
+        f"Admin: https://linkedtrust.us/admin/website/levelupregistration/{reg.pk}/change/\n"
+    )
+    notify_to = getattr(settings, 'LEVELUP_NOTIFY_EMAIL', 'connect@linkedtrust.us')
+    try:
+        EmailMessage(
+            subject=f"LevelUp registration: {reg.name} ({reg.organization})",
+            body=team_body,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[notify_to],
+            reply_to=[reg.email],
+        ).send(fail_silently=True)
+    except Exception as e:  # pragma: no cover
+        logger.error(f"LevelUp team email failed: {e}")
+
+    attendee_body = (
+        f"Hi {reg.name.split()[0] if reg.name.strip() else 'there'},\n\n"
+        f"You are registered for LevelUp, the live build workshop with LinkedTrust engineers.\n\n"
+        f"When: {LEVELUP_EVENT['date_label']}, {LEVELUP_EVENT['time_label']} ({LEVELUP_EVENT['time_utc']})\n"
+        f"Where: online. The video link and a calendar invite come by email before the day.\n\n"
+        f"What you told us you want help with: {help_list}\n"
+        f"Your goal: {reg.goal}\n"
+    )
+    if reg.wants_checkin:
+        attendee_body += "\nYou asked for a 1-1 check-in first. Someone from the team will reach out to set a time.\n"
+    if reg.payment_status == 'pending':
+        attendee_body += "\nYour ticket is $100. If you have not paid yet, we will send a payment link shortly.\n"
+    attendee_body += "\nReply to this email if anything changes.\n\nThe LinkedTrust team\nhttps://linkedtrust.us\n"
+    try:
+        EmailMessage(
+            subject="You are in: LevelUp, Sept 9",
+            body=attendee_body,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[reg.email],
+            reply_to=[notify_to],
+        ).send(fail_silently=True)
+    except Exception as e:  # pragma: no cover
+        logger.error(f"LevelUp attendee email failed: {e}")
+
+
+def _levelup_stripe_url(reg):
+    """Stripe Payment Link for the $100 tier, if Golda has set one in .env.
+    Prefills the email and carries the registration id back as
+    client_reference_id so the webhook or a manual check can match it."""
+    from urllib.parse import urlencode
+    link = getattr(settings, 'LEVELUP_STRIPE_PAYMENT_LINK', '')
+    if not link:
+        return ''
+    sep = '&' if '?' in link else '?'
+    return link + sep + urlencode({'prefilled_email': reg.email, 'client_reference_id': f'levelup-{reg.pk}'})
+
+
+@csrf_protect
+def levelup_view(request):
+    from .forms import LevelUpRegistrationForm
+    registration = None
+    pay_url = ''
+    if request.method == 'POST':
+        form = LevelUpRegistrationForm(request.POST)
+        if form.is_valid():
+            registration = form.save()
+            _levelup_notify(registration)
+            if registration.payment_status == 'pending':
+                pay_url = _levelup_stripe_url(registration)
+                if pay_url:
+                    return redirect(pay_url)
+            request.session['levelup_registered'] = registration.pk
+            return redirect(reverse('levelup_thanks'))
+    else:
+        form = LevelUpRegistrationForm()
+    return render(request, 'levelup.html', {
+        'form': form,
+        'event': LEVELUP_EVENT,
+        'stripe_enabled': bool(getattr(settings, 'LEVELUP_STRIPE_PAYMENT_LINK', '')),
+    })
+
+
+def levelup_thanks_view(request):
+    from .models import LevelUpRegistration
+    reg = None
+    pk = request.session.get('levelup_registered')
+    if pk:
+        reg = LevelUpRegistration.objects.filter(pk=pk).first()
+    if reg is None and request.GET.get('paid') is None:
+        return redirect(reverse('levelup'))
+    first_name = (reg.name.strip().split()[0] if reg and reg.name.strip() else '')
+    return render(request, 'levelup_thanks.html', {
+        'reg': reg,
+        'first_name': first_name,
+        'event': LEVELUP_EVENT,
+        'paid': request.GET.get('paid') is not None,
+    })

@@ -250,3 +250,80 @@ class EarnedgovCommitment(models.Model):
 
     def __str__(self):
         return f"claim {self.claim_id} — {self.person_name} ({self.status})"
+
+
+class LevelUpAccessCode(models.Model):
+    """Free-entry codes for the LevelUp workshop. Golda hands one to each
+    channel/partner; a valid code makes the registration free regardless of
+    the tier the attendee picked. Case-insensitive on lookup."""
+    code = models.CharField(max_length=40, unique=True)
+    label = models.CharField(max_length=120, blank=True, help_text="Who this code was given to")
+    active = models.BooleanField(default=True)
+    max_uses = models.PositiveIntegerField(default=0, help_text="0 = unlimited")
+    uses = models.PositiveIntegerField(default=0, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'LevelUp access code'
+
+    def save(self, *args, **kwargs):
+        self.code = self.code.strip().upper()
+        super().save(*args, **kwargs)
+
+    @property
+    def usable(self):
+        return self.active and (self.max_uses == 0 or self.uses < self.max_uses)
+
+    def __str__(self):
+        return f"{self.code} ({self.label or 'no label'})"
+
+
+class LevelUpRegistration(models.Model):
+    """One sign-up for the LevelUp live workshop (Sept 9 2026, 7 to 9am PT)."""
+    HELP_CHOICES = [
+        ('gtm', 'Go to market'),
+        ('ux', 'User experience'),
+        ('deploy', 'Deployment, infrastructure and DevOps'),
+        ('scale', 'Reliability and scalability'),
+        ('other', 'Something else'),
+    ]
+    TIER_CHOICES = [
+        ('free_small', 'Free: fewer than 10 employees'),
+        ('free_nonprofit', 'Free: nonprofit'),
+        ('paid', '$100: 10 or more employees'),
+    ]
+    PAYMENT_CHOICES = [
+        ('free', 'Free'),
+        ('pending', 'Payment pending'),
+        ('paid', 'Paid'),
+    ]
+
+    name = models.CharField(max_length=150)
+    email = models.EmailField()
+    organization = models.CharField(max_length=200, help_text="Company, project or idea name")
+    link = models.URLField(blank=True, help_text="Site, deck, repo or doc they want us to look at")
+    help_with = models.CharField(max_length=200, help_text="Comma-separated keys from HELP_CHOICES")
+    goal = models.TextField(help_text="What they want to walk out with")
+    wants_checkin = models.BooleanField(default=False, help_text="Asked for a 1-1 before the workshop")
+    tier = models.CharField(max_length=20, choices=TIER_CHOICES, default='free_small')
+    access_code = models.ForeignKey(LevelUpAccessCode, null=True, blank=True, on_delete=models.SET_NULL)
+    payment_status = models.CharField(max_length=10, choices=PAYMENT_CHOICES, default='free')
+    stripe_reference = models.CharField(max_length=120, blank=True)
+    invited = models.BooleanField(default=False, help_text="Calendar invite and link sent")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'LevelUp registration'
+
+    def help_with_labels(self):
+        lookup = dict(self.HELP_CHOICES)
+        return [lookup[k] for k in self.help_with.split(',') if k in lookup]
+
+    @property
+    def is_free(self):
+        return self.payment_status == 'free'
+
+    def __str__(self):
+        return f"{self.name} <{self.email}> — {self.organization}"

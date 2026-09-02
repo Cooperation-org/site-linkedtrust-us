@@ -4,7 +4,7 @@ from django.utils.html import format_html
 from django.db.models import Avg, Sum
 from django.utils import timezone
 from datetime import timedelta
-from .models import TeamMember, PortfolioProject, CaseStudy, Testimonial, EcosystemItem, ServicePackage, ContactInquiry
+from .models import LevelUpRegistration, LevelUpAccessCode, TeamMember, PortfolioProject, CaseStudy, Testimonial, EcosystemItem, ServicePackage, ContactInquiry
 
 class LinkedtrustAdminSite(AdminSite):
     site_header = 'Linkedtrust Administration'
@@ -180,3 +180,31 @@ class EarnedgovCommitmentAdmin(admin.ModelAdmin):
     search_fields = ('person_name',)
 
 admin_site.register(EarnedgovCommitment, EarnedgovCommitmentAdmin)
+
+
+@admin.action(description='Mark selected as invited (link + calendar sent)')
+def mark_invited(modeladmin, request, queryset):
+    queryset.update(invited=True)
+
+
+@admin.action(description='Mark selected as paid')
+def mark_paid(modeladmin, request, queryset):
+    queryset.update(payment_status='paid')
+
+
+class LevelUpRegistrationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'organization', 'tier', 'payment_status', 'wants_checkin', 'invited', 'created_at')
+    list_filter = ('tier', 'payment_status', 'wants_checkin', 'invited')
+    search_fields = ('name', 'email', 'organization', 'goal')
+    readonly_fields = ('created_at',)
+    actions = [mark_invited, mark_paid]
+
+
+class LevelUpAccessCodeAdmin(admin.ModelAdmin):
+    list_display = ('code', 'label', 'active', 'uses', 'max_uses', 'created_at')
+    list_filter = ('active',)
+    readonly_fields = ('uses',)
+
+
+admin_site.register(LevelUpRegistration, LevelUpRegistrationAdmin)
+admin_site.register(LevelUpAccessCode, LevelUpAccessCodeAdmin)

@@ -226,6 +226,11 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='emosmwangi@gmail.com')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = 'LinkedTrust <emosmwangi@gmail.com>'
 
+# LevelUp workshop registration (/levelup/)
+# Paste a Stripe Payment Link for the $100 tier; blank = collect now, invoice later.
+LEVELUP_STRIPE_PAYMENT_LINK = config('LEVELUP_STRIPE_PAYMENT_LINK', default='')
+LEVELUP_NOTIFY_EMAIL = config('LEVELUP_NOTIFY_EMAIL', default='connect@linkedtrust.us')
+
 # Logging Configuration
 LOGGING = {
     'version': 1,

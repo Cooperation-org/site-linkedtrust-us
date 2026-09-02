@@ -35,6 +35,7 @@ class StaticViewSitemap(Sitemap):
         ("interns", 0.5),
         ("privacy", 0.3),
         ("getstarted", 0.6),
+        ("levelup", 0.8),
     ]
 
     def items(self):
