@@ -1,5 +1,6 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.admin import AdminSite
+from django.conf import settings
 from django.utils.html import format_html
 from django.db.models import Avg, Sum
 from django.utils import timezone
@@ -182,9 +183,24 @@ class EarnedgovCommitmentAdmin(admin.ModelAdmin):
 admin_site.register(EarnedgovCommitment, EarnedgovCommitmentAdmin)
 
 
-@admin.action(description='Mark selected as invited (link + calendar sent)')
-def mark_invited(modeladmin, request, queryset):
-    queryset.update(invited=True)
+@admin.action(description='Send workshop link + updated calendar invitation')
+def send_levelup_access(modeladmin, request, queryset):
+    from .views import _levelup_send_access
+
+    access_url = getattr(settings, 'LEVELUP_VIDEO_URL', '').strip()
+    if not access_url:
+        modeladmin.message_user(
+            request,
+            'LEVELUP_VIDEO_URL is not configured. No messages were sent.',
+            level=messages.ERROR,
+        )
+        return
+    sent = sum(1 for registration in queryset if _levelup_send_access(registration, access_url))
+    modeladmin.message_user(
+        request,
+        f'Sent the workshop link and calendar invitation to {sent} registration(s).',
+        level=messages.SUCCESS if sent else messages.ERROR,
+    )
 
 
 @admin.action(description='Mark selected as paid')
@@ -193,11 +209,11 @@ def mark_paid(modeladmin, request, queryset):
 
 
 class LevelUpRegistrationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'organization', 'tier', 'payment_status', 'wants_checkin', 'invited', 'created_at')
+    list_display = ('name', 'email', 'organization', 'tier', 'payment_status', 'wants_checkin', 'invited', 'access_sent_at', 'created_at')
     list_filter = ('tier', 'payment_status', 'wants_checkin', 'invited')
     search_fields = ('name', 'email', 'organization', 'goal')
-    readonly_fields = ('created_at',)
-    actions = [mark_invited, mark_paid]
+    readonly_fields = ('created_at', 'access_sent_at')
+    actions = [send_levelup_access, mark_paid]
 
 
 class LevelUpAccessCodeAdmin(admin.ModelAdmin):

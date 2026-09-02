@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import FileExtensionValidator
 from django.utils.text import Truncator, slugify
 
 
@@ -303,6 +304,15 @@ class LevelUpRegistration(models.Model):
     email = models.EmailField()
     organization = models.CharField(max_length=200, help_text="Company, project or idea name")
     link = models.URLField(blank=True, help_text="Site, deck, repo or doc they want us to look at")
+    attachment = models.FileField(
+        upload_to='levelup/%Y/%m/',
+        blank=True,
+        validators=[FileExtensionValidator([
+            'pdf', 'doc', 'docx', 'ppt', 'pptx', 'txt', 'md',
+            'png', 'jpg', 'jpeg', 'webp', 'zip',
+        ])],
+        help_text="Optional document, deck, screenshot, or project artifact",
+    )
     help_with = models.CharField(max_length=200, help_text="Comma-separated keys from HELP_CHOICES")
     goal = models.TextField(help_text="What they want to walk out with")
     wants_checkin = models.BooleanField(default=False, help_text="Asked for a 1-1 before the workshop")
@@ -310,7 +320,8 @@ class LevelUpRegistration(models.Model):
     access_code = models.ForeignKey(LevelUpAccessCode, null=True, blank=True, on_delete=models.SET_NULL)
     payment_status = models.CharField(max_length=10, choices=PAYMENT_CHOICES, default='free')
     stripe_reference = models.CharField(max_length=120, blank=True)
-    invited = models.BooleanField(default=False, help_text="Calendar invite and link sent")
+    invited = models.BooleanField(default=False, help_text="Private workshop link and updated calendar invitation sent")
+    access_sent_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

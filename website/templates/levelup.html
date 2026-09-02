@@ -5,7 +5,12 @@
 {% block meta_description %}Two hours, live, with engineers who ship. Bring your idea or your existing site and leave with real progress: unblocked, modern, live. Free for teams under 10 and nonprofits.{% endblock %}
 {% block og_title %}LevelUp: make your idea live. Sept 9, 7 to 9am PT{% endblock %}
 {% block og_description %}A live build workshop with LinkedTrust engineers. Bring what is stuck, leave with it moving. Free for teams under 10 and nonprofits.{% endblock %}
+{% block og_image %}https://linkedtrust.us{% static 'img/levelup/levelup-banner-1200x627.png' %}{% endblock %}
+{% block og_image_height %}627{% endblock %}
+{% block og_image_alt %}LevelUp live workshop with LinkedTrust engineers — September 9, 2026{% endblock %}
 {% block twitter_title %}LevelUp: make your idea live. Sept 9, 7 to 9am PT{% endblock %}
+{% block twitter_description %}A live build workshop with LinkedTrust engineers. Bring what is stuck and leave with it moving.{% endblock %}
+{% block twitter_image %}https://linkedtrust.us{% static 'img/levelup/levelup-banner-1200x627.png' %}{% endblock %}
 
 {% block structured_data %}
 <script type="application/ld+json">
@@ -191,6 +196,27 @@
 .lu-price b { font-family: 'JetBrains Mono', monospace; font-weight: 700; white-space: nowrap; }
 .lu-price .free b { color: var(--success); }
 
+.lu-share {
+    margin-top: 1.25rem;
+    padding: 1.25rem;
+    display: grid;
+    grid-template-columns: 112px 1fr;
+    gap: 1.25rem;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-white);
+}
+.lu-share img { width: 112px; height: 112px; display: block; }
+.lu-share strong { display: block; margin-bottom: 0.35rem; }
+.lu-share p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.55; margin: 0; }
+.lu-downloads { margin-top: 0.7rem; display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; }
+.lu-downloads a { color: var(--brand-secondary); font-size: 0.82rem; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 420px) {
+    .lu-share { grid-template-columns: 88px 1fr; gap: 0.9rem; }
+    .lu-share img { width: 88px; height: 88px; }
+}
+
 /* ---- form card ---- */
 .lu-form-card {
     background: var(--bg-white);
@@ -218,7 +244,7 @@
     margin-bottom: 0.45rem;
 }
 .lu-field .req { color: #dc2626; margin-left: 2px; }
-.lu-field input[type=text], .lu-field input[type=email], .lu-field input[type=url], .lu-field textarea {
+.lu-field input[type=text], .lu-field input[type=email], .lu-field input[type=url], .lu-field input[type=file], .lu-field textarea {
     width: 100%;
     min-height: 48px;
     padding: 0.75rem 1rem;
@@ -241,6 +267,12 @@
     outline-offset: 2px;
 }
 .lu-field input::placeholder, .lu-field textarea::placeholder { color: var(--text-muted); }
+.lu-field input[type=file] { padding: 0.55rem; }
+.lu-field input[type=file]::file-selector-button {
+    min-height: 34px; margin-right: 0.75rem; padding: 0.35rem 0.75rem;
+    border: 0; border-radius: 7px; background: var(--brand-dark); color: #fff;
+    font: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer;
+}
 .lu-field.has-error input, .lu-field.has-error textarea { border-color: #dc2626; }
 .lu-error {
     color: #b91c1c;
@@ -377,13 +409,31 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
                 <div><span>10 or more employees</span><b>{{ event.price }}</b></div>
             </div>
         </section>
+
+        <section aria-labelledby="lu-share-title">
+            <h2 id="lu-share-title">Share LevelUp</h2>
+            <div class="lu-share">
+                <a href="{% static 'img/levelup/levelup-qr.png' %}" download aria-label="Download the LevelUp QR code">
+                    <img src="{% static 'img/levelup/levelup-qr.png' %}" alt="QR code for linkedtrust.us/levelup">
+                </a>
+                <div>
+                    <strong>Invite someone who is stuck.</strong>
+                    <p>The branded QR opens this registration page.</p>
+                    <div class="lu-downloads">
+                        <a href="{% static 'img/levelup/levelup-flyer-1080x1350.png' %}" download>Portrait flyer</a>
+                        <a href="{% static 'img/levelup/levelup-banner-1200x627.png' %}" download>Landscape banner</a>
+                        <a href="{% static 'img/levelup/levelup-qr.png' %}" download>QR code</a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <div class="lu-form-col" id="register">
-        <form method="post" class="lu-form-card" novalidate id="lu-form" aria-labelledby="lu-form-title">
+        <form method="post" enctype="multipart/form-data" class="lu-form-card" novalidate id="lu-form" aria-labelledby="lu-form-title">
             {% csrf_token %}
             <h2 id="lu-form-title">Save your seat</h2>
-            <p>Takes about a minute. We send the video link and a calendar invite to everyone registered before the day.</p>
+            <p>Takes about a minute. Your calendar invitation arrives now; the private video link follows before the day.</p>
 
             {% if form.non_field_errors %}
             <div class="lu-alert" role="alert">{{ form.non_field_errors.0 }}</div>
@@ -414,6 +464,13 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
                 {{ form.link }}
                 <p class="lu-hint">Optional. Anything you want us to look at before the day.</p>
                 {% for e in form.link.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
+            </div>
+
+            <div class="lu-field {% if form.attachment.errors %}has-error{% endif %}">
+                <label for="{{ form.attachment.id_for_label }}">Upload a deck, document, or screenshot</label>
+                {{ form.attachment }}
+                <p class="lu-hint">Optional. PDF, Office document, image, text, or ZIP; maximum 10 MB.</p>
+                {% for e in form.attachment.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
             </div>
 
             <fieldset class="lu-field {% if form.help_with.errors %}has-error{% endif %}">
@@ -456,7 +513,7 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
             <div hidden aria-hidden="true">{{ form.company_fax }}</div>
 
             <button type="submit" class="lu-submit" id="lu-submit">Register for LevelUp</button>
-            <p class="lu-fineprint">You will get a confirmation email right away. The video link follows before the day. No newsletter, no spam.</p>
+            <p class="lu-fineprint">You will get a confirmation email and calendar invitation right away. The video link follows before the day. No newsletter, no spam.</p>
         </form>
     </div>
 </div>

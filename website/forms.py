@@ -40,6 +40,8 @@ from .models import LevelUpRegistration, LevelUpAccessCode
 
 
 class LevelUpRegistrationForm(forms.ModelForm):
+    MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024
+
     help_with = forms.MultipleChoiceField(
         choices=LevelUpRegistration.HELP_CHOICES,
         widget=forms.CheckboxSelectMultiple,
@@ -56,10 +58,16 @@ class LevelUpRegistrationForm(forms.ModelForm):
     )
     # Honeypot: real people never see or fill this.
     company_fax = forms.CharField(required=False, widget=forms.HiddenInput)
+    attachment = forms.FileField(
+        required=False,
+        widget=forms.ClearableFileInput(attrs={
+            'accept': '.pdf,.doc,.docx,.ppt,.pptx,.txt,.md,.png,.jpg,.jpeg,.webp,.zip',
+        }),
+    )
 
     class Meta:
         model = LevelUpRegistration
-        fields = ['name', 'email', 'organization', 'link', 'help_with', 'goal', 'wants_checkin', 'tier']
+        fields = ['name', 'email', 'organization', 'link', 'attachment', 'help_with', 'goal', 'wants_checkin', 'tier']
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'Your name', 'autocomplete': 'name', 'required': True}),
             'email': forms.EmailInput(attrs={'placeholder': 'you@example.com', 'autocomplete': 'email', 'required': True}),
@@ -71,6 +79,7 @@ class LevelUpRegistrationForm(forms.ModelForm):
         labels = {
             'organization': 'Company or project',
             'link': 'Link to your site, deck or docs',
+            'attachment': 'Upload a file',
             'goal': 'What do you want to walk out with?',
             'wants_checkin': 'I would like a 15-minute 1-1 check-in before the workshop',
             'tier': 'Pricing',
@@ -83,6 +92,12 @@ class LevelUpRegistrationForm(forms.ModelForm):
 
     def clean_help_with(self):
         return ','.join(self.cleaned_data['help_with'])
+
+    def clean_attachment(self):
+        attachment = self.cleaned_data.get('attachment')
+        if attachment and attachment.size > self.MAX_ATTACHMENT_BYTES:
+            raise forms.ValidationError('Keep the file under 10 MB.')
+        return attachment
 
     def clean_code(self):
         raw = (self.cleaned_data.get('code') or '').strip().upper()

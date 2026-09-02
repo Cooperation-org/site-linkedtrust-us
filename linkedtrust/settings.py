@@ -227,8 +227,11 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = 'LinkedTrust <emosmwangi@gmail.com>'
 
 # LevelUp workshop registration (/levelup/)
-# Paste a Stripe Payment Link for the $100 tier; blank = collect now, invoice later.
+# Add these as repository Actions secrets; deploy-production.yml syncs them to
+# the production .env. Blank payment/video URLs keep those paths unavailable.
 LEVELUP_STRIPE_PAYMENT_LINK = config('LEVELUP_STRIPE_PAYMENT_LINK', default='')
+LEVELUP_STRIPE_WEBHOOK_SECRET = config('LEVELUP_STRIPE_WEBHOOK_SECRET', default='')
+LEVELUP_VIDEO_URL = config('LEVELUP_VIDEO_URL', default='')
 LEVELUP_NOTIFY_EMAIL = config('LEVELUP_NOTIFY_EMAIL', default='connect@linkedtrust.us')
 
 # Logging Configuration
