@@ -404,3 +404,34 @@ class CsrfFailurePageTests(TestCase):
         self.assertEqual(r.status_code, 403)
         self.assertContains(r, 'This page expired', status_code=403)
         self.assertContains(r, 'Back to LevelUp', status_code=403)
+
+
+@override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend')
+class LevelUpCodeCheckTests(TestCase):
+    """The form shows the price before submitting, so the code endpoint has to
+    agree with what save() will do."""
+
+    def setUp(self):
+        self.code = LevelUpAccessCode.objects.create(code='PARTNER1', label='A partner')
+
+    def test_valid_code_is_reported_valid(self):
+        r = self.client.post('/levelup/code/', {'code': 'partner1'})
+        self.assertEqual(r.status_code, 200)
+        self.assertTrue(r.json()['valid'])
+
+    def test_unknown_code_is_reported_invalid(self):
+        self.assertFalse(self.client.post('/levelup/code/', {'code': 'NOPE'}).json()['valid'])
+
+    def test_exhausted_code_is_reported_invalid(self):
+        self.code.max_uses = 1
+        self.code.uses = 1
+        self.code.save()
+        self.assertFalse(self.client.post('/levelup/code/', {'code': 'PARTNER1'}).json()['valid'])
+
+    def test_get_is_not_allowed(self):
+        self.assertEqual(self.client.get('/levelup/code/').status_code, 405)
+
+    def test_guessing_is_throttled(self):
+        for _ in range(20):
+            self.client.post('/levelup/code/', {'code': 'NOPE'})
+        self.assertEqual(self.client.post('/levelup/code/', {'code': 'PARTNER1'}).status_code, 429)

@@ -284,6 +284,12 @@
     margin-top: 0.35rem;
     display: flex; gap: 0.35rem; align-items: flex-start;
 }
+.lu-seat-price { margin-top: 0.7rem; font-size: 0.9rem; color: var(--text-secondary); }
+.lu-seat-price strong { color: var(--text-primary); font-family: 'JetBrains Mono', monospace; }
+.lu-seat-price.is-free strong { color: var(--success); }
+.lu-code-state { margin-top: 0.4rem; font-size: 0.8rem; font-weight: 600; }
+.lu-code-state.ok { color: var(--success); }
+.lu-code-state.no { color: var(--text-muted); }
 .lu-hint { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.35rem; }
 fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
 
@@ -515,6 +521,7 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
                     <label class="lu-choice radio">{{ choice.tag }}<span>{{ choice.choice_label }}</span></label>
                     {% endfor %}
                 </div>
+                <p class="lu-seat-price" id="lu-seat-price" aria-live="polite">Your seat: <strong>Free</strong></p>
                 {% for e in form.tier.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
             </fieldset>
 
@@ -522,6 +529,7 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
                 <label for="{{ form.code.id_for_label }}">Access code</label>
                 {{ form.code }}
                 <p class="lu-hint">Got one from a partner? It makes your seat free whatever the size of your team.</p>
+                <p class="lu-code-state" id="lu-code-state" aria-live="polite" hidden></p>
                 {% for e in form.code.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
             </div>
 
@@ -546,6 +554,59 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
     });
     var firstError = form.querySelector('.has-error input, .has-error textarea');
     if (firstError) { firstError.focus(); }
+
+    var price = document.getElementById('lu-seat-price');
+    var codeInput = document.getElementById('{{ form.code.auto_id }}');
+    var codeState = document.getElementById('lu-code-state');
+    var paidPrice = '{{ event.price }}';
+    var codeIsGood = false;
+
+    function render() {
+        var tier = form.querySelector('input[name="tier"]:checked');
+        var free = codeIsGood || !tier || tier.value !== 'paid';
+        price.querySelector('strong').textContent = free ? 'Free' : paidPrice;
+        price.classList.toggle('is-free', free);
+    }
+
+    form.querySelectorAll('input[name="tier"]').forEach(function (input) {
+        input.addEventListener('change', render);
+    });
+
+    if (codeInput && codeState) {
+        var timer = null;
+        var check = function () {
+            var raw = codeInput.value.trim();
+            if (!raw) {
+                codeIsGood = false;
+                codeState.hidden = true;
+                render();
+                return;
+            }
+            var body = new FormData();
+            body.append('code', raw);
+            body.append('csrfmiddlewaretoken', form.querySelector('[name=csrfmiddlewaretoken]').value);
+            fetch('{% url "levelup_code_check" %}', {
+                method: 'POST', body: body, credentials: 'same-origin'
+            }).then(function (r) { return r.json(); }).then(function (data) {
+                if (codeInput.value.trim() !== raw) return;
+                codeIsGood = !!data.valid;
+                codeState.hidden = false;
+                codeState.className = 'lu-code-state ' + (codeIsGood ? 'ok' : 'no');
+                codeState.textContent = codeIsGood
+                    ? 'Code accepted. Your seat is free.'
+                    : 'That code is not recognised.';
+                render();
+            }).catch(function () { /* the code is checked again on submit */ });
+        };
+        codeInput.addEventListener('input', function () {
+            clearTimeout(timer);
+            timer = setTimeout(check, 400);
+        });
+        codeInput.addEventListener('blur', function () { clearTimeout(timer); check(); });
+        if (codeInput.value.trim()) { check(); }
+    }
+
+    render();
 })();
 </script>
 {% endblock %}

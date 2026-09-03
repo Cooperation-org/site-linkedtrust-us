@@ -991,6 +991,22 @@ def _levelup_send_access(reg, access_url):
     return False
 
 
+@csrf_protect
+@require_http_methods(['POST'])
+def levelup_code_check(request):
+    """Answer whether an access code is usable, so the form can show the price
+    the registrant will actually pay before they submit. Says nothing about who
+    the code belongs to, and the code is applied again on save."""
+    from .models import LevelUpAccessCode
+    tries = request.session.get('levelup_code_tries', 0) + 1
+    request.session['levelup_code_tries'] = tries
+    if tries > 20:
+        return JsonResponse({'valid': False, 'throttled': True}, status=429)
+    raw = (request.POST.get('code') or '').strip().upper()
+    code = LevelUpAccessCode.objects.filter(code=raw).first() if raw else None
+    return JsonResponse({'valid': bool(code and code.usable)})
+
+
 def levelup_ics_view(request, key):
     """The sitting as a downloadable .ics. Opening it adds the event straight
     to any calendar app; Google's web link always lands on an edit screen."""
