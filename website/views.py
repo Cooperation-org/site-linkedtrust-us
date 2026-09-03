@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.text import slugify
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.core.mail import EmailMessage
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.conf import settings
@@ -834,6 +834,13 @@ def levelup_session(key):
     return LEVELUP_SESSIONS[0]
 
 
+def levelup_sessions(keys):
+    """Every sitting a registrant picked, in the order they run."""
+    picked = {k.strip() for k in (keys or '').split(',') if k.strip()}
+    chosen = [s for s in LEVELUP_SESSIONS if s['key'] in picked]
+    return chosen or [LEVELUP_SESSIONS[0]]
+
+
 def _levelup_calendar(session, access_url=''):
     """Return a small standards-based calendar invitation for the workshop."""
     description = (
@@ -883,10 +890,11 @@ def _levelup_notify(reg):
     hiccup must never lose a registration that is already in the database."""
     from .forms import LevelUpRegistrationForm  # noqa: F401  (keeps import graph obvious)
     help_list = ', '.join(reg.help_with_labels()) or '(none)'
-    session = levelup_session(reg.session)
+    sessions = levelup_sessions(reg.session)
+    session = sessions[0]
     team_body = (
         f"Name: {reg.name}\nEmail: {reg.email}\nOrganization: {reg.organization}\n"
-        f"Session: {session['date_label']}\n"
+        f"Sessions: {', '.join(s['date_label'] for s in sessions)}\n"
         f"Link: {reg.link or '(none)'}\n"
         f"Uploaded file: {reg.attachment.name if reg.attachment else '(none)'}\n"
         f"Help with: {help_list}\n"
@@ -915,8 +923,11 @@ def _levelup_notify(reg):
     attendee_body = (
         f"Hi {reg.name.split()[0] if reg.name.strip() else 'there'},\n\n"
         f"You are registered for LevelUp, the live build workshop with LinkedTrust engineers.\n\n"
-        f"When: {session['date_label']}, {LEVELUP_EVENT['time_label']} ({LEVELUP_EVENT['time_utc']})\n"
-        f"Where: online. A calendar invitation is attached; the video link comes by email before the day.\n\n"
+        + ''.join(
+            f"When: {s['date_label']}, {LEVELUP_EVENT['time_label']} ({LEVELUP_EVENT['time_utc']})\n"
+            for s in sessions
+        ) +
+        f"Where: online. A calendar invitation is attached for each date; the video link comes by email before the day.\n\n"
         f"What you told us you want help with: {help_list}\n"
         f"Your goal: {reg.goal}\n"
     )
@@ -936,7 +947,8 @@ def _levelup_notify(reg):
             to=[reg.email],
             reply_to=[notify_to],
         )
-        _attach_levelup_calendar(attendee_message, session)
+        for sitting in sessions:
+            _attach_levelup_calendar(attendee_message, sitting)
         attendee_message.send(fail_silently=False)
         reg.attendee_notified = True
     except Exception as e:
@@ -948,12 +960,14 @@ def _levelup_notify(reg):
 def _levelup_send_access(reg, access_url):
     """Email the private workshop link and an updated calendar invitation."""
     notify_to = getattr(settings, 'LEVELUP_NOTIFY_EMAIL', 'connect@linkedtrust.us')
-    session = levelup_session(reg.session)
+    sessions = levelup_sessions(reg.session)
+    session = sessions[0]
     message = EmailMessage(
-        subject=f'Your LevelUp workshop link — {session["short_label"]}',
+        subject=f'Your LevelUp workshop link — {", ".join(s["short_label"] for s in sessions)}',
         body=(
             f"Hi {reg.name.split()[0] if reg.name.strip() else 'there'},\n\n"
-            f"Here is your private link for LevelUp on {session['date_label']} "
+            f"Here is your private link for LevelUp on "
+            f"{' and '.join(s['date_label'] for s in sessions)} "
             f"at {LEVELUP_EVENT['time_label']}:\n\n{access_url}\n\n"
             "An updated calendar invitation is attached. Please do not post the "
             "workshop link publicly.\n\nThe LinkedTrust team\n"
@@ -962,7 +976,8 @@ def _levelup_send_access(reg, access_url):
         to=[reg.email],
         reply_to=[notify_to],
     )
-    _attach_levelup_calendar(message, session, access_url)
+    for sitting in sessions:
+        _attach_levelup_calendar(message, sitting, access_url)
     try:
         sent = message.send(fail_silently=False)
     except Exception as exc:  # pragma: no cover
@@ -974,6 +989,15 @@ def _levelup_send_access(reg, access_url):
         reg.save(update_fields=['invited', 'access_sent_at'])
         return True
     return False
+
+
+def levelup_ics_view(request, key):
+    """The sitting as a downloadable .ics. Opening it adds the event straight
+    to any calendar app; Google's web link always lands on an edit screen."""
+    session = levelup_session(key)
+    response = HttpResponse(_levelup_calendar(session), content_type='text/calendar; charset=utf-8')
+    response['Content-Disposition'] = f'attachment; filename="levelup-{session["key"]}.ics"'
+    return response
 
 
 def _levelup_stripe_url(reg):
@@ -1020,11 +1044,12 @@ def levelup_thanks_view(request):
     if reg is None:
         return redirect(reverse('levelup'))
     first_name = (reg.name.strip().split()[0] if reg and reg.name.strip() else '')
-    session = levelup_session(reg.session if reg else '')
+    sessions = levelup_sessions(reg.session if reg else '')
     return render(request, 'levelup_thanks.html', {
         'reg': reg,
         'first_name': first_name,
-        'session': session,
+        'session': sessions[0],
+        'sessions': sessions,
         'event': LEVELUP_EVENT,
         'paid': reg.payment_status == 'paid',
     })

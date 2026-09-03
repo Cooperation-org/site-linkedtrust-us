@@ -309,6 +309,44 @@ class LevelUpSessionTests(TestCase):
         self.assertContains(r, 'Wednesday, October 21, 2026')
         self.assertContains(r, '20261021T140000Z')
 
+    def test_both_sittings_can_be_taken(self):
+        self.client.post('/levelup/', payload(session=['sep16', 'oct21']))
+        reg = LevelUpRegistration.objects.get()
+        self.assertEqual(reg.session, 'sep16,oct21')
+        self.assertEqual(reg.session_labels(),
+                         ['Wednesday, September 16, 2026', 'Wednesday, October 21, 2026'])
+        team, attendee = mail.outbox
+        self.assertIn('Wednesday, September 16, 2026', team.body)
+        self.assertIn('Wednesday, October 21, 2026', team.body)
+        stamps = sorted(
+            (c[1].decode() if isinstance(c[1], bytes) else c[1])
+            for c in attendee.attachments if str(c[0]).endswith('.ics')
+        )
+        self.assertEqual(len(stamps), 2)
+        self.assertIn('DTSTART:20260916T140000Z', stamps[0])
+        self.assertIn('DTSTART:20261021T140000Z', stamps[1])
+
+    def test_thanks_page_lists_both_sittings(self):
+        self.client.post('/levelup/', payload(session=['sep16', 'oct21']))
+        r = self.client.get('/levelup/thanks/')
+        self.assertContains(r, 'Wednesday, September 16, 2026')
+        self.assertContains(r, 'Wednesday, October 21, 2026')
+        self.assertContains(r, '/levelup/calendar/sep16.ics')
+        self.assertContains(r, '/levelup/calendar/oct21.ics')
+
+    def test_ics_download_is_a_calendar_file(self):
+        r = self.client.get('/levelup/calendar/oct21.ics')
+        self.assertEqual(r.status_code, 200)
+        self.assertIn('text/calendar', r['Content-Type'])
+        self.assertIn('levelup-oct21.ics', r['Content-Disposition'])
+        self.assertIn('DTSTART:20261021T140000Z', r.content.decode())
+
+    def test_both_sittings_show_the_same_time_on_the_page(self):
+        r = self.client.get('/levelup/')
+        self.assertContains(r, 'Wednesday, September 16, 2026, 7:00 to 9:00 am PT')
+        self.assertContains(r, 'Wednesday, October 21, 2026, 7:00 to 9:00 am PT')
+        self.assertNotContains(r, 'Pick one when you register')
+
     def test_unknown_session_rejected(self):
         r = self.client.post('/levelup/', payload(session='dec25'))
         self.assertEqual(r.status_code, 200)

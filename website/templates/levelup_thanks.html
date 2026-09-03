@@ -33,6 +33,7 @@
 .lu-next ol { padding-left: 1.2rem; color: var(--text-secondary); line-height: 1.7; }
 .lu-actions { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
 .lu-actions .btn { min-height: 46px; display: inline-flex; align-items: center; }
+.lu-alt-cal { margin-top: 0.85rem; font-size: 0.82rem; color: var(--text-muted); }
 .lu-pay {
     margin-top: 1.5rem; padding: 1rem 1.15rem; border-radius: 10px;
     background: rgba(102,126,234,0.08); border: 1px solid rgba(102,126,234,0.3); font-size: 0.92rem; line-height: 1.6;
@@ -48,7 +49,7 @@
         <p>{% if paid %}Payment received, thank you. {% endif %}Your seat at LevelUp is saved. A confirmation is on its way to {% if reg %}<strong>{{ reg.email }}</strong>{% else %}your inbox{% endif %}.</p>
 
         <dl>
-            <dt>Date</dt><dd>{{ session.date_label }}</dd>
+            <dt>{% if sessions|length > 1 %}Dates{% else %}Date{% endif %}</dt><dd>{% for s in sessions %}{{ s.date_label }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</dd>
             <dt>Time</dt><dd>{{ event.time_label }} ({{ event.time_utc }})</dd>
             <dt>Where</dt><dd>Online. The link comes by email before the day.</dd>
             {% if reg %}<dt>Project</dt><dd>{{ reg.organization }}</dd>{% endif %}
@@ -63,14 +64,17 @@
             <ol>
                 <li>We read what you told us and put you in the right breakout group.</li>
                 {% if reg and reg.wants_checkin %}<li>Someone from the team emails you to set up your 15-minute check-in.</li>{% endif %}
-                <li>Save the attached calendar invitation. The private video link follows before the day.</li>
+                <li>Save the attached calendar {% if sessions|length > 1 %}invitations{% else %}invitation{% endif %}. The private video link follows before the day.</li>
             </ol>
         </div>
 
         <div class="lu-actions">
-            <a class="btn btn-gradient" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=LevelUp%3A+live+build+workshop+with+LinkedTrust&dates={{ session.stamp }}%2F{{ session.end_stamp }}&details=Video+link+arrives+by+email+from+LinkedTrust+before+the+day.&location=Online" target="_blank" rel="noopener">Add to Google Calendar</a>
+            {% for s in sessions %}
+            <a class="btn btn-gradient" href="{% url 'levelup_ics' s.key %}" download>Add to calendar{% if sessions|length > 1 %} — {{ s.short_label }}{% endif %}</a>
+            {% endfor %}
             <a class="btn" style="border:1.5px solid var(--border);" href="{% url 'services' %}">See what we build</a>
         </div>
+        <p class="lu-alt-cal">Google Calendar instead: {% for s in sessions %}<a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=LevelUp%3A+live+build+workshop+with+LinkedTrust&dates={{ s.stamp }}%2F{{ s.end_stamp }}&details=Video+link+arrives+by+email+from+LinkedTrust+before+the+day.&location=Online" target="_blank" rel="noopener">{{ s.short_label }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}. Google opens a prefilled event you save.</p>
     </div>
 </div>
 {% endblock %}

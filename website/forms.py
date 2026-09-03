@@ -47,11 +47,12 @@ class LevelUpRegistrationForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         error_messages={'required': 'Pick at least one thing you want help with.'},
     )
-    session = forms.ChoiceField(
+    session = forms.MultipleChoiceField(
         choices=LevelUpRegistration.SESSION_CHOICES,
-        widget=forms.RadioSelect,
-        initial='sep16',
-        label='Which session?',
+        widget=forms.CheckboxSelectMultiple,
+        initial=['sep16'],
+        label='Which sessions?',
+        error_messages={'required': 'Pick at least one date.'},
     )
     tier = forms.ChoiceField(
         choices=LevelUpRegistration.TIER_CHOICES,
@@ -98,6 +99,11 @@ class LevelUpRegistrationForm(forms.ModelForm):
 
     def clean_help_with(self):
         return ','.join(self.cleaned_data['help_with'])
+
+    def clean_session(self):
+        keys = [k for k, _ in LevelUpRegistration.SESSION_CHOICES
+                if k in self.cleaned_data['session']]
+        return ','.join(keys)
 
     def clean_attachment(self):
         attachment = self.cleaned_data.get('attachment')

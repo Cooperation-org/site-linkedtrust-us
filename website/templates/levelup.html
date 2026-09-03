@@ -371,8 +371,8 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
         <h1 id="lu-title">Make your idea <span>actually live.</span></h1>
         <p class="lu-hero-lede">Two hours in a small group with engineers who do infra, DevOps and product for a living. Bring the thing that is stuck. Leave with it moving.</p>
         <dl class="lu-when">
-            <div><dt>Dates</dt><dd>{% for s in event.sessions %}{{ s.date_label }}{% if not forloop.last %}<br>{% endif %}{% endfor %}<br><span style="font-weight:400;color:var(--text-on-dark-muted);font-size:0.85rem;">Pick one when you register</span></dd></div>
-            <div><dt>Time</dt><dd>{{ event.time_label }}<br><span style="font-weight:400;color:var(--text-on-dark-muted);font-size:0.85rem;">{{ event.time_utc }}</span></dd></div>
+            <div><dt>Dates</dt><dd>{% for s in event.sessions %}{{ s.date_label }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</dd></div>
+            <div><dt>Time</dt><dd>Both {{ event.time_label }}<br><span style="font-weight:400;color:var(--text-on-dark-muted);font-size:0.85rem;">{{ event.time_utc }}</span></dd></div>
             <div><dt>Where</dt><dd>Online, breakout rooms</dd></div>
             <div><dt>Cost</dt><dd>Free for teams under 10<br><span style="font-weight:400;color:var(--text-on-dark-muted);font-size:0.85rem;">and nonprofits, else {{ event.price }}</span></dd></div>
         </dl>
@@ -498,12 +498,13 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
             </div>
 
             <fieldset class="lu-field {% if form.session.errors %}has-error{% endif %}">
-                <legend>Which session?<span class="req" aria-hidden="true">*</span></legend>
+                <legend>{{ form.session.label }}<span class="req" aria-hidden="true">*</span></legend>
                 <div class="lu-choices">
                     {% for choice in form.session %}
-                    <label class="lu-choice radio">{{ choice.tag }}<span>{{ choice.choice_label }}</span></label>
+                    <label class="lu-choice">{{ choice.tag }}<span>{{ choice.choice_label }}, {{ event.time_label }}</span></label>
                     {% endfor %}
                 </div>
+                <p class="lu-hint">Take both if you want to.</p>
                 {% for e in form.session.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
             </fieldset>
 

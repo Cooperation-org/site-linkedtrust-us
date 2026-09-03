@@ -40,6 +40,7 @@ urlpatterns = [
     path('levelup/', levelup_view, name='levelup'),
     path('levelup', RedirectView.as_view(url='/levelup/', permanent=True)),
     path('levelup/thanks/', levelup_thanks_view, name='levelup_thanks'),
+    path('levelup/calendar/<slug:key>.ics', levelup_ics_view, name='levelup_ics'),
     path('levelup/stripe/webhook/', levelup_stripe_webhook, name='levelup_stripe_webhook'),
     path('levelup/register/', RedirectView.as_view(url='/levelup/', permanent=True)),
 
