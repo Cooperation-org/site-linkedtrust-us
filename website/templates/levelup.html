@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}LevelUp: a live build workshop with LinkedTrust engineers | Sept 16{% endblock %}
+{% block title %}LevelUp: a live build workshop with LinkedTrust engineers | {{ event.short_dates }}{% endblock %}
 {% block meta_description %}Two hours, live, with engineers who ship. Bring your idea or your existing site and leave with real progress: unblocked, modern, live. Free for teams under 10 and nonprofits.{% endblock %}
-{% block og_title %}LevelUp: make your idea live. Sept 16 or Oct 21, 7 to 9am PT{% endblock %}
+{% block og_title %}LevelUp: make your idea live. {{ event.short_dates }}, 7 to 9am PT{% endblock %}
 {% block og_description %}A live build workshop with LinkedTrust engineers. Bring what is stuck, leave with it moving. Free for teams under 10 and nonprofits.{% endblock %}
 {% block og_image %}https://linkedtrust.us{% static 'img/levelup/levelup-banner-1200x627.png' %}{% endblock %}
 {% block og_image_height %}627{% endblock %}
-{% block og_image_alt %}LevelUp live workshop with LinkedTrust engineers — September 16, 2026{% endblock %}
-{% block twitter_title %}LevelUp: make your idea live. Sept 16 or Oct 21, 7 to 9am PT{% endblock %}
+{% block og_image_alt %}LevelUp live workshop with LinkedTrust engineers, {{ event.date_label }}, 7:00 to 9:00 am PT{% endblock %}
+{% block twitter_title %}LevelUp: make your idea live. {{ event.short_dates }}, 7 to 9am PT{% endblock %}
 {% block twitter_description %}A live build workshop with LinkedTrust engineers. Bring what is stuck and leave with it moving.{% endblock %}
 {% block twitter_image %}https://linkedtrust.us{% static 'img/levelup/levelup-banner-1200x627.png' %}{% endblock %}
 

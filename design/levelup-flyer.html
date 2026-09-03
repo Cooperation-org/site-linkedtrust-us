@@ -1,0 +1,172 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>LevelUp flyer artboards</title>
+<style>
+@font-face { font-family: Montserrat; src: url('../static/fonts/montserrat-400-latin.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: Montserrat; src: url('../static/fonts/montserrat-500-latin.woff2') format('woff2'); font-weight: 500; }
+@font-face { font-family: Montserrat; src: url('../static/fonts/montserrat-700-latin.woff2') format('woff2'); font-weight: 700; }
+@font-face { font-family: Montserrat; src: url('../static/fonts/montserrat-800-latin.woff2') format('woff2'); font-weight: 800; }
+@font-face { font-family: 'JetBrains Mono'; src: url('../static/fonts/jetbrainsmono-400-latin.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'JetBrains Mono'; src: url('../static/fonts/jetbrainsmono-700-latin.woff2') format('woff2'); font-weight: 700; }
+
+:root {
+    --bg-dark: #0f1117;
+    --brand: #00B2E5;
+    --accent: #667eea;
+    --on-dark: #e8e8e8;
+    --on-dark-muted: #8b8fa3;
+    --ink: #1a1a1a;
+    --ink-2: #555;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #333; font-family: Montserrat, sans-serif; }
+
+.board {
+    position: relative; overflow: hidden; color: var(--on-dark);
+    background:
+        radial-gradient(120% 90% at 88% 4%, rgba(102,126,234,0.30) 0%, transparent 55%),
+        radial-gradient(90% 80% at 2% 82%, rgba(0,178,229,0.20) 0%, transparent 58%),
+        #0b0d13;
+    margin: 20px auto;
+}
+.mono { font-family: 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
+
+.brandline { display: flex; align-items: center; gap: 0.55em; }
+.brandline img { display: block; }
+.brandline span { font-weight: 700; letter-spacing: -0.01em; }
+.brandline span i { color: var(--brand); font-style: normal; }
+
+.kicker { display: flex; align-items: center; gap: 0.7em; color: var(--brand); font-weight: 700; }
+.kicker::before { content: ''; border-radius: 50%; background: var(--brand); flex: none; }
+
+h1 { font-weight: 800; letter-spacing: -0.03em; line-height: 0.98; }
+h1 em { font-style: normal; background: linear-gradient(100deg, #00B2E5 10%, #667eea 92%);
+        -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lede { color: #b9bdcc; font-weight: 400; }
+
+.meta { display: flex; }
+.meta > div { flex: 1; }
+.meta > div:first-child { flex: 1.25; }
+.meta dd { white-space: nowrap; }
+.meta dt { color: var(--on-dark-muted); font-family: 'JetBrains Mono', monospace;
+           letter-spacing: 0.13em; text-transform: uppercase; }
+.meta dd { font-weight: 700; color: #fff; }
+.meta .sub { display: block; font-weight: 400; color: var(--on-dark-muted); }
+
+.card { background: #fff; color: var(--ink); border-radius: 18px; position: relative; overflow: hidden; }
+.card::before { content: ''; position: absolute; inset: 0 0 auto 0;
+                background: linear-gradient(90deg, #00B2E5, #667eea); }
+.card h2 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
+.card h2 em { font-style: normal; color: #0090b8; }
+.card p { color: var(--ink-2); }
+.card .url { font-family: 'JetBrains Mono', monospace; color: #0090b8; font-weight: 700; word-break: break-all; }
+.card b { color: var(--ink); }
+.qr { text-align: center; flex: none; }
+.qr img { display: block; width: 100%; height: auto; border-radius: 10px; }
+.qr span { display: block; color: #6b7280; font-family: 'JetBrains Mono', monospace;
+           letter-spacing: 0.13em; text-transform: uppercase; }
+.quote { border-top: 1px solid #e8e8e6; color: #4b5563; font-style: italic; }
+.quote b { display: block; font-style: normal; color: var(--ink); }
+
+/* ---------------- portrait 1080 x 1350 ---------------- */
+#portrait { width: 1080px; height: 1350px; padding: 58px 68px 54px; display: flex; flex-direction: column; }
+#portrait .brandline img { width: 62px; height: 62px; }
+#portrait .brandline span { font-size: 34px; }
+#portrait .kicker { font-size: 16px; margin-top: 48px; }
+#portrait .kicker::before { width: 12px; height: 12px; }
+#portrait h1 { font-size: 104px; margin-top: 20px; }
+#portrait .lede { font-size: 27px; line-height: 1.44; margin-top: 26px; max-width: 780px; }
+#portrait .meta { gap: 30px; margin-top: auto; }
+#portrait .meta dt { font-size: 15px; }
+#portrait .meta dd { font-size: 24px; line-height: 1.38; margin-top: 11px; }
+#portrait .meta .sub { font-size: 18px; margin-top: 5px; white-space: normal; }
+#portrait .card { margin-top: 56px; padding: 40px 44px 36px; display: flex; gap: 38px; }
+#portrait .card::before { height: 6px; }
+#portrait .card h2 { font-size: 36px; }
+#portrait .card p { font-size: 22px; line-height: 1.5; margin-top: 16px; }
+#portrait .card .url { font-size: 25px; margin-top: 20px; display: block; }
+#portrait .qr { width: 236px; }
+#portrait .qr span { font-size: 14px; margin-top: 14px; }
+#portrait .quote { font-size: 19px; line-height: 1.55; margin-top: 26px; padding-top: 22px; }
+#portrait .quote b { font-size: 18px; margin-top: 10px; }
+
+/* ---------------- landscape 1200 x 627 ---------------- */
+#landscape { width: 1200px; height: 627px; padding: 46px 52px; display: flex; gap: 46px; align-items: center; }
+#landscape .left { flex: 1; min-width: 0; }
+#landscape .brandline img { width: 44px; height: 44px; }
+#landscape .brandline span { font-size: 25px; }
+#landscape .kicker { font-size: 13px; margin-top: 30px; }
+#landscape .kicker::before { width: 9px; height: 9px; }
+#landscape h1 { font-size: 70px; margin-top: 16px; }
+#landscape .lede { font-size: 21px; line-height: 1.42; margin-top: 20px; max-width: 600px; }
+#landscape .meta { gap: 22px; margin-top: 30px; }
+#landscape .meta dt { font-size: 12px; }
+#landscape .meta dd { font-size: 17px; line-height: 1.38; margin-top: 8px; }
+#landscape .meta .sub { font-size: 13px; margin-top: 4px; white-space: normal; }
+#landscape .card { width: 372px; flex: none; padding: 34px 32px 30px; text-align: center; }
+#landscape .card::before { height: 5px; }
+#landscape .card h2 { font-size: 27px; }
+#landscape .card p { font-size: 17px; line-height: 1.5; margin-top: 12px; }
+#landscape .card .url { font-size: 19px; margin-top: 16px; display: block; }
+#landscape .qr { width: 190px; margin: 20px auto 0; }
+#landscape .qr span { font-size: 12px; margin-top: 10px; }
+</style>
+
+<div class="board" id="portrait">
+    <div class="brandline"><img src="LOGO_SRC" alt=""><span>Linked <i>Trust</i></span></div>
+    <p class="kicker mono">LevelUp: live workshop with LinkedTrust engineers</p>
+    <h1>Make your idea<br><em>actually live.</em></h1>
+    <p class="lede">Two hours in a small group with engineers who do infra, DevOps and product for a living. Bring the thing that is stuck. Leave with it moving.</p>
+    <dl class="meta">
+        <div>
+            <dt>Dates</dt>
+            <dd>Wed, Sept 16, 2026<br>Wed, Oct 21, 2026<span class="sub">Take either one, or both</span></dd>
+        </div>
+        <div>
+            <dt>Time &middot; both dates</dt>
+            <dd>7:00 to 9:00 am PT<span class="sub">14:00 to 16:00 UTC</span></dd>
+        </div>
+        <div>
+            <dt>Where</dt>
+            <dd>Online<span class="sub">small breakout rooms</span></dd>
+        </div>
+    </dl>
+    <div class="card">
+        <div>
+            <h2>Save your seat. <em>Free for teams under 10 and nonprofits.</em></h2>
+            <p><b>$100</b> for larger teams. Have a partner code? Your seat is free.</p>
+            <span class="url">linkedtrust.us/levelup</span>
+            <p class="quote">"Deep technical expertise applied to real world imperatives, executed quickly, with excellent communication, and affordably."<b>George Polisner, verified LinkedClaim</b></p>
+        </div>
+        <div class="qr"><img src="QR_SRC" alt="linkedtrust.us/levelup"><span>Scan to register</span></div>
+    </div>
+</div>
+
+<div class="board" id="landscape">
+    <div class="left">
+        <div class="brandline"><img src="LOGO_SRC" alt=""><span>Linked <i>Trust</i></span></div>
+        <p class="kicker mono">LevelUp: live workshop with LinkedTrust engineers</p>
+        <h1>Make your idea<br><em>actually live.</em></h1>
+        <p class="lede">Two hours in a small group with engineers who do infra, DevOps and product for a living. Bring the thing that is stuck. Leave with it moving.</p>
+        <dl class="meta">
+            <div>
+                <dt>Dates</dt>
+                <dd>Wed, Sept 16, 2026<br>Wed, Oct 21, 2026<span class="sub">Take either one, or both</span></dd>
+            </div>
+            <div>
+                <dt>Time &middot; both dates</dt>
+                <dd>7:00 to 9:00 am PT<span class="sub">14:00 to 16:00 UTC</span></dd>
+            </div>
+            <div>
+                <dt>Where</dt>
+                <dd>Online<span class="sub">small breakout rooms</span></dd>
+            </div>
+        </dl>
+    </div>
+    <div class="card">
+        <h2>Save your seat. <em>Free for teams under 10 and nonprofits.</em></h2>
+        <p><b>$100</b> for larger teams. Have a partner code? Your seat is free.</p>
+        <span class="url">linkedtrust.us/levelup</span>
+        <div class="qr"><img src="QR_SRC" alt="linkedtrust.us/levelup"><span>Scan to register</span></div>
+    </div>
+</div>
