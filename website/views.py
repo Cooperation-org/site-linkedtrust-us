@@ -896,6 +896,10 @@ def _levelup_notify(reg):
         f"Admin: https://linkedtrust.us/admin/website/levelupregistration/{reg.pk}/change/\n"
     )
     notify_to = getattr(settings, 'LEVELUP_NOTIFY_EMAIL', 'connect@linkedtrust.us')
+    # fail_silently must stay False here. With it True, Django swallows SMTP
+    # errors and returns 0, the except below never fires, and a dead mail
+    # server is indistinguishable from a delivered notification. The try/except
+    # is what keeps a mail outage from losing a registration already in the DB.
     try:
         EmailMessage(
             subject=f"LevelUp registration: {reg.name} ({reg.organization})",
@@ -903,9 +907,10 @@ def _levelup_notify(reg):
             from_email=settings.DEFAULT_FROM_EMAIL,
             to=[notify_to],
             reply_to=[reg.email],
-        ).send(fail_silently=True)
-    except Exception as e:  # pragma: no cover
-        logger.error(f"LevelUp team email failed: {e}")
+        ).send(fail_silently=False)
+        reg.team_notified = True
+    except Exception as e:
+        logger.error("LevelUp team email failed for registration %s: %s", reg.pk, e)
 
     attendee_body = (
         f"Hi {reg.name.split()[0] if reg.name.strip() else 'there'},\n\n"
@@ -932,9 +937,12 @@ def _levelup_notify(reg):
             reply_to=[notify_to],
         )
         _attach_levelup_calendar(attendee_message, session)
-        attendee_message.send(fail_silently=True)
-    except Exception as e:  # pragma: no cover
-        logger.error(f"LevelUp attendee email failed: {e}")
+        attendee_message.send(fail_silently=False)
+        reg.attendee_notified = True
+    except Exception as e:
+        logger.error("LevelUp attendee email failed for registration %s: %s", reg.pk, e)
+
+    reg.save(update_fields=['team_notified', 'attendee_notified'])
 
 
 def _levelup_send_access(reg, access_url):

@@ -7,6 +7,8 @@ from pathlib import Path
 import tempfile
 import time
 
+from unittest.mock import patch
+
 from django.core import mail
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, override_settings
@@ -316,3 +318,40 @@ class LevelUpSessionTests(TestCase):
         self.client.post('/levelup/', payload())
         self.assertEqual(mail.outbox[0].to, ['connect@linkedtrust.us'])
         self.assertIn('Wednesday, September 16, 2026', mail.outbox[0].body)
+
+
+@override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend',
+                   LEVELUP_STRIPE_PAYMENT_LINK='', LEVELUP_NOTIFY_EMAIL='connect@linkedtrust.us')
+class LevelUpNotificationTests(TestCase):
+    """A registration must never be lost to a mail outage, and the admin has to
+    show whether the notification actually left the server."""
+
+    def test_delivery_is_recorded_on_success(self):
+        self.client.post('/levelup/', payload())
+        reg = LevelUpRegistration.objects.get()
+        self.assertTrue(reg.team_notified)
+        self.assertTrue(reg.attendee_notified)
+
+    def test_registration_survives_a_dead_mail_server(self):
+        with patch('website.views.EmailMessage.send', side_effect=OSError('smtp down')):
+            r = self.client.post('/levelup/', payload())
+        self.assertRedirects(r, '/levelup/thanks/', fetch_redirect_response=False)
+        reg = LevelUpRegistration.objects.get()
+        self.assertFalse(reg.team_notified)
+        self.assertFalse(reg.attendee_notified)
+
+    def test_attendee_failure_still_records_the_team_notification(self):
+        real = LevelUpRegistration.objects.count
+        calls = {'n': 0}
+
+        def flaky(self, *a, **kw):
+            calls['n'] += 1
+            if calls['n'] > 1:
+                raise OSError('smtp down')
+            return 1
+
+        with patch('website.views.EmailMessage.send', flaky):
+            self.client.post('/levelup/', payload())
+        reg = LevelUpRegistration.objects.get()
+        self.assertTrue(reg.team_notified)
+        self.assertFalse(reg.attendee_notified)

@@ -327,6 +327,8 @@ class LevelUpRegistration(models.Model):
     payment_status = models.CharField(max_length=10, choices=PAYMENT_CHOICES, default='free')
     stripe_reference = models.CharField(max_length=120, blank=True)
     invited = models.BooleanField(default=False, help_text="Private workshop link and updated calendar invitation sent")
+    team_notified = models.BooleanField(default=False, help_text="Notification to the team inbox left the server")
+    attendee_notified = models.BooleanField(default=False, help_text="Confirmation to the registrant left the server")
     access_sent_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
