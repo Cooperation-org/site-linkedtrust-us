@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}You are in: LevelUp, Sept 9 | LinkedTrust{% endblock %}
+{% block title %}You are in: LevelUp | LinkedTrust{% endblock %}
 {% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
 
 {% block extra_css %}
@@ -48,7 +48,7 @@
         <p>{% if paid %}Payment received, thank you. {% endif %}Your seat at LevelUp is saved. A confirmation is on its way to {% if reg %}<strong>{{ reg.email }}</strong>{% else %}your inbox{% endif %}.</p>
 
         <dl>
-            <dt>Date</dt><dd>{{ event.date_label }}</dd>
+            <dt>Date</dt><dd>{{ session.date_label }}</dd>
             <dt>Time</dt><dd>{{ event.time_label }} ({{ event.time_utc }})</dd>
             <dt>Where</dt><dd>Online. The link comes by email before the day.</dd>
             {% if reg %}<dt>Project</dt><dd>{{ reg.organization }}</dd>{% endif %}
@@ -63,12 +63,12 @@
             <ol>
                 <li>We read what you told us and put you in the right breakout group.</li>
                 {% if reg and reg.wants_checkin %}<li>Someone from the team emails you to set up your 15-minute check-in.</li>{% endif %}
-                <li>Save the attached calendar invitation. The private video link follows before September 9.</li>
+                <li>Save the attached calendar invitation. The private video link follows before the day.</li>
             </ol>
         </div>
 
         <div class="lu-actions">
-            <a class="btn btn-gradient" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=LevelUp%3A+live+build+workshop+with+LinkedTrust&dates=20260909T140000Z%2F20260909T160000Z&details=Video+link+arrives+by+email+from+LinkedTrust+before+the+day.&location=Online" target="_blank" rel="noopener">Add to Google Calendar</a>
+            <a class="btn btn-gradient" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=LevelUp%3A+live+build+workshop+with+LinkedTrust&dates={{ session.stamp }}%2F{{ session.end_stamp }}&details=Video+link+arrives+by+email+from+LinkedTrust+before+the+day.&location=Online" target="_blank" rel="noopener">Add to Google Calendar</a>
             <a class="btn" style="border:1.5px solid var(--border);" href="{% url 'services' %}">See what we build</a>
         </div>
     </div>

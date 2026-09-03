@@ -281,7 +281,12 @@ class LevelUpAccessCode(models.Model):
 
 
 class LevelUpRegistration(models.Model):
-    """One sign-up for the LevelUp live workshop (Sept 9 2026, 7 to 9am PT)."""
+    """One sign-up for a LevelUp live workshop sitting (7 to 9am PT)."""
+    SESSION_CHOICES = [
+        ('sep16', 'Wednesday, September 16, 2026'),
+        ('oct21', 'Wednesday, October 21, 2026'),
+    ]
+
     HELP_CHOICES = [
         ('gtm', 'Go to market'),
         ('ux', 'User experience'),
@@ -303,6 +308,7 @@ class LevelUpRegistration(models.Model):
     name = models.CharField(max_length=150)
     email = models.EmailField()
     organization = models.CharField(max_length=200, help_text="Company, project or idea name")
+    session = models.CharField(max_length=10, choices=SESSION_CHOICES, default='sep16')
     link = models.URLField(blank=True, help_text="Site, deck, repo or doc they want us to look at")
     attachment = models.FileField(
         upload_to='levelup/%Y/%m/',

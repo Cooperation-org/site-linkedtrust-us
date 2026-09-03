@@ -36,7 +36,7 @@ urlpatterns = [
     # personalized one-click commit, then SSO into the dashboard.
     path('earnedgov/i/<slug:code>/', earnedgov_invite_view, name='earnedgov_invite'),
 
-    # LevelUp live workshop: branded registration page (Sept 9 2026)
+    # LevelUp live workshop: branded registration page (Sept 16 and Oct 21 2026)
     path('levelup/', levelup_view, name='levelup'),
     path('levelup', RedirectView.as_view(url='/levelup/', permanent=True)),
     path('levelup/thanks/', levelup_thanks_view, name='levelup_thanks'),

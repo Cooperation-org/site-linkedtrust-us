@@ -26,6 +26,7 @@ def payload(**over):
         'goal': 'Get the app live on a real domain.',
         'wants_checkin': 'on',
         'tier': 'free_small',
+        'session': 'sep16',
         'code': '',
         'company_fax': '',
     }
@@ -42,8 +43,9 @@ class LevelUpPageTests(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertContains(r, 'Save your seat')
         self.assertContains(r, 'name="help_with"')
-        self.assertContains(r, 'September 9')
-        self.assertContains(r, 'Wednesday, September 9, 2026')
+        self.assertContains(r, 'September 16')
+        self.assertContains(r, 'Wednesday, September 16, 2026')
+        self.assertContains(r, 'Wednesday, October 21, 2026')
         self.assertContains(r, 'multipart/form-data')
         self.assertContains(r, 'levelup-banner-1200x627.png')
         self.assertContains(r, 'levelup-qr.png')
@@ -70,10 +72,10 @@ class LevelUpPageTests(TestCase):
         self.assertIn('1-1 check-in', attendee.body)
         self.assertEqual(len(attendee.attachments), 1)
         calendar_name, calendar_body, calendar_type = attendee.attachments[0]
-        self.assertEqual(calendar_name, 'levelup-sept-9-2026.ics')
+        self.assertEqual(calendar_name, 'levelup-sep16.ics')
         if isinstance(calendar_body, bytes):
             calendar_body = calendar_body.decode()
-        self.assertIn('DTSTART:20260909T140000Z', calendar_body)
+        self.assertIn('DTSTART:20260916T140000Z', calendar_body)
         self.assertIn('text/calendar', calendar_type)
 
     def test_thanks_page_uses_session(self):
@@ -269,3 +271,48 @@ class LevelUpPageTests(TestCase):
         r = self.client.get('/sitemap-pages.xml')
         self.assertEqual(r.status_code, 200)
         self.assertContains(r, '/levelup/')
+
+
+@override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend',
+                   LEVELUP_STRIPE_PAYMENT_LINK='', LEVELUP_NOTIFY_EMAIL='connect@linkedtrust.us')
+class LevelUpSessionTests(TestCase):
+    """Both sittings are offered, and the one picked drives the emails and the .ics."""
+
+    def test_page_offers_both_sittings(self):
+        r = self.client.get('/levelup/')
+        self.assertContains(r, 'Wednesday, September 16, 2026')
+        self.assertContains(r, 'Wednesday, October 21, 2026')
+        self.assertNotContains(r, 'September 9')
+
+    def test_defaults_to_september(self):
+        self.client.post('/levelup/', payload())
+        self.assertEqual(LevelUpRegistration.objects.get().session, 'sep16')
+
+    def test_october_choice_drives_emails_and_calendar(self):
+        self.client.post('/levelup/', payload(session='oct21'))
+        reg = LevelUpRegistration.objects.get()
+        self.assertEqual(reg.session, 'oct21')
+        team, attendee = mail.outbox
+        self.assertIn('Wednesday, October 21, 2026', team.body)
+        self.assertIn('Wednesday, October 21, 2026', attendee.body)
+        self.assertIn('Oct 21', attendee.subject)
+        ics = [c for c in attendee.attachments if str(c[0]).endswith('.ics')][0][1]
+        body = ics.decode() if isinstance(ics, bytes) else ics
+        self.assertIn('DTSTART:20261021T140000Z', body)
+        self.assertIn('DTEND:20261021T160000Z', body)
+
+    def test_thanks_page_shows_the_chosen_sitting(self):
+        self.client.post('/levelup/', payload(session='oct21'))
+        r = self.client.get('/levelup/thanks/')
+        self.assertContains(r, 'Wednesday, October 21, 2026')
+        self.assertContains(r, '20261021T140000Z')
+
+    def test_unknown_session_rejected(self):
+        r = self.client.post('/levelup/', payload(session='dec25'))
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(LevelUpRegistration.objects.count(), 0)
+
+    def test_team_notification_goes_to_connect_inbox(self):
+        self.client.post('/levelup/', payload())
+        self.assertEqual(mail.outbox[0].to, ['connect@linkedtrust.us'])
+        self.assertIn('Wednesday, September 16, 2026', mail.outbox[0].body)

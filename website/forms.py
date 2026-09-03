@@ -47,6 +47,12 @@ class LevelUpRegistrationForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         error_messages={'required': 'Pick at least one thing you want help with.'},
     )
+    session = forms.ChoiceField(
+        choices=LevelUpRegistration.SESSION_CHOICES,
+        widget=forms.RadioSelect,
+        initial='sep16',
+        label='Which session?',
+    )
     tier = forms.ChoiceField(
         choices=LevelUpRegistration.TIER_CHOICES,
         widget=forms.RadioSelect,
@@ -67,7 +73,7 @@ class LevelUpRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = LevelUpRegistration
-        fields = ['name', 'email', 'organization', 'link', 'attachment', 'help_with', 'goal', 'wants_checkin', 'tier']
+        fields = ['name', 'email', 'organization', 'link', 'attachment', 'help_with', 'goal', 'wants_checkin', 'session', 'tier']
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'Your name', 'autocomplete': 'name', 'required': True}),
             'email': forms.EmailInput(attrs={'placeholder': 'you@example.com', 'autocomplete': 'email', 'required': True}),

@@ -792,18 +792,49 @@ def services_launch_view(request):
 # LevelUp workshop registration
 # ---------------------------------------------------------------------------
 
+# Two sittings of the same workshop. Both run 7 to 9am PT, which is 14:00 UTC
+# on both dates because California is still on daylight time in October.
+LEVELUP_SESSIONS = [
+    {
+        'key': 'sep16',
+        'date_label': 'Wednesday, September 16, 2026',
+        'short_label': 'Sept 16',
+        'stamp': '20260916T140000Z',
+        'end_stamp': '20260916T160000Z',
+        'iso_start': '2026-09-16T14:00:00Z',
+        'iso_end': '2026-09-16T16:00:00Z',
+    },
+    {
+        'key': 'oct21',
+        'date_label': 'Wednesday, October 21, 2026',
+        'short_label': 'Oct 21',
+        'stamp': '20261021T140000Z',
+        'end_stamp': '20261021T160000Z',
+        'iso_start': '2026-10-21T14:00:00Z',
+        'iso_end': '2026-10-21T16:00:00Z',
+    },
+]
+
 LEVELUP_EVENT = {
     'name': 'LevelUp',
-    'date_label': 'Wednesday, September 9, 2026',
     'time_label': '7:00 to 9:00 am PT',
     'time_utc': '14:00 to 16:00 UTC',
-    'iso_start': '2026-09-09T14:00:00Z',
-    'iso_end': '2026-09-09T16:00:00Z',
     'price': '$100',
+    'sessions': LEVELUP_SESSIONS,
+    'date_label': ' or '.join(s['date_label'] for s in LEVELUP_SESSIONS),
+    'short_dates': ' and '.join(s['short_label'] for s in LEVELUP_SESSIONS),
 }
 
 
-def _levelup_calendar(access_url=''):
+def levelup_session(key):
+    """The session a registrant picked, falling back to the first sitting."""
+    for session in LEVELUP_SESSIONS:
+        if session['key'] == key:
+            return session
+    return LEVELUP_SESSIONS[0]
+
+
+def _levelup_calendar(session, access_url=''):
     """Return a small standards-based calendar invitation for the workshop."""
     description = (
         'A live build workshop with LinkedTrust engineers. Bring what is stuck '
@@ -824,10 +855,10 @@ def _levelup_calendar(access_url=''):
         'CALSCALE:GREGORIAN',
         'METHOD:REQUEST',
         'BEGIN:VEVENT',
-        'UID:levelup-20260909T140000Z@linkedtrust.us',
+        f'UID:levelup-{session["stamp"]}@linkedtrust.us',
         f'DTSTAMP:{datetime.now(datetime_timezone.utc):%Y%m%dT%H%M%SZ}',
-        'DTSTART:20260909T140000Z',
-        'DTEND:20260909T160000Z',
+        f'DTSTART:{session["stamp"]}',
+        f'DTEND:{session["end_stamp"]}',
         f'SUMMARY:{escape("LevelUp: live build workshop")}',
         f'DESCRIPTION:{escape(description)}',
         f'LOCATION:{escape(location)}',
@@ -839,10 +870,10 @@ def _levelup_calendar(access_url=''):
     return '\r\n'.join(lines) + '\r\n'
 
 
-def _attach_levelup_calendar(message, access_url=''):
+def _attach_levelup_calendar(message, session, access_url=''):
     message.attach(
-        'levelup-sept-9-2026.ics',
-        _levelup_calendar(access_url).encode('utf-8'),
+        f'levelup-{session["key"]}.ics',
+        _levelup_calendar(session, access_url).encode('utf-8'),
         'text/calendar; method=REQUEST; charset=UTF-8',
     )
 
@@ -852,8 +883,10 @@ def _levelup_notify(reg):
     hiccup must never lose a registration that is already in the database."""
     from .forms import LevelUpRegistrationForm  # noqa: F401  (keeps import graph obvious)
     help_list = ', '.join(reg.help_with_labels()) or '(none)'
+    session = levelup_session(reg.session)
     team_body = (
         f"Name: {reg.name}\nEmail: {reg.email}\nOrganization: {reg.organization}\n"
+        f"Session: {session['date_label']}\n"
         f"Link: {reg.link or '(none)'}\n"
         f"Uploaded file: {reg.attachment.name if reg.attachment else '(none)'}\n"
         f"Help with: {help_list}\n"
@@ -877,7 +910,7 @@ def _levelup_notify(reg):
     attendee_body = (
         f"Hi {reg.name.split()[0] if reg.name.strip() else 'there'},\n\n"
         f"You are registered for LevelUp, the live build workshop with LinkedTrust engineers.\n\n"
-        f"When: {LEVELUP_EVENT['date_label']}, {LEVELUP_EVENT['time_label']} ({LEVELUP_EVENT['time_utc']})\n"
+        f"When: {session['date_label']}, {LEVELUP_EVENT['time_label']} ({LEVELUP_EVENT['time_utc']})\n"
         f"Where: online. A calendar invitation is attached; the video link comes by email before the day.\n\n"
         f"What you told us you want help with: {help_list}\n"
         f"Your goal: {reg.goal}\n"
@@ -892,13 +925,13 @@ def _levelup_notify(reg):
     attendee_body += "\nReply to this email if anything changes.\n\nThe LinkedTrust team\nhttps://linkedtrust.us\n"
     try:
         attendee_message = EmailMessage(
-            subject="You are in: LevelUp, Sept 9",
+            subject=f"You are in: LevelUp, {session['short_label']}",
             body=attendee_body,
             from_email=settings.DEFAULT_FROM_EMAIL,
             to=[reg.email],
             reply_to=[notify_to],
         )
-        _attach_levelup_calendar(attendee_message)
+        _attach_levelup_calendar(attendee_message, session)
         attendee_message.send(fail_silently=True)
     except Exception as e:  # pragma: no cover
         logger.error(f"LevelUp attendee email failed: {e}")
@@ -907,11 +940,12 @@ def _levelup_notify(reg):
 def _levelup_send_access(reg, access_url):
     """Email the private workshop link and an updated calendar invitation."""
     notify_to = getattr(settings, 'LEVELUP_NOTIFY_EMAIL', 'connect@linkedtrust.us')
+    session = levelup_session(reg.session)
     message = EmailMessage(
-        subject='Your LevelUp workshop link — Sept 9',
+        subject=f'Your LevelUp workshop link — {session["short_label"]}',
         body=(
             f"Hi {reg.name.split()[0] if reg.name.strip() else 'there'},\n\n"
-            f"Here is your private link for LevelUp on {LEVELUP_EVENT['date_label']} "
+            f"Here is your private link for LevelUp on {session['date_label']} "
             f"at {LEVELUP_EVENT['time_label']}:\n\n{access_url}\n\n"
             "An updated calendar invitation is attached. Please do not post the "
             "workshop link publicly.\n\nThe LinkedTrust team\n"
@@ -920,7 +954,7 @@ def _levelup_send_access(reg, access_url):
         to=[reg.email],
         reply_to=[notify_to],
     )
-    _attach_levelup_calendar(message, access_url)
+    _attach_levelup_calendar(message, session, access_url)
     try:
         sent = message.send(fail_silently=False)
     except Exception as exc:  # pragma: no cover
@@ -978,9 +1012,11 @@ def levelup_thanks_view(request):
     if reg is None:
         return redirect(reverse('levelup'))
     first_name = (reg.name.strip().split()[0] if reg and reg.name.strip() else '')
+    session = levelup_session(reg.session if reg else '')
     return render(request, 'levelup_thanks.html', {
         'reg': reg,
         'first_name': first_name,
+        'session': session,
         'event': LEVELUP_EVENT,
         'paid': reg.payment_status == 'paid',
     })
