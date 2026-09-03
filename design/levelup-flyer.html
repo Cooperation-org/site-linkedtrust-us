@@ -62,7 +62,12 @@ h1 em { font-style: normal; background: linear-gradient(100deg, #00B2E5 10%, #66
 .card .url { font-family: 'JetBrains Mono', monospace; color: #0090b8; font-weight: 700; word-break: break-all; }
 .card b { color: var(--ink); }
 .qr { text-align: center; flex: none; }
+.qr .code { position: relative; }
 .qr img { display: block; width: 100%; height: auto; border-radius: 10px; }
+.qr .mark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 23%; height: 23%; background: #fff; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; padding: 4%; }
+.qr .mark img { width: 100%; height: 100%; border-radius: 0; }
 .qr span { display: block; color: #6b7280; font-family: 'JetBrains Mono', monospace;
            letter-spacing: 0.13em; text-transform: uppercase; }
 .quote { border-top: 1px solid #e8e8e6; color: #4b5563; font-style: italic; }
@@ -89,6 +94,12 @@ h1 em { font-style: normal; background: linear-gradient(100deg, #00B2E5 10%, #66
 #portrait .qr span { font-size: 14px; margin-top: 14px; }
 #portrait .quote { font-size: 19px; line-height: 1.55; margin-top: 26px; padding-top: 22px; }
 #portrait .quote b { font-size: 18px; margin-top: 10px; }
+
+/* ---------------- standalone QR 888 x 888 ---------------- */
+#qrboard { width: 888px; height: 888px; background: #fff; padding: 44px;
+           display: flex; align-items: center; justify-content: center; }
+#qrboard .qr { width: 800px; }
+#qrboard .qr img { border-radius: 0; }
 
 /* ---------------- landscape 1200 x 627 ---------------- */
 #landscape { width: 1200px; height: 627px; padding: 46px 52px; display: flex; gap: 46px; align-items: center; }
@@ -138,8 +149,12 @@ h1 em { font-style: normal; background: linear-gradient(100deg, #00B2E5 10%, #66
             <span class="url">linkedtrust.us/levelup</span>
             <p class="quote">"Deep technical expertise applied to real world imperatives, executed quickly, with excellent communication, and affordably."<b>George Polisner, verified LinkedClaim</b></p>
         </div>
-        <div class="qr"><img src="QR_SRC" alt="linkedtrust.us/levelup"><span>Scan to register</span></div>
+        <div class="qr"><span class="code"><img src="QR_SRC" alt="linkedtrust.us/levelup"><span class="mark"><img src="LOGO_SRC" alt=""></span></span><span>Scan to register</span></div>
     </div>
+</div>
+
+<div class="board" id="qrboard">
+    <div class="qr"><span class="code"><img src="QR_SRC" alt="linkedtrust.us/levelup"><span class="mark"><img src="LOGO_SRC" alt=""></span></span></div>
 </div>
 
 <div class="board" id="landscape">
@@ -167,6 +182,6 @@ h1 em { font-style: normal; background: linear-gradient(100deg, #00B2E5 10%, #66
         <h2>Save your seat. <em>Free for teams under 10 and nonprofits.</em></h2>
         <p><b>$100</b> for larger teams. Have a partner code? Your seat is free.</p>
         <span class="url">linkedtrust.us/levelup</span>
-        <div class="qr"><img src="QR_SRC" alt="linkedtrust.us/levelup"><span>Scan to register</span></div>
+        <div class="qr"><span class="code"><img src="QR_SRC" alt="linkedtrust.us/levelup"><span class="mark"><img src="LOGO_SRC" alt=""></span></span><span>Scan to register</span></div>
     </div>
 </div>

@@ -25,6 +25,7 @@ REGISTER_URL = 'https://linkedtrust.us/levelup/'
 BOARDS = [
     ('portrait', 'levelup-flyer-1080x1350.png', 1080, 1350),
     ('landscape', 'levelup-banner-1200x627.png', 1200, 627),
+    ('qrboard', 'levelup-qr.png', 888, 888),
 ]
 
 
@@ -33,7 +34,7 @@ def qr_png(scale=12):
     in the middle does not stop a phone reading it."""
     buf = BytesIO()
     segno.make(REGISTER_URL, error='h').save(
-        buf, kind='png', scale=scale, border=2, dark='#101014', light='#ffffff')
+        buf, kind='png', scale=scale, border=4, dark='#101014', light='#ffffff')
     return buf.getvalue()
 
 
@@ -44,8 +45,6 @@ def data_uri(payload, mime):
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     qr = qr_png()
-    (OUT / 'levelup-qr.png').write_bytes(qr)
-
     html = (ROOT / 'design' / 'levelup-flyer.html').read_text()
     html = html.replace('QR_SRC', data_uri(qr, 'image/png'))
     html = html.replace('LOGO_SRC', data_uri((ROOT / 'static' / 'img' / 'logo.svg').read_bytes(), 'image/svg+xml'))
@@ -69,7 +68,6 @@ def main():
             browser.close()
     finally:
         staged.unlink(missing_ok=True)
-    print('wrote', OUT / 'levelup-qr.png')
 
 
 if __name__ == '__main__':
