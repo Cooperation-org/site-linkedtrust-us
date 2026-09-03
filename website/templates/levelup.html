@@ -101,10 +101,13 @@
 }
 .lu-when {
     margin-top: 2rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, max-content));
-    gap: 0.75rem 2.5rem;
+    /* each fact is as wide as its own longest line, so a date never breaks
+       across lines; the row wraps instead */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem 2.5rem;
 }
+.lu-when > div { flex: 0 1 auto; }
 .lu-when dt {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
@@ -116,6 +119,7 @@
     font-weight: 700;
     color: #fff;
     margin-top: 0.15rem;
+    line-height: 1.45;
 }
 .lu-hero-cta {
     margin-top: 2.25rem;
@@ -378,9 +382,9 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
         <p class="lu-hero-lede">Two hours in a small group with engineers who do infra, DevOps and product for a living. Bring the thing that is stuck. Leave with it moving.</p>
         <dl class="lu-when">
             <div><dt>Dates</dt><dd>{% for s in event.sessions %}{{ s.date_label }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</dd></div>
-            <div><dt>Time</dt><dd>Both {{ event.time_label }}<br><span style="font-weight:400;color:var(--text-on-dark-muted);font-size:0.85rem;">{{ event.time_utc }}</span></dd></div>
-            <div><dt>Where</dt><dd>Online, breakout rooms</dd></div>
-            <div><dt>Cost</dt><dd>Free for teams under 10<br><span style="font-weight:400;color:var(--text-on-dark-muted);font-size:0.85rem;">and nonprofits, else {{ event.price }}</span></dd></div>
+            <div><dt>Time</dt><dd>{{ event.time_label }}<br>{{ event.time_utc }}</dd></div>
+            <div><dt>Where</dt><dd>Online<br>small breakout rooms</dd></div>
+            <div><dt>Cost</dt><dd>Free for teams under 10<br>and nonprofits, else {{ event.price }}</dd></div>
         </dl>
         <div class="lu-hero-cta">
             <a href="#register" class="btn btn-gradient">Save my seat</a>
