@@ -22,6 +22,11 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / 'static' / 'img' / 'levelup'
 REGISTER_URL = 'https://linkedtrust.us/levelup/'
 
+# Boards that also ship as PDF: the contact links stay clickable there.
+PDFS = [
+    ('levelup-poster.html', 'poster', 'levelup-poster.pdf', 1080, 1350),
+]
+
 BOARDS = [
     ('levelup-flyer.html', 'portrait', 'levelup-flyer-1080x1350.png', 1080, 1350),
     ('levelup-flyer.html', 'landscape', 'levelup-banner-1200x627.png', 1200, 627),
@@ -86,6 +91,17 @@ def main():
                 if spill > 0:
                     sys.exit(f'{board}: content runs {spill}px under the contact band')
                 page.locator('#' + board).screenshot(path=str(OUT / name))
+                print('wrote', OUT / name)
+
+            for source, board, name, width, height in PDFS:
+                page.goto(staged[source].as_uri())
+                page.add_style_tag(content=(
+                    f'body {{ margin: 0; background: #fff; }} '
+                    f'#{board} {{ margin: 0; }}'))
+                page.wait_for_timeout(300)
+                page.pdf(path=str(OUT / name), print_background=True,
+                         width=f'{width}px', height=f'{height}px',
+                         margin={'top': '0', 'right': '0', 'bottom': '0', 'left': '0'})
                 print('wrote', OUT / name)
             browser.close()
     finally:
