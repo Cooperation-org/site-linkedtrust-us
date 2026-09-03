@@ -209,7 +209,7 @@ def mark_paid(modeladmin, request, queryset):
 
 
 class LevelUpRegistrationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'organization', 'tier', 'payment_status', 'wants_checkin', 'invited', 'access_sent_at', 'created_at')
+    list_display = ('name', 'email', 'organization', 'session', 'tier', 'payment_status', 'team_notified', 'attendee_notified', 'wants_checkin', 'invited', 'created_at')
     list_filter = ('session', 'tier', 'payment_status', 'wants_checkin', 'team_notified', 'attendee_notified', 'invited')
     search_fields = ('name', 'email', 'organization', 'goal')
     readonly_fields = ('created_at', 'access_sent_at')
