@@ -11,7 +11,7 @@ from unittest.mock import patch
 
 from django.core import mail
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase, override_settings
+from django.test import Client, TestCase, override_settings
 
 from .forms import LevelUpRegistrationForm
 from .models import LevelUpAccessCode, LevelUpRegistration
@@ -393,3 +393,14 @@ class LevelUpNotificationTests(TestCase):
         reg = LevelUpRegistration.objects.get()
         self.assertTrue(reg.team_notified)
         self.assertFalse(reg.attendee_notified)
+
+
+class CsrfFailurePageTests(TestCase):
+    """A stale form must not drop a registrant on Django's debug 403."""
+
+    def test_expired_form_gets_a_way_back(self):
+        client = Client(enforce_csrf_checks=True)
+        r = client.post('/levelup/', payload())
+        self.assertEqual(r.status_code, 403)
+        self.assertContains(r, 'This page expired', status_code=403)
+        self.assertContains(r, 'Back to LevelUp', status_code=403)
