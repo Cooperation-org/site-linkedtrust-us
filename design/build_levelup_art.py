@@ -22,10 +22,31 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / 'static' / 'img' / 'levelup'
 REGISTER_URL = 'https://linkedtrust.us/levelup/'
 
-# Boards that also ship as PDF: the contact links stay clickable there.
+# Boards that also ship as PDF: US Letter, contact links still clickable.
+# Letter is 8.5 x 11in, 816 x 1056 CSS px. The artboard is scaled to fill it
+# and the few pixels of extra width are cropped, the way a print bleed is.
+LETTER_W, LETTER_H = 816, 1056
 PDFS = [
     ('levelup-poster.html', 'poster', 'levelup-poster.pdf', 1080, 1350),
 ]
+
+FIT_TO_PAGE = '''([id, pageW, pageH, boardW, boardH]) => {
+    const board = document.querySelector('#' + id);
+    const box = document.createElement('div');
+    box.style.cssText = `width:${pageW}px;height:${pageH}px;overflow:hidden;margin:0;`;
+    board.parentNode.insertBefore(box, board);
+    box.appendChild(board);
+    for (const node of [...document.body.children]) {
+        if (node !== box) node.remove();
+    }
+    document.body.style.margin = '0';
+    document.body.style.background = '#fff';
+    const scale = pageH / boardH;
+    board.style.margin = '0';
+    board.style.transformOrigin = 'top left';
+    board.style.transform =
+        `scale(${scale}) translateX(${(pageW / scale - boardW) / 2}px)`;
+}'''
 
 BOARDS = [
     ('levelup-flyer.html', 'portrait', 'levelup-flyer-1080x1350.png', 1080, 1350),
@@ -95,12 +116,11 @@ def main():
 
             for source, board, name, width, height in PDFS:
                 page.goto(staged[source].as_uri())
-                page.add_style_tag(content=(
-                    f'body {{ margin: 0; background: #fff; }} '
-                    f'#{board} {{ margin: 0; }}'))
                 page.wait_for_timeout(300)
+                page.evaluate(FIT_TO_PAGE,
+                              [board, LETTER_W, LETTER_H, width, height])
                 page.pdf(path=str(OUT / name), print_background=True,
-                         width=f'{width}px', height=f'{height}px',
+                         width='8.5in', height='11in',
                          margin={'top': '0', 'right': '0', 'bottom': '0', 'left': '0'})
                 print('wrote', OUT / name)
             browser.close()
