@@ -72,4 +72,4 @@ node_modules/
 
 # OS
 Thumbs.db
-design/.levelup-flyer.rendered.html
+design/.*.rendered.html
