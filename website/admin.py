@@ -215,7 +215,7 @@ class LevelUpRegistrationAdmin(admin.ModelAdmin):
 
     list_display = ('name', 'email', 'organization', 'sessions', 'tier', 'payment_status', 'team_notified', 'attendee_notified', 'wants_checkin', 'invited', 'created_at')
     list_filter = ('session', 'tier', 'payment_status', 'wants_checkin', 'team_notified', 'attendee_notified', 'invited')
-    search_fields = ('name', 'email', 'organization', 'goal')
+    search_fields = ('name', 'email', 'organization', 'goal', 'heard_from')
     readonly_fields = ('created_at', 'access_sent_at')
     actions = [send_levelup_access, mark_paid]
 

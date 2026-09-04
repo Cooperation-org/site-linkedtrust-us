@@ -74,7 +74,7 @@ class LevelUpRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = LevelUpRegistration
-        fields = ['name', 'email', 'organization', 'link', 'attachment', 'help_with', 'goal', 'wants_checkin', 'session', 'tier']
+        fields = ['name', 'email', 'organization', 'link', 'attachment', 'help_with', 'goal', 'wants_checkin', 'session', 'tier', 'heard_from']
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'Your name', 'autocomplete': 'name', 'required': True}),
             'email': forms.EmailInput(attrs={'placeholder': 'you@example.com', 'autocomplete': 'email', 'required': True}),
@@ -82,6 +82,7 @@ class LevelUpRegistrationForm(forms.ModelForm):
             'link': forms.URLInput(attrs={'placeholder': 'https://', 'autocomplete': 'url'}),
             'goal': forms.Textarea(attrs={'rows': 3, 'maxlength': 600, 'required': True,
                                           'placeholder': 'One or two lines. What is stuck, or what do you want live by the end of the month?'}),
+            'heard_from': forms.TextInput(attrs={'placeholder': 'A friend, LinkedIn, a flyer', 'autocomplete': 'off'}),
         }
         labels = {
             'organization': 'Company or project',
@@ -90,6 +91,7 @@ class LevelUpRegistrationForm(forms.ModelForm):
             'goal': 'What do you want to walk out with?',
             'wants_checkin': 'I would like a 15-minute 1-1 check-in before the workshop',
             'tier': 'Pricing',
+            'heard_from': 'Where did you hear about us?',
         }
 
     def clean_company_fax(self):

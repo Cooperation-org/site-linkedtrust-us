@@ -45,12 +45,20 @@ class LevelUpPageTests(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertContains(r, 'Save your seat')
         self.assertContains(r, 'name="help_with"')
+        self.assertContains(r, 'Where did you hear about us?')
         self.assertContains(r, 'September 16')
         self.assertContains(r, 'Wednesday, September 16, 2026')
         self.assertContains(r, 'Wednesday, October 21, 2026')
         self.assertContains(r, 'multipart/form-data')
         self.assertContains(r, 'levelup-banner-1200x627.png')
         self.assertContains(r, 'levelup-qr.png')
+
+    def test_heard_from_saves_and_is_optional(self):
+        self.client.post('/levelup/', payload(heard_from='A flyer at the cafe'))
+        self.assertEqual(LevelUpRegistration.objects.get().heard_from, 'A flyer at the cafe')
+        LevelUpRegistration.objects.all().delete()
+        self.client.post('/levelup/', payload(email='second@example.org'))
+        self.assertEqual(LevelUpRegistration.objects.get().heard_from, '')
 
     def test_no_slash_redirects(self):
         self.assertEqual(self.client.get('/levelup').status_code, 301)

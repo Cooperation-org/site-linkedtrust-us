@@ -900,7 +900,8 @@ def _levelup_notify(reg):
         f"Help with: {help_list}\n"
         f"Goal: {reg.goal}\n1-1 check-in: {'yes' if reg.wants_checkin else 'no'}\n"
         f"Tier: {reg.get_tier_display()}\nCode: {reg.access_code.code if reg.access_code else '(none)'}\n"
-        f"Payment: {reg.get_payment_status_display()}\n\n"
+        f"Payment: {reg.get_payment_status_display()}\n"
+        f"Heard about us: {reg.heard_from or '(not said)'}\n\n"
         f"Admin: https://linkedtrust.us/admin/website/levelupregistration/{reg.pk}/change/\n"
     )
     notify_to = getattr(settings, 'LEVELUP_NOTIFY_EMAIL', 'connect@linkedtrust.us')

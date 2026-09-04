@@ -295,6 +295,7 @@
 .lu-code-state.ok { color: var(--success); }
 .lu-code-state.no { color: var(--text-muted); }
 .lu-hint { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.35rem; }
+.lu-field-small input[type=text] { max-width: 22rem; }
 fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
 
 /* choice groups render as tappable rows, not bare checkboxes */
@@ -535,6 +536,12 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
                 <p class="lu-hint">Got one from a partner? It makes your seat free whatever the size of your team.</p>
                 <p class="lu-code-state" id="lu-code-state" aria-live="polite" hidden></p>
                 {% for e in form.code.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
+            </div>
+
+            <div class="lu-field lu-field-small {% if form.heard_from.errors %}has-error{% endif %}">
+                <label for="{{ form.heard_from.id_for_label }}">Where did you hear about us?</label>
+                {{ form.heard_from }}
+                {% for e in form.heard_from.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
             </div>
 
             <div hidden aria-hidden="true">{{ form.company_fax }}</div>

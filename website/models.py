@@ -324,6 +324,7 @@ class LevelUpRegistration(models.Model):
     help_with = models.CharField(max_length=200, help_text="Comma-separated keys from HELP_CHOICES")
     goal = models.TextField(help_text="What they want to walk out with")
     wants_checkin = models.BooleanField(default=False, help_text="Asked for a 1-1 before the workshop")
+    heard_from = models.CharField(max_length=200, blank=True, help_text="Where they heard about LevelUp")
     tier = models.CharField(max_length=20, choices=TIER_CHOICES, default='free_small')
     access_code = models.ForeignKey(LevelUpAccessCode, null=True, blank=True, on_delete=models.SET_NULL)
     payment_status = models.CharField(max_length=10, choices=PAYMENT_CHOICES, default='free')
