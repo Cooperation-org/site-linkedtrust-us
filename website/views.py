@@ -701,7 +701,7 @@ def latest_claims(limit=5):
         return cached
     out = []
     try:
-        r = _rq.get('https://api.linkedtrust.us/api/feed', params={'limit': 60}, timeout=4)
+        r = _rq.get('https://api.linkedtrust.us/api/feed', params={'limit': 120}, timeout=4)
         r.raise_for_status()
         for e in r.json().get('entries', []):
             subj = e.get('subject') or {}
