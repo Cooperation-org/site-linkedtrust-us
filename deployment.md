@@ -135,6 +135,23 @@ sudo rm -f /etc/nginx/sites-enabled/default
 
 ## Maintenance
 
+## LevelUp workshop configuration
+
+The LevelUp registration page is deployed at `/levelup/`. Configure these
+repository Actions secrets before enabling its external integrations:
+
+- `LEVELUP_STRIPE_PAYMENT_LINK`: the $100 Stripe Payment Link.
+- `LEVELUP_STRIPE_WEBHOOK_SECRET`: signing secret for a Stripe webhook pointed
+  at `https://linkedtrust.us/levelup/stripe/webhook/`. Subscribe it to
+  `checkout.session.completed` and `checkout.session.async_payment_succeeded`.
+- `LEVELUP_VIDEO_URL`: the private workshop URL. Once configured, select
+  registrations in Django admin and run **Send workshop link + updated calendar
+  invitation**.
+
+Every registration immediately receives a calendar invitation without the
+private workshop URL. The configured URL is sent later through the admin action,
+matching the requirement not to publish the video link early.
+
 ### Regular Maintenance Tasks
 
 1. Update system packages:

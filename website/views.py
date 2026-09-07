@@ -1,15 +1,20 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.text import slugify
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.core.mail import EmailMessage
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.conf import settings
 from django.views.decorators.http import require_http_methods
+from django.utils import timezone
 from .models import TeamMember, PortfolioProject, CaseStudy, Testimonial, EcosystemItem, ServicePackage, ContactInquiry
 from .forms import ContactForm
+from datetime import datetime, timezone as datetime_timezone
+import hashlib
+import hmac
 import json
 import logging
+import time
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -795,3 +800,340 @@ def services_nonprofits_view(request):
 def services_launch_view(request):
     """Landing page for MVP/launch services."""
     return render(request, 'services_launch.html')
+
+# ---------------------------------------------------------------------------
+# LevelUp workshop registration
+# ---------------------------------------------------------------------------
+
+# Two sittings of the same workshop. Both run 7 to 9am PT, which is 14:00 UTC
+# on both dates because California is still on daylight time in October.
+LEVELUP_SESSIONS = [
+    {
+        'key': 'sep16',
+        'date_label': 'Wednesday, September 16, 2026',
+        'short_label': 'Sept 16',
+        'stamp': '20260916T140000Z',
+        'end_stamp': '20260916T160000Z',
+        'iso_start': '2026-09-16T14:00:00Z',
+        'iso_end': '2026-09-16T16:00:00Z',
+    },
+    {
+        'key': 'oct21',
+        'date_label': 'Wednesday, October 21, 2026',
+        'short_label': 'Oct 21',
+        'stamp': '20261021T140000Z',
+        'end_stamp': '20261021T160000Z',
+        'iso_start': '2026-10-21T14:00:00Z',
+        'iso_end': '2026-10-21T16:00:00Z',
+    },
+]
+
+LEVELUP_EVENT = {
+    'name': 'LevelUp',
+    'time_label': '7:00 to 9:00 am PT',
+    'time_utc': '14:00 to 16:00 UTC',
+    'price': '$100',
+    'sessions': LEVELUP_SESSIONS,
+    'date_label': ' or '.join(s['date_label'] for s in LEVELUP_SESSIONS),
+    'short_dates': ' and '.join(s['short_label'] for s in LEVELUP_SESSIONS),
+}
+
+
+def levelup_session(key):
+    """The session a registrant picked, falling back to the first sitting."""
+    for session in LEVELUP_SESSIONS:
+        if session['key'] == key:
+            return session
+    return LEVELUP_SESSIONS[0]
+
+
+def levelup_sessions(keys):
+    """Every sitting a registrant picked, in the order they run."""
+    picked = {k.strip() for k in (keys or '').split(',') if k.strip()}
+    chosen = [s for s in LEVELUP_SESSIONS if s['key'] in picked]
+    return chosen or [LEVELUP_SESSIONS[0]]
+
+
+def _levelup_calendar(session, access_url=''):
+    """Return a small standards-based calendar invitation for the workshop."""
+    description = (
+        'A live build workshop with LinkedTrust engineers. Bring what is stuck '
+        'and leave with it moving.'
+    )
+    location = 'Online — access link will be emailed before the workshop'
+    if access_url:
+        description += f' Join online: {access_url}'
+        location = access_url
+
+    def escape(value):
+        return str(value).replace('\\', '\\\\').replace('\n', '\\n').replace(',', '\\,').replace(';', '\\;')
+
+    lines = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//LinkedTrust//LevelUp//EN',
+        'CALSCALE:GREGORIAN',
+        'METHOD:REQUEST',
+        'BEGIN:VEVENT',
+        f'UID:levelup-{session["stamp"]}@linkedtrust.us',
+        f'DTSTAMP:{datetime.now(datetime_timezone.utc):%Y%m%dT%H%M%SZ}',
+        f'DTSTART:{session["stamp"]}',
+        f'DTEND:{session["end_stamp"]}',
+        f'SUMMARY:{escape("LevelUp: live build workshop")}',
+        f'DESCRIPTION:{escape(description)}',
+        f'LOCATION:{escape(location)}',
+        'URL:https://linkedtrust.us/levelup/',
+        'STATUS:CONFIRMED',
+        'END:VEVENT',
+        'END:VCALENDAR',
+    ]
+    return '\r\n'.join(lines) + '\r\n'
+
+
+def _attach_levelup_calendar(message, session, access_url=''):
+    message.attach(
+        f'levelup-{session["key"]}.ics',
+        _levelup_calendar(session, access_url).encode('utf-8'),
+        'text/calendar; method=REQUEST; charset=UTF-8',
+    )
+
+
+def _levelup_notify(reg):
+    """Tell the team, and confirm to the attendee. Both fail silently: a mail
+    hiccup must never lose a registration that is already in the database."""
+    from .forms import LevelUpRegistrationForm  # noqa: F401  (keeps import graph obvious)
+    help_list = ', '.join(reg.help_with_labels()) or '(none)'
+    sessions = levelup_sessions(reg.session)
+    session = sessions[0]
+    team_body = (
+        f"Name: {reg.name}\nEmail: {reg.email}\nOrganization: {reg.organization}\n"
+        f"Sessions: {', '.join(s['date_label'] for s in sessions)}\n"
+        f"Link: {reg.link or '(none)'}\n"
+        f"Uploaded file: {reg.attachment.name if reg.attachment else '(none)'}\n"
+        f"Help with: {help_list}\n"
+        f"Goal: {reg.goal}\n1-1 check-in: {'yes' if reg.wants_checkin else 'no'}\n"
+        f"Tier: {reg.get_tier_display()}\nCode: {reg.access_code.code if reg.access_code else '(none)'}\n"
+        f"Payment: {reg.get_payment_status_display()}\n"
+        f"Heard about us: {reg.heard_from or '(not said)'}\n\n"
+        f"Admin: https://linkedtrust.us/admin/website/levelupregistration/{reg.pk}/change/\n"
+    )
+    notify_to = getattr(settings, 'LEVELUP_NOTIFY_EMAIL', 'connect@linkedtrust.us')
+    # fail_silently must stay False here. With it True, Django swallows SMTP
+    # errors and returns 0, the except below never fires, and a dead mail
+    # server is indistinguishable from a delivered notification. The try/except
+    # is what keeps a mail outage from losing a registration already in the DB.
+    try:
+        EmailMessage(
+            subject=f"LevelUp registration: {reg.name} ({reg.organization})",
+            body=team_body,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[notify_to],
+            reply_to=[reg.email],
+        ).send(fail_silently=False)
+        reg.team_notified = True
+    except Exception as e:
+        logger.error("LevelUp team email failed for registration %s: %s", reg.pk, e)
+
+    attendee_body = (
+        f"Hi {reg.name.split()[0] if reg.name.strip() else 'there'},\n\n"
+        f"You are registered for LevelUp, the live build workshop with LinkedTrust engineers.\n\n"
+        + ''.join(
+            f"When: {s['date_label']}, {LEVELUP_EVENT['time_label']} ({LEVELUP_EVENT['time_utc']})\n"
+            for s in sessions
+        ) +
+        f"Where: online. A calendar invitation is attached for each date; the video link comes by email before the day.\n\n"
+        f"What you told us you want help with: {help_list}\n"
+        f"Your goal: {reg.goal}\n"
+    )
+    if reg.wants_checkin:
+        attendee_body += "\nYou asked for a 1-1 check-in first. Someone from the team will reach out to set a time.\n"
+    if reg.payment_status == 'pending':
+        if getattr(settings, 'LEVELUP_STRIPE_PAYMENT_LINK', ''):
+            attendee_body += "\nYour ticket is $100. Complete payment in the secure Stripe checkout page that opened after registration.\n"
+        else:
+            attendee_body += "\nYour ticket is $100. We will send a payment link shortly.\n"
+    attendee_body += "\nReply to this email if anything changes.\n\nThe LinkedTrust team\nhttps://linkedtrust.us\n"
+    try:
+        attendee_message = EmailMessage(
+            subject=f"You are in: LevelUp, {session['short_label']}",
+            body=attendee_body,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[reg.email],
+            reply_to=[notify_to],
+        )
+        for sitting in sessions:
+            _attach_levelup_calendar(attendee_message, sitting)
+        attendee_message.send(fail_silently=False)
+        reg.attendee_notified = True
+    except Exception as e:
+        logger.error("LevelUp attendee email failed for registration %s: %s", reg.pk, e)
+
+    reg.save(update_fields=['team_notified', 'attendee_notified'])
+
+
+def _levelup_send_access(reg, access_url):
+    """Email the private workshop link and an updated calendar invitation."""
+    notify_to = getattr(settings, 'LEVELUP_NOTIFY_EMAIL', 'connect@linkedtrust.us')
+    sessions = levelup_sessions(reg.session)
+    session = sessions[0]
+    message = EmailMessage(
+        subject=f'Your LevelUp workshop link — {", ".join(s["short_label"] for s in sessions)}',
+        body=(
+            f"Hi {reg.name.split()[0] if reg.name.strip() else 'there'},\n\n"
+            f"Here is your private link for LevelUp on "
+            f"{' and '.join(s['date_label'] for s in sessions)} "
+            f"at {LEVELUP_EVENT['time_label']}:\n\n{access_url}\n\n"
+            "An updated calendar invitation is attached. Please do not post the "
+            "workshop link publicly.\n\nThe LinkedTrust team\n"
+        ),
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[reg.email],
+        reply_to=[notify_to],
+    )
+    for sitting in sessions:
+        _attach_levelup_calendar(message, sitting, access_url)
+    try:
+        sent = message.send(fail_silently=False)
+    except Exception as exc:  # pragma: no cover
+        logger.error('LevelUp access email failed for registration %s: %s', reg.pk, exc)
+        return False
+    if sent:
+        reg.invited = True
+        reg.access_sent_at = timezone.now()
+        reg.save(update_fields=['invited', 'access_sent_at'])
+        return True
+    return False
+
+
+@csrf_protect
+@require_http_methods(['POST'])
+def levelup_code_check(request):
+    """Answer whether an access code is usable, so the form can show the price
+    the registrant will actually pay before they submit. Says nothing about who
+    the code belongs to, and the code is applied again on save."""
+    from .models import LevelUpAccessCode
+    tries = request.session.get('levelup_code_tries', 0) + 1
+    request.session['levelup_code_tries'] = tries
+    if tries > 20:
+        return JsonResponse({'valid': False, 'throttled': True}, status=429)
+    raw = (request.POST.get('code') or '').strip().upper()
+    code = LevelUpAccessCode.objects.filter(code=raw).first() if raw else None
+    return JsonResponse({'valid': bool(code and code.usable)})
+
+
+def levelup_ics_view(request, key):
+    """The sitting as a downloadable .ics. Opening it adds the event straight
+    to any calendar app; Google's web link always lands on an edit screen."""
+    session = levelup_session(key)
+    response = HttpResponse(_levelup_calendar(session), content_type='text/calendar; charset=utf-8')
+    response['Content-Disposition'] = f'attachment; filename="levelup-{session["key"]}.ics"'
+    return response
+
+
+def _levelup_stripe_url(reg):
+    """Stripe Payment Link for the $100 tier, if Golda has set one in .env.
+    Prefills the email and carries the registration id back as
+    client_reference_id so the webhook or a manual check can match it."""
+    from urllib.parse import urlencode
+    link = getattr(settings, 'LEVELUP_STRIPE_PAYMENT_LINK', '')
+    if not link:
+        return ''
+    sep = '&' if '?' in link else '?'
+    return link + sep + urlencode({'prefilled_email': reg.email, 'client_reference_id': f'levelup-{reg.pk}'})
+
+
+@csrf_protect
+def levelup_view(request):
+    from .forms import LevelUpRegistrationForm
+    if request.method == 'POST':
+        form = LevelUpRegistrationForm(request.POST, request.FILES)
+        if form.is_valid():
+            registration = form.save()
+            request.session['levelup_registered'] = registration.pk
+            _levelup_notify(registration)
+            if registration.payment_status == 'pending':
+                pay_url = _levelup_stripe_url(registration)
+                if pay_url:
+                    return redirect(pay_url)
+            return redirect(reverse('levelup_thanks'))
+    else:
+        form = LevelUpRegistrationForm()
+    return render(request, 'levelup.html', {
+        'form': form,
+        'event': LEVELUP_EVENT,
+        'stripe_enabled': bool(getattr(settings, 'LEVELUP_STRIPE_PAYMENT_LINK', '')),
+    })
+
+
+def levelup_thanks_view(request):
+    from .models import LevelUpRegistration
+    reg = None
+    pk = request.session.get('levelup_registered')
+    if pk:
+        reg = LevelUpRegistration.objects.filter(pk=pk).first()
+    if reg is None:
+        return redirect(reverse('levelup'))
+    first_name = (reg.name.strip().split()[0] if reg and reg.name.strip() else '')
+    sessions = levelup_sessions(reg.session if reg else '')
+    return render(request, 'levelup_thanks.html', {
+        'reg': reg,
+        'first_name': first_name,
+        'session': sessions[0],
+        'sessions': sessions,
+        'event': LEVELUP_EVENT,
+        'paid': reg.payment_status == 'paid',
+    })
+
+
+def _valid_stripe_signature(payload, header, secret, tolerance=300):
+    """Validate Stripe's signed webhook body without adding an SDK dependency."""
+    values = {}
+    for item in (header or '').split(','):
+        key, separator, value = item.partition('=')
+        if separator:
+            values.setdefault(key, []).append(value)
+    try:
+        timestamp = int(values['t'][0])
+    except (KeyError, ValueError, IndexError):
+        return False
+    if abs(time.time() - timestamp) > tolerance:
+        return False
+    signed_payload = str(timestamp).encode('ascii') + b'.' + payload
+    expected = hmac.new(secret.encode('utf-8'), signed_payload, hashlib.sha256).hexdigest()
+    return any(hmac.compare_digest(expected, signature) for signature in values.get('v1', []))
+
+
+@csrf_exempt
+@require_http_methods(['POST'])
+def levelup_stripe_webhook(request):
+    """Mark a paid registration only after a verified Stripe webhook."""
+    from .models import LevelUpRegistration
+
+    secret = getattr(settings, 'LEVELUP_STRIPE_WEBHOOK_SECRET', '')
+    if not secret:
+        return JsonResponse({'error': 'Stripe webhook is not configured'}, status=503)
+    if not _valid_stripe_signature(request.body, request.headers.get('Stripe-Signature'), secret):
+        return JsonResponse({'error': 'Invalid signature'}, status=400)
+    try:
+        event = json.loads(request.body)
+    except (TypeError, ValueError):
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    if event.get('type') not in {'checkout.session.completed', 'checkout.session.async_payment_succeeded'}:
+        return JsonResponse({'received': True})
+    session = event.get('data', {}).get('object', {})
+    reference = session.get('client_reference_id', '')
+    prefix = 'levelup-'
+    registration_id = reference[len(prefix):] if reference.startswith(prefix) else ''
+    if not registration_id.isdigit() or session.get('payment_status') != 'paid':
+        return JsonResponse({'received': True})
+    if session.get('amount_total') != 10000 or str(session.get('currency', '')).lower() != 'usd':
+        logger.warning('Ignored mismatched LevelUp Stripe payment for %s', reference)
+        return JsonResponse({'received': True})
+
+    updated = LevelUpRegistration.objects.filter(
+        pk=int(registration_id), tier='paid'
+    ).exclude(payment_status='paid').update(
+        payment_status='paid', stripe_reference=str(session.get('id', ''))[:120]
+    )
+    return JsonResponse({'received': True, 'updated': bool(updated)})

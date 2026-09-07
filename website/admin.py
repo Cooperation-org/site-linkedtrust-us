@@ -1,10 +1,11 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.admin import AdminSite
+from django.conf import settings
 from django.utils.html import format_html
 from django.db.models import Avg, Sum
 from django.utils import timezone
 from datetime import timedelta
-from .models import TeamMember, PortfolioProject, CaseStudy, Testimonial, EcosystemItem, ServicePackage, ContactInquiry
+from .models import LevelUpRegistration, LevelUpAccessCode, TeamMember, PortfolioProject, CaseStudy, Testimonial, EcosystemItem, ServicePackage, ContactInquiry
 
 class LinkedtrustAdminSite(AdminSite):
     site_header = 'Linkedtrust Administration'
@@ -180,3 +181,50 @@ class EarnedgovCommitmentAdmin(admin.ModelAdmin):
     search_fields = ('person_name',)
 
 admin_site.register(EarnedgovCommitment, EarnedgovCommitmentAdmin)
+
+
+@admin.action(description='Send workshop link + updated calendar invitation')
+def send_levelup_access(modeladmin, request, queryset):
+    from .views import _levelup_send_access
+
+    access_url = getattr(settings, 'LEVELUP_VIDEO_URL', '').strip()
+    if not access_url:
+        modeladmin.message_user(
+            request,
+            'LEVELUP_VIDEO_URL is not configured. No messages were sent.',
+            level=messages.ERROR,
+        )
+        return
+    sent = sum(1 for registration in queryset if _levelup_send_access(registration, access_url))
+    modeladmin.message_user(
+        request,
+        f'Sent the workshop link and calendar invitation to {sent} registration(s).',
+        level=messages.SUCCESS if sent else messages.ERROR,
+    )
+
+
+@admin.action(description='Mark selected as paid')
+def mark_paid(modeladmin, request, queryset):
+    queryset.update(payment_status='paid')
+
+
+class LevelUpRegistrationAdmin(admin.ModelAdmin):
+    @admin.display(description='Sessions', ordering='session')
+    def sessions(self, obj):
+        return ', '.join(obj.session_labels()) or '—'
+
+    list_display = ('name', 'email', 'organization', 'sessions', 'tier', 'payment_status', 'team_notified', 'attendee_notified', 'wants_checkin', 'invited', 'created_at')
+    list_filter = ('session', 'tier', 'payment_status', 'wants_checkin', 'team_notified', 'attendee_notified', 'invited')
+    search_fields = ('name', 'email', 'organization', 'goal', 'heard_from')
+    readonly_fields = ('created_at', 'access_sent_at')
+    actions = [send_levelup_access, mark_paid]
+
+
+class LevelUpAccessCodeAdmin(admin.ModelAdmin):
+    list_display = ('code', 'label', 'active', 'uses', 'max_uses', 'created_at')
+    list_filter = ('active',)
+    readonly_fields = ('uses',)
+
+
+admin_site.register(LevelUpRegistration, LevelUpRegistrationAdmin)
+admin_site.register(LevelUpAccessCode, LevelUpAccessCodeAdmin)

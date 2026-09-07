@@ -42,6 +42,23 @@ jobs:
               fi
             fi
 
+            sync_env_secret() {
+              key="$1"
+              value="$2"
+              if [ -z "$value" ]; then
+                return
+              fi
+              env_tmp=$(mktemp)
+              awk -v key="$key" 'index($0, key "=") != 1' .env > "$env_tmp"
+              printf '%s=%s\n' "$key" "$value" >> "$env_tmp"
+              mv "$env_tmp" .env
+            }
+
+            touch .env
+            sync_env_secret LEVELUP_STRIPE_PAYMENT_LINK '${{ secrets.LEVELUP_STRIPE_PAYMENT_LINK }}'
+            sync_env_secret LEVELUP_STRIPE_WEBHOOK_SECRET '${{ secrets.LEVELUP_STRIPE_WEBHOOK_SECRET }}'
+            sync_env_secret LEVELUP_VIDEO_URL '${{ secrets.LEVELUP_VIDEO_URL }}'
+
             echo "Installing dependencies..."
             source .venv/bin/activate
             pip install -r requirements.txt --quiet

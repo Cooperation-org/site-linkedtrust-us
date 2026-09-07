@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}This page expired | LinkedTrust{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block extra_css %}
+<style>
+.csrf-page { max-width: 620px; margin: 0 auto; padding: 5rem 1.5rem 6rem; }
+.csrf-card {
+    background: var(--bg-white); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
+    padding: 2.5rem 1.75rem; position: relative; overflow: hidden;
+}
+@media (min-width: 480px) { .csrf-card { padding: 2.75rem 2.5rem; } }
+.csrf-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient); }
+.csrf-card h1 { font-size: 1.5rem; margin-bottom: 0.85rem; }
+.csrf-card p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem; }
+.csrf-card .btn { margin-top: 0.75rem; min-height: 46px; display: inline-flex; align-items: center; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="csrf-page">
+    <div class="csrf-card">
+        <h1>This page expired before you sent it.</h1>
+        <p>It happens when a form sits open for a long time, or when you sign in somewhere else in the same browser. Nothing was saved.</p>
+        <p>Open the form again and your seat takes about a minute.</p>
+        <a class="btn btn-gradient" href="/levelup/">Back to LevelUp</a>
+    </div>
+</div>
+{% endblock %}
