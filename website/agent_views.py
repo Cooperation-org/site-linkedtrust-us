@@ -83,7 +83,7 @@ def _oneline(text):
 
 
 _SUMMARY = (
-    "LinkedTrust is a coop-style deep-tech studio that builds verified trust "
+    "LinkedTrust is a public benefit corporation run by its workers using earned governance. It builds verified trust "
     "systems, civic-tech platforms, and AI-powered tools. We design, build, and "
     "run real software for organizations that care about doing things right, "
     "backed by publicly verifiable trust claims (LinkedClaims)."
@@ -101,7 +101,7 @@ def llms_txt(request):
         f"> {_SUMMARY}", "",
         "## Core pages", "",
         f"- [Home]({root}/): Services, featured work, and verified trust badges.",
-        f"- [About]({root}/about/): Who we are, how the cooperative works, and our values.",
+        f"- [About]({root}/about/): Who we are, how earned governance works, and our values.",
         f"- [Our Work]({root}/work/): Portfolio of client, open-source, and research projects.",
         f"- [Services]({root}/services/): What we build and roughly what it costs.",
         f"- [LinkedClaims Ecosystem]({root}/linkedclaims/): Apps, specs, and tools built on the standard.",
@@ -162,7 +162,7 @@ def llms_full_txt(request):
         "## What we do", "",
         "We design, build, and operate production software end-to-end: web "
         "platforms, APIs, data pipelines, AI/RAG integrations, and the "
-        "infrastructure underneath them. We work as a cooperative (the people "
+        "infrastructure underneath them. We are a public benefit corporation run by the workers using earned governance (the people "
         "who do the work share in it) and we bias toward the real things: real "
         "projects, real impact, all verifiable.", "",
     ]

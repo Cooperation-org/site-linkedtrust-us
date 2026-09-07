@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Internships at LinkedTrust: Build Real Things{% endblock %}
-{% block meta_description %}Join the LinkedTrust internship program: work on real open-source and civic-tech projects with senior engineers in a cooperative team.{% endblock %}
+{% block meta_description %}Join the LinkedTrust internship program: work on real open-source and civic-tech projects with senior engineers in a worker-run team.{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -540,7 +540,7 @@
 <section class="intern-cohort" id="apply">
     <div class="intern-audience-header">
         <div class="intern-audience-icon icon-org"><i class="fa-solid fa-calendar"></i></div>
-        <h2>March Cohort</h2>
+        <h2>Next cohort</h2>
     </div>
     <div class="cohort-card">
         <div class="cohort-details">
@@ -568,6 +568,7 @@
                 <span>Marketing / Sales &amp; Partnerships</span>
             </div>
         </div>
+        <p style="margin-top:1.5rem;"><a href="{% url 'contact' %}?subject=intern_placement" class="btn btn-gradient">Apply for the next cohort</a></p>
     </div>
 </section>
 
