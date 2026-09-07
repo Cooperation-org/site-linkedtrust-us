@@ -1,0 +1,45 @@
+{% load static %}
+    <div class="services-grid">
+
+        <div class="service-card">
+            <div class="get-started-image">
+                <img src="{% static 'img/linkedtrust-app.png' %}" alt="Use the app" loading="lazy" decoding="async">
+            </div>
+            <h3>Have Something to Share?</h3>
+            <p>Make a Claim<br>Ask for Validation<br>Share the Report</p>
+            <a href="https://live.linkedtrust.us/login" class="btn btn-gradient" target="_blank" rel="noopener">Login Now</a>
+        </div>
+
+        <div class="service-card">
+            <div class="get-started-image">
+                <img src="{% static 'img/investigate.png' %}" alt="Investigate" loading="lazy" decoding="async">
+            </div>
+            <h3>Investigating?</h3>
+            <p>Search<br>View a Report<br>Dig Into the Graph</p>
+            <a href="https://live.linkedtrust.us/" class="btn btn-gradient" target="_blank" rel="noopener">Live App</a>
+        </div>
+
+        <div class="service-card">
+            <div class="get-started-image">
+                <img src="{% static 'img/opencreds.png' %}" alt="OpenCreds.net" loading="lazy" decoding="async">
+            </div>
+            <h3>Accomplish Something?</h3>
+            <p>Describe a Skill<br>Ask for Recommendations<br>Share Your Credential</p>
+            <a href="https://opencreds.net" class="btn btn-gradient" target="_blank" rel="noopener">OpenCreds</a>
+        </div>
+
+        <div class="service-card">
+            <div class="get-started-image">
+                <img src="{% static 'img/devs.png' %}" alt="Developers" loading="lazy" decoding="async">
+            </div>
+            <h3>For Developers</h3>
+            <p>
+                <a class="nodec" href="https://live.linkedtrust.us/api/docs/" target="_blank" rel="noopener">Send Claims via API</a><br>
+                <a class="nodec" href="https://www.npmjs.com/package/@cooperation/vc-storage" target="_blank" rel="noopener">Store Credentials to Google Drive</a><br>
+                <a class="nodec" href="https://pypi.org/project/linked-claims-extractor/" target="_blank" rel="noopener">Use LLM to Extract Claims</a>
+            </p>
+            <a href="https://github.com/Cooperation-org/linkedclaims" class="btn btn-gradient" target="_blank" rel="noopener">LinkedClaims SDK</a>
+        </div>
+
+    </div>
+</section>

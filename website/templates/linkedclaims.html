@@ -7,11 +7,30 @@
 {% block content %}
 
 <section class="linkedclaims-hero">
-    <div class="container">
+    <div class="container lc-hero-grid">
+      <div>
         <h1>The LinkedClaims Ecosystem</h1>
         <p class="linkedclaims-intro">LinkedClaims is an open, minimal standard for expressing assertions about addressable things, published at the <a href="https://identity.foundation/labs-linkedclaims/" style="color:var(--brand-primary);font-weight:600;">Decentralized Identity Foundation</a>. It enables linking to third-party sources and other claims, building a decentralized web of trust that is inclusive of external projects and data. These are the tools, specs, and platforms built on the standard.</p>
     </div>
+      {% if latest_claims %}
+      <aside class="claims-feed">
+        <div class="claims-feed-head"><span>Latest claims</span><a href="https://live.linkedtrust.us/feed" target="_blank" rel="noopener">live.linkedtrust.us &rarr;</a></div>
+        {% for c in latest_claims %}
+        <a class="claims-feed-item" href="https://live.linkedtrust.us/report/{{ c.id }}" target="_blank" rel="noopener">
+          {% if c.image %}<img src="{{ c.image }}" alt="" loading="lazy" width="36" height="36">{% else %}<span class="claims-feed-dot"></span>{% endif %}
+          <span><b>{{ c.name }}</b> <em>{{ c.claim }}</em><small>{{ c.statement }}</small></span>
+        </a>
+        {% endfor %}
+      </aside>
+      {% endif %}
+    </div>
 </section>
+
+<section class="services-section" style="padding-top:1.5rem;padding-bottom:0;">
+    <h2 class="section-title" style="text-align:center;">Get started</h2>
+    {% include 'getstarted_cards.html' %}
+</section>
+
 
 <!-- The Standard: spec and foundational paper -->
 <section class="ecosystem-grid-section">

@@ -691,10 +691,42 @@ def interns_view(request):
     return render(request, 'interns.html')
 
 
+def latest_claims(limit=5):
+    """Newest people-made claims from live.linkedtrust.us, cached 5 minutes. Empty on any failure."""
+    from django.core.cache import cache
+    import requests as _rq
+    key = 'latest_claims_v1'
+    cached = cache.get(key)
+    if cached is not None:
+        return cached
+    out = []
+    try:
+        r = _rq.get('https://api.linkedtrust.us/api/feed', params={'limit': 40}, timeout=4)
+        r.raise_for_status()
+        for e in r.json().get('entries', []):
+            subj = e.get('subject') or {}
+            name = (subj.get('name') or '').strip()
+            statement = (e.get('statement') or '').strip()
+            claim = (e.get('claim') or '').replace('_', ' ').lower()
+            if claim == 'validates' or not name or not statement or name.isupper():
+                continue
+            img = subj.get('image') or ''
+            if not img.lower().split('?')[0].endswith(('.jpg', '.jpeg', '.png', '.webp', '.gif')):
+                img = ''
+            out.append({'id': e.get('id'), 'name': name[:60], 'claim': claim, 'statement': statement[:140], 'image': img})
+            if len(out) >= limit:
+                break
+    except Exception as exc:
+        logger.warning(f"latest_claims unavailable: {exc}")
+    cache.set(key, out, 300)
+    return out
+
+
 def linkedclaims_view(request):
-    """LinkedClaims ecosystem page — cards for every app/spec/tool built on the standard."""
+    """LinkedClaims ecosystem page: cards for every app/spec/tool built on the standard, plus the live feed."""
     all_items = EcosystemItem.objects.all()
     context = {
+        'latest_claims': latest_claims(),
         'ecosystem_items': all_items,
         'ecosystem_standards': all_items.filter(sort_order__lte=1),
         'ecosystem_platforms': all_items.filter(sort_order__gte=2, sort_order__lte=8),

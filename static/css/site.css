@@ -1775,3 +1775,18 @@ a.nodec:hover { text-decoration: underline; }
 h1.section-title { text-align: center; }
 h1.section-title + p { margin-left: auto; margin-right: auto; text-align: center; }
 .site-nav + main > section:first-child, .site-nav + section, main > section:first-child { padding-top: 1.5rem !important; }
+
+/* ---- LINKEDCLAIMS: intro left, live feed right ---- */
+.lc-hero-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 2rem; align-items: start; }
+.claims-feed { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.9rem 1.1rem; }
+.claims-feed-head { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+.claims-feed-head a { color: var(--brand-primary); text-transform: none; letter-spacing: 0; font-family: var(--font-ui); font-weight: 600; font-size: 0.85rem; }
+.claims-feed-item { display: grid; grid-template-columns: 36px 1fr; gap: 0.75rem; align-items: start; padding: 0.7rem 0; border-bottom: 1px solid var(--border); color: var(--text-primary); }
+.claims-feed-item:last-child { border-bottom: 0; }
+.claims-feed-item img, .claims-feed-dot { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; display: block; }
+.claims-feed-dot { background: var(--gradient); opacity: 0.35; }
+.claims-feed-item b { font-size: 0.92rem; }
+.claims-feed-item em { font-style: normal; color: var(--brand-dark); font-size: 0.85rem; margin-left: 0.3rem; }
+.claims-feed-item small { display: block; color: var(--text-secondary); font-size: 0.85rem; line-height: 1.45; margin-top: 0.15rem; }
+.claims-feed-item:hover b { color: var(--brand-primary); }
+@media (max-width: 900px) { .lc-hero-grid { grid-template-columns: 1fr; } }
