@@ -57,30 +57,44 @@
 
 {% block content %}
 
-<section class="container" style="padding-top:2.5rem;padding-bottom:0;text-align:center;">
+<section class="container" style="padding-top:2.5rem;padding-bottom:1.5rem;">
+    <div class="section-label mono">// services</div>
     <h1 class="section-title">What we build</h1>
-    <p style="color:var(--text-secondary);max-width:620px;margin:0.5rem auto 0;">Pick your path, or browse every service package below.</p>
-    <a href="{% url 'levelup' %}" style="display:inline-flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0.5rem 0.9rem;margin:1.5rem auto 0;padding:0.8rem 1.25rem;min-height:48px;border:1.5px solid var(--border);border-radius:999px;background:var(--bg-white);font-size:0.9rem;box-shadow:var(--shadow-sm);">
-        <span class="mono" style="font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--brand-primary);font-weight:700;">Live workshop, Sept 16</span>
-        <span style="color:var(--text-secondary);">LevelUp: make your idea live, with our engineers. Free for small teams.</span>
-        <span style="font-weight:700;color:var(--brand-dark);">Save a seat</span>
-    </a>
 </section>
 
-<!-- Entry Point Buttons + Badges + Cards in one tight section -->
-<section class="services-section" style="padding-top: 1.5rem;">
-    <div class="services-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
-        <a href="{% url 'services_startups' %}" class="btn btn-gradient" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-            <i class="fa-solid fa-rocket"></i> For Startups
-        </a>
-        <a href="{% url 'services_nonprofits' %}" class="btn btn-gradient" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-            <i class="fa-solid fa-hand-holding-heart"></i> For Nonprofits
-        </a>
-        <a href="{% url 'services_launch' %}" class="btn btn-gradient" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-            <i class="fa-solid fa-code"></i> Your Idea Made Live
-        </a>
+<!-- Three paths plus the workshop, on a dark band -->
+<section class="path-band">
+    <div class="path-band-inner">
+        <div class="path-band-grid">
+            <a href="{% url 'services_startups' %}" class="path-band-item">
+                <i class="fa-solid fa-rocket"></i>
+                <h2>For Startups</h2>
+                <p>We help startups optimize infrastructure costs, own their tools, and build with equity, not vanity metrics.</p>
+                <span>See the path &rarr;</span>
+            </a>
+            <a href="{% url 'services_nonprofits' %}" class="path-band-item">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+                <h2>For Nonprofits</h2>
+                <p>We help nonprofits build robust systems using open-source tools, at a fraction of standard agency costs.</p>
+                <span>See the path &rarr;</span>
+            </a>
+            <a href="{% url 'services_launch' %}" class="path-band-item">
+                <i class="fa-solid fa-code"></i>
+                <h2>Your Idea Made Live</h2>
+                <p>From raw idea to production-ready MVP in weeks, not months. We use clean code and scalable frameworks.</p>
+                <span>See the path &rarr;</span>
+            </a>
+            <a href="{% url 'levelup' %}" class="path-band-item path-band-item--lu">
+                <span class="mono path-band-kicker">Live workshop, Sept 16</span>
+                <h2>LevelUp</h2>
+                <p>Make your idea live, with our engineers. Free for small teams.</p>
+                <span>Save a seat &rarr;</span>
+            </a>
+        </div>
     </div>
+</section>
 
+<section class="services-section" style="padding-top:2rem;">
     <!-- Single row of embed badges: scrolls horizontally if they don't fit -->
     <div class="badge-row">
         <linked-badge claim-id="124521" theme="light"></linked-badge>

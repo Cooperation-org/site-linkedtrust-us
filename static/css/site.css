@@ -1746,3 +1746,25 @@ a.nodec:hover { text-decoration: underline; }
 .footer-social a { display: inline-flex; color: var(--text-secondary); }
 .footer-social a:hover { color: var(--brand-primary); }
 .footer-social svg { display: block; }
+
+/* ---- SERVICES: three paths + workshop on a dark band ---- */
+.path-band { background: var(--bg-dark); color: var(--text-on-dark); padding: 2.5rem 2rem; }
+.path-band-inner { max-width: 1200px; margin: 0 auto; }
+.path-band-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+.path-band-item { background: var(--bg-dark-card); border: 1px solid var(--border-dark); border-radius: var(--radius); padding: 1.5rem; color: var(--text-on-dark); display: flex; flex-direction: column; gap: 0.5rem; }
+.path-band-item:hover { background: var(--bg-dark-hover); }
+.path-band-item > i { color: var(--brand-primary); font-size: 1.4rem; }
+.path-band-item h2 { font-size: 1.1rem; font-weight: 700; color: var(--text-on-dark); }
+.path-band-item p { font-size: 0.9rem; color: var(--text-on-dark-muted); line-height: 1.5; flex: 1; }
+.path-band-item > span:last-child { font-weight: 700; color: var(--brand-primary); font-size: 0.9rem; }
+.path-band-item--lu {
+    border-color: #F5A623;
+    background: linear-gradient(180deg, rgba(43,31,58,0.35) 0%, rgba(43,31,58,0.85) 65%), url(../img/levelup/levelup-card.jpg) center center / cover no-repeat;
+}
+.path-band-item--lu .path-band-kicker { color: #F5A623; }
+.path-band-item--lu p { color: #e6dff0; }
+.path-band-item--lu > span:last-child { color: #F5A623; }
+.path-band-item--lu:hover { background-image: linear-gradient(180deg, rgba(43,31,58,0.25) 0%, rgba(43,31,58,0.8) 65%), url(../img/levelup/levelup-card.jpg); }
+.path-band-kicker { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-primary); font-weight: 700; }
+@media (max-width: 960px) { .path-band-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .path-band-grid { grid-template-columns: 1fr; } .path-band { padding: 2rem 1.25rem; } }
