@@ -4,10 +4,11 @@
         <a href="{% url 'home' %}" class="nav-logo"><img src="{% static 'img/logo.svg' %}" alt="LinkedTrust logo" width="28" height="28" class="nav-logo-img">Linked<span>Trust</span></a>
 
         <ul class="nav-links">
-            <li><a href="{% url 'linkedclaims' %}" {% if request.resolver_match.url_name == 'linkedclaims' %}style="font-weight:700"{% endif %}>LinkedClaims</a></li>
-            <li><a href="{% url 'work_list' %}" {% if request.resolver_match.url_name == 'work_list' or request.resolver_match.url_name == 'work_detail' %}style="font-weight:700"{% endif %}>Portfolio</a></li>
-            <li><a href="{% url 'services' %}" {% if request.resolver_match.url_name == 'services' or request.resolver_match.url_name == 'service_detail' %}style="font-weight:700"{% endif %}>Services</a></li>
-            <li><a href="{% url 'about' %}" {% if request.resolver_match.url_name == 'about' or request.resolver_match.url_name == 'team' %}style="font-weight:700"{% endif %}>About</a></li>
+            {% with u=request.resolver_match.url_name %}{% if u == 'press' or u == 'team' or u == 'team_member_detail' or u == 'getstarted' or u == 'privacy' or u == 'interns' or u == 'levelup' or u == 'levelup_thanks' or u == 'case_studies_list' or u == 'case_study' or u == 'mission' or u == 'contact' %}<li><a href="{{ request.path }}" class="is-active" aria-current="page">{% with u=request.resolver_match.url_name %}{% if u == 'press' %}Press{% elif u == 'team' or u == 'team_member_detail' %}Team{% elif u == 'getstarted' %}Get Started{% elif u == 'privacy' %}Privacy{% elif u == 'interns' %}Internships{% elif u == 'levelup' or u == 'levelup_thanks' %}LevelUp{% elif u == 'case_studies_list' or u == 'case_study' %}Case Studies{% elif u == 'mission' %}Mission{% elif u == 'contact' %}Contact{% endif %}{% endwith %}</a></li>{% endif %}{% endwith %}
+            <li><a href="{% url 'linkedclaims' %}" {% if request.resolver_match.url_name == 'linkedclaims' %}class="is-active"{% endif %}>LinkedClaims</a></li>
+            <li><a href="{% url 'work_list' %}" {% if request.resolver_match.url_name == 'work_list' or request.resolver_match.url_name == 'work_detail' %}class="is-active"{% endif %}>Portfolio</a></li>
+            <li><a href="{% url 'services' %}" {% if request.resolver_match.url_name == 'services' or request.resolver_match.url_name == 'service_detail' %}class="is-active"{% endif %}>Services</a></li>
+            <li><a href="{% url 'about' %}" {% if request.resolver_match.url_name == 'about' or request.resolver_match.url_name == 'team' %}class="is-active"{% endif %}>About</a></li>
             <li><a href="/blog/">Blog</a></li>
             <li><a href="{% url 'contact' %}" class="nav-cta">Let's Talk</a></li>
         </ul>

@@ -40,7 +40,6 @@
 {% block content %}
 
 <section class="container service-detail-hero">
-    <div class="section-label mono">// services</div>
     {% if service.icon %}<div style="font-size:2.5rem;margin-bottom:1rem;"><i class="{{ service.get_icon_class }}"></i></div>{% endif %}
     <h1>{{ service.title }}</h1>
     <p class="description">{{ service.short_description }}</p>
@@ -59,7 +58,6 @@
 <div class="gradient-bar"></div>
 <section class="portfolio-dark">
     <div class="container">
-        <div class="section-label mono">// related work</div>
         <h2 class="section-title">Projects using this service</h2>
         <div class="portfolio-grid">
             {% for project in example_projects %}

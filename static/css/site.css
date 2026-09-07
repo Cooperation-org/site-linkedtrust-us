@@ -128,6 +128,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 
 }
 .nav-links a:hover { color: var(--text-primary); }
+.nav-links a.is-active { background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700; }
 
 .nav-cta {
     background: var(--gradient);
