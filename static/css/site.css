@@ -44,6 +44,8 @@
 
     /* Type — interface in the sans, people in the serif */
     --font-prose: 'Literata', Georgia, serif;
+    --font-display: 'Fraunces', Georgia, serif;   /* hero 'Human trust' only */
+    --font-display: 'Fraunces', Georgia, serif;   /* hero 'Human trust' only */
     --font-ui: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
     --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
 }
@@ -1588,7 +1590,7 @@ details p {
 
 /* Tagline: same size and color, only the typeface changes */
 .hero-text h1 .tech  { font-family: var(--font-ui);    font-weight: 700; }
-.hero-text h1 .human { font-family: var(--font-prose); font-weight: 600; }
+.hero-text h1 .human { font-family: var(--font-display); font-weight: 600; }
 
 /* Page ledes are prose too */
 .section-title + p,
