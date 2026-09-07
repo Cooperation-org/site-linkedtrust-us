@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}About LinkedTrust — A Global Tech Cooperative{% endblock %}
+{% block title %}About LinkedTrust: A Global Tech Cooperative{% endblock %}
 {% block meta_description %}LinkedTrust is a cooperative deep-tech studio built on transparency and earned governance. Learn who we are, how the co-op works, and what we value.{% endblock %}
 
 {% block extra_css %}
@@ -128,7 +128,7 @@
             </div>
         </div>
         {% empty %}
-        <p style="color:var(--text-muted);grid-column:1/-1;">Team profiles coming soon — add them in the admin.</p>
+        <p style="color:var(--text-muted);grid-column:1/-1;">Team profiles coming soon. Add them in the admin.</p>
         {% endfor %}
     </div>
 </section>
@@ -150,7 +150,7 @@
         <div class="service-card">
             <div class="service-icon"><i class="fa-solid fa-link"></i></div>
             <h3>Decentralized Trust</h3>
-            <p>Built on the <a href="{% url 'linkedclaims' %}" style="color:var(--brand-primary);font-weight:600;">LinkedClaims</a> open standard. Claims, credentials, and testimonials — all verifiable, all open source.</p>
+            <p>Built on the <a href="{% url 'linkedclaims' %}" style="color:var(--brand-primary);font-weight:600;">LinkedClaims</a> open standard. Claims, credentials, and testimonials: all verifiable, all open source.</p>
             <div class="github-links" style="margin-top:0.75rem;">
                 <a href="https://github.com/Cooperation-org" target="_blank" rel="noopener">Cooperation-org &rarr;</a>
                 <a href="https://github.com/Whats-Cookin" target="_blank" rel="noopener">Whats-Cookin &rarr;</a>

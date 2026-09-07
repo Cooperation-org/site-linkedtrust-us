@@ -1,5 +1,5 @@
 {% extends 'work_detail.html' %}
-{# Case study page reuses the work_detail template — it already renders case_study if present.
+{# Case study page reuses the work_detail template, it already renders case_study if present.
    It renders the same content as the project page, so canonicalize to work_detail to avoid
    duplicate content (and it's intentionally kept out of the sitemap). #}
 
@@ -12,7 +12,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "headline": "{{ project.title|escapejs }}{% if case_study %} — Case Study{% endif %}",
+      "headline": "{{ project.title|escapejs }}{% if case_study %}: Case Study{% endif %}",
       "url": "https://linkedtrust.us{% url 'case_study' project.slug %}",
       {% if project.hero_image %}"image": "https://linkedtrust.us{{ project.hero_image.url }}",{% endif %}
       "about": {

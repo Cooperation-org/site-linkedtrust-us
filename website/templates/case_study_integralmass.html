@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {# The case study itself is Jefferson Richards' document, served byte-for-byte
-   from static/casestudies/grunt-lead-methodology/ — do NOT restyle or edit it.
+   from static/casestudies/grunt-lead-methodology/, do NOT restyle or edit it.
    It renders in a same-origin iframe so its CSS and the site's never touch. #}
 
-{% block title %}The Grunt-Lead Methodology — IntegralMASS Case Study | LinkedTrust{% endblock %}
+{% block title %}The Grunt-Lead Methodology: IntegralMASS Case Study | LinkedTrust{% endblock %}
 {% block meta_description %}How IntegralMASS navigated the initial lifecycle of building a minimum viable product with a team of unknown collaborators, without prematurely slicing equity. By Jefferson Richards.{% endblock %}
 
 {% block structured_data %}
@@ -52,7 +52,7 @@
 <iframe id="casedoc-frame"
         class="casedoc-frame"
         src="{% static 'casestudies/grunt-lead-methodology/index.html' %}"
-        title="The Grunt-Lead Methodology — IntegralMASS (document by Jefferson Richards)"></iframe>
+        title="The Grunt-Lead Methodology: IntegralMASS (document by Jefferson Richards)"></iframe>
 
 {% endblock %}
 

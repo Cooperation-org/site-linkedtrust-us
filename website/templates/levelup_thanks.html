@@ -70,7 +70,7 @@
 
         <div class="lu-actions">
             {% for s in sessions %}
-            <a class="btn btn-gradient" href="{% url 'levelup_ics' s.key %}" download>Add to calendar{% if sessions|length > 1 %} — {{ s.short_label }}{% endif %}</a>
+            <a class="btn btn-gradient" href="{% url 'levelup_ics' s.key %}" download>Add to calendar{% if sessions|length > 1 %}: {{ s.short_label }}{% endif %}</a>
             {% endfor %}
             <a class="btn" style="border:1.5px solid var(--border);" href="{% url 'services' %}">See what we build</a>
         </div>
