@@ -765,7 +765,8 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 /* ---- PROJECT DETAIL PAGE ---- */
 
 .project-detail-hero {
-    padding: 2rem 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 .project-detail-hero .project-client {
     font-size: 0.8rem;
