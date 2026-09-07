@@ -820,7 +820,8 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 /* ---- CASE STUDY ---- */
 
 .case-study-section {
-    padding: 2rem 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 .case-study-section h2 {
     font-size: 1.5rem;

@@ -701,14 +701,14 @@ def latest_claims(limit=5):
         return cached
     out = []
     try:
-        r = _rq.get('https://api.linkedtrust.us/api/feed', params={'limit': 40}, timeout=4)
+        r = _rq.get('https://api.linkedtrust.us/api/feed', params={'limit': 60}, timeout=4)
         r.raise_for_status()
         for e in r.json().get('entries', []):
             subj = e.get('subject') or {}
             name = (subj.get('name') or '').strip()
             statement = (e.get('statement') or '').strip()
             claim = (e.get('claim') or '').replace('_', ' ').lower()
-            if claim == 'validates' or not name or not statement or name.isupper():
+            if claim == 'validates' or not name or len(statement) <= 30 or name.isupper():
                 continue
             img = subj.get('image') or ''
             if not img.lower().split('?')[0].endswith(('.jpg', '.jpeg', '.png', '.webp', '.gif')):
