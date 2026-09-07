@@ -63,12 +63,11 @@ def contact_view(request):
     Render the contact page and handle form submissions.
     """
     success = False
-    error = False
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if request.POST.get('website'):
             # Honeypot field filled in: a bot. Pretend it worked, store nothing, send nothing.
-            return render(request, 'contact.html', {'form': ContactForm(), 'success': True, 'error': False})
+            return render(request, 'contact.html', {'form': ContactForm(), 'success': True})
         if form.is_valid():
             inquiry = form.save()
             # Send notification email
@@ -87,18 +86,19 @@ def contact_view(request):
                     to=['connect@linkedtrust.us'],
                     reply_to=[inquiry.email],
                 ).send(fail_silently=False)
-                success = True
-                form = ContactForm()  # reset form after success
             except Exception as e:
+                # The inquiry is already saved (admin > Contact inquiries). Never show
+                # the visitor a failure for a mail problem on our side; log it.
                 logger.error(f"Contact email failed for inquiry {inquiry.id}: {e}")
-                error = True
+            success = True
+            form = ContactForm()  # reset form after success
     else:
         initial = {}
         subject = request.GET.get('subject')
         if subject:
             initial['subject'] = subject
         form = ContactForm(initial=initial)
-    return render(request, 'contact.html', {'form': form, 'success': success, 'error': error})
+    return render(request, 'contact.html', {'form': form, 'success': success})
 
 def press_view(request):
     """
