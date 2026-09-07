@@ -1748,14 +1748,14 @@ a.nodec:hover { text-decoration: underline; }
 .footer-social svg { display: block; }
 
 /* ---- SERVICES: three paths + workshop on a dark band ---- */
-.path-band { background: var(--bg-dark); color: var(--text-on-dark); padding: 2.5rem 2rem; }
+.path-band { background: var(--bg-dark); color: var(--text-on-dark); padding: 1.5rem 2rem; }
 .path-band-inner { max-width: 1200px; margin: 0 auto; }
 .path-band-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
-.path-band-item { background: var(--bg-dark-card); border: 1px solid var(--border-dark); border-radius: var(--radius); padding: 1.5rem; color: var(--text-on-dark); display: flex; flex-direction: column; gap: 0.5rem; }
+.path-band-item { background: var(--bg-dark-card); border: 1px solid var(--border-dark); border-radius: var(--radius); padding: 1.25rem; color: var(--text-on-dark); display: flex; flex-direction: column; gap: 0.5rem; }
 .path-band-item:hover { background: var(--bg-dark-hover); }
 .path-band-item > i { color: var(--brand-primary); font-size: 1.4rem; }
 .path-band-item h2 { font-size: 1.1rem; font-weight: 700; color: var(--text-on-dark); }
-.path-band-item p { font-size: 0.9rem; color: var(--text-on-dark-muted); line-height: 1.5; flex: 1; }
+.path-band-item p { font-size: 0.9rem; color: var(--text-on-dark-muted); line-height: 1.5; flex: 1; margin: 0; }
 .path-band-item > span:last-child { font-weight: 700; color: var(--brand-primary); font-size: 0.9rem; }
 .path-band-item--lu {
     border-color: #F5A623;
