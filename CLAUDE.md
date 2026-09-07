@@ -1,3 +1,8 @@
+# DO NOT MAKE ANY BAD END USER EXPERIENCE. EVER. IN ANY WAY. THIS IS CRITICAL. (golda, 2026-09-07)
+A visitor never sees our failures. Every form saves to the database FIRST, then always shows success;
+a mail or service failure is logged for us, never shown to them. No bare error pages, no dead links,
+no unstyled pages, no "try again later". If something on our side breaks, the visitor still gets through.
+
 # LinkedTrust.us Website — Claude Code Context
 
 ## Project Overview
