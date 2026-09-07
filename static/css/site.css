@@ -1588,7 +1588,7 @@ details p {
 
 /* Tagline: same size and color, only the typeface changes */
 .hero-text h1 .tech  { font-family: var(--font-ui);    font-weight: 700; }
-.hero-text h1 .human { font-family: var(--font-prose); font-weight: 600; font-style: italic; }
+.hero-text h1 .human { font-family: var(--font-prose); font-weight: 600; }
 
 /* Page ledes are prose too */
 .section-title + p,
