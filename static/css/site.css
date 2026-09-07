@@ -72,9 +72,9 @@ a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on photos — looks real */
 
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
 }
 
 
@@ -91,9 +91,9 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 }
 
 .nav-inner {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -279,9 +279,9 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 /* ---- HERO (split: text left, badge right) ---- */
 
 .hero {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 2.5rem 2rem 3rem;
+    padding: 1.5rem 2rem 2rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
@@ -427,7 +427,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 
 /* Mini badge (light bg, for secondary badges row) */
 .more-badges {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 2rem 3rem;
     display: grid;
@@ -451,9 +451,9 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 /* ---- SERVICES GRID ---- */
 
 .services-section {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 4rem 2rem;
+    padding: 2.5rem 2rem;
 }
 .services-grid {
     display: grid;
@@ -515,7 +515,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 .portfolio-dark {
     background: var(--bg-dark);
     color: var(--text-on-dark);
-    padding: 5rem 2rem;
+    padding: 2.5rem 2rem;
 }
 .portfolio-dark .section-label { color: var(--brand-accent); }
 .portfolio-dark .section-title { color: #fff; }
@@ -632,7 +632,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 /* ---- TRUSTED BY ---- */
 
 .trusted-section {
-    padding: 4rem 0;
+    padding: 2.5rem 0;
     text-align: center;
     overflow: hidden;
 }
@@ -706,7 +706,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 
 .cta-banner {
     background: var(--gradient);
-    padding: 5rem 2rem;
+    padding: 2.5rem 2rem;
     text-align: center;
     color: #fff;
 }
@@ -727,10 +727,10 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 .site-footer {
     background: var(--bg-primary);
     border-top: 1px solid var(--border);
-    padding: 3rem 0;
+    padding: 2rem 0;
 }
 .footer-inner {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 2rem;
     display: grid;
@@ -765,7 +765,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 /* ---- PROJECT DETAIL PAGE ---- */
 
 .project-detail-hero {
-    padding: 3rem 0;
+    padding: 2rem 0;
 }
 .project-detail-hero .project-client {
     font-size: 0.8rem;
@@ -819,7 +819,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 /* ---- CASE STUDY ---- */
 
 .case-study-section {
-    padding: 3rem 0;
+    padding: 2rem 0;
 }
 .case-study-section h2 {
     font-size: 1.5rem;
@@ -875,7 +875,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 /* ---- SERVICE DETAIL ---- */
 
 .service-detail-hero {
-    padding: 3rem 2rem;
+    padding: 2rem 2rem;
 }
 .service-detail-hero h1 {
     font-size: 2.5rem;
@@ -931,7 +931,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 /* ---- LINKEDCLAIMS ECOSYSTEM PAGE ---- */
 
 .linkedclaims-hero {
-    padding: 4rem 0 2rem;
+    padding: 1.5rem 0 1.5rem;
     background: var(--bg-primary);
 }
 .linkedclaims-hero h1 {
@@ -1064,14 +1064,14 @@ linked-badge[layout="card"]:not(:defined) {
 @media (max-width: 768px) {
     .hero {
         grid-template-columns: 1fr;
-        padding: 3rem 1.5rem 2rem;
+        padding: 1.5rem 1.5rem 1.5rem;
     }
     .hero-text h1 { font-size: 2.2rem; }
     .more-badges { grid-template-columns: 1fr; padding: 0 1.5rem 2rem; }
-    .services-section { padding: 3rem 1.5rem; }
+    .services-section { padding: 2rem 1.5rem; }
     .services-grid { grid-template-columns: 1fr; }
     .badge-row { margin-bottom: 1rem; }
-    .portfolio-dark { padding: 3rem 1.5rem; }
+    .portfolio-dark { padding: 2rem 1.5rem; }
     .portfolio-grid { grid-template-columns: 1fr; }
     .footer-inner { grid-template-columns: 1fr 1fr; }
     .nav-links { display: none; }
@@ -1079,7 +1079,7 @@ linked-badge[layout="card"]:not(:defined) {
     .project-detail-hero h1 { font-size: 1.8rem; }
     .service-detail-hero h1 { font-size: 1.8rem; }
     .cta-banner h2 { font-size: 1.6rem; }
-    .cta-banner { padding: 3rem 1.5rem; }
+    .cta-banner { padding: 2rem 1.5rem; }
     .ecosystem-grid--wide { grid-template-columns: 1fr; }
     .ecosystem-grid { grid-template-columns: 1fr; }
 }
@@ -1099,7 +1099,7 @@ linked-badge[layout="card"]:not(:defined) {
 /* ---- FLOATING TAB NAVIGATION ---- */
 
 .services-tabs-section {
-    padding: 3rem 2rem 0;
+    padding: 1.5rem 2rem 0;
     display: flex;
     justify-content: center;
 }
@@ -1189,7 +1189,7 @@ linked-badge[layout="card"]:not(:defined) {
 
 .bento-hero {
     position: relative;
-    padding: 4rem 2rem 3rem;
+    padding: 1.5rem 2rem 2rem;
     overflow: hidden;
 }
 
@@ -1290,14 +1290,14 @@ linked-badge[layout="card"]:not(:defined) {
 /* ---- BENTO SECTION ---- */
 
 .bento-section {
-    padding: 3rem 2rem 4rem;
+    padding: 2rem 2rem 2.5rem;
 }
 
 .bento-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
@@ -1750,7 +1750,7 @@ a.nodec:hover { text-decoration: underline; }
 
 /* ---- SERVICES: three paths + workshop on a dark band ---- */
 .path-band { background: var(--bg-dark); color: var(--text-on-dark); padding: 1.5rem 2rem; }
-.path-band-inner { max-width: 1200px; margin: 0 auto; }
+.path-band-inner { max-width: 1400px; margin: 0 auto; }
 .path-band-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
 .path-band-item { background: var(--bg-dark-card); border: 1px solid var(--border-dark); border-radius: var(--radius); padding: 1.25rem; color: var(--text-on-dark); display: flex; flex-direction: column; gap: 0.5rem; }
 .path-band-item:hover { background: var(--bg-dark-hover); }
