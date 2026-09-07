@@ -85,7 +85,7 @@ def _oneline(text):
 _SUMMARY = (
     "LinkedTrust is a coop-style deep-tech studio that builds verified trust "
     "systems, civic-tech platforms, and AI-powered tools. We design, build, and "
-    "run real software for organizations that care about doing things right — "
+    "run real software for organizations that care about doing things right, "
     "backed by publicly verifiable trust claims (LinkedClaims)."
 )
 
@@ -137,7 +137,7 @@ def llms_txt(request):
         L += ["## Team", "",
               f"The people you work with ([profiles]({root}/team/)):", ""]
         for m in team:
-            L.append(f"- {m.name} — {m.title}")
+            L.append(f"- {m.name}, {m.title}")
         L.append("")
 
     L += ["## More", "",
@@ -157,13 +157,13 @@ def llms_txt(request):
 def llms_full_txt(request):
     root = _site_root(request)
     L = [
-        "# LinkedTrust — Full Reference", "",
+        "# LinkedTrust: Full Reference", "",
         f"> {_SUMMARY}", "",
         "## What we do", "",
         "We design, build, and operate production software end-to-end: web "
         "platforms, APIs, data pipelines, AI/RAG integrations, and the "
-        "infrastructure underneath them. We work as a cooperative — the people "
-        "who do the work share in it — and we bias toward the real things: real "
+        "infrastructure underneath them. We work as a cooperative (the people "
+        "who do the work share in it) and we bias toward the real things: real "
         "projects, real impact, all verifiable.", "",
     ]
 
@@ -238,7 +238,7 @@ def llms_full_txt(request):
     if team:
         L += [f"## Team ({root}/team/)", ""]
         for m in team:
-            L.append(f"### {m.name} — {m.title}")
+            L.append(f"### {m.name}, {m.title}")
             if m.description:
                 L.append(_oneline(m.description))
             L.append("")
