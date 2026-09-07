@@ -24,7 +24,7 @@ def home_view(request):
     Render the home page: hero + trust badges + featured work + services + trusted by.
     """
     context = {
-        'featured_projects': PortfolioProject.objects.filter(featured=True)[:4],
+        'featured_projects': PortfolioProject.objects.filter(featured=True).order_by('sort_order')[:6],
         'hero_badges': Testimonial.objects.filter(placement='hero', linked_claim_id__gt='')[:2],
         'homepage_badges': Testimonial.objects.filter(placement='homepage', linked_claim_id__gt=''),
         'featured_testimonials': Testimonial.objects.filter(featured=True)[:3],
@@ -72,7 +72,7 @@ def contact_view(request):
             inquiry = form.save()
             # Send notification email
             try:
-                subject = f"New Contact: {inquiry.get_subject_display()} — {inquiry.name or inquiry.email}"
+                subject = f"New Contact: {inquiry.get_subject_display()}: {inquiry.name or inquiry.email}"
                 body = (
                     f"Name: {inquiry.name or '(not provided)'}\n"
                     f"Email: {inquiry.email}\n"
@@ -232,13 +232,13 @@ def earnedgov_commit_view(request):
 
         if adopt and adopt.get('gate_type') and not request.POST.get('gate_agree'):
             errors.append(
-                f"This opportunity has a {adopt['gate_type']} gate — you must "
+                f"This opportunity has a {adopt['gate_type']} gate. You must "
                 f"agree to its terms to join."
             )
         if not errors:
             statement_full = statement
             if not self_attested and form['voucher_name']:
-                statement_full = f"{statement}\n\n— as told to {form['voucher_name']}"
+                statement_full = f"{statement}\n\nAs told to {form['voucher_name']}"
             if adopt and adopt.get('gate_type') and request.POST.get('gate_agree'):
                 statement_full += (
                     f"\n\n[Agreed to the opportunity's {adopt['gate_type']} gate: "
@@ -854,7 +854,7 @@ def _levelup_calendar(session, access_url=''):
         'A live build workshop with LinkedTrust engineers. Bring what is stuck '
         'and leave with it moving.'
     )
-    location = 'Online — access link will be emailed before the workshop'
+    location = 'Online. Access link will be emailed before the workshop'
     if access_url:
         description += f' Join online: {access_url}'
         location = access_url
@@ -971,7 +971,7 @@ def _levelup_send_access(reg, access_url):
     sessions = levelup_sessions(reg.session)
     session = sessions[0]
     message = EmailMessage(
-        subject=f'Your LevelUp workshop link — {", ".join(s["short_label"] for s in sessions)}',
+        subject=f'Your LevelUp workshop link: {", ".join(s["short_label"] for s in sessions)}',
         body=(
             f"Hi {reg.name.split()[0] if reg.name.strip() else 'there'},\n\n"
             f"Here is your private link for LevelUp on "
