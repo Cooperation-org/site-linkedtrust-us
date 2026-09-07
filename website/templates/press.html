@@ -3,81 +3,6 @@
 {% block title %}Press & Media: LinkedTrust in the News{% endblock %}
 {% block meta_description %}LinkedTrust in the news: talks, podcasts, interviews, and articles on decentralized trust, AI, and earned governance, from ETH Denver to TechDirt.{% endblock %}
 
-{% block extra_css %}
-<style>
-    .press-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 1.25rem;
-    }
-    .press-card {
-        background: var(--bg-white);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 1.5rem;
-        transition: border-color 0.2s, box-shadow 0.2s;
-   }
-    .press-card:hover {
-        border-color: var(--brand-primary);
-        box-shadow: var(--shadow-md);
-    }
-    .press-type {
-        font-family: var(--font-mono);
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: var(--brand-primary);
-        margin-bottom: 0.5rem;
-    }
-    .press-date {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        margin-bottom: 0.5rem;
-    }
-    .press-card h3 {
-        font-size: 1rem;
-        font-weight: 600;
-        line-height: 1.4;
-        margin-bottom: 0.5rem;
-    }
-    .press-card h3 a {
-        color: var(--text-primary);
-        transition: color 0.2s;
-    }
-    .press-card h3 a:hover {
-        color: var(--brand-primary);
-    }
-    .press-meta {
-        font-size: 0.8rem;
-        color: var(--text-secondary);
-    }
-    .press-tag {
-        display: inline-block;
-        font-family: var(--font-mono);
-        font-size: 0.65rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        background: var(--bg-primary);
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        padding: 0.2rem 0.5rem;
-        margin-top: 0.75rem;
-        color: var(--text-muted);
-    }
-    .press-flyer { display:block; width:100%; max-width:260px; height:auto; margin:0.75rem 0; border:1px solid var(--border); }
-    .press-year {
-        font-family: var(--font-mono);
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: var(--text-muted);
-        letter-spacing: 0.05em;
-        padding: 1.5rem 0 0.75rem;
-        border-bottom: 1px solid var(--border);
-        margin-bottom: 1.5rem;
-    }
-</style>
-{% endblock %}
-
 {% block content %}
 
 <section class="container" style="padding-top:3rem;">
@@ -89,194 +14,223 @@
 </section>
 
 <section class="container" style="padding-bottom:3rem;">
-
-    <div class="press-year">2026</div>
     <div class="press-grid">
-
         <div class="press-card">
-            <div class="press-type">Podcast</div>
-            <div class="press-date">August 7, 2026</div>
-            <h3><a href="https://drive.google.com/drive/folders/1e66dCe89l8rmEibn6dkjp5yzjQ8pR1-2" target="_blank" rel="noopener noreferrer">UNMUTED+ with Page Hinerman: Two women. One mission.</a></h3>
-            <div class="press-meta">Gitonga Miriam &amp; Golda Velez, interviewed by Page Hinerman, PAGE Capacity Builders</div>
-            <a href="https://drive.google.com/drive/folders/1e66dCe89l8rmEibn6dkjp5yzjQ8pR1-2" target="_blank" rel="noopener noreferrer"><img class="press-flyer" src="{% static 'img/press/unmuted-2026-08-07.jpg' %}" alt="UNMUTED+ flyer, August 7: Gitonga Miriam and Golda Velez of LinkedTrust" loading="lazy" width="696" height="900"></a>
-            <span class="press-tag">UNMUTED+</span> <span class="press-tag">Clips</span>
+            <a class="press-media press-media--contain press-media--play" href="https://drive.google.com/drive/folders/1e66dCe89l8rmEibn6dkjp5yzjQ8pR1-2" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/unmuted-2026-08-07.jpg' %}" alt="UNMUTED+ flyer, August 7: Gitonga Miriam and Golda Velez of LinkedTrust" width="696" height="900" loading="eager"></a>
+            <div class="press-body">
+                <div class="press-type">Podcast</div>
+                <div class="press-date">August 7, 2026</div>
+                <h3><a href="https://drive.google.com/drive/folders/1e66dCe89l8rmEibn6dkjp5yzjQ8pR1-2" target="_blank" rel="noopener noreferrer">UNMUTED+ with Page Hinerman: Two women. One mission.</a></h3>
+                <div class="press-meta">Gitonga Miriam &amp; Golda Velez, interviewed by Page Hinerman, PAGE Capacity Builders</div>
+                <span class="press-tag">UNMUTED+</span> <span class="press-tag">Clips</span>
+            </div>
         </div>
-
+        <div class="press-card">
+            <a class="press-media" href="https://docs.google.com/presentation/d/19zoJlOcEnPe1HKNckI_iD3pqQYCCMRo8O4SxLwyuArg/edit" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/oe-summit-2025.jpg' %}" alt="First slide: LinkedTrust.us Case Study, Earned Governance in Action" width="640" height="360" loading="eager"></a>
+            <div class="press-body">
+                <div class="press-type">Talk (slides)</div>
+                <div class="press-date">October 2025</div>
+                <h3><a href="https://docs.google.com/presentation/d/19zoJlOcEnPe1HKNckI_iD3pqQYCCMRo8O4SxLwyuArg/edit" target="_blank" rel="noopener noreferrer">Earned Governance in Action</a></h3>
+                <div class="press-meta">Gitonga Miriam, Golda Velez</div>
+                <span class="press-tag">Ownership Economy Summit</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--play" href="https://youtu.be/pHYnNOYu5jw?t=926" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/dif-labs.jpg' %}" alt="DIF Labs Inaugural Beta Cohort: Show and Tell" width="640" height="360" loading="eager"></a>
+            <div class="press-body">
+                <div class="press-type">Video</div>
+                <div class="press-date">February 18, 2025</div>
+                <h3><a href="https://youtu.be/pHYnNOYu5jw?t=926" target="_blank" rel="noopener noreferrer">DIF Labs Inaugural Cohort</a></h3>
+                <div class="press-meta">Gitonga Miriam, Agnes Koinange, Golda Velez</div>
+                <span class="press-tag">Decentralized Identity Foundation</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--play" href="https://archive.org/details/practical-inclusiveness-and-earned-governance-linkedtrust" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/metagov-inclusiveness.jpg' %}" alt="Video call frame from the MetaGov session" width="640" height="361" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Video</div>
+                <div class="press-date">July 17, 2024</div>
+                <h3><a href="https://archive.org/details/practical-inclusiveness-and-earned-governance-linkedtrust" target="_blank" rel="noopener noreferrer">Practical Inclusiveness and Earned Governance</a></h3>
+                <div class="press-meta">Gitonga Njeri, Kenechukwu Orjiene, Amos Mwangi, Golda Velez</div>
+                <span class="press-tag">MetaGov</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media" href="https://archive.org/details/web-virtual-meetup-public-goods-june-2024" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/public-goods-2024.jpg' %}" alt="Title slide: Sustaining and Measuring the Impact of Public Goods, DWeb meetup" width="640" height="348" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Article</div>
+                <div class="press-date">June 2024</div>
+                <h3><a href="https://archive.org/details/web-virtual-meetup-public-goods-june-2024" target="_blank" rel="noopener noreferrer">Sustaining and Measuring the Impact of Public Goods</a></h3>
+                <div class="press-meta">Gitonga Njeri</div>
+                <span class="press-tag">Internet Archive</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--play" href="https://acceleratingmakers.publicgoodapphouse.org/blog/_blog-posts/how-linkedtrust-is-proving-impact-and-trust-making-web3-work" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/accelerating-makers.jpg' %}" alt="Proving Impact with Web3, Making Web3 Work interview series" width="640" height="360" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Video</div>
+                <div class="press-date">April 26, 2024</div>
+                <h3><a href="https://acceleratingmakers.publicgoodapphouse.org/blog/_blog-posts/how-linkedtrust-is-proving-impact-and-trust-making-web3-work" target="_blank" rel="noopener noreferrer">How LinkedTrust is Proving Impact and Trust</a></h3>
+                <div class="press-meta">Gitonga Miriam &amp; Golda Velez, interviewed by Billy Bicket. Full interview plus short clips.</div>
+                <span class="press-tag">Accelerating Makers</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--play" href="https://www.youtube.com/watch?v=gYOM91aa0DM" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/eth-denver-trust-ai.jpg' %}" alt="ETHDenver 2024 video thumbnail" width="640" height="360" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Video</div>
+                <div class="press-date">March 1, 2024</div>
+                <h3><a href="https://www.youtube.com/watch?v=gYOM91aa0DM" target="_blank" rel="noopener noreferrer">Decentralized Trust and AI</a></h3>
+                <div class="press-meta">Golda Velez</div>
+                <span class="press-tag">ETH Denver</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--play" href="https://www.youtube.com/watch?v=APy0RvnqDB8" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/eth-denver-supply-chain.jpg' %}" alt="Speaker on stage at ETHDenver 2024" width="640" height="360" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Video</div>
+                <div class="press-date">February 29, 2024</div>
+                <h3><a href="https://www.youtube.com/watch?v=APy0RvnqDB8" target="_blank" rel="noopener noreferrer">Supply Chain Traceability On and Off Chain</a></h3>
+                <span class="press-tag">ETH Denver</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media" href="https://www.techdirt.com/2024/01/26/how-to-bell-the-ai-cat/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/techdirt-bell-ai-cat.jpg' %}" alt="Techdirt" width="640" height="336" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Article</div>
+                <div class="press-date">January 26, 2024</div>
+                <h3><a href="https://www.techdirt.com/2024/01/26/how-to-bell-the-ai-cat/" target="_blank" rel="noopener noreferrer">Techdirt: How to Bell the AI Cat?</a></h3>
+                <div class="press-meta">Golda Velez &amp; Ayush Bharadwaj</div>
+                <span class="press-tag">TechDirt</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--play" href="https://www.youtube.com/watch?v=L5uARHb0-mA" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/fintech-dubai.jpg' %}" alt="WFC Fintech 2024 Dubai: Gitonga Miriam, LinkedTrust project manager" width="640" height="360" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Video</div>
+                <div class="press-date">January 2024</div>
+                <h3><a href="https://www.youtube.com/watch?v=L5uARHb0-mA" target="_blank" rel="noopener noreferrer">Gitonga at Fintech Dubai 2024</a></h3>
+                <span class="press-tag">Fintech Dubai</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--play" href="https://twit.tv/shows/floss-weekly/episodes/739?autostart=false" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/floss-weekly-739.jpg' %}" alt="FLOSS Weekly 739: AI Security, Decentralized Identifiers" width="640" height="360" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Podcast</div>
+                <div class="press-date">July 5, 2023</div>
+                <h3><a href="https://twit.tv/shows/floss-weekly/episodes/739?autostart=false" target="_blank" rel="noopener noreferrer">Whose AI is it Anyway?</a></h3>
+                <span class="press-tag">FLOSS Weekly</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media" href="https://thegreendivas.com/episode/the-christmas-tree-dilemma-other-holiday-season-fun/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/green-divas-2022.jpg' %}" alt="The Green Divas: 80 to 100 million trees are cut for Christmas each year" width="640" height="360" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Article</div>
+                <div class="press-date">December 14, 2022</div>
+                <h3><a href="https://thegreendivas.com/episode/the-christmas-tree-dilemma-other-holiday-season-fun/" target="_blank" rel="noopener noreferrer">The Christmas Tree Dilemma &amp; Other Holiday Season Fun</a></h3>
+                <span class="press-tag">The Green Divas</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media" href="https://mirror.xyz/0x3176Dd992793ae9C50b92fE09E1bb7CcCdFF8016/3b7qsIHd8QnFjL-CQnfCNjW-4mEaSvsvLtCQS7ecypU" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/mirror-after-merge.jpg' %}" alt="After the Merge: Miner Changes" width="640" height="336" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Article</div>
+                <div class="press-date">October 31, 2022</div>
+                <h3><a href="https://mirror.xyz/0x3176Dd992793ae9C50b92fE09E1bb7CcCdFF8016/3b7qsIHd8QnFjL-CQnfCNjW-4mEaSvsvLtCQS7ecypU" target="_blank" rel="noopener noreferrer">After the Merge: Miner Changes</a></h3>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--play" href="https://www.youtube.com/watch?v=0YsnGkFG7o8" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/columbia-public-sphere.jpg' %}" alt="Regulating the Online Public Sphere, Columbia University, October 3 and 4, 2022" width="640" height="360" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Video</div>
+                <div class="press-date">October 4, 2022</div>
+                <h3><a href="https://www.youtube.com/watch?v=0YsnGkFG7o8" target="_blank" rel="noopener noreferrer">Regulating the Online Public Sphere: From Decentralized Networks to Public Regulation</a></h3>
+                <div class="press-meta">Golda Velez, Invited Speaker</div>
+                <span class="press-tag">Columbia University</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--contain press-media--play" href="https://podcasts.apple.com/us/podcast/episode-033-making-the-transition-from-web2-to-web3/id1609220378?i=1000580481359" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/apple-web2-web3.jpg' %}" alt="The Ownership Economy podcast, episode 33 cover" width="640" height="640" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Podcast</div>
+                <div class="press-date">September 23, 2022</div>
+                <h3><a href="https://podcasts.apple.com/us/podcast/episode-033-making-the-transition-from-web2-to-web3/id1609220378?i=1000580481359" target="_blank" rel="noopener noreferrer">Making the Transition from Web2 to Web3 as an Engineer and Operator</a></h3>
+                <div class="press-meta">Golda Velez, Co-founder of What's Cookin and Former Uber and Postmates</div>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--play" href="https://archive.org/details/27-10_30_transparency_not_permission__a_work-weighted_approach_to_dao_governance.mp4" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/transparency-not-permission.jpg' %}" alt="Golda Velez presenting Transparency not Permission" width="640" height="361" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Video</div>
+                <div class="press-date">August 27, 2022</div>
+                <h3><a href="https://archive.org/details/27-10_30_transparency_not_permission__a_work-weighted_approach_to_dao_governance.mp4" target="_blank" rel="noopener noreferrer">Transparency not Permission: a Work-weighted Approach to DAO Governance</a></h3>
+                <div class="press-meta">Golda Velez</div>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--play" href="https://archive.org/details/26-09-30_-_ceramic_the_decentralized_network.qt" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/ceramic.jpg' %}" alt="Outdoor talk with slides on two screens" width="640" height="361" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Video</div>
+                <div class="press-date">August 26, 2022</div>
+                <h3><a href="https://archive.org/details/26-09-30_-_ceramic_the_decentralized_network.qt" target="_blank" rel="noopener noreferrer">Ceramic: The Decentralized Network for Composable Data</a></h3>
+                <div class="press-meta">Golda Velez</div>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--play" href="https://archive.org/details/26-12_15_decentralized_reputation_-_open_trust_claims.mp4" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/open-trust-claims.jpg' %}" alt="Golda Velez presenting Decentralized Reputation: Open Trust Claims" width="640" height="361" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Video</div>
+                <div class="press-date">August 26, 2022</div>
+                <h3><a href="https://archive.org/details/26-12_15_decentralized_reputation_-_open_trust_claims.mp4" target="_blank" rel="noopener noreferrer">Decentralized Reputation: Open Trust Claims</a></h3>
+                <div class="press-meta">Golda Velez</div>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--contain" href="https://medium.com/@dereksilva/ethcc-hack-2022-winners-3461e41c8b42" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/medium-ethcc-2022.jpg' %}" alt="EthCC Hack 2022, 22 to 24 July, Paris, France" width="640" height="213" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Article</div>
+                <div class="press-date">August 2, 2022</div>
+                <h3><a href="https://medium.com/@dereksilva/ethcc-hack-2022-winners-3461e41c8b42" target="_blank" rel="noopener noreferrer">EthCC Hack 2022 Winners</a></h3>
+                <div class="press-meta">Featuring Nishant Sharma and Arnob Choudry's 1st and 2nd place prizes</div>
+            </div>
+        </div>
+        <div class="press-card">
+            <div class="press-media press-media--none"><span>Article</span><span>Fairmint Blog</span></div>
+            <div class="press-body">
+                <div class="press-type">Article</div>
+                <div class="press-date">July 15, 2022</div>
+                <h3>WhatsCookin' does Equity their way</h3>
+                <span class="press-tag">Fairmint Blog</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--contain" href="https://whatscookin.us/perception-on-feminism-with-nandar/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/wc-nandar.jpg' %}" alt="Perception on Feminism with Nandar, event graphic" width="640" height="537" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Article</div>
+                <div class="press-date">March 21, 2022</div>
+                <h3><a href="https://whatscookin.us/perception-on-feminism-with-nandar/" target="_blank" rel="noopener noreferrer">Perception on Feminism with Nandar</a></h3>
+                <span class="press-tag">WhatsCookin' Blog</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media press-media--contain" href="https://whatscookin.us/a-future-without-employees/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/wc-no-employees.jpg' %}" alt="For-Purpose Enterprise with Thomas Thomison, encode.org" width="640" height="449" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Article</div>
+                <div class="press-date">February 8, 2022</div>
+                <h3><a href="https://whatscookin.us/a-future-without-employees/" target="_blank" rel="noopener noreferrer">A Future Without Employees</a></h3>
+                <span class="press-tag">WhatsCookin' Blog</span>
+            </div>
+        </div>
+        <div class="press-card">
+            <a class="press-media" href="https://whatscookin.us/just-because-we-agree-to-something-it-doesnt-mean-its-fair-things-change/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="{% static 'img/press/wc-moyer.jpg' %}" alt="Mike Moyer" width="640" height="310" loading="lazy"></a>
+            <div class="press-body">
+                <div class="press-type">Article</div>
+                <div class="press-date">January 26, 2022</div>
+                <h3><a href="https://whatscookin.us/just-because-we-agree-to-something-it-doesnt-mean-its-fair-things-change/" target="_blank" rel="noopener noreferrer">Mike Moyer: "Just because we agree to something, it doesn't mean it's fair. Things Change."</a></h3>
+                <span class="press-tag">WhatsCookin' Blog</span>
+            </div>
+        </div>
     </div>
-
-    <div class="press-year">2025</div>
-    <div class="press-grid">
-
-        <div class="press-card">
-            <div class="press-type">Video</div>
-            <div class="press-date">February 18, 2025</div>
-            <h3><a href="https://youtu.be/pHYnNOYu5jw?t=926" target="_blank" rel="noopener noreferrer">DIF Labs Inaugural Cohort</a></h3>
-            <div class="press-meta">Gitonga Miriam, Agnes Koinange, Golda Velez</div>
-            <span class="press-tag">Decentralized Identity Foundation</span>
-        </div>
-
-    </div>
-
-    <div class="press-year">2024</div>
-    <div class="press-grid">
-
-        <div class="press-card">
-            <div class="press-type">Video</div>
-            <div class="press-date">July 17, 2024</div>
-            <h3><a href="https://archive.org/details/practical-inclusiveness-and-earned-governance-linkedtrust" target="_blank" rel="noopener noreferrer">Practical Inclusiveness and Earned Governance</a></h3>
-            <div class="press-meta">Gitonga Njeri, Kenechukwu Orjiene, Amos Mwangi, Golda Velez</div>
-            <span class="press-tag">MetaGov</span>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Article</div>
-            <div class="press-date">June 2024</div>
-            <h3><a href="https://archive.org/details/web-virtual-meetup-public-goods-june-2024" target="_blank" rel="noopener noreferrer">Sustaining and Measuring the Impact of Public Goods</a></h3>
-            <div class="press-meta">Gitonga Njeri</div>
-            <span class="press-tag">Internet Archive</span>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Video</div>
-            <div class="press-date">April 26, 2024</div>
-            <h3><a href="https://acceleratingmakers.publicgoodapphouse.org/blog/_blog-posts/how-linkedtrust-is-proving-impact-and-trust-making-web3-work" target="_blank" rel="noopener noreferrer">How LinkedTrust is Proving Impact and Trust</a></h3>
-            <div class="press-meta">Gitonga Miriam &amp; Golda Velez, interviewed by Billy Bicket. Full interview plus short clips.</div>
-            <span class="press-tag">Accelerating Makers</span>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Video</div>
-            <div class="press-date">March 1, 2024</div>
-            <h3><a href="https://www.youtube.com/watch?v=gYOM91aa0DM" target="_blank" rel="noopener noreferrer">Decentralized Trust and AI</a></h3>
-            <div class="press-meta">Golda Velez</div>
-            <span class="press-tag">ETH Denver</span>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Video</div>
-            <div class="press-date">February 29, 2024</div>
-            <h3><a href="https://www.youtube.com/watch?v=APy0RvnqDB8" target="_blank" rel="noopener noreferrer">Supply Chain Traceability On and Off Chain</a></h3>
-            <span class="press-tag">ETH Denver</span>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Video</div>
-            <div class="press-date">January 2024</div>
-            <h3><a href="https://www.youtube.com/watch?v=L5uARHb0-mA" target="_blank" rel="noopener noreferrer">Gitonga at Fintech Dubai 2024</a></h3>
-            <span class="press-tag">Fintech Dubai</span>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Article</div>
-            <div class="press-date">January 26, 2024</div>
-            <h3><a href="https://www.techdirt.com/2024/01/26/how-to-bell-the-ai-cat/" target="_blank" rel="noopener noreferrer">Techdirt: How to Bell the AI Cat?</a></h3>
-            <div class="press-meta">Golda Velez &amp; Ayush Bharadwaj</div>
-            <span class="press-tag">TechDirt</span>
-        </div>
-
-    </div>
-
-    <div class="press-year">2023</div>
-    <div class="press-grid">
-
-        <div class="press-card">
-            <div class="press-type">Podcast</div>
-            <div class="press-date">July 5, 2023</div>
-            <h3><a href="https://twit.tv/shows/floss-weekly/episodes/739?autostart=false" target="_blank" rel="noopener noreferrer">Whose AI is it Anyway?</a></h3>
-            <span class="press-tag">FLOSS Weekly</span>
-        </div>
-
-    </div>
-
-    <div class="press-year">2022</div>
-    <div class="press-grid">
-
-        <div class="press-card">
-            <div class="press-type">Article</div>
-            <div class="press-date">December 14, 2022</div>
-            <h3><a href="https://thegreendivas.com/episode/the-christmas-tree-dilemma-other-holiday-season-fun/" target="_blank" rel="noopener noreferrer">The Christmas Tree Dilemma &amp; Other Holiday Season Fun</a></h3>
-            <span class="press-tag">The Green Divas</span>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Article</div>
-            <div class="press-date">October 31, 2022</div>
-            <h3><a href="https://mirror.xyz/0x3176Dd992793ae9C50b92fE09E1bb7CcCdFF8016/3b7qsIHd8QnFjL-CQnfCNjW-4mEaSvsvLtCQS7ecypU" target="_blank" rel="noopener noreferrer">After the Merge: Miner Changes</a></h3>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Video</div>
-            <div class="press-date">October 4, 2022</div>
-            <h3><a href="https://www.youtube.com/watch?v=0YsnGkFG7o8" target="_blank" rel="noopener noreferrer">Regulating the Online Public Sphere: From Decentralized Networks to Public Regulation</a></h3>
-            <div class="press-meta">Golda Velez, Invited Speaker</div>
-            <span class="press-tag">Columbia University</span>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Podcast</div>
-            <div class="press-date">September 23, 2022</div>
-            <h3><a href="https://podcasts.apple.com/us/podcast/episode-033-making-the-transition-from-web2-to-web3/id1609220378?i=1000580481359" target="_blank" rel="noopener noreferrer">Making the Transition from Web2 to Web3 as an Engineer and Operator</a></h3>
-            <div class="press-meta">Golda Velez, Co-founder of What's Cookin and Former Uber and Postmates</div>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Video</div>
-            <div class="press-date">August 27, 2022</div>
-            <h3><a href="https://archive.org/details/27-10_30_transparency_not_permission__a_work-weighted_approach_to_dao_governance.mp4" target="_blank" rel="noopener noreferrer">Transparency not Permission: a Work-weighted Approach to DAO Governance</a></h3>
-            <div class="press-meta">Golda Velez</div>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Video</div>
-            <div class="press-date">August 26, 2022</div>
-            <h3><a href="https://archive.org/details/26-09-30_-_ceramic_the_decentralized_network.qt" target="_blank" rel="noopener noreferrer">Ceramic: The Decentralized Network for Composable Data</a></h3>
-            <div class="press-meta">Golda Velez</div>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Video</div>
-            <div class="press-date">August 26, 2022</div>
-            <h3><a href="https://archive.org/details/26-12_15_decentralized_reputation_-_open_trust_claims.mp4" target="_blank" rel="noopener noreferrer">Decentralized Reputation: Open Trust Claims</a></h3>
-            <div class="press-meta">Golda Velez</div>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Article</div>
-            <div class="press-date">August 2, 2022</div>
-            <h3><a href="https://medium.com/@dereksilva/ethcc-hack-2022-winners-3461e41c8b42" target="_blank" rel="noopener noreferrer">EthCC Hack 2022 Winners</a></h3>
-            <div class="press-meta">Featuring Nishant Sharma and Arnob Choudry's 1st and 2nd place prizes</div>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Article</div>
-            <div class="press-date">July 15, 2022</div>
-            <h3>WhatsCookin' does Equity their way</h3>
-            <span class="press-tag">Fairmint Blog</span>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Article</div>
-            <div class="press-date">March 21, 2022</div>
-            <h3><a href="https://whatscookin.us/perception-on-feminism-with-nandar/" target="_blank" rel="noopener noreferrer">Perception on Feminism with Nandar</a></h3>
-            <span class="press-tag">WhatsCookin' Blog</span>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Article</div>
-            <div class="press-date">February 8, 2022</div>
-            <h3><a href="https://whatscookin.us/a-future-without-employees/" target="_blank" rel="noopener noreferrer">A Future Without Employees</a></h3>
-            <span class="press-tag">WhatsCookin' Blog</span>
-        </div>
-
-        <div class="press-card">
-            <div class="press-type">Article</div>
-            <div class="press-date">January 26, 2022</div>
-            <h3><a href="https://whatscookin.us/just-because-we-agree-to-something-it-doesnt-mean-its-fair-things-change/" target="_blank" rel="noopener noreferrer">Mike Moyer: "Just because we agree to something, it doesn't mean it's fair. Things Change."</a></h3>
-            <span class="press-tag">WhatsCookin' Blog</span>
-        </div>
-
-    </div>
-
 </section>
 
 <section class="cta-banner">
