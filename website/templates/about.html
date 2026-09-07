@@ -71,6 +71,9 @@
     .about-values-grid { grid-template-columns: 1fr; }
     .about-team-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
 }
+
+/* bios are people: the serif, never below 16px */
+.about-team-card-body p { font-family: var(--font-prose); font-size: 1rem; line-height: 1.65; }
 </style>
 {% endblock %}
 
@@ -92,14 +95,14 @@
 <section class="container" style="padding-top:3rem;">
     <div class="section-label mono">// about</div>
     <h1 class="section-title">Who we are</h1>
-    <div style="max-width:750px;">
-        <p style="font-size:1.1rem;color:var(--text-secondary);line-height:1.8;margin-bottom:1.5rem;">
+    <div class="prose" style="max-width:68ch;">
+        <p style="font-size:1.1rem;color:var(--text-secondary);line-height:1.7;margin-bottom:1.5rem;">
             LinkedTrust is a global, employee-owned technology cooperative based in Tucson, Arizona. We build verified trust systems, civic tech platforms, and AI-powered tools for organizations that care about doing things right.
         </p>
-        <p style="font-size:1.1rem;color:var(--text-secondary);line-height:1.8;margin-bottom:1.5rem;">
+        <p style="font-size:1.1rem;color:var(--text-secondary);line-height:1.7;margin-bottom:1.5rem;">
             Our team spans four continents. We share equity, governance, and a belief that trust should be earned and verifiable.
         </p>
-        <p style="font-size:1.1rem;color:var(--text-secondary);line-height:1.8;margin-bottom:2.5rem;">
+        <p style="font-size:1.1rem;color:var(--text-secondary);line-height:1.7;margin-bottom:2.5rem;">
             Every testimonial on this site is a verifiable claim on the LinkedTrust graph.
         </p>
     </div>

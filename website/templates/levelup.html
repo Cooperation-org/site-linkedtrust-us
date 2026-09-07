@@ -65,7 +65,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-family: var(--font-mono);
     font-size: 0.75rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -109,7 +109,7 @@
 }
 .lu-when > div { flex: 0 1 auto; }
 .lu-when dt {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.7rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -166,7 +166,7 @@
 }
 .lu-steps li::before {
     content: counter(step, decimal-leading-zero);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-weight: 700;
     color: var(--brand-primary);
     font-size: 0.95rem;
@@ -201,7 +201,7 @@
     font-size: 0.95rem;
 }
 .lu-price div + div { border-top: 1px solid var(--border); }
-.lu-price b { font-family: 'JetBrains Mono', monospace; font-weight: 700; white-space: nowrap; }
+.lu-price b { font-family: var(--font-mono); font-weight: 700; white-space: nowrap; }
 .lu-price .free b { color: var(--success); }
 
 .lu-share {
@@ -289,7 +289,7 @@
     display: flex; gap: 0.35rem; align-items: flex-start;
 }
 .lu-seat-price { margin-top: 0.7rem; font-size: 0.9rem; color: var(--text-secondary); }
-.lu-seat-price strong { color: var(--text-primary); font-family: 'JetBrains Mono', monospace; }
+.lu-seat-price strong { color: var(--text-primary); font-family: var(--font-mono); }
 .lu-seat-price.is-free strong { color: var(--success); }
 .lu-code-state { margin-top: 0.4rem; font-size: 0.8rem; font-weight: 600; }
 .lu-code-state.ok { color: var(--success); }

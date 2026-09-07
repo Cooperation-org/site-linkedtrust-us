@@ -41,6 +41,11 @@
     /* Radius */
     --radius: 12px;
     --radius-lg: 16px;
+
+    /* Type — interface in the sans, people in the serif */
+    --font-prose: 'Literata', Georgia, serif;
+    --font-ui: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
 }
 
 
@@ -49,7 +54,7 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: var(--font-ui);
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
@@ -57,8 +62,10 @@ body {
 }
 
 .mono {
-    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    font-family: var(--font-mono);
 }
+
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-ui); line-height: 1.2; }
 
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on photos — looks real */
@@ -249,7 +256,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 /* ---- SECTION UTILITIES ---- */
 
 .section-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.75rem;
     font-weight: 500;
     color: var(--brand-primary);
@@ -281,7 +288,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 .hero-text h1 {
     font-size: 3.2rem;
     font-weight: 800;
-    line-height: 1.1;
+    line-height: 1.15;
     letter-spacing: -1px;
     margin-bottom: 1.25rem;
 }
@@ -494,7 +501,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 .service-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
 .service-card .price-range {
     margin-top: 0.75rem;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.8rem;
     color: var(--brand-primary);
     font-weight: 600;
@@ -577,7 +584,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 
 .project-body { padding: 1.25rem; }
 .project-client {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.7rem;
     font-weight: 500;
     color: var(--brand-primary);
@@ -602,7 +609,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
     color: var(--text-on-dark-muted);
     padding: 0.2rem 0.55rem;
     border-radius: 6px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.65rem;
     font-weight: 500;
 }
@@ -735,7 +742,7 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
     margin-top: 0.5rem;
 }
 .footer-col h4 {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -1233,7 +1240,7 @@ linked-badge[layout="card"]:not(:defined) {
 
 .bento-badge {
     display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.72rem;
     font-weight: 500;
     text-transform: uppercase;
@@ -1365,7 +1372,7 @@ linked-badge[layout="card"]:not(:defined) {
 }
 
 .price-tag {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.78rem;
     font-weight: 500;
     padding: 4px 10px;
@@ -1402,7 +1409,7 @@ linked-badge[layout="card"]:not(:defined) {
 }
 
 .step-number {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 1rem;
     font-weight: 700;
     color: #fff;
@@ -1538,4 +1545,58 @@ linked-badge[layout="card"]:not(:defined) {
 .cs-thumb img { object-position: top; }
 @media (max-width: 900px) {
     .casedoc-bar { padding: 0.6rem 1rem; }
+}
+
+
+/* ---- PROSE (Literata): body copy, quotes, bios. Never below 16px, 1.6-1.7 leading, 68ch measure. ---- */
+
+.hero-text p,
+.project-detail-hero .description,
+.service-detail-hero .description,
+.project-detail-content p,
+.service-detail-content p,
+.case-study-section p,
+.linkedclaims-intro,
+.bento-hero-content p,
+.client-quote blockquote,
+.badge-quote,
+.mini-badge .badge-quote,
+.faq-item p,
+.faq-section p,
+.prose p,
+details p {
+    font-family: var(--font-prose);
+    font-size: max(1rem, 1em);
+    line-height: 1.65;
+}
+.hero-text p,
+.project-detail-hero .description,
+.service-detail-hero .description,
+.linkedclaims-intro,
+.bento-hero-content p { font-size: 1.1rem; line-height: 1.7; }
+.badge-quote, .mini-badge .badge-quote { font-size: 1rem; line-height: 1.6; }
+.client-quote blockquote { font-size: 1.1rem; line-height: 1.65; }
+
+.hero-text p,
+.project-detail-hero .description,
+.service-detail-hero .description,
+.project-detail-content p,
+.service-detail-content p,
+.case-study-section p,
+.linkedclaims-intro,
+.prose p { max-width: 68ch; }
+
+/* Tagline: same size and color, only the typeface changes */
+.hero-text h1 .tech  { font-family: var(--font-ui);    font-weight: 700; }
+.hero-text h1 .human { font-family: var(--font-prose); font-weight: 600; font-style: italic; }
+
+/* Page ledes are prose too */
+.section-title + p,
+.lede,
+.t2w-intro,
+.t2w-sub,
+.lu-hero-lede {
+    font-family: var(--font-prose);
+    line-height: 1.65;
+    max-width: 68ch;
 }
