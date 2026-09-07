@@ -117,7 +117,7 @@
     <div style="max-width:1200px;margin:0 auto;">
         <div class="section-label mono">// portfolio</div>
         <h2 class="section-title">Selected work</h2>
-        <div class="portfolio-grid">
+        <div class="portfolio-grid portfolio-grid--3">
             {% for project in featured_projects %}
             <a href="{% url 'work_detail' project.slug %}" class="project-card">
                 <div class="project-thumb" {% if project.thumbnail_image %}style="background:#1a1d27;"{% else %}style="background: {% cycle 'linear-gradient(135deg, rgba(0,178,229,0.15) 0%, rgba(102,126,234,0.15) 100%)' 'linear-gradient(135deg, rgba(102,126,234,0.15) 0%, rgba(147,51,234,0.15) 100%)' 'linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(0,178,229,0.15) 100%)' 'linear-gradient(135deg, rgba(234,179,8,0.15) 0%, rgba(239,68,68,0.1) 100%)' %};"{% endif %}>

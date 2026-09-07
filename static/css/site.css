@@ -1615,3 +1615,8 @@ a.nodec:hover { text-decoration: underline; }
 
 /* Grid items never force the hero wider than the phone (the badge's own min width) */
 .hero > * { min-width: 0; }
+
+/* Home: six selected projects as two even rows of three */
+.portfolio-grid--3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 960px) { .portfolio-grid--3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .portfolio-grid--3 { grid-template-columns: 1fr; } }
