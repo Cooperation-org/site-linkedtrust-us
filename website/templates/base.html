@@ -98,8 +98,8 @@
     {% block extra_css %}{% endblock %}
 
     <!-- LinkedTrust badge web component -->
-    <!-- TEMPORARY: badge.js served from demos VM. Move to permanent URL (e.g. linkedtrust.us/embed/) later -->
-    <script src="https://demos.linkedtrust.us/embed/badge.js" defer></script>
+    <!-- LinkedTrust badge web component, vendored from trust_claim (see static/js/badge.js header) -->
+    <script src="{% static 'js/badge.js' %}" defer></script>
 </head>
 <body>
     <!--

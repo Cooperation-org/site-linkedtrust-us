@@ -398,6 +398,9 @@
         </div>
 
         {% else %}
+        {% if error %}
+        <div class="form-group error-text" style="margin-bottom:1.25rem;">Your message was saved but our mail service did not confirm delivery. Email us directly at <a href="mailto:connect@linkedtrust.us" style="font-weight:600;">connect@linkedtrust.us</a>.</div>
+        {% endif %}
 
         <div class="form-header">
             <h2>Send us a message</h2>

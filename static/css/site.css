@@ -1600,3 +1600,18 @@ details p {
     line-height: 1.65;
     max-width: 68ch;
 }
+
+
+/* ---- GET STARTED (cards reuse .service-card) ---- */
+.get-started-image img {
+    width: 100%;
+    height: 140px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+.service-card .btn { margin-top: 1rem; display: inline-block; }
+a.nodec { color: var(--brand-primary); font-weight: 600; }
+a.nodec:hover { text-decoration: underline; }
+
+/* Grid items never force the hero wider than the phone (the badge's own min width) */
+.hero > * { min-width: 0; }

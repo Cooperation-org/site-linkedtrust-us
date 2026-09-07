@@ -63,6 +63,7 @@ def contact_view(request):
     Render the contact page and handle form submissions.
     """
     success = False
+    error = False
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -82,18 +83,19 @@ def contact_view(request):
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     to=['connect@linkedtrust.us'],
                     reply_to=[inquiry.email],
-                ).send(fail_silently=True)
+                ).send(fail_silently=False)
+                success = True
+                form = ContactForm()  # reset form after success
             except Exception as e:
-                logger.error(f"Contact email failed: {e}")
-            success = True
-            form = ContactForm()  # reset form after success
+                logger.error(f"Contact email failed for inquiry {inquiry.id}: {e}")
+                error = True
     else:
         initial = {}
         subject = request.GET.get('subject')
         if subject:
             initial['subject'] = subject
         form = ContactForm(initial=initial)
-    return render(request, 'contact.html', {'form': form, 'success': success})
+    return render(request, 'contact.html', {'form': form, 'success': success, 'error': error})
 
 def press_view(request):
     """
@@ -717,7 +719,9 @@ def work_list_view(request):
         projects = projects.filter(category=category)
     context = {
         'projects': projects,
-        'categories': PortfolioProject.CATEGORY_CHOICES,
+        # Only offer tabs for categories that actually contain projects
+        'categories': [(v, l) for v, l in PortfolioProject.CATEGORY_CHOICES
+                       if v in set(PortfolioProject.objects.values_list('category', flat=True))],
         'active_category': category,
     }
     return render(request, 'work_list.html', context)

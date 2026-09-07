@@ -16,6 +16,7 @@
 from html.parser import HTMLParser
 import re
 
+from django.http import HttpResponsePermanentRedirect
 from django.utils.deprecation import MiddlewareMixin
 
 
@@ -250,3 +251,15 @@ class MarkdownNegotiationMiddleware(MiddlewareMixin):
         existing_vary = response.get("Vary")
         response["Vary"] = f"{existing_vary}, Accept" if existing_vary else "Accept"
         return response
+
+
+class CanonicalHostMiddleware(MiddlewareMixin):
+    """www.linkedtrust.us is an alias; send visitors and crawlers to the one canonical host."""
+
+    CANONICAL = 'linkedtrust.us'
+
+    def process_request(self, request):
+        host = request.get_host().split(':')[0].lower()
+        if host == 'www.' + self.CANONICAL:
+            return HttpResponsePermanentRedirect(f"https://{self.CANONICAL}{request.get_full_path()}")
+        return None

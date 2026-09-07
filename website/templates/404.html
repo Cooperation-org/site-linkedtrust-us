@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Page not found | LinkedTrust{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+<section class="container" style="padding:4rem 2rem;">
+    <div class="section-label mono">// 404</div>
+    <h1 class="section-title">That page isn't here</h1>
+    <p class="lede" style="color:var(--text-secondary);margin:1rem 0 2rem;">The link may be old, or the page moved.</p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="{% url 'home' %}" class="btn btn-gradient">Home</a>
+        <a href="{% url 'work_list' %}" class="btn btn-outline">Our work</a>
+        <a href="{% url 'services' %}" class="btn btn-outline">Services</a>
+        <a href="{% url 'contact' %}" class="btn btn-outline">Contact</a>
+    </div>
+</section>
+{% endblock %}
