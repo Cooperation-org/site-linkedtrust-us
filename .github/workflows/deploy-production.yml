@@ -58,6 +58,12 @@ jobs:
             sync_env_secret LEVELUP_STRIPE_PAYMENT_LINK '${{ secrets.LEVELUP_STRIPE_PAYMENT_LINK }}'
             sync_env_secret LEVELUP_STRIPE_WEBHOOK_SECRET '${{ secrets.LEVELUP_STRIPE_WEBHOOK_SECRET }}'
             sync_env_secret LEVELUP_VIDEO_URL '${{ secrets.LEVELUP_VIDEO_URL }}'
+            sync_env_secret EMAIL_HOST '${{ secrets.EMAIL_HOST }}'
+            sync_env_secret EMAIL_PORT '${{ secrets.EMAIL_PORT }}'
+            sync_env_secret EMAIL_USE_SSL '${{ secrets.EMAIL_USE_SSL }}'
+            sync_env_secret EMAIL_HOST_USER '${{ secrets.EMAIL_HOST_USER }}'
+            sync_env_secret EMAIL_HOST_PASSWORD '${{ secrets.EMAIL_HOST_PASSWORD }}'
+            sync_env_secret DEFAULT_FROM_EMAIL '${{ secrets.DEFAULT_FROM_EMAIL }}'
 
             echo "Installing dependencies..."
             source .venv/bin/activate

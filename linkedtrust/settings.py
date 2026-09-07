@@ -222,12 +222,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+# All from the environment so the mailbox can change (Migadu) without a code
+# change: set EMAIL_* as repository Actions secrets; deploy-production.yml
+# syncs them into the production .env. Migadu: smtp.migadu.com, 465 + SSL
+# (or 587 + TLS), user = full mailbox address, from = that same address.
+EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_USE_SSL = config('EMAIL_USE_SSL', default=False, cast=bool)
+EMAIL_USE_TLS = not EMAIL_USE_SSL
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='emosmwangi@gmail.com')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = 'LinkedTrust <emosmwangi@gmail.com>'
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='LinkedTrust <emosmwangi@gmail.com>')
+EMAIL_TIMEOUT = 15
 
 # LevelUp workshop registration (/levelup/)
 # Add these as repository Actions secrets; deploy-production.yml syncs them to

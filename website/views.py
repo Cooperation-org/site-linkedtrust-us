@@ -66,6 +66,9 @@ def contact_view(request):
     error = False
     if request.method == 'POST':
         form = ContactForm(request.POST)
+        if request.POST.get('website'):
+            # Honeypot field filled in: a bot. Pretend it worked, store nothing, send nothing.
+            return render(request, 'contact.html', {'form': ContactForm(), 'success': True, 'error': False})
         if form.is_valid():
             inquiry = form.save()
             # Send notification email
