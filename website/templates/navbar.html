@@ -8,7 +8,7 @@
             <li><a href="{% url 'linkedclaims' %}" {% if request.resolver_match.url_name == 'linkedclaims' %}class="is-active"{% endif %}>LinkedClaims</a></li>
             <li><a href="{% url 'work_list' %}" {% if request.resolver_match.url_name == 'work_list' or request.resolver_match.url_name == 'work_detail' %}class="is-active"{% endif %}>Portfolio</a></li>
             <li><a href="{% url 'services' %}" {% if request.resolver_match.url_name == 'services' or request.resolver_match.url_name == 'service_detail' %}class="is-active"{% endif %}>Services</a></li>
-            <li><a href="{% url 'about' %}" {% if request.resolver_match.url_name == 'about' or request.resolver_match.url_name == 'team' %}class="is-active"{% endif %}>About</a></li>
+            <li><a href="{% url 'about' %}" {% if request.resolver_match.url_name == 'about' %}class="is-active"{% endif %}>About</a></li>
             <li><a href="/blog/">Blog</a></li>
             <li><a href="{% url 'contact' %}" class="nav-cta">Let's Talk</a></li>
         </ul>

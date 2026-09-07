@@ -295,11 +295,6 @@
 // Make team cards clickable (replaces old read-more buttons)
 document.querySelectorAll('.team-card[data-member-id]').forEach(card => {
     card.addEventListener('click', function() {
-        const btn = document.createElement('button');
-        btn.classList.add('read-more');
-        btn.setAttribute('data-member-id', this.dataset.memberId);
-        btn.click = function() {};
-        // Trigger the existing modal logic
         const memberId = this.dataset.memberId;
         const teamModal = document.getElementById('teamModal');
         if (!teamModal) return;

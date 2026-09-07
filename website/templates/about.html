@@ -93,7 +93,7 @@
 {% block content %}
 
 <section class="container" style="padding-top:1.25rem;">
-    <h1 class="section-title">Who we are</h1>
+    <h1 class="section-title" style="text-align:left;">Who we are</h1>
     <div class="prose" style="max-width:68ch;">
         <p style="font-size:1.1rem;color:var(--text-secondary);line-height:1.7;margin-bottom:1.5rem;">
             LinkedTrust is a global, employee-owned technology cooperative based in Tucson, Arizona. We build verified trust systems, civic tech platforms, and AI-powered tools for organizations that care about doing things right.
@@ -126,7 +126,7 @@
             </div>
         </div>
         {% empty %}
-        <p style="color:var(--text-muted);grid-column:1/-1;">Team profiles coming soon. Add them in the admin.</p>
+        <p style="color:var(--text-muted);grid-column:1/-1;">Team profiles coming soon.</p>
         {% endfor %}
     </div>
 </section>
