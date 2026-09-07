@@ -39,7 +39,7 @@ _CSP = "; ".join([
     "img-src 'self' data: https:",
     # <linked-badge> testimonial videos are served from Backblaze S3.
     "media-src 'self' https://*.backblazeb2.com https://*.linkedtrust.us",
-    "connect-src 'self' https://www.google-analytics.com https://*.linkedtrust.us "
+    "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://*.linkedtrust.us "
     "https://*.clarity.ms https://c.bing.com",
     "frame-src 'self' https://www.youtube.com https://docs.google.com https://www.google.com",
     "frame-ancestors 'self'",
