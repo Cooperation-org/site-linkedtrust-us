@@ -287,6 +287,7 @@ class LevelUpRegistration(models.Model):
     SESSION_CHOICES = [
         ('sep16', 'Wednesday, September 16, 2026'),
         ('oct21', 'Wednesday, October 21, 2026'),
+        ('nov18', 'Wednesday, November 18, 2026'),
     ]
 
     HELP_CHOICES = [
@@ -297,9 +298,9 @@ class LevelUpRegistration(models.Model):
         ('other', 'Something else'),
     ]
     TIER_CHOICES = [
-        ('free_small', 'Free: fewer than 10 employees'),
+        ('free_small', 'Free: solopreneur'),
         ('free_nonprofit', 'Free: nonprofit'),
-        ('paid', '$100: 10 or more employees'),
+        ('paid', '$100: team'),
     ]
     PAYMENT_CHOICES = [
         ('free', 'Free'),

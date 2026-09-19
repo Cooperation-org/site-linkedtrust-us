@@ -50,7 +50,7 @@
 
         <dl>
             <dt>{% if sessions|length > 1 %}Dates{% else %}Date{% endif %}</dt><dd>{% for s in sessions %}{{ s.date_label }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</dd>
-            <dt>Time</dt><dd>{{ event.time_label }} ({{ event.time_utc }})</dd>
+            <dt>Time</dt><dd>{{ event.time_label }}</dd>
             <dt>Where</dt><dd>Online. The link comes by email before the day.</dd>
             {% if reg %}<dt>Project</dt><dd>{{ reg.organization }}</dd>{% endif %}
         </dl>

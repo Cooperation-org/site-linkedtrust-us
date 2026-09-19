@@ -50,7 +50,6 @@ class LevelUpRegistrationForm(forms.ModelForm):
     session = forms.MultipleChoiceField(
         choices=LevelUpRegistration.SESSION_CHOICES,
         widget=forms.CheckboxSelectMultiple,
-        initial=['sep16'],
         label='Which sessions?',
         error_messages={'required': 'Pick at least one date.'},
     )
@@ -93,6 +92,17 @@ class LevelUpRegistrationForm(forms.ModelForm):
             'tier': 'Pricing',
             'heard_from': 'Where did you hear about us?',
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Offer only the sittings still on the calendar; past keys stay in
+        # SESSION_CHOICES so older registrations keep their labels.
+        from .views import LEVELUP_SESSIONS
+        upcoming = [s['key'] for s in LEVELUP_SESSIONS]
+        self.fields['session'].choices = [c for c in LevelUpRegistration.SESSION_CHOICES if c[0] in upcoming]
+        self.fields['session'].initial = upcoming[:1]
+        if len(upcoming) == 1:
+            self.fields['session'].label = 'Session'
 
     def clean_company_fax(self):
         if self.cleaned_data.get('company_fax'):

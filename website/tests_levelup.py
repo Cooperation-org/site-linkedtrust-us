@@ -28,7 +28,7 @@ def payload(**over):
         'goal': 'Get the app live on a real domain.',
         'wants_checkin': 'on',
         'tier': 'free_small',
-        'session': 'sep16',
+        'session': 'oct21',
         'code': '',
         'company_fax': '',
     }
@@ -46,8 +46,6 @@ class LevelUpPageTests(TestCase):
         self.assertContains(r, 'Save your seat')
         self.assertContains(r, 'name="help_with"')
         self.assertContains(r, 'Where did you hear about us?')
-        self.assertContains(r, 'September 16')
-        self.assertContains(r, 'Wednesday, September 16, 2026')
         self.assertContains(r, 'Wednesday, October 21, 2026')
         self.assertContains(r, 'multipart/form-data')
         self.assertContains(r, 'levelup-banner-1200x627.png')
@@ -82,10 +80,10 @@ class LevelUpPageTests(TestCase):
         self.assertIn('1-1 check-in', attendee.body)
         self.assertEqual(len(attendee.attachments), 1)
         calendar_name, calendar_body, calendar_type = attendee.attachments[0]
-        self.assertEqual(calendar_name, 'levelup-sep16.ics')
+        self.assertEqual(calendar_name, 'levelup-oct21.ics')
         if isinstance(calendar_body, bytes):
             calendar_body = calendar_body.decode()
-        self.assertIn('DTSTART:20260916T140000Z', calendar_body)
+        self.assertIn('DTSTART:20261021T140000Z', calendar_body)
         self.assertIn('text/calendar', calendar_type)
 
     def test_thanks_page_uses_session(self):
@@ -288,15 +286,33 @@ class LevelUpPageTests(TestCase):
 class LevelUpSessionTests(TestCase):
     """Both sittings are offered, and the one picked drives the emails and the .ics."""
 
-    def test_page_offers_both_sittings(self):
+    def test_page_offers_upcoming_sittings_in_pacific_time(self):
         r = self.client.get('/levelup/')
-        self.assertContains(r, 'Wednesday, September 16, 2026')
         self.assertContains(r, 'Wednesday, October 21, 2026')
-        self.assertNotContains(r, 'September 9')
+        self.assertContains(r, 'Wednesday, November 18, 2026')
+        self.assertNotContains(r, 'September 16')
+        self.assertNotContains(r, 'UTC')
+        self.assertContains(r, '7:00 to 9:00 am PT')
 
-    def test_defaults_to_september(self):
-        self.client.post('/levelup/', payload())
-        self.assertEqual(LevelUpRegistration.objects.get().session, 'sep16')
+    def test_free_for_solopreneurs_and_nonprofits(self):
+        r = self.client.get('/levelup/')
+        self.assertContains(r, 'Free for solopreneurs and nonprofits.')
+        self.assertContains(r, '<span>Solopreneurs</span>', html=False)
+        self.assertNotContains(r, 'under 10')
+        self.assertNotContains(r, 'employees')
+
+    def test_november_is_pacific_standard_time(self):
+        self.client.post('/levelup/', payload(session='nov18'))
+        attendee = mail.outbox[1]
+        self.assertIn('Wednesday, November 18, 2026', attendee.body)
+        ics = [c for c in attendee.attachments if str(c[0]).endswith('.ics')][0][1]
+        body = ics.decode() if isinstance(ics, bytes) else ics
+        self.assertIn('DTSTART:20261118T150000Z', body)
+        self.assertIn('DTEND:20261118T170000Z', body)
+
+    def test_past_sitting_is_not_accepted(self):
+        self.client.post('/levelup/', payload(session='sep16'))
+        self.assertFalse(LevelUpRegistration.objects.exists())
 
     def test_october_choice_drives_emails_and_calendar(self):
         self.client.post('/levelup/', payload(session='oct21'))
@@ -317,31 +333,6 @@ class LevelUpSessionTests(TestCase):
         self.assertContains(r, 'Wednesday, October 21, 2026')
         self.assertContains(r, '20261021T140000Z')
 
-    def test_both_sittings_can_be_taken(self):
-        self.client.post('/levelup/', payload(session=['sep16', 'oct21']))
-        reg = LevelUpRegistration.objects.get()
-        self.assertEqual(reg.session, 'sep16,oct21')
-        self.assertEqual(reg.session_labels(),
-                         ['Wednesday, September 16, 2026', 'Wednesday, October 21, 2026'])
-        team, attendee = mail.outbox
-        self.assertIn('Wednesday, September 16, 2026', team.body)
-        self.assertIn('Wednesday, October 21, 2026', team.body)
-        stamps = sorted(
-            (c[1].decode() if isinstance(c[1], bytes) else c[1])
-            for c in attendee.attachments if str(c[0]).endswith('.ics')
-        )
-        self.assertEqual(len(stamps), 2)
-        self.assertIn('DTSTART:20260916T140000Z', stamps[0])
-        self.assertIn('DTSTART:20261021T140000Z', stamps[1])
-
-    def test_thanks_page_lists_both_sittings(self):
-        self.client.post('/levelup/', payload(session=['sep16', 'oct21']))
-        r = self.client.get('/levelup/thanks/')
-        self.assertContains(r, 'Wednesday, September 16, 2026')
-        self.assertContains(r, 'Wednesday, October 21, 2026')
-        self.assertContains(r, '/levelup/calendar/sep16.ics')
-        self.assertContains(r, '/levelup/calendar/oct21.ics')
-
     def test_ics_download_is_a_calendar_file(self):
         r = self.client.get('/levelup/calendar/oct21.ics')
         self.assertEqual(r.status_code, 200)
@@ -349,9 +340,8 @@ class LevelUpSessionTests(TestCase):
         self.assertIn('levelup-oct21.ics', r['Content-Disposition'])
         self.assertIn('DTSTART:20261021T140000Z', r.content.decode())
 
-    def test_both_sittings_show_the_same_time_on_the_page(self):
+    def test_sitting_shows_pacific_time_on_the_page(self):
         r = self.client.get('/levelup/')
-        self.assertContains(r, 'Wednesday, September 16, 2026, 7:00 to 9:00 am PT')
         self.assertContains(r, 'Wednesday, October 21, 2026, 7:00 to 9:00 am PT')
         self.assertNotContains(r, 'Pick one when you register')
 
@@ -363,7 +353,7 @@ class LevelUpSessionTests(TestCase):
     def test_team_notification_goes_to_connect_inbox(self):
         self.client.post('/levelup/', payload())
         self.assertEqual(mail.outbox[0].to, ['connect@linkedtrust.us'])
-        self.assertIn('Wednesday, September 16, 2026', mail.outbox[0].body)
+        self.assertIn('Wednesday, October 21, 2026', mail.outbox[0].body)
 
 
 @override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend',

@@ -831,18 +831,9 @@ def services_launch_view(request):
 # LevelUp workshop registration
 # ---------------------------------------------------------------------------
 
-# Two sittings of the same workshop. Both run 7 to 9am PT, which is 14:00 UTC
-# on both dates because California is still on daylight time in October.
+# Upcoming sittings, all 7 to 9am PT: 14:00 UTC on daylight time (to Nov 1 2026),
+# 15:00 UTC on standard time after.
 LEVELUP_SESSIONS = [
-    {
-        'key': 'sep16',
-        'date_label': 'Wednesday, September 16, 2026',
-        'short_label': 'Sept 16',
-        'stamp': '20260916T140000Z',
-        'end_stamp': '20260916T160000Z',
-        'iso_start': '2026-09-16T14:00:00Z',
-        'iso_end': '2026-09-16T16:00:00Z',
-    },
     {
         'key': 'oct21',
         'date_label': 'Wednesday, October 21, 2026',
@@ -852,12 +843,20 @@ LEVELUP_SESSIONS = [
         'iso_start': '2026-10-21T14:00:00Z',
         'iso_end': '2026-10-21T16:00:00Z',
     },
+    {
+        'key': 'nov18',
+        'date_label': 'Wednesday, November 18, 2026',
+        'short_label': 'Nov 18',
+        'stamp': '20261118T150000Z',
+        'end_stamp': '20261118T170000Z',
+        'iso_start': '2026-11-18T15:00:00Z',
+        'iso_end': '2026-11-18T17:00:00Z',
+    },
 ]
 
 LEVELUP_EVENT = {
     'name': 'LevelUp',
     'time_label': '7:00 to 9:00 am PT',
-    'time_utc': '14:00 to 16:00 UTC',
     'price': '$100',
     'sessions': LEVELUP_SESSIONS,
     'date_label': ' or '.join(s['date_label'] for s in LEVELUP_SESSIONS),
@@ -964,7 +963,7 @@ def _levelup_notify(reg):
         f"Hi {reg.name.split()[0] if reg.name.strip() else 'there'},\n\n"
         f"You are registered for LevelUp, the live build workshop with LinkedTrust engineers.\n\n"
         + ''.join(
-            f"When: {s['date_label']}, {LEVELUP_EVENT['time_label']} ({LEVELUP_EVENT['time_utc']})\n"
+            f"When: {s['date_label']}, {LEVELUP_EVENT['time_label']}\n"
             for s in sessions
         ) +
         f"Where: online. A calendar invitation is attached for each date; the video link comes by email before the day.\n\n"
