@@ -452,3 +452,13 @@ class LevelUpAccessCodeCreatorTests(TestCase):
         code.refresh_from_db()
         self.assertEqual(code.label, 'Renamed')
         self.assertEqual(code.created_by, user)
+
+
+class LevelUpBadgeTests(TestCase):
+    def test_levelup_badge_shows_on_levelup_page_and_homepage(self):
+        # Seeded by migration 0020.
+        from .models import Testimonial
+        self.assertTrue(Testimonial.objects.filter(linked_claim_id='124842', placement='levelup').exists())
+        for url in ('/levelup/', '/'):
+            r = self.client.get(url)
+            self.assertContains(r, '<linked-badge claim-id="124842" layout="card" theme="light">', html=False)

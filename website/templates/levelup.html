@@ -186,6 +186,9 @@
 }
 .lu-fit svg { flex: none; width: 20px; height: 20px; margin-top: 0.2rem; color: var(--success); }
 
+.lu-badges { display: grid; gap: 1rem; }
+.lu-badges linked-badge { display: block; max-width: 100%; }
+
 .lu-price {
     margin-top: 1.25rem;
     border: 1px solid var(--border);
@@ -405,6 +408,15 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
                 <li><div><strong>You leave unblocked</strong><p>Something deployed, a decision made, or a clear next step you can do yourself. Plus a team you can come back to.</p></div></li>
             </ol>
         </section>
+
+        {% if levelup_badges %}
+        <section aria-labelledby="lu-said">
+            <h2 id="lu-said">From the last workshop</h2>
+            <div class="lu-badges">
+                {% for badge in levelup_badges %}<linked-badge claim-id="{{ badge.linked_claim_id }}" layout="{{ badge.badge_layout }}" theme="{{ badge.badge_theme }}"></linked-badge>{% endfor %}
+            </div>
+        </section>
+        {% endif %}
 
         <section aria-labelledby="lu-who">
             <h2 id="lu-who">Who it is for</h2>

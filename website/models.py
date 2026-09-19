@@ -99,6 +99,7 @@ class Testimonial(models.Model):
         ('homepage', 'Homepage (below hero)'),
         ('wall', 'Badge Wall page'),
         ('page', 'Specific project page only'),
+        ('levelup', 'LevelUp page, and under the LevelUp link on the homepage'),
     ]
     LAYOUT_CHOICES = [
         ('row', 'Row (horizontal rectangle — good for stacking)'),

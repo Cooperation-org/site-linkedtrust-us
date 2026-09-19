@@ -425,6 +425,10 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
 }
 .badge-link:hover { text-decoration: underline; }
 
+/* Badge under the LevelUp link on the homepage */
+.levelup-badge { max-width: 640px; margin: 1.25rem auto 0; text-align: left; }
+.levelup-badge linked-badge { display: block; }
+
 /* Mini badge (light bg, for secondary badges row) */
 .more-badges {
     max-width: 1480px;

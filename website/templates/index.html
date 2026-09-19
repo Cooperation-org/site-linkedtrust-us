@@ -76,6 +76,9 @@
         <span style="color:var(--text-secondary);">LevelUp: make your idea live, with our engineers.</span>
         <span style="font-weight:700;color:var(--brand-dark);">Save a seat</span>
     </a>
+    {% for badge in levelup_badges %}
+    <div class="levelup-badge"><linked-badge claim-id="{{ badge.linked_claim_id }}" layout="{{ badge.badge_layout }}" theme="{{ badge.badge_theme }}"></linked-badge></div>
+    {% endfor %}
     </div>
     {% if services %}
     <h2 class="section-title">What we build</h2>

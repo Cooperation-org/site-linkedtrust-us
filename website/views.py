@@ -27,6 +27,7 @@ def home_view(request):
         'featured_projects': PortfolioProject.objects.filter(featured=True).order_by('sort_order')[:6],
         'hero_badges': Testimonial.objects.filter(placement='hero', linked_claim_id__gt='')[:2],
         'homepage_badges': Testimonial.objects.filter(placement='homepage', linked_claim_id__gt=''),
+        'levelup_badges': Testimonial.objects.filter(placement='levelup', linked_claim_id__gt=''),
         'featured_testimonials': Testimonial.objects.filter(featured=True)[:3],
         'services': ServicePackage.objects.filter(is_active=True)[:4],
         'show_banner': True,
@@ -1086,6 +1087,7 @@ def levelup_view(request):
     return render(request, 'levelup.html', {
         'form': form,
         'event': LEVELUP_EVENT,
+        'levelup_badges': Testimonial.objects.filter(placement='levelup', linked_claim_id__gt=''),
         'stripe_enabled': bool(getattr(settings, 'LEVELUP_STRIPE_PAYMENT_LINK', '')),
     })
 
