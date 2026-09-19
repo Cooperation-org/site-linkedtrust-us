@@ -12,6 +12,7 @@ from unittest.mock import patch
 from django.core import mail
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, TestCase, override_settings
+from django.urls import reverse
 
 from .forms import LevelUpRegistrationForm
 from .models import LevelUpAccessCode, LevelUpRegistration
@@ -433,3 +434,21 @@ class LevelUpCodeCheckTests(TestCase):
         for _ in range(20):
             self.client.post('/levelup/code/', {'code': 'NOPE'})
         self.assertEqual(self.client.post('/levelup/code/', {'code': 'PARTNER1'}).status_code, 429)
+
+
+class LevelUpAccessCodeCreatorTests(TestCase):
+    def test_admin_records_who_created_a_code(self):
+        from django.contrib.auth import get_user_model
+        user = get_user_model().objects.create_superuser('codemaker', 'codemaker@example.org', 'pw')
+        self.client.force_login(user)
+        self.client.post(reverse('linkedtrust_admin:website_levelupaccesscode_add'),
+                         {'code': 'partner1', 'label': 'A partner', 'active': 'on', 'max_uses': '0'})
+        code = LevelUpAccessCode.objects.get(code='PARTNER1')
+        self.assertEqual(code.created_by, user)
+        other = get_user_model().objects.create_superuser('editor', 'editor@example.org', 'pw')
+        self.client.force_login(other)
+        self.client.post(reverse('linkedtrust_admin:website_levelupaccesscode_change', args=[code.pk]),
+                         {'code': 'PARTNER1', 'label': 'Renamed', 'active': 'on', 'max_uses': '0'})
+        code.refresh_from_db()
+        self.assertEqual(code.label, 'Renamed')
+        self.assertEqual(code.created_by, user)

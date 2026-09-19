@@ -221,9 +221,14 @@ class LevelUpRegistrationAdmin(admin.ModelAdmin):
 
 
 class LevelUpAccessCodeAdmin(admin.ModelAdmin):
-    list_display = ('code', 'label', 'active', 'uses', 'max_uses', 'created_at')
-    list_filter = ('active',)
-    readonly_fields = ('uses',)
+    list_display = ('code', 'label', 'active', 'uses', 'max_uses', 'created_by', 'created_at')
+    list_filter = ('active', 'created_by')
+    readonly_fields = ('uses', 'created_by', 'created_at')
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user
+        super().save_model(request, obj, form, change)
 
 
 admin_site.register(LevelUpRegistration, LevelUpRegistrationAdmin)

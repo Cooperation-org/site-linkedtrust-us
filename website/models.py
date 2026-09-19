@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.core.validators import FileExtensionValidator
 from django.utils.text import Truncator, slugify
 
@@ -263,6 +264,8 @@ class LevelUpAccessCode(models.Model):
     active = models.BooleanField(default=True)
     max_uses = models.PositiveIntegerField(default=0, help_text="0 = unlimited")
     uses = models.PositiveIntegerField(default=0, editable=False)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, editable=False,
+                                   on_delete=models.SET_NULL, related_name='levelup_codes_created')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
