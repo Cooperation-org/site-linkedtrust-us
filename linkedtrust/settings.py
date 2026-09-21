@@ -239,6 +239,9 @@ EMAIL_TIMEOUT = 15
 # Add these as repository Actions secrets; deploy-production.yml syncs them to
 # the production .env. Blank payment/video URLs keep those paths unavailable.
 LEVELUP_STRIPE_PAYMENT_LINK = config('LEVELUP_STRIPE_PAYMENT_LINK', default='')
+# Stripe buy button, shown on the thanks page for a seat that still owes payment.
+LEVELUP_STRIPE_BUY_BUTTON_ID = config('LEVELUP_STRIPE_BUY_BUTTON_ID', default='')
+LEVELUP_STRIPE_PUBLISHABLE_KEY = config('LEVELUP_STRIPE_PUBLISHABLE_KEY', default='')
 LEVELUP_STRIPE_WEBHOOK_SECRET = config('LEVELUP_STRIPE_WEBHOOK_SECRET', default='')
 LEVELUP_VIDEO_URL = config('LEVELUP_VIDEO_URL', default='')
 LEVELUP_NOTIFY_EMAIL = config('LEVELUP_NOTIFY_EMAIL', default='connect@linkedtrust.us')

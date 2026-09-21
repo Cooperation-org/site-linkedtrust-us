@@ -56,6 +56,8 @@ jobs:
 
             touch .env
             sync_env_secret LEVELUP_STRIPE_PAYMENT_LINK '${{ secrets.LEVELUP_STRIPE_PAYMENT_LINK }}'
+            sync_env_secret LEVELUP_STRIPE_BUY_BUTTON_ID '${{ secrets.LEVELUP_STRIPE_BUY_BUTTON_ID }}'
+            sync_env_secret LEVELUP_STRIPE_PUBLISHABLE_KEY '${{ secrets.LEVELUP_STRIPE_PUBLISHABLE_KEY }}'
             sync_env_secret LEVELUP_STRIPE_WEBHOOK_SECRET '${{ secrets.LEVELUP_STRIPE_WEBHOOK_SECRET }}'
             sync_env_secret LEVELUP_VIDEO_URL '${{ secrets.LEVELUP_VIDEO_URL }}'
             sync_env_secret EMAIL_HOST '${{ secrets.EMAIL_HOST }}'

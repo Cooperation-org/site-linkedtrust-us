@@ -38,6 +38,7 @@
     margin-top: 1.5rem; padding: 1rem 1.15rem; border-radius: 10px;
     background: rgba(102,126,234,0.08); border: 1px solid rgba(102,126,234,0.3); font-size: 0.92rem; line-height: 1.6;
 }
+.lu-pay stripe-buy-button { display: block; margin-top: 0.85rem; }
 </style>
 {% endblock %}
 
@@ -56,7 +57,20 @@
         </dl>
 
         {% if reg and reg.payment_status == 'pending' and not paid %}
-        <div class="lu-pay">Your ticket is $100. We will send a payment link to your email shortly. Your seat is held in the meantime.</div>
+        <div class="lu-pay">
+            <p>Your ticket is {{ event.price }}. Your seat is held either way.</p>
+            {% if buy_button_id and stripe_key %}
+            <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+            <stripe-buy-button
+                buy-button-id="{{ buy_button_id }}"
+                publishable-key="{{ stripe_key }}"
+                client-reference-id="levelup-{{ reg.pk }}"
+                customer-email="{{ reg.email }}">
+            </stripe-buy-button>
+            {% else %}
+            <p>We will send a payment link to your email shortly.</p>
+            {% endif %}
+        </div>
         {% endif %}
 
         <div class="lu-next">

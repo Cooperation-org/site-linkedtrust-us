@@ -109,15 +109,36 @@ class LevelUpPageTests(TestCase):
         self.assertContains(r, 'payment link')
 
     @override_settings(LEVELUP_STRIPE_PAYMENT_LINK='https://buy.stripe.com/test_abc')
-    def test_paid_with_stripe_redirects_to_payment_link(self):
+    def test_payment_link_goes_in_the_email_not_a_redirect(self):
         r = self.client.post('/levelup/', payload(tier='paid'))
         reg = LevelUpRegistration.objects.get()
-        self.assertEqual(r.status_code, 302)
-        self.assertTrue(r['Location'].startswith('https://buy.stripe.com/test_abc?'))
-        self.assertIn('prefilled_email=ada%40example.org', r['Location'])
-        self.assertIn(f'client_reference_id=levelup-{reg.pk}', r['Location'])
+        self.assertRedirects(r, '/levelup/thanks/', fetch_redirect_response=False)
+        body = mail.outbox[1].body
+        self.assertIn('https://buy.stripe.com/test_abc?', body)
+        self.assertIn('prefilled_email=ada%40example.org', body)
+        self.assertIn(f'client_reference_id=levelup-{reg.pk}', body)
         self.assertEqual(reg.payment_status, 'pending')
         self.assertEqual(self.client.session['levelup_registered'], reg.pk)
+
+    @override_settings(LEVELUP_STRIPE_BUY_BUTTON_ID='buy_btn_test',
+                       LEVELUP_STRIPE_PUBLISHABLE_KEY='pk_live_test')
+    def test_buy_button_is_on_the_thanks_page_for_an_unpaid_seat(self):
+        self.client.post('/levelup/', payload(tier='paid'))
+        reg = LevelUpRegistration.objects.get()
+        r = self.client.get('/levelup/thanks/')
+        self.assertContains(r, 'https://js.stripe.com/v3/buy-button.js')
+        self.assertContains(r, 'buy-button-id="buy_btn_test"')
+        self.assertContains(r, f'client-reference-id="levelup-{reg.pk}"')
+        self.assertContains(r, 'customer-email="ada@example.org"')
+        self.assertIn('https://js.stripe.com', r['Content-Security-Policy'])
+
+    @override_settings(LEVELUP_STRIPE_BUY_BUTTON_ID='buy_btn_test',
+                       LEVELUP_STRIPE_PUBLISHABLE_KEY='pk_live_test')
+    def test_no_buy_button_for_a_free_seat(self):
+        self.client.post('/levelup/', payload(tier='free_nonprofit'))
+        r = self.client.get('/levelup/thanks/')
+        self.assertNotContains(r, 'buy-button-id')
+        self.assertNotContains(r, 'buy-button.js')
 
     def test_paid_query_parameter_cannot_spoof_payment(self):
         self.client.post('/levelup/', payload(tier='paid'))

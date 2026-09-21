@@ -27,9 +27,10 @@ _CSP = "; ".join([
     "default-src 'self'",
     # cdn.tailwindcss.com: the earnedgov pages use the Tailwind play CDN
     # (swap for a built stylesheet when that design settles, then remove).
+    # js.stripe.com: the LevelUp buy button on the thanks page.
     "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com "
     "https://www.google-analytics.com https://demos.linkedtrust.us "
-    "https://cdn.tailwindcss.com "
+    "https://cdn.tailwindcss.com https://js.stripe.com "
     "https://www.clarity.ms https://*.clarity.ms",
     # Our own fonts are self-hosted; these origins are for the <linked-badge>
     # web component, which injects its own Google Fonts.
@@ -41,7 +42,8 @@ _CSP = "; ".join([
     "media-src 'self' https://*.backblazeb2.com https://*.linkedtrust.us",
     "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://*.linkedtrust.us "
     "https://*.clarity.ms https://c.bing.com",
-    "frame-src 'self' https://www.youtube.com https://docs.google.com https://www.google.com",
+    "frame-src 'self' https://www.youtube.com https://docs.google.com https://www.google.com "
+    "https://js.stripe.com",
     "frame-ancestors 'self'",
     "base-uri 'self'",
     "form-action 'self'",

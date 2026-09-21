@@ -977,8 +977,9 @@ def _levelup_notify(reg):
     if reg.wants_checkin:
         attendee_body += "\nYou asked for a 1-1 check-in first. Someone from the team will reach out to set a time.\n"
     if reg.payment_status == 'pending':
-        if getattr(settings, 'LEVELUP_STRIPE_PAYMENT_LINK', ''):
-            attendee_body += f"\nYour ticket is ${LEVELUP_PRICE_USD}. Complete payment in the secure Stripe checkout page that opened after registration.\n"
+        pay_url = _levelup_stripe_url(reg)
+        if pay_url:
+            attendee_body += f"\nYour ticket is ${LEVELUP_PRICE_USD}. Pay here: {pay_url}\n"
         else:
             attendee_body += f"\nYour ticket is ${LEVELUP_PRICE_USD}. We will send a payment link shortly.\n"
     attendee_body += "\nReply to this email if anything changes.\n\nThe LinkedTrust team\nhttps://linkedtrust.us\n"
@@ -1080,10 +1081,8 @@ def levelup_view(request):
             registration = form.save()
             request.session['levelup_registered'] = registration.pk
             _levelup_notify(registration)
-            if registration.payment_status == 'pending':
-                pay_url = _levelup_stripe_url(registration)
-                if pay_url:
-                    return redirect(pay_url)
+            # Payment happens on the thanks page (Stripe buy button) or from the
+            # link in the confirmation email, never by bouncing them off-site.
             return redirect(reverse('levelup_thanks'))
     else:
         form = LevelUpRegistrationForm()
@@ -1112,6 +1111,8 @@ def levelup_thanks_view(request):
         'sessions': sessions,
         'event': LEVELUP_EVENT,
         'paid': reg.payment_status == 'paid',
+        'buy_button_id': getattr(settings, 'LEVELUP_STRIPE_BUY_BUTTON_ID', ''),
+        'stripe_key': getattr(settings, 'LEVELUP_STRIPE_PUBLISHABLE_KEY', ''),
     })
 
 
