@@ -61,6 +61,37 @@
     margin: 0 auto;
     padding: 0 1.5rem 2.5rem;
 }
+/* With a verified claim to show, the hero is two columns on a wide screen:
+   words left, badge top right. Narrower, it stacks under the CTA. The class
+   is only set when there is a badge, so an empty column never squeezes the
+   headline. */
+/* Two badges at a time. Every page sits in the same grid cell, so the
+   column is as tall as the tallest page and nothing jumps as they rotate. */
+.lu-hero-badge { margin-top: 2.25rem; display: grid; justify-items: start; }
+.lu-badge-page {
+    grid-area: 1 / 1;
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+}
+.lu-badge-page.is-on { opacity: 1; transform: none; pointer-events: auto; }
+.lu-hero-badge linked-badge { display: block; width: 100%; max-width: 420px; }
+@media (prefers-reduced-motion: reduce) {
+    .lu-badge-page { transition: none; transform: none; }
+}
+@media (min-width: 1000px) {
+    .lu-hero-inner.has-badge {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+        column-gap: 3.5rem;
+        align-items: start;
+    }
+    .lu-hero-inner.has-badge .lu-hero-badge { margin-top: 0.35rem; justify-items: stretch; }
+}
 .lu-kicker {
     display: inline-flex;
     align-items: center;
@@ -185,8 +216,6 @@
 }
 .lu-fit svg { flex: none; width: 20px; height: 20px; margin-top: 0.2rem; color: var(--success); }
 
-.lu-badges { display: grid; gap: 1rem; }
-.lu-badges linked-badge { display: block; max-width: 100%; }
 
 .lu-share {
     margin-top: 1.25rem;
@@ -361,7 +390,8 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
 
 {% block content %}
 <section class="lu-hero" aria-labelledby="lu-title">
-    <div class="lu-hero-inner">
+    <div class="lu-hero-inner{% if levelup_badges %} has-badge{% endif %}">
+        <div class="lu-hero-main">
         <p class="lu-kicker">Live workshop with LinkedTrust engineers</p>
         <h1 id="lu-title">Go from vibe coding <span>to live in production.</span></h1>
         <p class="lu-hero-lede">Two hours in a small group with engineers who do infra, DevOps and product for a living. Bring the thing that is stuck. Leave with it moving.</p>
@@ -374,6 +404,16 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
         <div class="lu-hero-cta">
             <a href="#register" class="btn btn-gradient">Save my seat</a>
         </div>
+        </div>
+        {% if levelup_badge_pages %}
+        <div class="lu-hero-badge" id="lu-hero-badge" aria-label="From the last workshop">
+            {% for page in levelup_badge_pages %}
+            <div class="lu-badge-page{% if forloop.first %} is-on{% endif %}"{% if not forloop.first %} aria-hidden="true"{% endif %}>
+                {% for badge in page %}<linked-badge claim-id="{{ badge.linked_claim_id }}" layout="{{ badge.badge_layout }}" theme="{{ badge.badge_theme }}"></linked-badge>{% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
     </div>
 </section>
 
@@ -388,15 +428,6 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
                 <li><div><strong>You leave unblocked</strong><p>Something deployed, a decision made, or a clear next step you can do yourself. Plus a team you can come back to.</p></div></li>
             </ol>
         </section>
-
-        {% if levelup_badges %}
-        <section aria-labelledby="lu-said">
-            <h2 id="lu-said">From the last workshop</h2>
-            <div class="lu-badges">
-                {% for badge in levelup_badges %}<linked-badge claim-id="{{ badge.linked_claim_id }}" layout="{{ badge.badge_layout }}" theme="{{ badge.badge_theme }}"></linked-badge>{% endfor %}
-            </div>
-        </section>
-        {% endif %}
 
         <section aria-labelledby="lu-who">
             <h2 id="lu-who">Who it is for</h2>
@@ -604,6 +635,34 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
     }
 
     render();
+})();
+
+// Hero badges: rotate a page of two every few seconds, paused while someone
+// is reading one. One page means nothing moves.
+(function () {
+    var rail = document.getElementById('lu-hero-badge');
+    if (!rail) return;
+    var pages = rail.querySelectorAll('.lu-badge-page');
+    if (pages.length < 2) return;
+    var at = 0;
+    var timer = null;
+    function show(next) {
+        pages[at].classList.remove('is-on');
+        pages[at].setAttribute('aria-hidden', 'true');
+        at = next;
+        pages[at].classList.add('is-on');
+        pages[at].removeAttribute('aria-hidden');
+    }
+    function start() { timer = setInterval(function () { show((at + 1) % pages.length); }, 7000); }
+    function stop() { clearInterval(timer); timer = null; }
+    rail.addEventListener('mouseenter', stop);
+    rail.addEventListener('focusin', stop);
+    rail.addEventListener('mouseleave', function () { if (!timer) start(); });
+    rail.addEventListener('focusout', function () { if (!timer) start(); });
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) { stop(); } else if (!timer) { start(); }
+    });
+    start();
 })();
 </script>
 {% endblock %}

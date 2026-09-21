@@ -868,6 +868,12 @@ LEVELUP_EVENT = {
 }
 
 
+def levelup_badge_pages(badges, per_page=2):
+    """Verified claims for the hero, two at a time. More than two rotate."""
+    badges = list(badges)
+    return [badges[i:i + per_page] for i in range(0, len(badges), per_page)]
+
+
 def levelup_session(key):
     """The session a registrant picked, falling back to the first sitting."""
     for session in LEVELUP_SESSIONS:
@@ -1086,10 +1092,12 @@ def levelup_view(request):
             return redirect(reverse('levelup_thanks'))
     else:
         form = LevelUpRegistrationForm()
+    badges = Testimonial.objects.filter(placement='levelup', linked_claim_id__gt='')
     return render(request, 'levelup.html', {
         'form': form,
         'event': LEVELUP_EVENT,
-        'levelup_badges': Testimonial.objects.filter(placement='levelup', linked_claim_id__gt=''),
+        'levelup_badges': badges,
+        'levelup_badge_pages': levelup_badge_pages(badges),
         'stripe_enabled': bool(getattr(settings, 'LEVELUP_STRIPE_PAYMENT_LINK', '')),
     })
 

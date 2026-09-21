@@ -484,6 +484,14 @@ class LevelUpAccessCodeCreatorTests(TestCase):
 
 
 class LevelUpBadgeTests(TestCase):
+    def _badge(self, claim_id):
+        from .models import Testimonial
+        return Testimonial.objects.create(
+            person_name=f'Person {claim_id}', person_title='Founder',
+            quote_text='It went live.', linked_claim_id=claim_id,
+            placement='levelup', badge_layout='card', badge_theme='light',
+        )
+
     def test_levelup_badge_shows_on_levelup_page_and_homepage(self):
         # Seeded by migration 0020.
         from .models import Testimonial
@@ -491,3 +499,39 @@ class LevelUpBadgeTests(TestCase):
         for url in ('/levelup/', '/'):
             r = self.client.get(url)
             self.assertContains(r, '<linked-badge claim-id="124842" layout="card" theme="light">', html=False)
+
+    def _rail(self, html):
+        """Just the badge rail markup, so page CSS and JS do not skew counts."""
+        start = html.index('<div class="lu-hero-badge"')
+        return html[start:html.index('</section>', start)]
+
+    def test_badge_sits_in_the_hero(self):
+        html = self.client.get('/levelup/').content.decode()
+        hero = html[html.index('<section class="lu-hero"'):html.index('<div class="lu-body">')]
+        self.assertIn('lu-hero-badge', hero)
+        self.assertIn('claim-id="124842"', hero)
+        self.assertIn('has-badge', hero)
+
+    def test_one_page_of_two_badges_does_not_rotate(self):
+        self._badge('900001')
+        rail = self._rail(self.client.get('/levelup/').content.decode())
+        self.assertEqual(rail.count('<div class="lu-badge-page'), 1)
+        self.assertEqual(rail.count('<linked-badge'), 2)
+        self.assertNotIn('aria-hidden="true"', rail)
+
+    def test_more_than_two_badges_paginate_two_at_a_time(self):
+        for claim in ('900001', '900002', '900003'):
+            self._badge(claim)
+        rail = self._rail(self.client.get('/levelup/').content.decode())
+        self.assertEqual(rail.count('<div class="lu-badge-page'), 2)  # 4 badges, 2 pages
+        self.assertEqual(rail.count('<linked-badge'), 4)
+        self.assertEqual(rail.count('is-on'), 1)
+        self.assertEqual(rail.count('aria-hidden="true"'), 1)
+
+    def test_hero_has_no_badge_markup_when_there_are_none(self):
+        from .models import Testimonial
+        Testimonial.objects.filter(placement='levelup').delete()
+        html = self.client.get('/levelup/').content.decode()
+        hero = html[html.index('<section class="lu-hero"'):html.index('<div class="lu-body">')]
+        self.assertNotIn('lu-hero-badge', hero)
+        self.assertNotIn('has-badge', hero)
