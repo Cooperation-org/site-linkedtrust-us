@@ -302,9 +302,10 @@ class LevelUpRegistration(models.Model):
         ('other', 'Something else'),
     ]
     TIER_CHOICES = [
-        ('free_small', 'Free: solopreneur'),
-        ('free_nonprofit', 'Free: nonprofit'),
-        ('paid', '$100: team'),
+        ('paid', '$49'),
+        ('free_nonprofit', 'Nonprofit: free'),
+        # Retired tier, kept so earlier registrations still read correctly.
+        ('free_small', 'Solopreneur: free (retired)'),
     ]
     PAYMENT_CHOICES = [
         ('free', 'Free'),
@@ -331,7 +332,7 @@ class LevelUpRegistration(models.Model):
     goal = models.TextField(help_text="What they want to walk out with")
     wants_checkin = models.BooleanField(default=False, help_text="Asked for a 1-1 before the workshop")
     heard_from = models.CharField(max_length=200, blank=True, help_text="Where they heard about LevelUp")
-    tier = models.CharField(max_length=20, choices=TIER_CHOICES, default='free_small')
+    tier = models.CharField(max_length=20, choices=TIER_CHOICES, default='paid')
     access_code = models.ForeignKey(LevelUpAccessCode, null=True, blank=True, on_delete=models.SET_NULL)
     payment_status = models.CharField(max_length=10, choices=PAYMENT_CHOICES, default='free')
     stripe_reference = models.CharField(max_length=120, blank=True)

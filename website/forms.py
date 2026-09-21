@@ -54,9 +54,11 @@ class LevelUpRegistrationForm(forms.ModelForm):
         error_messages={'required': 'Pick at least one date.'},
     )
     tier = forms.ChoiceField(
-        choices=LevelUpRegistration.TIER_CHOICES,
+        # The retired solopreneur tier stays on the model for old rows but is
+        # not offered any more.
+        choices=[c for c in LevelUpRegistration.TIER_CHOICES if c[0] != 'free_small'],
         widget=forms.RadioSelect,
-        initial='free_small',
+        initial='paid',
     )
     code = forms.CharField(
         required=False, max_length=40,

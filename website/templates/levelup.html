@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}LevelUp: a live build workshop with LinkedTrust engineers | {{ event.short_dates }}{% endblock %}
-{% block meta_description %}Two hours, live, with engineers who ship. Bring your idea or your existing site and leave with real progress: unblocked, modern, live. Free for solopreneurs and nonprofits.{% endblock %}
-{% block og_title %}LevelUp: make your idea live. {{ event.short_dates }}, 7 to 9am PT{% endblock %}
-{% block og_description %}A live build workshop with LinkedTrust engineers. Bring what is stuck, leave with it moving. Free for solopreneurs and nonprofits.{% endblock %}
+{% block title %}LevelUp: go from vibe coding to live in production | {{ event.short_dates }}{% endblock %}
+{% block meta_description %}Two hours, live, with engineers who ship. Bring the build that is not in production yet and leave with it moving. Free for nonprofits.{% endblock %}
+{% block og_title %}LevelUp: go from vibe coding to live in production. {{ event.short_dates }}, 7 to 9am PT{% endblock %}
+{% block og_description %}A live build workshop with LinkedTrust engineers. Bring what is stuck, leave with it moving. Free for nonprofits.{% endblock %}
 {% block og_image %}https://linkedtrust.us{% static 'img/levelup/levelup-banner-1200x627.png' %}{% endblock %}
 {% block og_image_height %}627{% endblock %}
 {% block og_image_alt %}LevelUp live workshop with LinkedTrust engineers, {{ event.date_label }}, 7:00 to 9:00 am PT{% endblock %}
-{% block twitter_title %}LevelUp: make your idea live. {{ event.short_dates }}, 7 to 9am PT{% endblock %}
+{% block twitter_title %}LevelUp: go from vibe coding to live in production. {{ event.short_dates }}, 7 to 9am PT{% endblock %}
 {% block twitter_description %}A live build workshop with LinkedTrust engineers. Bring what is stuck and leave with it moving.{% endblock %}
 {% block twitter_image %}https://linkedtrust.us{% static 'img/levelup/levelup-banner-1200x627.png' %}{% endblock %}
 
@@ -19,7 +19,7 @@
   "@graph": [
     {% for s in event.sessions %}{
       "@type": "Event",
-      "name": "LevelUp: live build workshop with LinkedTrust engineers",
+      "name": "LevelUp: go from vibe coding to live in production",
       "description": "Two hours, live, in small groups with engineers who do infra, DevOps and product. Bring your idea or your existing site and leave with real progress.",
       "startDate": "{{ s.iso_start }}",
       "endDate": "{{ s.iso_end }}",
@@ -28,8 +28,8 @@
       "location": { "@type": "VirtualLocation", "url": "https://linkedtrust.us/levelup/" },
       "organizer": { "@id": "https://linkedtrust.us/#org" },
       "offers": [
-        { "@type": "Offer", "price": "0", "priceCurrency": "USD", "url": "https://linkedtrust.us/levelup/", "availability": "https://schema.org/InStock", "description": "Free for solopreneurs and nonprofits" },
-        { "@type": "Offer", "price": "100", "priceCurrency": "USD", "url": "https://linkedtrust.us/levelup/", "availability": "https://schema.org/InStock" }
+        { "@type": "Offer", "price": "0", "priceCurrency": "USD", "url": "https://linkedtrust.us/levelup/", "availability": "https://schema.org/InStock", "description": "Free for nonprofits" },
+        { "@type": "Offer", "price": "49", "priceCurrency": "USD", "url": "https://linkedtrust.us/levelup/", "availability": "https://schema.org/InStock" }
       ]
     }{% if not forloop.last %},{% endif %}{% endfor %}
   ]
@@ -129,7 +129,6 @@
     align-items: center;
 }
 .lu-hero-cta .btn-gradient { min-height: 48px; padding: 0.85rem 1.6rem; display: inline-flex; align-items: center; }
-.lu-hero-note { font-size: 0.85rem; color: var(--text-on-dark-muted); }
 
 /* ---- body layout: story left, form right; stacks on phones ---- */
 .lu-body {
@@ -188,24 +187,6 @@
 
 .lu-badges { display: grid; gap: 1rem; }
 .lu-badges linked-badge { display: block; max-width: 100%; }
-
-.lu-price {
-    margin-top: 1.25rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    background: var(--bg-white);
-}
-.lu-price div {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.9rem 1.25rem;
-    font-size: 0.95rem;
-}
-.lu-price div + div { border-top: 1px solid var(--border); }
-.lu-price b { font-family: var(--font-mono); font-weight: 700; white-space: nowrap; }
-.lu-price .free b { color: var(--success); }
 
 .lu-share {
     margin-top: 1.25rem;
@@ -382,17 +363,16 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
 <section class="lu-hero" aria-labelledby="lu-title">
     <div class="lu-hero-inner">
         <p class="lu-kicker">Live workshop with LinkedTrust engineers</p>
-        <h1 id="lu-title">Make your idea <span>actually live.</span></h1>
+        <h1 id="lu-title">Go from vibe coding <span>to live in production.</span></h1>
         <p class="lu-hero-lede">Two hours in a small group with engineers who do infra, DevOps and product for a living. Bring the thing that is stuck. Leave with it moving.</p>
         <dl class="lu-when">
             <div><dt>Dates</dt><dd>{% for s in event.sessions %}{{ s.date_label }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</dd></div>
             <div><dt>Time</dt><dd>{{ event.time_label }}</dd></div>
             <div><dt>Where</dt><dd>Online<br>small breakout rooms</dd></div>
-            <div><dt>Cost</dt><dd>Free for solopreneurs<br>and nonprofits, else {{ event.price }}</dd></div>
+            <div><dt>Cost</dt><dd>{{ event.price }}<br>free for nonprofits</dd></div>
         </dl>
         <div class="lu-hero-cta">
             <a href="#register" class="btn btn-gradient">Save my seat</a>
-            <span class="lu-hero-note">Seats are limited so every room stays small.</span>
         </div>
     </div>
 </section>
@@ -403,7 +383,7 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
             <h2 id="lu-how">What happens in the room</h2>
             <p>This is not a talk. You work on your own project, with our developers next to you, and we make progress on the call.</p>
             <ol class="lu-steps">
-                <li><div><strong>You show us where it is</strong><p>Your idea, your half-built app, or the site you have had for years. Whatever state it is in.</p></div></li>
+                <li><div><strong>You show us where it is</strong><p>Your idea, your team hackathon MVP, or your outdated website. Whatever state it is in.</p></div></li>
                 <li><div><strong>We work on it together</strong><p>Small breakout groups by need: getting live, infrastructure, reliability, user experience, go to market.</p></div></li>
                 <li><div><strong>You leave unblocked</strong><p>Something deployed, a decision made, or a clear next step you can do yourself. Plus a team you can come back to.</p></div></li>
             </ol>
@@ -428,13 +408,8 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
         </section>
 
         <section aria-labelledby="lu-cost">
-            <h2 id="lu-cost">What it costs</h2>
-            <div class="lu-price">
-                <div class="free"><span>Solopreneurs</span><b>Free</b></div>
-                <div class="free"><span>Nonprofits</span><b>Free</b></div>
-                <div class="free"><span>Invited through a partner (with code)</span><b>Free</b></div>
-                <div><span>Teams</span><b>{{ event.price }}</b></div>
-            </div>
+            <h2 id="lu-cost">Cost: {{ event.price }}</h2>
+            <p>Free for nonprofits.</p>
         </section>
 
         <section aria-labelledby="lu-share-title">
@@ -460,7 +435,6 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
         <form method="post" enctype="multipart/form-data" class="lu-form-card" novalidate id="lu-form" aria-labelledby="lu-form-title">
             {% csrf_token %}
             <h2 id="lu-form-title">Save your seat</h2>
-            <p>Takes about a minute. Your calendar invitation arrives now; the private video link follows before the day.</p>
 
             {% if form.non_field_errors %}
             <div class="lu-alert" role="alert">{{ form.non_field_errors.0 }}</div>
@@ -538,14 +512,14 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
                     <label class="lu-choice radio">{{ choice.tag }}<span>{{ choice.choice_label }}</span></label>
                     {% endfor %}
                 </div>
-                <p class="lu-seat-price" id="lu-seat-price" aria-live="polite">Your seat: <strong>Free</strong></p>
+                <p class="lu-seat-price" id="lu-seat-price" aria-live="polite">Your seat: <strong>{{ event.price }}</strong></p>
                 {% for e in form.tier.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
             </fieldset>
 
             <div class="lu-field {% if form.code.errors %}has-error{% endif %}">
                 <label for="{{ form.code.id_for_label }}">Access code</label>
                 {{ form.code }}
-                <p class="lu-hint">Got one from a partner? It makes your seat free whatever the size of your team.</p>
+                <p class="lu-hint">A partner code makes your seat free.</p>
                 <p class="lu-code-state" id="lu-code-state" aria-live="polite" hidden></p>
                 {% for e in form.code.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
             </div>

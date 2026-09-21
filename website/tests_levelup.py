@@ -28,7 +28,7 @@ def payload(**over):
         'help_with': ['deploy', 'scale'],
         'goal': 'Get the app live on a real domain.',
         'wants_checkin': 'on',
-        'tier': 'free_small',
+        'tier': 'free_nonprofit',
         'session': 'oct21',
         'code': '',
         'company_fax': '',
@@ -104,7 +104,7 @@ class LevelUpPageTests(TestCase):
         self.assertRedirects(r, '/levelup/thanks/', fetch_redirect_response=False)
         reg = LevelUpRegistration.objects.get()
         self.assertEqual(reg.payment_status, 'pending')
-        self.assertIn('$100', mail.outbox[1].body)
+        self.assertIn('$49', mail.outbox[1].body)
         r = self.client.get('/levelup/thanks/')
         self.assertContains(r, 'payment link')
 
@@ -202,7 +202,7 @@ class LevelUpPageTests(TestCase):
     def test_access_email_includes_link_and_updates_calendar(self):
         registration = LevelUpRegistration.objects.create(
             name='Ada Example', email='ada@example.org', organization='Ada Labs',
-            help_with='deploy', goal='Ship it', tier='free_small', payment_status='free',
+            help_with='deploy', goal='Ship it', tier='free_nonprofit', payment_status='free',
         )
         self.assertTrue(_levelup_send_access(registration, 'https://meet.example.org/private-room'))
         registration.refresh_from_db()
@@ -219,7 +219,7 @@ class LevelUpPageTests(TestCase):
             'id': 'cs_test_levelup',
             'client_reference_id': f'levelup-{registration.pk}',
             'payment_status': 'paid',
-            'amount_total': 10000,
+            'amount_total': 4900,
             'currency': 'usd',
         }
         session.update(overrides)
@@ -295,12 +295,20 @@ class LevelUpSessionTests(TestCase):
         self.assertNotContains(r, 'UTC')
         self.assertContains(r, '7:00 to 9:00 am PT')
 
-    def test_free_for_solopreneurs_and_nonprofits(self):
+    def test_free_for_nonprofits_only(self):
         r = self.client.get('/levelup/')
-        self.assertContains(r, 'Free for solopreneurs and nonprofits.')
-        self.assertContains(r, '<span>Solopreneurs</span>', html=False)
+        self.assertContains(r, 'Cost: $49')
+        self.assertContains(r, 'Free for nonprofits.')
+        self.assertNotContains(r, 'olopreneur')
         self.assertNotContains(r, 'under 10')
         self.assertNotContains(r, 'employees')
+
+    def test_page_leads_with_production(self):
+        r = self.client.get('/levelup/')
+        self.assertContains(r, 'Go from vibe coding')
+        self.assertContains(r, 'to live in production.')
+        self.assertContains(r, '$49')
+        self.assertNotContains(r, '$100')
 
     def test_november_is_pacific_standard_time(self):
         self.client.post('/levelup/', payload(session='nov18'))

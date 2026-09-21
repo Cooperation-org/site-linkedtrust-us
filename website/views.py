@@ -855,10 +855,13 @@ LEVELUP_SESSIONS = [
     },
 ]
 
+# One number, used on the page, in the emails and to check the Stripe amount.
+LEVELUP_PRICE_USD = 49
+
 LEVELUP_EVENT = {
     'name': 'LevelUp',
     'time_label': '7:00 to 9:00 am PT',
-    'price': '$100',
+    'price': f'${LEVELUP_PRICE_USD}',
     'sessions': LEVELUP_SESSIONS,
     'date_label': ' or '.join(s['date_label'] for s in LEVELUP_SESSIONS),
     'short_dates': ' and '.join(s['short_label'] for s in LEVELUP_SESSIONS),
@@ -975,9 +978,9 @@ def _levelup_notify(reg):
         attendee_body += "\nYou asked for a 1-1 check-in first. Someone from the team will reach out to set a time.\n"
     if reg.payment_status == 'pending':
         if getattr(settings, 'LEVELUP_STRIPE_PAYMENT_LINK', ''):
-            attendee_body += "\nYour ticket is $100. Complete payment in the secure Stripe checkout page that opened after registration.\n"
+            attendee_body += f"\nYour ticket is ${LEVELUP_PRICE_USD}. Complete payment in the secure Stripe checkout page that opened after registration.\n"
         else:
-            attendee_body += "\nYour ticket is $100. We will send a payment link shortly.\n"
+            attendee_body += f"\nYour ticket is ${LEVELUP_PRICE_USD}. We will send a payment link shortly.\n"
     attendee_body += "\nReply to this email if anything changes.\n\nThe LinkedTrust team\nhttps://linkedtrust.us\n"
     try:
         attendee_message = EmailMessage(
@@ -1057,7 +1060,7 @@ def levelup_ics_view(request, key):
 
 
 def _levelup_stripe_url(reg):
-    """Stripe Payment Link for the $100 tier, if Golda has set one in .env.
+    """Stripe Payment Link for the paid tier, if Golda has set one in .env.
     Prefills the email and carries the registration id back as
     client_reference_id so the webhook or a manual check can match it."""
     from urllib.parse import urlencode
@@ -1154,7 +1157,7 @@ def levelup_stripe_webhook(request):
     registration_id = reference[len(prefix):] if reference.startswith(prefix) else ''
     if not registration_id.isdigit() or session.get('payment_status') != 'paid':
         return JsonResponse({'received': True})
-    if session.get('amount_total') != 10000 or str(session.get('currency', '')).lower() != 'usd':
+    if session.get('amount_total') != LEVELUP_PRICE_USD * 100 or str(session.get('currency', '')).lower() != 'usd':
         logger.warning('Ignored mismatched LevelUp Stripe payment for %s', reference)
         return JsonResponse({'received': True})
 
