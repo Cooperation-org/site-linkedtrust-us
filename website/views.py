@@ -1067,7 +1067,7 @@ def levelup_ics_view(request, key):
 
 
 def _levelup_stripe_url(reg):
-    """Stripe Payment Link for the paid tier, if Golda has set one in .env.
+    """Stripe Payment Link for the paid tier, if one is set in .env.
     Prefills the email and carries the registration id back as
     client_reference_id so the webhook or a manual check can match it."""
     from urllib.parse import urlencode
@@ -1098,7 +1098,6 @@ def levelup_view(request):
         'event': LEVELUP_EVENT,
         'levelup_badges': badges,
         'levelup_badge_pages': levelup_badge_pages(badges),
-        'stripe_enabled': bool(getattr(settings, 'LEVELUP_STRIPE_PAYMENT_LINK', '')),
     })
 
 

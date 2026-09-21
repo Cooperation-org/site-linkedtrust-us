@@ -257,7 +257,7 @@ class EarnedgovCommitment(models.Model):
 
 
 class LevelUpAccessCode(models.Model):
-    """Free-entry codes for the LevelUp workshop. Golda hands one to each
+    """Free-entry codes for the LevelUp workshop. One is handed to each
     channel/partner; a valid code makes the registration free regardless of
     the tier the attendee picked. Case-insensitive on lookup."""
     code = models.CharField(max_length=40, unique=True)
