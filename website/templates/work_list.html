@@ -26,12 +26,7 @@
 
 {% block content %}
 
-<section class="container" style="padding-top:1.25rem;padding-bottom:0.5rem;">
-    <h1 class="section-title">Our work</h1>
-    <p style="color:var(--text-secondary);max-width:620px;">View selected client work, open source, and research. Filter by category.</p>
-</section>
-
-<section class="container" style="padding-top:0.5rem;padding-bottom:1rem;">
+<section class="container" style="padding-top:1.5rem;padding-bottom:1rem;">
     <div class="filter-tabs">
         <a href="{% url 'work_list' %}" class="filter-tab {% if not active_category %}active{% endif %}">All</a>
         {% for value, label in categories %}
