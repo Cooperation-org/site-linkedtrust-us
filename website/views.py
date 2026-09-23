@@ -692,11 +692,41 @@ def interns_view(request):
     return render(request, 'interns.html')
 
 
-def latest_claims(limit=5):
-    """Newest people-made claims from live.linkedtrust.us, cached 5 minutes. Empty on any failure."""
-    from django.core.cache import cache
+def _claim_source(claim_id, timeout=3):
+    """Who made the claim: (name, image) from its source edge. Empty if unknown."""
     import requests as _rq
-    key = 'latest_claims_v1'
+    try:
+        r = _rq.get(f'https://api.linkedtrust.us/api/claims/{claim_id}', timeout=timeout)
+        r.raise_for_status()
+        for edge in (r.json().get('claim') or {}).get('edges', []):
+            if edge.get('label') == 'source':
+                node = edge.get('endNode') or {}
+                name = (node.get('name') or '').strip()
+                if name and not name.lower().startswith(('http', 'did:')):
+                    return name[:60], (node.get('image') or '')
+    except Exception as exc:
+        logger.warning(f"claim {claim_id} source unavailable: {exc}")
+    return '', ''
+
+
+def _is_image(url):
+    return bool(url) and url.lower().split('?')[0].endswith(('.jpg', '.jpeg', '.png', '.webp', '.gif'))
+
+
+def latest_claims(limit=5):
+    """Newest claims from live.linkedtrust.us, read as the data defines them.
+
+    A claim with an object reads subject -> claim -> object ("X commits to Y").
+    A claim without one is about its subject and was made by its source
+    ("X endorses Y", where X is on the source edge, not the subject). One row
+    row per thing claimed about, so five different things show. Cached 5
+    minutes, [] on failure.
+    """
+    from django.core.cache import cache
+    from datetime import datetime
+    import textwrap
+    import requests as _rq
+    key = 'latest_claims_v3'
     cached = cache.get(key)
     if cached is not None:
         return cached
@@ -704,17 +734,41 @@ def latest_claims(limit=5):
     try:
         r = _rq.get('https://api.linkedtrust.us/api/feed', params={'limit': 120}, timeout=4)
         r.raise_for_status()
+        seen_subjects, seen_targets = set(), set()
         for e in r.json().get('entries', []):
             subj = e.get('subject') or {}
+            obj = e.get('object') or {}
             name = (subj.get('name') or '').strip()
             statement = (e.get('statement') or '').strip()
             claim = (e.get('claim') or '').replace('_', ' ').lower()
             if claim == 'validates' or not name or len(statement) <= 30 or name.isupper():
                 continue
-            img = subj.get('image') or ''
-            if not img.lower().split('?')[0].endswith(('.jpg', '.jpeg', '.png', '.webp', '.gif')):
-                img = ''
-            out.append({'id': e.get('id'), 'name': name[:60], 'claim': claim, 'statement': statement[:140], 'image': img})
+            uri = subj.get('uri') or ''
+            if uri in seen_subjects:
+                continue
+            seen_subjects.add(uri)
+            if (obj.get('name') or '').strip():
+                actor, image, target = name, subj.get('image') or '', obj['name'].strip()[:60]
+            else:
+                actor, image = _claim_source(e.get('id'))
+                target = name[:60]
+            if target.lower() in seen_targets:
+                continue
+            seen_targets.add(target.lower())
+            date = ''
+            try:
+                date = datetime.strptime((e.get('effectiveDate') or '')[:10], '%Y-%m-%d').strftime('%b %-d, %Y')
+            except ValueError:
+                pass
+            out.append({
+                'id': e.get('id'),
+                'actor': actor,
+                'claim': claim,
+                'target': target,
+                'statement': textwrap.shorten(statement, width=160, placeholder='\u2026'),
+                'date': date,
+                'image': image if _is_image(image) else '',
+            })
             if len(out) >= limit:
                 break
     except Exception as exc:

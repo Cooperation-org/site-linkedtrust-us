@@ -18,7 +18,11 @@
         {% for c in latest_claims %}
         <a class="claims-feed-item" href="https://live.linkedtrust.us/report/{{ c.id }}" target="_blank" rel="noopener">
           {% if c.image %}<img src="{{ c.image }}" alt="" loading="lazy" width="36" height="36">{% else %}<span class="claims-feed-dot"></span>{% endif %}
-          <span><b>{{ c.name }}</b> <em>{{ c.claim }}</em><small>{{ c.statement }}</small></span>
+          <span>
+            <span class="claims-feed-what">{% if c.actor %}<b>{{ c.actor }}</b> {% endif %}<em>{{ c.claim }}</em> <b>{{ c.target }}</b></span>
+            <small dir="auto">{{ c.statement }}</small>
+            {% if c.date %}<time>{{ c.date }}</time>{% endif %}
+          </span>
         </a>
         {% endfor %}
       </aside>

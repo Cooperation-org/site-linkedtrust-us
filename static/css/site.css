@@ -1671,6 +1671,8 @@ details p {
 .case-study-section p,
 .linkedclaims-intro,
 .prose p { max-width: 68ch; }
+/* Opt out of the reading column: text runs to the page margins. */
+.prose-wide p { max-width: none; }
 
 /* Tagline: same size and color, only the typeface changes */
 .hero-text h1 .tech  { font-family: var(--font-ui);    font-weight: 700; }
@@ -1869,7 +1871,10 @@ h1.section-title + p { margin-left: auto; margin-right: auto; text-align: center
 .claims-feed-item img, .claims-feed-dot { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; display: block; }
 .claims-feed-dot { background: var(--gradient); opacity: 0.35; }
 .claims-feed-item b { font-size: 0.92rem; }
-.claims-feed-item em { font-style: normal; color: var(--brand-dark); font-size: 0.85rem; margin-left: 0.3rem; }
+/* who made the claim, the claim, what it is about */
+.claims-feed-what { display: block; }
+.claims-feed-item em { font-style: normal; color: var(--brand-dark); font-size: 0.85rem; }
+.claims-feed-item time { display: block; font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-muted); margin-top: 0.3rem; }
 .claims-feed-item small { display: block; color: var(--text-secondary); font-size: 0.85rem; line-height: 1.45; margin-top: 0.15rem; }
 .claims-feed-item:hover b { color: var(--brand-primary); }
 @media (max-width: 900px) { .lc-hero-grid { grid-template-columns: 1fr; } }
