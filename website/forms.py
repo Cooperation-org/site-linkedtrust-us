@@ -42,10 +42,14 @@ from .models import LevelUpRegistration, LevelUpAccessCode
 class LevelUpRegistrationForm(forms.ModelForm):
     MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024
 
-    help_with = forms.MultipleChoiceField(
-        choices=LevelUpRegistration.HELP_CHOICES,
-        widget=forms.CheckboxSelectMultiple,
-        error_messages={'required': 'Pick at least one thing you want help with.'},
+    help_with = forms.ChoiceField(
+        choices=[('', 'Pick one, or skip this')] + LevelUpRegistration.HELP_CHOICES,
+        required=False,
+        label='What do you want help with?',
+    )
+    help_with_other = forms.CharField(
+        required=False, max_length=200, label='',
+        widget=forms.TextInput(attrs={'placeholder': 'What is it?', 'autocomplete': 'off'}),
     )
     session = forms.MultipleChoiceField(
         choices=LevelUpRegistration.SESSION_CHOICES,
@@ -75,21 +79,18 @@ class LevelUpRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = LevelUpRegistration
-        fields = ['name', 'email', 'organization', 'link', 'attachment', 'help_with', 'goal', 'wants_checkin', 'session', 'tier', 'heard_from']
+        fields = ['name', 'email', 'organization', 'link', 'attachment', 'help_with', 'help_with_other', 'wants_checkin', 'session', 'tier', 'heard_from']
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'Your name', 'autocomplete': 'name', 'required': True}),
             'email': forms.EmailInput(attrs={'placeholder': 'you@example.com', 'autocomplete': 'email', 'required': True}),
             'organization': forms.TextInput(attrs={'placeholder': 'Company, project or idea', 'autocomplete': 'organization', 'required': True}),
             'link': forms.URLInput(attrs={'placeholder': 'https://', 'autocomplete': 'url'}),
-            'goal': forms.Textarea(attrs={'rows': 3, 'maxlength': 600, 'required': True,
-                                          'placeholder': 'One or two lines. What is stuck, or what do you want live by the end of the month?'}),
             'heard_from': forms.TextInput(attrs={'placeholder': 'A friend, LinkedIn, a flyer', 'autocomplete': 'off'}),
         }
         labels = {
             'organization': 'Company or project',
             'link': 'Link to your site, deck or docs',
-            'attachment': 'Upload a file',
-            'goal': 'What do you want to walk out with?',
+            'attachment': 'upload',
             'wants_checkin': 'I would like a 15-minute 1-1 check-in before the workshop',
             'tier': 'Pricing',
             'heard_from': 'Where did you hear about us?',
@@ -111,8 +112,15 @@ class LevelUpRegistrationForm(forms.ModelForm):
             raise forms.ValidationError('Spam check failed.')
         return ''
 
-    def clean_help_with(self):
-        return ','.join(self.cleaned_data['help_with'])
+    def clean_help_with_other(self):
+        return (self.cleaned_data.get('help_with_other') or '').strip()
+
+    def clean(self):
+        cleaned = super().clean()
+        # The free text belongs to the "Something else" option only.
+        if cleaned.get('help_with') != 'other':
+            cleaned['help_with_other'] = ''
+        return cleaned
 
     def clean_session(self):
         keys = [k for k, _ in LevelUpRegistration.SESSION_CHOICES

@@ -265,7 +265,7 @@
     margin-bottom: 0.45rem;
 }
 .lu-field .req { color: #dc2626; margin-left: 2px; }
-.lu-field input[type=text], .lu-field input[type=email], .lu-field input[type=url], .lu-field input[type=file], .lu-field textarea {
+.lu-field input[type=text], .lu-field input[type=email], .lu-field input[type=url], .lu-field input[type=file], .lu-field select, .lu-field textarea {
     width: 100%;
     min-height: 48px;
     padding: 0.75rem 1rem;
@@ -278,7 +278,7 @@
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 .lu-field textarea { resize: vertical; min-height: 96px; }
-.lu-field input:focus, .lu-field textarea:focus {
+.lu-field input:focus, .lu-field select:focus, .lu-field textarea:focus {
     outline: none;
     border-color: var(--brand-primary);
     box-shadow: 0 0 0 3px rgba(0,178,229,0.18);
@@ -294,7 +294,29 @@
     border: 0; border-radius: 7px; background: var(--brand-dark); color: #fff;
     font: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer;
 }
-.lu-field.has-error input, .lu-field.has-error textarea { border-color: #dc2626; }
+.lu-field.has-error input, .lu-field.has-error select, .lu-field.has-error textarea { border-color: #dc2626; }
+
+/* the file picker stays out of the way until someone asks for it */
+.lu-upload-toggle {
+    margin-top: 0.35rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-decoration: underline;
+    cursor: pointer;
+}
+.lu-upload-toggle:hover { color: var(--text-secondary); }
+.lu-upload { margin-top: 0.5rem; }
+.lu-other { margin-top: 0.5rem; }
+.lu-sr {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
 .lu-error {
     color: #b91c1c;
     font-size: 0.8rem;
@@ -491,34 +513,24 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
                 {% for e in form.organization.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
             </div>
 
-            <div class="lu-field {% if form.link.errors %}has-error{% endif %}">
+            <div class="lu-field {% if form.link.errors or form.attachment.errors %}has-error{% endif %}">
                 <label for="{{ form.link.id_for_label }}">Link to your site, deck or docs</label>
                 {{ form.link }}
-                <p class="lu-hint">Optional. Anything you want us to look at before the day.</p>
+                <button type="button" class="lu-upload-toggle" id="lu-upload-toggle" aria-expanded="false" aria-controls="lu-upload">upload</button>
+                <div class="lu-upload" id="lu-upload" hidden>{{ form.attachment }}</div>
                 {% for e in form.link.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
-            </div>
-
-            <div class="lu-field {% if form.attachment.errors %}has-error{% endif %}">
-                <label for="{{ form.attachment.id_for_label }}">Upload a deck, document, or screenshot</label>
-                {{ form.attachment }}
-                <p class="lu-hint">Optional. PDF, Office document, image, text, or ZIP; maximum 10 MB.</p>
                 {% for e in form.attachment.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
             </div>
 
-            <fieldset class="lu-field {% if form.help_with.errors %}has-error{% endif %}">
-                <legend>What do you want help with?<span class="req" aria-hidden="true">*</span></legend>
-                <div class="lu-choices two">
-                    {% for choice in form.help_with %}
-                    <label class="lu-choice">{{ choice.tag }}<span>{{ choice.choice_label }}</span></label>
-                    {% endfor %}
+            <div class="lu-field {% if form.help_with.errors or form.help_with_other.errors %}has-error{% endif %}">
+                <label for="{{ form.help_with.id_for_label }}">What do you want help with?</label>
+                {{ form.help_with }}
+                <div class="lu-other" id="lu-other" hidden>
+                    <label class="lu-sr" for="{{ form.help_with_other.id_for_label }}">What do you want help with?</label>
+                    {{ form.help_with_other }}
                 </div>
                 {% for e in form.help_with.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
-            </fieldset>
-
-            <div class="lu-field {% if form.goal.errors %}has-error{% endif %}">
-                <label for="{{ form.goal.id_for_label }}">What do you want to walk out with?<span class="req" aria-hidden="true">*</span></label>
-                {{ form.goal }}
-                {% for e in form.goal.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
+                {% for e in form.help_with_other.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
             </div>
 
             <div class="lu-field">
@@ -526,13 +538,12 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
             </div>
 
             <fieldset class="lu-field {% if form.session.errors %}has-error{% endif %}">
-                <legend>{{ form.session.label }}<span class="req" aria-hidden="true">*</span></legend>
+                <legend class="lu-sr">{{ form.session.label }}</legend>
                 <div class="lu-choices">
                     {% for choice in form.session %}
                     <label class="lu-choice">{{ choice.tag }}<span>{{ choice.choice_label }}, {{ event.time_label }}</span></label>
                     {% endfor %}
                 </div>
-                {% if event.sessions|length > 1 %}<p class="lu-hint">Take both if you want to.</p>{% endif %}
                 {% for e in form.session.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
             </fieldset>
 
@@ -550,7 +561,6 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
             <div class="lu-field {% if form.code.errors %}has-error{% endif %}">
                 <label for="{{ form.code.id_for_label }}">Access code</label>
                 {{ form.code }}
-                <p class="lu-hint">A partner code makes your seat free.</p>
                 <p class="lu-code-state" id="lu-code-state" aria-live="polite" hidden></p>
                 {% for e in form.code.errors %}<p class="lu-error">{{ e }}</p>{% endfor %}
             </div>
@@ -580,8 +590,39 @@ fieldset.lu-field { border: 0; padding: 0; margin-inline: 0; }
         btn.disabled = true;
         btn.textContent = 'Saving your seat...';
     });
-    var firstError = form.querySelector('.has-error input, .has-error textarea');
+    var firstError = form.querySelector('.has-error input, .has-error select, .has-error textarea');
     if (firstError) { firstError.focus(); }
+
+    // File picker is hidden behind "upload" until it is wanted. If a file
+    // survived a failed submit, or the field errored, show it straight away.
+    var uploadToggle = document.getElementById('lu-upload-toggle');
+    var uploadBox = document.getElementById('lu-upload');
+    if (uploadToggle && uploadBox) {
+        var fileInput = uploadBox.querySelector('input[type=file]');
+        var openUpload = function (focus) {
+            uploadBox.hidden = false;
+            uploadToggle.hidden = true;
+            uploadToggle.setAttribute('aria-expanded', 'true');
+            if (focus && fileInput) { fileInput.focus(); }
+        };
+        uploadToggle.addEventListener('click', function () { openUpload(true); });
+        if ((fileInput && fileInput.value) || uploadBox.querySelector('a')) { openUpload(false); }
+        if (form.querySelector('.has-error #' + uploadBox.id)) { openUpload(false); }
+    }
+
+    // The free-text box belongs to "Something else" only.
+    var helpSelect = document.getElementById('{{ form.help_with.auto_id }}');
+    var otherBox = document.getElementById('lu-other');
+    if (helpSelect && otherBox) {
+        var otherInput = otherBox.querySelector('input');
+        var syncOther = function () {
+            var show = helpSelect.value === 'other';
+            otherBox.hidden = !show;
+            if (!show && otherInput) { otherInput.value = ''; }
+        };
+        helpSelect.addEventListener('change', syncOther);
+        syncOther();
+    }
 
     var price = document.getElementById('lu-seat-price');
     var codeInput = document.getElementById('{{ form.code.auto_id }}');

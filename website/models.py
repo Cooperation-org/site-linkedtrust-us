@@ -328,8 +328,9 @@ class LevelUpRegistration(models.Model):
         ])],
         help_text="Optional document, deck, screenshot, or project artifact",
     )
-    help_with = models.CharField(max_length=200, help_text="Comma-separated keys from HELP_CHOICES")
-    goal = models.TextField(help_text="What they want to walk out with")
+    help_with = models.CharField(max_length=200, blank=True, help_text="Comma-separated keys from HELP_CHOICES")
+    help_with_other = models.CharField(max_length=200, blank=True, help_text="Free text when they pick Something else")
+    goal = models.TextField(blank=True, help_text="What they want to walk out with (question retired 2026-09)")
     wants_checkin = models.BooleanField(default=False, help_text="Asked for a 1-1 before the workshop")
     heard_from = models.CharField(max_length=200, blank=True, help_text="Where they heard about LevelUp")
     tier = models.CharField(max_length=20, choices=TIER_CHOICES, default='paid')
@@ -348,7 +349,15 @@ class LevelUpRegistration(models.Model):
 
     def help_with_labels(self):
         lookup = dict(self.HELP_CHOICES)
-        return [lookup[k] for k in self.help_with.split(',') if k in lookup]
+        labels = []
+        for key in self.help_with.split(','):
+            if key not in lookup:
+                continue
+            if key == 'other' and self.help_with_other:
+                labels.append(self.help_with_other)
+            else:
+                labels.append(lookup[key])
+        return labels
 
     def session_keys(self):
         picked = {k.strip() for k in self.session.split(',') if k.strip()}

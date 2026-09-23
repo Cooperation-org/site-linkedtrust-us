@@ -946,7 +946,7 @@ def _levelup_notify(reg):
         f"Link: {reg.link or '(none)'}\n"
         f"Uploaded file: {reg.attachment.name if reg.attachment else '(none)'}\n"
         f"Help with: {help_list}\n"
-        f"Goal: {reg.goal}\n1-1 check-in: {'yes' if reg.wants_checkin else 'no'}\n"
+        f"1-1 check-in: {'yes' if reg.wants_checkin else 'no'}\n"
         f"Tier: {reg.get_tier_display()}\nCode: {reg.access_code.code if reg.access_code else '(none)'}\n"
         f"Payment: {reg.get_payment_status_display()}\n"
         f"Heard about us: {reg.heard_from or '(not said)'}\n\n"
@@ -977,9 +977,9 @@ def _levelup_notify(reg):
             for s in sessions
         ) +
         f"Where: online. A calendar invitation is attached for each date; the video link comes by email before the day.\n\n"
-        f"What you told us you want help with: {help_list}\n"
-        f"Your goal: {reg.goal}\n"
     )
+    if reg.help_with_labels():
+        attendee_body += f"What you told us you want help with: {help_list}\n"
     if reg.wants_checkin:
         attendee_body += "\nYou asked for a 1-1 check-in first. Someone from the team will reach out to set a time.\n"
     if reg.payment_status == 'pending':

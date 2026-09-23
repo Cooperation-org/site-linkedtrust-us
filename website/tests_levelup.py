@@ -25,8 +25,8 @@ def payload(**over):
         'email': 'ada@example.org',
         'organization': 'Ada Labs',
         'link': 'https://adalabs.example',
-        'help_with': ['deploy', 'scale'],
-        'goal': 'Get the app live on a real domain.',
+        'help_with': 'deploy',
+        'help_with_other': '',
         'wants_checkin': 'on',
         'tier': 'free_nonprofit',
         'session': 'oct21',
@@ -196,16 +196,25 @@ class LevelUpPageTests(TestCase):
         r = self.client.post('/levelup/', payload(code='old'))
         self.assertContains(r, 'no longer active')
 
-    def test_requires_at_least_one_help_choice(self):
-        r = self.client.post('/levelup/', payload(help_with=[]))
-        self.assertEqual(r.status_code, 200)
-        self.assertContains(r, 'Pick at least one')
-        self.assertEqual(LevelUpRegistration.objects.count(), 0)
+    def test_help_with_is_optional(self):
+        r = self.client.post('/levelup/', payload(help_with=''))
+        self.assertEqual(r.status_code, 302)
+        self.assertEqual(LevelUpRegistration.objects.get().help_with, '')
+
+    def test_help_with_other_keeps_the_free_text(self):
+        self.client.post('/levelup/', payload(help_with='other', help_with_other='Pricing the thing'))
+        reg = LevelUpRegistration.objects.get()
+        self.assertEqual(reg.help_with, 'other')
+        self.assertEqual(reg.help_with_labels(), ['Pricing the thing'])
+
+    def test_help_with_other_text_is_dropped_for_other_choices(self):
+        self.client.post('/levelup/', payload(help_with='deploy', help_with_other='ignored'))
+        self.assertEqual(LevelUpRegistration.objects.get().help_with_other, '')
 
     def test_required_fields_and_errors_marked(self):
-        r = self.client.post('/levelup/', payload(name='', email='not-an-email', goal=''))
+        r = self.client.post('/levelup/', payload(name='', email='not-an-email'))
         self.assertEqual(r.status_code, 200)
-        self.assertContains(r, 'lu-field has-error', count=3)
+        self.assertContains(r, 'lu-field has-error', count=2)
         self.assertEqual(LevelUpRegistration.objects.count(), 0)
 
     def test_honeypot_blocks_bots(self):
@@ -361,7 +370,7 @@ class LevelUpSessionTests(TestCase):
         self.client.post('/levelup/', payload(session='oct21'))
         r = self.client.get('/levelup/thanks/')
         self.assertContains(r, 'Wednesday, October 21, 2026')
-        self.assertContains(r, '20261021T140000Z')
+        self.assertContains(r, '/levelup/calendar/oct21.ics')
 
     def test_ics_download_is_a_calendar_file(self):
         r = self.client.get('/levelup/calendar/oct21.ics')
