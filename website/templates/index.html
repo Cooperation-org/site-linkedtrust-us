@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <!-- Two stacked row badges on the right -->
+    <!-- Right side: trust badges from the admin, then the podcast card -->
     <div class="hero-badge hero-badge-stack">
         {% if hero_badges %}
             {% for badge in hero_badges %}
@@ -53,6 +53,18 @@
             <linked-badge claim-id="124419" layout="row" theme="dark"></linked-badge>
             <linked-badge claim-id="124418" layout="row" theme="dark"></linked-badge>
         {% endif %}
+
+        <!-- Podcast episode, same footprint as a row badge. Opens on YouTube. -->
+        <a class="hero-video-card" href="https://www.youtube.com/watch?v=D09UfEKwQZM" target="_blank" rel="noopener">
+            <img src="{% static 'img/podcast-unmuted-ep25.jpg' %}" width="1102" height="330" alt="">
+            <span class="hero-video-bar">
+                <span class="hero-video-play" aria-hidden="true"></span>
+                <span class="hero-video-text">
+                    <span class="hero-video-title">UNMUTED+ Ep 25. Golda Velez &amp; Gitonga Miriam Njeri</span>
+                    <span class="hero-video-meta">Page Capacity Builders on YouTube</span>
+                </span>
+            </span>
+        </a>
     </div>
 </section>
 
