@@ -794,6 +794,10 @@ img { max-width: 100%; display: block; border-radius: 0; } /* sharp corners on p
     margin-bottom: 2rem;
     font-size: 1.05rem;
 }
+/* Banner with no line under the heading: keep the button off the heading. */
+.cta-banner h2 + .btn {
+    margin-top: 0.75rem;
+}
 
 
 /* ---- FOOTER ---- */
