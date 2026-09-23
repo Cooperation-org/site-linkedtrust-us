@@ -53,6 +53,12 @@ urlpatterns = [
     path('privacy/', privacy_view, name='privacy'),
     path('interns/', interns_view, name='interns'),
 
+    # Newsletters — archive index + editions
+    path('newsletters/', newsletters_view, name='newsletters'),
+    path('newsletters', RedirectView.as_view(url='/newsletters/', permanent=True)),
+    path('newsletters/fall-2026/', newsletter_fall_2026_view, name='newsletter_fall_2026'),
+    path('newsletters/fall-2026', RedirectView.as_view(url='/newsletters/fall-2026/', permanent=True)),
+
     # Legacy no-slash paths → 301 redirect to the canonical trailing-slash URL
     # (avoids duplicate content; the slash version is the canonical one).
     path('contact', RedirectView.as_view(url='/contact/', permanent=True)),

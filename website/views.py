@@ -113,6 +113,18 @@ def privacy_view(request):
     """
     return render(request, 'privacy.html')
 
+def newsletters_view(request):
+    """
+    Render the newsletter archive index.
+    """
+    return render(request, 'newsletters/index.html')
+
+def newsletter_fall_2026_view(request):
+    """
+    Render the Fall 2026 Insider's Update newsletter.
+    """
+    return render(request, 'newsletters/fall-2026.html')
+
 def earnedgov_view(request):
     """
     Render the Earned Governance Accelerator landing page.

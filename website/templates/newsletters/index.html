@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Newsletters: LinkedTrust Insider Updates{% endblock %}
+{% block meta_description %}LinkedTrust newsletters and insider updates, our workshops, worker-owned accelerator, trusted testimonials, and where to find us.{% endblock %}
+
+{% block content %}
+
+<section class="container" style="padding-top:1.25rem;">
+    <h1 class="section-title">Newsletters</h1>
+    <p style="color:var(--text-secondary);max-width:650px;margin-bottom:2.5rem;">
+        Insider updates from the LinkedTrust team, our Level-Up workshops, the Workers.VC accelerator, trusted testimonials, and where to find us next.
+    </p>
+
+    <div class="card-grid">
+        <div class="card-item">
+            <div class="content-date">Fall 2026</div>
+            <a href="{% url 'newsletter_fall_2026' %}" class="content-link">
+                <h3>Fall 2026 Insider's Update</h3>
+            </a>
+            <div class="content-meta">Level-Up workshops, Workers.VC, trusted testimonials, and our fall presentations.</div>
+            <div class="content-tag">Newsletter</div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
