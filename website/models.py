@@ -228,6 +228,13 @@ class ContactInquiry(models.Model):
     contacted = models.BooleanField(default=False)
     contacted_at = models.DateTimeField(null=True, blank=True)
     contacted_by = models.CharField(max_length=100, blank=True)
+    # Triage verdict: lead / jobseeker / other / spam / dupe / test, or '' when
+    # not yet reviewed. Set by the seed_inquiry_triage command and the console.
+    VERDICT_CHOICES = [
+        ('lead', 'Lead'), ('jobseeker', 'Job seeker'), ('other', 'Review'),
+        ('spam', 'Spam'), ('dupe', 'Duplicate'), ('test', 'Test'),
+    ]
+    verdict = models.CharField(max_length=20, blank=True, default='', db_index=True)
 
     class Meta:
         ordering = ['-created_at']
