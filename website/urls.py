@@ -1,6 +1,7 @@
 from django.urls import path
 from django.views.generic import RedirectView
 from .views import *
+from . import console_views
 
 urlpatterns = [
     # Homepage
@@ -69,6 +70,11 @@ urlpatterns = [
     path('interns', RedirectView.as_view(url='/interns/', permanent=True)),
     # getstarted has no trailing-slash route; it is canonical as-is.
     path('getstarted', getstarted_view, name='getstarted'),
+
+    # New admin console (staff-only)
+    path('console/', console_views.console, name='console'),
+    path('console/draft/<int:pk>/', console_views.console_draft, name='console_draft'),
+    path('console/action/', console_views.console_action, name='console_action'),
 
     # API endpoints
     path('team/member/<int:member_id>/', team_member_detail_view, name='team_member_detail'),
