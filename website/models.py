@@ -221,6 +221,14 @@ class ContactInquiry(models.Model):
     message = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    # Triage + outreach tracking. Archived rows are spam/dupes moved out of the
+    # working list but kept for review (never deleted). Contacted marks that
+    # someone replied to a real inquiry, so the whole team can see the state.
+    archived = models.BooleanField(default=False, db_index=True)
+    contacted = models.BooleanField(default=False)
+    contacted_at = models.DateTimeField(null=True, blank=True)
+    contacted_by = models.CharField(max_length=100, blank=True)
+
     class Meta:
         ordering = ['-created_at']
         verbose_name_plural = 'Contact inquiries'

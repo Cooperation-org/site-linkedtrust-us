@@ -155,12 +155,70 @@ class ServicePackageAdmin(admin.ModelAdmin):
 
 
 # --- ContactInquiry ---
+@admin.action(description='Archive selected (spam / duplicate) — hidden from the working list, not deleted')
+def archive_inquiries(modeladmin, request, queryset):
+    n = queryset.update(archived=True)
+    modeladmin.message_user(request, f'{n} inquiries archived. Filter Archived=Yes to review them.')
+
+
+@admin.action(description='Unarchive selected')
+def unarchive_inquiries(modeladmin, request, queryset):
+    n = queryset.update(archived=False)
+    modeladmin.message_user(request, f'{n} inquiries restored to the working list.')
+
+
+@admin.action(description='Mark selected as contacted')
+def mark_contacted(modeladmin, request, queryset):
+    from django.utils import timezone
+    n = queryset.update(contacted=True, contacted_at=timezone.now(),
+                        contacted_by=request.user.get_username())
+    modeladmin.message_user(request, f'{n} inquiries marked contacted by {request.user.get_username()}.')
+
+
+@admin.action(description='Generate outreach drafts (download HTML) — never sends')
+def generate_outreach_drafts(modeladmin, request, queryset):
+    from django.http import HttpResponse
+    from . import outreach
+    rows = list(queryset.filter(archived=False))
+    if not rows:
+        modeladmin.message_user(request, 'No non-archived rows selected.')
+        return
+    html = outreach.build_drafts_html(rows)
+    resp = HttpResponse(html, content_type='text/html')
+    resp['Content-Disposition'] = 'attachment; filename="outreach_drafts.html"'
+    return resp
+
+
+class ArchivedFilter(admin.SimpleListFilter):
+    """Default the changelist to the working (non-archived) list."""
+    title = 'archived'
+    parameter_name = 'archived'
+
+    def lookups(self, request, model_admin):
+        return (('1', 'Archived'), ('0', 'Active (default)'))
+
+    def queryset(self, request, queryset):
+        if self.value() == '1':
+            return queryset.filter(archived=True)
+        return queryset.filter(archived=False)
+
+    def choices(self, changelist):
+        # make "Active" the selected default when no param is present
+        for lookup, title in self.lookup_choices:
+            yield {
+                'selected': self.value() == lookup or (self.value() is None and lookup == '0'),
+                'query_string': changelist.get_query_string({self.parameter_name: lookup}),
+                'display': title,
+            }
+
+
 class ContactInquiryAdmin(admin.ModelAdmin):
-    list_display = ['email', 'name', 'subject', 'created_at']
-    list_filter = ['subject', 'created_at']
+    list_display = ['email', 'name', 'subject', 'contacted', 'archived', 'created_at']
+    list_filter = [ArchivedFilter, 'contacted', 'subject', 'created_at']
     search_fields = ['email', 'name', 'message']
-    readonly_fields = ['created_at']
+    readonly_fields = ['created_at', 'contacted_at', 'contacted_by']
     ordering = ['-created_at']
+    actions = [archive_inquiries, unarchive_inquiries, mark_contacted, generate_outreach_drafts]
 
 
 # Register with custom admin site
