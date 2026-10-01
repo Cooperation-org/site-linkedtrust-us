@@ -332,20 +332,21 @@
 {% block nav-global %}{% endblock %}
 
 {% block messages %}
-<div id="lt-console-banner" style="display:none;align-items:center;gap:14px;flex-wrap:wrap;
-     margin:0 0 16px;padding:12px 18px;border-radius:12px;
-     background:linear-gradient(135deg,#3f2534,#5b3446);color:#fff;font-size:14px">
-  <strong style="font-weight:600">A new LinkedTrust console is available.</strong>
-  <span style="opacity:.85">Same data, a faster surface for inquiries and content.</span>
-  <a href="/console/" style="margin-left:auto;background:#00b2e5;color:#fff;font-weight:600;
-     padding:8px 15px;border-radius:9px;text-decoration:none;white-space:nowrap">Open the new console</a>
-  <button type="button" onclick="try{localStorage.setItem('lt_console_banner','off')}catch(e){};this.parentNode.style.display='none'"
-     style="background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;
-     padding:7px 12px;border-radius:9px;cursor:pointer;font:inherit">Dismiss</button>
+{{ block.super }}
+<div id="lt-console-toast" style="display:none;position:fixed;right:18px;bottom:18px;z-index:10000;
+     max-width:290px;background:#fff;border:1px solid #e8e5ec;border-radius:12px;
+     box-shadow:0 10px 30px rgba(40,30,50,.18);padding:14px 15px;font-size:13px;color:#2a2230;
+     font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif">
+  <div style="font-weight:600;color:#3f2534;margin-bottom:3px">New console available</div>
+  <div style="color:#6f6774;line-height:1.45">A faster surface for inquiries and content.</div>
+  <div style="margin-top:11px;display:flex;gap:6px;align-items:center">
+    <a href="/console/" style="background:#00b2e5;color:#fff;font-weight:600;padding:7px 13px;border-radius:8px;text-decoration:none">Open</a>
+    <button type="button" onclick="try{localStorage.setItem('lt_console_banner','off')}catch(e){};document.getElementById('lt-console-toast').style.display='none'"
+      style="background:transparent;border:0;color:#6f6774;cursor:pointer;font:inherit;padding:7px 8px">Later</button>
+  </div>
 </div>
 <script>
   (function(){var off;try{off=localStorage.getItem('lt_console_banner')==='off'}catch(e){}
-   if(!off){var b=document.getElementById('lt-console-banner');if(b)b.style.display='flex';}})();
+   if(!off){var t=document.getElementById('lt-console-toast');if(t)t.style.display='block';}})();
 </script>
-{{ block.super }}
 {% endblock %}

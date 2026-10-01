@@ -38,7 +38,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}a{colo
 .switch:hover{background:#f4f2f6;color:var(--ink)}.switch svg{width:16px;height:16px;flex:none}
 .who{display:flex;align-items:center;gap:9px;padding:4px 8px;color:var(--mut)}
 .avatar{width:26px;height:26px;border-radius:99px;background:var(--plum);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:600;text-transform:uppercase}
-.main{display:grid;grid-template-rows:auto 1fr;min-width:0}
+.main{display:grid;grid-template-rows:auto 1fr;min-width:0;min-height:0}
 .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 24px;border-bottom:1px solid var(--line);background:var(--panel)}
 .top .hi{font-size:12.5px;color:var(--mut)}
 .top h1{margin:1px 0 0;font-size:19px;font-weight:600;color:var(--plum);letter-spacing:-.01em}
@@ -49,7 +49,16 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}a{colo
 .btn-ghost{background:var(--panel);border:1px solid var(--line)}.btn-ghost:hover{background:#f4f2f6}
 .btn-sm{padding:6px 11px;font-size:12.5px}
 .btn[disabled]{opacity:.5;cursor:default}
-.view{overflow-y:auto;padding:22px 24px}
+.view{overflow-y:auto;padding:22px 24px;min-height:0}
+.seclist{max-width:860px}
+.seclist .sechead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.seclist .sechead .sub{color:var(--mut);font-size:12.5px;margin-top:2px}
+.seclist .acts{display:flex;gap:8px}
+.srow{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--panel);margin-bottom:8px}
+.srow .sl{flex:1;min-width:0;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.srow .sid{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.srow a.edit{font-size:12.5px;font-weight:600;color:var(--cyan-ink)}
+.secempty{color:var(--mut);font-size:13px;padding:30px;text-align:center}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px}
 .card h3{margin:0;font-size:14px;font-weight:600;color:var(--plum)}
 .card .sub{color:var(--mut);font-size:12px;margin-top:2px}
@@ -171,9 +180,8 @@ function railHTML(){
   ["Inbox","Content","Programs"].forEach(g=>{
     const items=DATA.sections.filter(s=>s[3]===g); if(!items.length)return;
     h+=`<div class="navgrp">${g}</div>`+items.map(s=>{
-      const badge=s[0]==="inq"?DATA.counts.inbox:(["egov","lvl"].includes(s[0])?s[2]:null);
-      const ext=INCONSOLE.has(s[0])?"":'<span class="ext-dot" title="opens classic admin"></span>';
-      return `<button class="nav-item" data-k="${s[0]}" ${s[0]===active?'aria-current="page"':""}>${svg(I[s[4]]||I.port)}<span class="lbl">${s[1].replace(" registrations","")}</span>${badge!=null?`<span class="badge">${badge}</span>`:ext}</button>`;
+      const badge=s[0]==="inq"?DATA.counts.inbox:s[2];
+      return `<button class="nav-item" data-k="${s[0]}" ${s[0]===active?'aria-current="page"':""}>${svg(I[s[4]]||I.port)}<span class="lbl">${s[1].replace(" registrations","")}</span><span class="badge">${badge}</span></button>`;
     }).join("");
   });
   return h;
@@ -249,6 +257,15 @@ function inqHTML(){
     <div class="detail" id="detail">${inqDetail(DATA.inbox[selected])}</div></div></div>`;
 }
 function paintDetail(){const det=document.getElementById("detail");if(det){det.innerHTML=inqDetail(DATA.inbox[selected]);wireDetail();}}
+function sectionHTML(key){
+  const s=SEC[key],items=DATA.section_items[key]||[],list=DATA.admin_urls[key];
+  const rows=items.length?items.map(it=>`<div class="srow"><span class="sid">#${it.id}</span><span class="sl">${esc(it.label)}</span><a class="edit" href="${it.url}" target="_blank" rel="noopener">Edit</a></div>`).join("")
+    :`<div class="secempty">No ${esc(s.label.toLowerCase())} yet.</div>`;
+  return `<div class="seclist"><div class="sechead">
+    <div><h3 style="margin:0;color:var(--plum);font-size:16px">${esc(s.label)}</h3><div class="sub">${s.count} total. Browse here, edit in the classic admin.</div></div>
+    <div class="acts"><a class="btn btn-ghost btn-sm" href="${list}add/" target="_blank" rel="noopener">+ Add</a>
+    <a class="btn btn-ghost btn-sm" href="${list}" target="_blank" rel="noopener">Open in classic admin</a></div></div>${rows}</div>`;
+}
 function paint(){
   const v=document.getElementById("view");
   v.style.padding=active==="inq"?"0":"22px 24px"; v.style.overflow=active==="inq"?"hidden":"auto";
@@ -257,9 +274,9 @@ function paint(){
     v.querySelectorAll(".row").forEach(r=>r.onclick=()=>{selected=+r.dataset.i;
       v.querySelectorAll(".row").forEach(x=>x.removeAttribute("aria-selected"));r.setAttribute("aria-selected","true");paintDetail();});
     wireDetail();}
+  else{v.innerHTML=sectionHTML(active);}
 }
 function nav(k){
-  if(!INCONSOLE.has(k)){const u=DATA.admin_urls[k];if(u){window.location.href=u;return;}}
   active=k;selected=null;
   document.querySelectorAll(".nav-item").forEach(b=>{b.removeAttribute("aria-current");if(b.dataset.k===k)b.setAttribute("aria-current","page");});
   setHead();paint();document.getElementById("view").scrollTop=0;
