@@ -33,18 +33,28 @@ def _row(inq):
             "contacted": inq.contacted, "has_draft": inq.verdict in ("lead", "other")}
 
 
+MODEL_PATH = {"port": "portfolioproject", "case": "casestudy", "team": "teammember",
+              "svc": "servicepackage", "test": "testimonial", "eco": "ecosystemitem",
+              "lvl": "levelupregistration", "egov": "earnedgovcommitment"}
+SECTION_MODEL = {"port": PortfolioProject, "case": CaseStudy, "team": TeamMember,
+                 "svc": ServicePackage, "test": Testimonial, "eco": EcosystemItem,
+                 "lvl": LevelUpRegistration, "egov": EarnedgovCommitment}
+
+
 def _counts():
-    return {
-        "inq": ContactInquiry.objects.count(),
-        "egov": EarnedgovCommitment.objects.count(),
-        "port": PortfolioProject.objects.count(),
-        "case": CaseStudy.objects.count(),
-        "team": TeamMember.objects.count(),
-        "svc": ServicePackage.objects.count(),
-        "test": Testimonial.objects.count(),
-        "eco": EcosystemItem.objects.count(),
-        "lvl": LevelUpRegistration.objects.count(),
-    }
+    return {"inq": ContactInquiry.objects.count()} | {
+        k: M.objects.count() for k, M in SECTION_MODEL.items()}
+
+
+def _section_items():
+    """Read-only item lists so content sections browse inside the console.
+    Editing a record still opens its classic-admin change page."""
+    out = {}
+    for key, Model in SECTION_MODEL.items():
+        base = f"/admin/website/{MODEL_PATH[key]}/"
+        out[key] = [{"id": o.id, "label": str(o)[:90], "url": f"{base}{o.id}/change/"}
+                    for o in Model.objects.all()[:300]]
+    return out
 
 
 @staff_member_required
@@ -92,14 +102,10 @@ def console(request):
                  ["Services", c["svc"]], ["LevelUp", c["lvl"]], ["Testimonials", c["test"]],
                  ["Case studies", c["case"]]],
         "attention": attention,
-        # Classic-admin changelist URLs for the section tiles.
-        "admin_urls": {
-            "inq": "/admin/website/contactinquiry/", "egov": "/admin/website/earnedgovcommitment/",
-            "port": "/admin/website/portfolioproject/", "case": "/admin/website/casestudy/",
-            "team": "/admin/website/teammember/", "svc": "/admin/website/servicepackage/",
-            "test": "/admin/website/testimonial/", "eco": "/admin/website/ecosystemitem/",
-            "lvl": "/admin/website/levelupregistration/",
-        },
+        # Classic-admin changelist URLs (per section) + the in-console item lists.
+        "admin_urls": {"inq": "/admin/website/contactinquiry/",
+                       **{k: f"/admin/website/{p}/" for k, p in MODEL_PATH.items()}},
+        "section_items": _section_items(),
     }
     return render(request, "console/panel.html", {"data": data})
 
