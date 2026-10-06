@@ -140,6 +140,14 @@ def console_crm(request):
 
 
 @staff_member_required
+def console_taiga(request):
+    """Read-only Taiga user stories composed in (not owned). Not-connected without
+    TAIGA_* config; degrades to empty on any API/network failure."""
+    from . import taiga
+    return JsonResponse({"configured": taiga.configured(), "items": taiga.recent_items(40)})
+
+
+@staff_member_required
 @require_POST
 def console_classify(request):
     """Classify the unreviewed, non-archived inquiries: rules archive the obvious
