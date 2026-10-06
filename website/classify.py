@@ -12,7 +12,9 @@ import re
 
 SPAM = ("spam", "dupe", "test")
 
-_URL = re.compile(r"https?://|www\.|t\.me/|telegra\.ph|bit\.ly|sho\.cat|xrum|directoryinspector|\.ru\b", re.I)
+# Only KNOWN-spam link patterns, never a bare https link: real people link their
+# GitHub, LinkedIn, App Store page or company site, and must not be archived.
+_URL = re.compile(r"telegra\.ph|t\.me/|bit\.ly|tinyurl\.com|sho\.cat|cutt\.ly|is\.gd|goo\.gl|xrum|directoryinspector|\.ru(?:/|\b)", re.I)
 _KW = re.compile(
     r"\b(seo|backlink|back link|link building|guest post|rank (?:higher|on google)|"
     r"slot games?|casino|rolls[- ]?royce|web archives?|wayback|crypto|bitcoin|forex|"
