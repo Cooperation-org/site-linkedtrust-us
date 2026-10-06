@@ -211,7 +211,13 @@ function homeHTML(){
   </div>
   <div class="secgrp"><div class="navgrp">Inbox</div><div class="tiles">${tiles("Inbox")}</div></div>
   <div class="secgrp"><div class="navgrp">Content</div><div class="tiles">${tiles("Content")}</div></div>
-  <div class="secgrp"><div class="navgrp">Programs</div><div class="tiles">${tiles("Programs")}</div></div>`;
+  <div class="secgrp"><div class="navgrp">Programs</div><div class="tiles">${tiles("Programs")}</div></div>
+  <div class="secgrp"><div class="navgrp">Other tools</div><div class="tiles">
+    <a class="tile" href="https://dash.workers.vc" target="_blank" rel="noopener"><div class="ic">${svg(I.lvl)}</div><div class="tt"><b>GovKit dashboard</b><span>workers.vc governance</span></div></a>
+    <a class="tile" href="https://amebo.linkedtrust.us" target="_blank" rel="noopener"><div class="ic">${svg(I.spark)}</div><div class="tt"><b>amebo</b><span>the AI agent</span></div></a>
+    <a class="tile" href="https://crm.linkedtrust.us" target="_blank" rel="noopener"><div class="ic">${svg(I.team)}</div><div class="tt"><b>CRM</b><span>Odoo, full app</span></div></a>
+    <a class="tile" href="https://taiga.linkedtrust.us" target="_blank" rel="noopener"><div class="ic">${svg(I.svc)}</div><div class="tt"><b>Taiga</b><span>project boards</span></div></a>
+  </div></div>`;
 }
 
 function inqRow(it,i){return `<button class="row${it.contacted?' done':''}" data-i="${i}" ${i===selected?'aria-selected="true"':""}>
@@ -295,18 +301,20 @@ function paint(){
   else{v.innerHTML=sectionHTML(active);}
 }
 function taigaHTML(d){
-  const head=`<div class="sechead"><div><h3 style="margin:0;color:var(--plum);font-size:16px">Tasks</h3><div class="sub">Taiga user stories, composed read-only</div></div></div>`;
+  const open=`<a class="btn btn-ghost btn-sm" href="https://taiga.linkedtrust.us" target="_blank" rel="noopener">Open in Taiga</a>`;
+  const head=`<div class="sechead"><div><h3 style="margin:0;color:var(--plum);font-size:16px">Tasks</h3><div class="sub">Taiga user stories, composed read-only</div></div><div class="acts">${open}</div></div>`;
   if(!d.configured) return `<div class="seclist">${head}<div class="secempty">Tasks are not connected yet. Set TAIGA_TOKEN in the server config to compose Taiga here.</div></div>`;
   const rows=d.items.length?d.items.map(t=>`<div class="srow"><span class="sid">#${t.ref||t.id}</span><span class="sl"><b>${esc(t.subject||"(untitled)")}</b> <span style="color:var(--faint);font-size:11.5px">${esc(t.project)}</span></span><span class="pill gold">${esc(t.status||"")}</span><span class="sid">${esc(t.assignee)}</span><span class="sid">${esc(t.updated||"")}</span></div>`).join("")
     :`<div class="secempty">No tasks.</div>`;
   return `<div class="seclist"><div class="sechead"><div><h3 style="margin:0;color:var(--plum);font-size:16px">Tasks</h3><div class="sub">${d.items.length} from Taiga, read-only</div></div></div>${rows}</div>`;
 }
 function crmHTML(d){
-  const head=`<div class="sechead"><div><h3 style="margin:0;color:var(--plum);font-size:16px">CRM leads</h3><div class="sub">Odoo CRM, composed read-only</div></div></div>`;
+  const open=`<a class="btn btn-ghost btn-sm" href="https://crm.linkedtrust.us" target="_blank" rel="noopener">Open full CRM</a>`;
+  const head=`<div class="sechead"><div><h3 style="margin:0;color:var(--plum);font-size:16px">CRM leads</h3><div class="sub">Odoo CRM, composed read-only</div></div><div class="acts">${open}</div></div>`;
   if(!d.configured) return `<div class="seclist">${head}<div class="secempty">CRM is not connected yet. Set ODOO_URL, ODOO_USER and ODOO_API_KEY in the server config to compose Odoo leads here.</div></div>`;
   const rows=d.leads.length?d.leads.map(l=>`<div class="srow"><span class="sl"><b>${esc(l.name||"(no name)")}</b> <span style="color:var(--faint);font-family:var(--mono);font-size:11.5px">${esc(l.email)}</span></span><span class="pill gold">${esc(l.stage||"")}</span><span class="sid">${esc(l.owner)}</span><span class="sid">${esc(l.updated||"")}</span></div>`).join("")
     :`<div class="secempty">No leads in the CRM.</div>`;
-  return `<div class="seclist"><div class="sechead"><div><h3 style="margin:0;color:var(--plum);font-size:16px">CRM leads</h3><div class="sub">${d.leads.length} from Odoo, read-only</div></div></div>${rows}</div>`;
+  return `<div class="seclist"><div class="sechead"><div><h3 style="margin:0;color:var(--plum);font-size:16px">CRM leads</h3><div class="sub">${d.leads.length} from Odoo, read-only</div></div><div class="acts">${open}</div></div>${rows}</div>`;
 }
 function nav(k){
   active=k;selected=null;
