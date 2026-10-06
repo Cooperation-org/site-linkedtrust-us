@@ -188,8 +188,21 @@ def console_action(request):
     elif action == "unarchive":
         n = qs.update(archived=False)
     elif action == "contacted":
-        n = qs.update(contacted=True, contacted_at=timezone.now(),
-                      contacted_by=request.user.get_username())
+        from . import linkedclaims
+        who = request.user.get_username()
+        now = timezone.now()
+        n = 0
+        for inq in qs:
+            inq.contacted = True
+            inq.contacted_at = now
+            inq.contacted_by = who
+            # Attestation as a LinkedClaim (no-op unless CONSOLE_PUBLISH_CLAIMS);
+            # the Django flag is written regardless, so the console never depends on it.
+            claim_id = linkedclaims.publish_contacted(inq, who)
+            if claim_id:
+                inq.contacted_claim_id = claim_id
+            inq.save(update_fields=["contacted", "contacted_at", "contacted_by", "contacted_claim_id"])
+            n += 1
     else:
         return HttpResponseBadRequest("unknown action")
     return JsonResponse({"ok": True, "updated": n})
