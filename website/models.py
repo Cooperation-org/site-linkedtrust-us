@@ -388,3 +388,23 @@ class LevelUpRegistration(models.Model):
 
     def __str__(self):
         return f"{self.name} <{self.email}> — {self.organization}"
+
+
+# --- Auto-archive obvious spam the moment a contact inquiry arrives ---
+# Rules only (no network), so the public contact form never slows or fails on
+# this. Uncertain submissions stay unreviewed for the console button / a human.
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
+@receiver(post_save, sender=ContactInquiry)
+def _auto_classify_inquiry(sender, instance, created, **kwargs):
+    if not created or instance.verdict:
+        return
+    try:
+        from .classify import spam_by_rules
+        if spam_by_rules(instance.name, instance.message):
+            # queryset.update avoids re-firing this signal
+            ContactInquiry.objects.filter(pk=instance.pk).update(verdict='spam', archived=True)
+    except Exception:
+        pass

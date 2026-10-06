@@ -75,6 +75,7 @@ urlpatterns = [
     path('console/', console_views.console, name='console'),
     path('console/draft/<int:pk>/', console_views.console_draft, name='console_draft'),
     path('console/action/', console_views.console_action, name='console_action'),
+    path('console/classify/', console_views.console_classify, name='console_classify'),
 
     # API endpoints
     path('team/member/<int:member_id>/', team_member_detail_view, name='team_member_detail'),
