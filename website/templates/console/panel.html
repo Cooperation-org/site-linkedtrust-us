@@ -184,6 +184,7 @@ function railHTML(){
       return `<button class="nav-item" data-k="${s[0]}" ${s[0]===active?'aria-current="page"':""}>${svg(I[s[4]]||I.port)}<span class="lbl">${s[1].replace(" registrations","")}</span><span class="badge">${badge}</span></button>`;
     }).join("");
   });
+  h+=`<div class="navgrp">Connected</div><button class="nav-item" data-k="crm" ${active==="crm"?'aria-current="page"':""}>${svg(I.team)}<span class="lbl">CRM leads</span></button>`;
   return h;
 }
 function renderChrome(){
@@ -193,8 +194,8 @@ function renderChrome(){
   document.querySelectorAll(".nav-item").forEach(b=>b.onclick=()=>nav(b.dataset.k));
 }
 function setHead(){const s=SEC[active];
-  document.getElementById("hi").textContent=active==="home"?"Good morning":(s?s.group:"");
-  document.getElementById("title").textContent=active==="home"?"Home":(s?s.label:"");}
+  document.getElementById("hi").textContent=active==="home"?"Good morning":active==="crm"?"Connected":(s?s.group:"");
+  document.getElementById("title").textContent=active==="home"?"Home":active==="crm"?"CRM leads":(s?s.label:"");}
 
 function homeHTML(){
   const attn=DATA.attention.map(a=>`<a data-go="${a[1]}"><span class="dotmark ${a[2]}"></span>${esc(a[0])}<span class="arr">${svg(I.arr)}</span></a>`).join("");
@@ -279,7 +280,19 @@ function paint(){
       try{const res=await api("/console/classify/");cb.innerHTML=svg(I.check)+`Archived ${res.archived}`;setTimeout(()=>location.reload(),900);}
       catch(e){cb.disabled=false;cb.innerHTML=svg(I.spark)+"Classify inbox (retry)";}};
     wireDetail();}
+  else if(active==="crm"){
+    v.innerHTML='<div class="seclist"><div class="secempty">Loading CRM…</div></div>';
+    fetch("/console/crm/").then(r=>r.json()).then(d=>{v.innerHTML=crmHTML(d);})
+      .catch(()=>{v.innerHTML='<div class="seclist"><div class="secempty">CRM is unavailable right now.</div></div>';});
+  }
   else{v.innerHTML=sectionHTML(active);}
+}
+function crmHTML(d){
+  const head=`<div class="sechead"><div><h3 style="margin:0;color:var(--plum);font-size:16px">CRM leads</h3><div class="sub">Odoo CRM, composed read-only</div></div></div>`;
+  if(!d.configured) return `<div class="seclist">${head}<div class="secempty">CRM is not connected yet. Set ODOO_URL, ODOO_USER and ODOO_API_KEY in the server config to compose Odoo leads here.</div></div>`;
+  const rows=d.leads.length?d.leads.map(l=>`<div class="srow"><span class="sl"><b>${esc(l.name||"(no name)")}</b> <span style="color:var(--faint);font-family:var(--mono);font-size:11.5px">${esc(l.email)}</span></span><span class="pill gold">${esc(l.stage||"")}</span><span class="sid">${esc(l.owner)}</span><span class="sid">${esc(l.updated||"")}</span></div>`).join("")
+    :`<div class="secempty">No leads in the CRM.</div>`;
+  return `<div class="seclist"><div class="sechead"><div><h3 style="margin:0;color:var(--plum);font-size:16px">CRM leads</h3><div class="sub">${d.leads.length} from Odoo, read-only</div></div></div>${rows}</div>`;
 }
 function nav(k){
   active=k;selected=null;
