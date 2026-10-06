@@ -26,6 +26,10 @@ REAL_SAMPLES = [
     ("Magnus Muller", "A few people building civic tech and credential platforms led me to LinkedTrust. Most teams lose time to manual work."),
     ("Omar Ahmed", "I am reaching out to express my interest in the Backend Intern position. I am an ITI graduate."),
     ("Hannah Melotto", "Hey! Do you have any use for a freelance writer? I have nearly a decade of experience."),
+    # real applicant who links a portfolio/GitHub/LinkedIn: must NOT be flagged
+    ("Tiancheng Gao", "I'm applying for the internship cohort with a focus on QA or Python/backend. "
+     "PageNote: https://apps.apple.com/au/app/pagenote/id6803788070 "
+     "GitHub: https://github.com/TerryG907 LinkedIn: https://www.linkedin.com/in/tiancheng-gao/"),
 ]
 
 
