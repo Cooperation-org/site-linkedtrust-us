@@ -185,6 +185,7 @@ function railHTML(){
     }).join("");
   });
   h+=`<div class="navgrp">Connected</div><button class="nav-item" data-k="crm" ${active==="crm"?'aria-current="page"':""}>${svg(I.team)}<span class="lbl">CRM leads</span></button>`;
+  h+=`<button class="nav-item" data-k="taiga" ${active==="taiga"?'aria-current="page"':""}>${svg(I.svc)}<span class="lbl">Tasks</span></button>`;
   return h;
 }
 function renderChrome(){
@@ -194,8 +195,9 @@ function renderChrome(){
   document.querySelectorAll(".nav-item").forEach(b=>b.onclick=()=>nav(b.dataset.k));
 }
 function setHead(){const s=SEC[active];
-  document.getElementById("hi").textContent=active==="home"?"Good morning":active==="crm"?"Connected":(s?s.group:"");
-  document.getElementById("title").textContent=active==="home"?"Home":active==="crm"?"CRM leads":(s?s.label:"");}
+  const conn={crm:"CRM leads",taiga:"Tasks"};
+  document.getElementById("hi").textContent=active==="home"?"Good morning":conn[active]?"Connected":(s?s.group:"");
+  document.getElementById("title").textContent=active==="home"?"Home":conn[active]||(s?s.label:"");}
 
 function homeHTML(){
   const attn=DATA.attention.map(a=>`<a data-go="${a[1]}"><span class="dotmark ${a[2]}"></span>${esc(a[0])}<span class="arr">${svg(I.arr)}</span></a>`).join("");
@@ -285,7 +287,19 @@ function paint(){
     fetch("/console/crm/").then(r=>r.json()).then(d=>{v.innerHTML=crmHTML(d);})
       .catch(()=>{v.innerHTML='<div class="seclist"><div class="secempty">CRM is unavailable right now.</div></div>';});
   }
+  else if(active==="taiga"){
+    v.innerHTML='<div class="seclist"><div class="secempty">Loading tasks…</div></div>';
+    fetch("/console/taiga/").then(r=>r.json()).then(d=>{v.innerHTML=taigaHTML(d);})
+      .catch(()=>{v.innerHTML='<div class="seclist"><div class="secempty">Tasks are unavailable right now.</div></div>';});
+  }
   else{v.innerHTML=sectionHTML(active);}
+}
+function taigaHTML(d){
+  const head=`<div class="sechead"><div><h3 style="margin:0;color:var(--plum);font-size:16px">Tasks</h3><div class="sub">Taiga user stories, composed read-only</div></div></div>`;
+  if(!d.configured) return `<div class="seclist">${head}<div class="secempty">Tasks are not connected yet. Set TAIGA_TOKEN in the server config to compose Taiga here.</div></div>`;
+  const rows=d.items.length?d.items.map(t=>`<div class="srow"><span class="sid">#${t.ref||t.id}</span><span class="sl"><b>${esc(t.subject||"(untitled)")}</b> <span style="color:var(--faint);font-size:11.5px">${esc(t.project)}</span></span><span class="pill gold">${esc(t.status||"")}</span><span class="sid">${esc(t.assignee)}</span><span class="sid">${esc(t.updated||"")}</span></div>`).join("")
+    :`<div class="secempty">No tasks.</div>`;
+  return `<div class="seclist"><div class="sechead"><div><h3 style="margin:0;color:var(--plum);font-size:16px">Tasks</h3><div class="sub">${d.items.length} from Taiga, read-only</div></div></div>${rows}</div>`;
 }
 function crmHTML(d){
   const head=`<div class="sechead"><div><h3 style="margin:0;color:var(--plum);font-size:16px">CRM leads</h3><div class="sub">Odoo CRM, composed read-only</div></div></div>`;

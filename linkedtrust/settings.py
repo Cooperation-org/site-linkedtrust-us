@@ -63,6 +63,10 @@ ODOO_DB = config('ODOO_DB', default='linkedtrust_crm')
 ODOO_USER = config('ODOO_USER', default='')
 ODOO_API_KEY = config('ODOO_API_KEY', default='')
 
+# Taiga (read-only compose into the console). Inert until TAIGA_* are set.
+TAIGA_URL = config('TAIGA_URL', default='https://taiga.linkedtrust.us')
+TAIGA_TOKEN = config('TAIGA_TOKEN', default='')
+
 # GovKit (the accelerator dashboard) — GovKit mints and owns invites; the
 # doorway resolves them server-to-server and hands committed invitees into
 # GovKit's SSO accept flow. Contract: govkit/scratch.md 2026-07-13. Point at
