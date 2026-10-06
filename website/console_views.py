@@ -132,6 +132,14 @@ def console_draft(request, pk):
 
 
 @staff_member_required
+def console_crm(request):
+    """Read-only CRM leads composed from Odoo (not owned here). Degrades to a
+    not-connected state when ODOO_* is unset or Odoo is unreachable."""
+    from . import crm
+    return JsonResponse({"configured": crm.configured(), "leads": crm.recent_leads(60)})
+
+
+@staff_member_required
 @require_POST
 def console_classify(request):
     """Classify the unreviewed, non-archived inquiries: rules archive the obvious

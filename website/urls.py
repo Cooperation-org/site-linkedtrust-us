@@ -77,6 +77,7 @@ urlpatterns = [
     path('console/draft/<int:pk>/', console_views.console_draft, name='console_draft'),
     path('console/action/', console_views.console_action, name='console_action'),
     path('console/classify/', console_views.console_classify, name='console_classify'),
+    path('console/crm/', console_views.console_crm, name='console_crm'),
 
     # LinkedTrust SSO (additive; the classic admin login is untouched)
     path('auth/linkedtrust/start/', ltauth.start, name='ltauth_start'),

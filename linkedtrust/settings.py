@@ -56,6 +56,13 @@ LINKEDTRUST_CLIENT_ID = config('LINKEDTRUST_CLIENT_ID', default='')
 LINKEDTRUST_CLIENT_SECRET = config('LINKEDTRUST_CLIENT_SECRET', default='')
 LINKEDTRUST_SCOPES = config('LINKEDTRUST_SCOPES', default='openid email profile trust')
 
+# Odoo CRM (read-only compose into the console). Inert until ODOO_* are set; the
+# console shows a "CRM not connected" state without them.
+ODOO_URL = config('ODOO_URL', default='')
+ODOO_DB = config('ODOO_DB', default='linkedtrust_crm')
+ODOO_USER = config('ODOO_USER', default='')
+ODOO_API_KEY = config('ODOO_API_KEY', default='')
+
 # GovKit (the accelerator dashboard) — GovKit mints and owns invites; the
 # doorway resolves them server-to-server and hands committed invitees into
 # GovKit's SSO accept flow. Contract: govkit/scratch.md 2026-07-13. Point at
