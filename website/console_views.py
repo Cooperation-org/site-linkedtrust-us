@@ -57,8 +57,16 @@ def _section_items():
     return out
 
 
-@staff_member_required
 def console(request):
+    # Auth handled here (not @staff_member_required) so anonymous visitors get the
+    # console's own sign-in page with the LinkedTrust option, while the classic
+    # admin login stays untouched. SSO is additive, never a replacement.
+    from django.conf import settings
+    lt = bool(getattr(settings, "LINKEDTRUST_CLIENT_ID", ""))
+    if not request.user.is_authenticated:
+        return render(request, "console/login.html", {"linkedtrust_enabled": lt})
+    if not (request.user.is_staff and request.user.is_active):
+        return render(request, "console/login.html", {"no_access": True, "linkedtrust_enabled": lt})
     c = _counts()
     inbox = [_row(i) for i in _inbox_qs()]
     leads = ContactInquiry.objects.filter(verdict="lead").count()

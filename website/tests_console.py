@@ -19,8 +19,13 @@ class ConsoleTests(TestCase):
             verdict="spam", archived=True)
         os.environ.pop("MINIMAX_API_KEY", None)  # force template fallback
 
-    def test_requires_staff(self):
-        self.assertEqual(self.client.get("/console/").status_code, 302)  # anon -> login
+    def test_anonymous_gets_login_page(self):
+        # the console renders its own sign-in page for anonymous visitors (200),
+        # with the classic password login always offered
+        r = self.client.get("/console/")
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, "Sign in with password")
+        self.assertNotContains(r, "paneldata")  # not the panel itself
 
     def test_page_renders_inbox_without_spam(self):
         self.client.force_login(self.staff)

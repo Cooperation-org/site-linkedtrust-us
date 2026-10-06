@@ -47,6 +47,15 @@ FORCE_SCRIPT_NAME = config('SCRIPT_NAME', default=None)
 # Point at https://dev.linkedtrust.us when testing so no claims hit live.
 EARNEDGOV_LT_API = config('EARNEDGOV_LT_API', default='https://live.linkedtrust.us')
 
+# LinkedTrust SSO (OIDC) for the admin console. Additive: the classic admin login
+# is untouched. The console's "Sign in with LinkedTrust" button only appears when
+# LINKEDTRUST_CLIENT_ID is set. Register a confidential client at LINKEDTRUST_URL
+# with redirect_uri https://linkedtrust.us/auth/linkedtrust/callback/
+LINKEDTRUST_URL = config('LINKEDTRUST_URL', default='https://live.linkedtrust.us')
+LINKEDTRUST_CLIENT_ID = config('LINKEDTRUST_CLIENT_ID', default='')
+LINKEDTRUST_CLIENT_SECRET = config('LINKEDTRUST_CLIENT_SECRET', default='')
+LINKEDTRUST_SCOPES = config('LINKEDTRUST_SCOPES', default='openid email profile trust')
+
 # GovKit (the accelerator dashboard) — GovKit mints and owns invites; the
 # doorway resolves them server-to-server and hands committed invitees into
 # GovKit's SSO accept flow. Contract: govkit/scratch.md 2026-07-13. Point at
