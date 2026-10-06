@@ -125,6 +125,32 @@ def console_draft(request, pk):
 
 @staff_member_required
 @require_POST
+def console_classify(request):
+    """Classify the unreviewed, non-archived inquiries: rules archive the obvious
+    spam; the model (if a key is set) splits the rest into lead/jobseeker/other.
+    Anything still uncertain stays unreviewed for a human."""
+    from . import classify
+    archived = tagged = 0
+    for inq in ContactInquiry.objects.filter(archived=False, verdict=""):
+        if classify.spam_by_rules(inq.name, inq.message):
+            ContactInquiry.objects.filter(pk=inq.pk).update(verdict="spam", archived=True)
+            archived += 1
+            continue
+        v = classify.llm_verdict(inq)
+        if not v:
+            continue
+        fields = {"verdict": v}
+        if v in classify.SPAM:
+            fields["archived"] = True
+            archived += 1
+        else:
+            tagged += 1
+        ContactInquiry.objects.filter(pk=inq.pk).update(**fields)
+    return JsonResponse({"ok": True, "archived": archived, "tagged": tagged})
+
+
+@staff_member_required
+@require_POST
 def console_action(request):
     try:
         payload = json.loads(request.body or "{}")

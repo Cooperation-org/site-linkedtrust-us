@@ -252,7 +252,8 @@ function wireDetail(){
 }
 function inqHTML(){
   const s=DATA.inq_stats,st=(v,l)=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`;
-  return `<div class="inqwrap"><div class="inqbar">${st(s.total,"total")}${st(DATA.inbox.length,"to action")}${st(s.leads,"leads")}${st(s.filtered+"%","filtered as noise")}</div>
+  return `<div class="inqwrap"><div class="inqbar">${st(s.total,"total")}${st(DATA.inbox.length,"to action")}${st(s.leads,"leads")}${st(s.filtered+"%","filtered as noise")}
+    <button class="btn btn-ghost btn-sm" id="classifybtn" style="margin-left:auto">${svg(I.spark)}Classify inbox</button></div>
     <div class="body"><div class="list-wrap"><div id="rows">${DATA.inbox.map((it,i)=>inqRow(it,i)).join("")||'<div class="empty" style="padding:50px">Inbox clear.</div>'}</div></div>
     <div class="detail" id="detail">${inqDetail(DATA.inbox[selected])}</div></div></div>`;
 }
@@ -273,6 +274,10 @@ function paint(){
   else if(active==="inq"){v.innerHTML=inqHTML();
     v.querySelectorAll(".row").forEach(r=>r.onclick=()=>{selected=+r.dataset.i;
       v.querySelectorAll(".row").forEach(x=>x.removeAttribute("aria-selected"));r.setAttribute("aria-selected","true");paintDetail();});
+    const cb=document.getElementById("classifybtn");
+    if(cb)cb.onclick=async()=>{cb.disabled=true;cb.innerHTML='<span class="spinner"></span>Classifying';
+      try{const res=await api("/console/classify/");cb.innerHTML=svg(I.check)+`Archived ${res.archived}`;setTimeout(()=>location.reload(),900);}
+      catch(e){cb.disabled=false;cb.innerHTML=svg(I.spark)+"Classify inbox (retry)";}};
     wireDetail();}
   else{v.innerHTML=sectionHTML(active);}
 }
