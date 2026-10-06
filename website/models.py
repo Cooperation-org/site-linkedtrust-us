@@ -235,6 +235,8 @@ class ContactInquiry(models.Model):
         ('spam', 'Spam'), ('dupe', 'Duplicate'), ('test', 'Test'),
     ]
     verdict = models.CharField(max_length=20, blank=True, default='', db_index=True)
+    # Local cache of the 'contacted' LinkedClaim id, when claim publishing is on.
+    contacted_claim_id = models.CharField(max_length=64, blank=True, default='')
 
     class Meta:
         ordering = ['-created_at']
