@@ -6,7 +6,7 @@
 {% block og_description %}Gather photos, video and voice notes on a phone, tag and organize them, and build the story over time.{% endblock %}
 {% block content %}
 {# Copy: the hero line and the line under the buttons are the project owner's own words (2026-10-21). #}
-{# Step captions and the line under "Updates" are AI-written; replace with the team's words when there are some. #}
+{# The line under "Updates" is AI-written; replace with the team's words when there are some. #}
 <style>
   .sk { max-width: 64rem; margin: 0 auto; padding: 0 1rem; }
   .sk-hero { padding: 3.5rem 0 2.5rem; }
@@ -14,11 +14,6 @@
   .sk-hero p { font-size: clamp(1.15rem, 3vw, 1.4rem); line-height: 1.5; color: var(--text-secondary); max-width: 40rem; margin: 0 0 1.6rem; }
   .sk-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
   .sk .sk-ways { color: var(--text-muted); font-size: .95rem; margin: 1.2rem 0 0; }
-  .sk-steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem 1.5rem; }
-  .sk-steps li { margin: 0; }
-  .sk-steps img { width: 100%; height: auto; display: block; border: 1px solid #e4e4e0; }
-  .sk-steps p { margin: .7rem 0 0; font-size: 1rem; line-height: 1.45; }
-  .sk-steps a { color: var(--brand-dark); text-decoration: underline; white-space: nowrap; }
   .sk h2 { font-size: 1.6rem; margin: 3rem 0 1.4rem; }
   .sk-updates { background: var(--bg-warm); padding: 2rem 1.25rem; margin: 3.5rem 0 3rem; }
   .sk-updates form { display: flex; flex-wrap: wrap; gap: .6rem; max-width: 30rem; }
@@ -26,8 +21,6 @@
   .sk-updates .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .sk-ok { font-weight: 600; margin: 0; }
   .sk-err { color: #a33; margin: .5rem 0 0; }
-  @media (max-width: 760px) { .sk-steps { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 480px) { .sk-steps { grid-template-columns: 1fr; } .sk-steps img { max-width: 22rem; margin: 0 auto; } }
 </style>
 
 <div class="sk">
@@ -36,22 +29,9 @@
     <p>Capture your story as it unfolds.</p>
     <div class="sk-actions">
       <a class="btn btn-gradient" href="{{ app }}">Start a free trial</a>
-      <a class="btn btn-outline" href="#walkthrough">See how it works</a>
+      <a class="btn btn-outline" href="{{ demo }}">See how it works</a>
     </div>
     <p class="sk-ways">Use your phone naturally. Import all your content, everywhere you have it.</p>
-  </section>
-
-  <section id="walkthrough">
-    <h2>How it works</h2>
-    <ol class="sk-steps">
-      <li><img src="{% static 'img/storykit/1-send.jpg' %}" alt="Send page on a phone: Take photo, Record video, Voice note" loading="lazy" width="780" height="1560"><p>Send a photo, video or voice note from a phone, with a line about it.</p></li>
-      <li><img src="{% static 'img/storykit/2-library.jpg' %}" alt="Everything collected, with labels for sites, businesses and topics" loading="lazy" width="780" height="1560"><p>Everything lands in one place, labeled by site, business and topic. AI can do the labeling.</p></li>
-      <li><img src="{% static 'img/storykit/3-filter.jpg' %}" alt="The library narrowed to one business" loading="lazy" width="780" height="1560"><p>Tap a label to see one site or one business.</p></li>
-      <li><img src="{% static 'img/storykit/4-templates.jpg' %}" alt="Start a timeline or a one-page story" loading="lazy" width="780" height="1560"><p>Pick dates for a timeline, or make a one-page summary. Drag pieces to reorder.</p></li>
-      <li><img src="{% static 'img/storykit/5-timeline.jpg' %}" alt="A published timeline, month by month" loading="lazy" width="780" height="1560"><p>A timeline, month by month. <a href="{{ samples.timeline }}">See the sample</a></p></li>
-      <li><img src="{% static 'img/storykit/6-onepage.jpg' %}" alt="A published one-page summary" loading="lazy" width="780" height="1560"><p>A one-page summary of a site. <a href="{{ samples.onepage }}">See the sample</a></p></li>
-    </ol>
-    <p class="sk-ways">The walkthrough uses a made-up organization, Umbrella Collective.</p>
   </section>
 
   <section class="sk-updates" id="updates">

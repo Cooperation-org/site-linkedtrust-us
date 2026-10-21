@@ -102,15 +102,13 @@ def contact_view(request):
     return render(request, 'contact.html', {'form': form, 'success': success})
 
 STORYKIT_APP = "https://demos.linkedtrust.us/storykit/kit/"
-STORYKIT_SAMPLES = {
-    "timeline": "https://demos.linkedtrust.us/storykit/stories/umbrella-collective-riverside-bike-repair/",
-    "onepage": "https://demos.linkedtrust.us/storykit/stories/umbrella-collective-hillcrest/",
-}
+# The live demo: each visitor gets their own copy of a made-up organization.
+STORYKIT_DEMO = "https://demos.linkedtrust.us/storykit/demo/"
 
 
 @csrf_protect
 def storykit_view(request):
-    """Story Kit landing page: walkthrough, start free, and an email box for updates.
+    """Story Kit landing page: the live demo, start free, and an email box for updates.
     An email is saved as a ContactInquiry (subject "storykit") first, then the team is
     told; the visitor always sees it worked."""
     if request.method == 'POST':
@@ -122,7 +120,7 @@ def storykit_view(request):
         try:
             validate_email(email)
         except ValidationError:
-            return render(request, 'storykit.html', {'app': STORYKIT_APP, 'samples': STORYKIT_SAMPLES,
+            return render(request, 'storykit.html', {'app': STORYKIT_APP, 'demo': STORYKIT_DEMO,
                                                      'email': email, 'email_error': True})
         inquiry = ContactInquiry.objects.create(email=email, subject='storykit', message='Story Kit updates')
         try:
@@ -132,7 +130,7 @@ def storykit_view(request):
         except Exception as e:
             logger.error(f"Story Kit signup email failed for inquiry {inquiry.id}: {e}")
         return redirect(reverse('storykit') + '?subscribed=1#updates')
-    return render(request, 'storykit.html', {'app': STORYKIT_APP, 'samples': STORYKIT_SAMPLES,
+    return render(request, 'storykit.html', {'app': STORYKIT_APP, 'demo': STORYKIT_DEMO,
                                              'subscribed': request.GET.get('subscribed') == '1'})
 
 

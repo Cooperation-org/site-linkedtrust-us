@@ -12,7 +12,7 @@ class StoryKitPageTests(TestCase):
         r = self.client.get(PAGE)
         self.assertContains(r, 'Start a free trial')
         self.assertContains(r, 'https://demos.linkedtrust.us/storykit/kit/')
-        self.assertContains(r, 'umbrella-collective-hillcrest')
+        self.assertContains(r, 'https://demos.linkedtrust.us/storykit/demo/')
 
     def test_email_saved_then_thanks_even_if_mail_fails(self):
         with mock.patch('website.views.EmailMessage.send', side_effect=OSError('smtp down')):
