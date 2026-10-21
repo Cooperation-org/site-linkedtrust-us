@@ -9,6 +9,7 @@ SUBJECT_CHOICES = [
     ('intern_placement', 'Intern Placement'),
     ('site_issue', 'Site Issue'),
     ('developer', 'Developer question'),
+    ('storykit', 'Story Kit updates'),
     ('other', 'Other'),
 ]
 

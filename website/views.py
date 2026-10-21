@@ -101,6 +101,41 @@ def contact_view(request):
         form = ContactForm(initial=initial)
     return render(request, 'contact.html', {'form': form, 'success': success})
 
+STORYKIT_APP = "https://demos.linkedtrust.us/storykit/kit/"
+STORYKIT_SAMPLES = {
+    "timeline": "https://demos.linkedtrust.us/storykit/stories/umbrella-collective-riverside-bike-repair/",
+    "onepage": "https://demos.linkedtrust.us/storykit/stories/umbrella-collective-hillcrest/",
+}
+
+
+@csrf_protect
+def storykit_view(request):
+    """Story Kit landing page: walkthrough, start free, and an email box for updates.
+    An email is saved as a ContactInquiry (subject "storykit") first, then the team is
+    told; the visitor always sees it worked."""
+    if request.method == 'POST':
+        email = (request.POST.get('email') or '').strip()
+        if request.POST.get('website'):  # honeypot: a bot
+            return redirect(reverse('storykit') + '?subscribed=1#updates')
+        from django.core.validators import validate_email
+        from django.core.exceptions import ValidationError
+        try:
+            validate_email(email)
+        except ValidationError:
+            return render(request, 'storykit.html', {'app': STORYKIT_APP, 'samples': STORYKIT_SAMPLES,
+                                                     'email': email, 'email_error': True})
+        inquiry = ContactInquiry.objects.create(email=email, subject='storykit', message='Story Kit updates')
+        try:
+            EmailMessage(subject=f"Story Kit updates: {email}", body=f"{email} asked for Story Kit updates.\n",
+                         from_email=settings.DEFAULT_FROM_EMAIL, to=['connect@linkedtrust.us'],
+                         reply_to=[email]).send(fail_silently=False)
+        except Exception as e:
+            logger.error(f"Story Kit signup email failed for inquiry {inquiry.id}: {e}")
+        return redirect(reverse('storykit') + '?subscribed=1#updates')
+    return render(request, 'storykit.html', {'app': STORYKIT_APP, 'samples': STORYKIT_SAMPLES,
+                                             'subscribed': request.GET.get('subscribed') == '1'})
+
+
 def press_view(request):
     """
     Render the press page.

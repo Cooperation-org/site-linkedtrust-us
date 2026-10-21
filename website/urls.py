@@ -39,6 +39,8 @@ urlpatterns = [
     path('earnedgov/i/<slug:code>/', earnedgov_invite_view, name='earnedgov_invite'),
 
     # LevelUp live workshop: branded registration page (Sept 16 and Oct 21 2026)
+    path('storykit/', storykit_view, name='storykit'),
+    path('storykit', RedirectView.as_view(url='/storykit/', permanent=True)),
     path('levelup/', levelup_view, name='levelup'),
     path('levelup', RedirectView.as_view(url='/levelup/', permanent=True)),
     path('levelup/thanks/', levelup_thanks_view, name='levelup_thanks'),
