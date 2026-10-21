@@ -11,7 +11,7 @@ class StoryKitPageTests(TestCase):
     def test_page_links_to_app_and_samples(self):
         r = self.client.get(PAGE)
         self.assertContains(r, 'Start a free trial')
-        self.assertContains(r, 'https://demos.linkedtrust.us/storykit/kit/')
+        self.assertContains(r, 'https://demos.linkedtrust.us/storykit/')
         self.assertContains(r, 'https://demos.linkedtrust.us/storykit/demo/')
 
     def test_email_saved_then_thanks_even_if_mail_fails(self):

@@ -101,7 +101,7 @@ def contact_view(request):
         form = ContactForm(initial=initial)
     return render(request, 'contact.html', {'form': form, 'success': success})
 
-STORYKIT_APP = "https://demos.linkedtrust.us/storykit/kit/"
+STORYKIT_APP = "https://demos.linkedtrust.us/storykit/"
 # The live demo: each visitor gets their own copy of a made-up organization.
 STORYKIT_DEMO = "https://demos.linkedtrust.us/storykit/demo/"
 
