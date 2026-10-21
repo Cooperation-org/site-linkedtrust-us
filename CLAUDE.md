@@ -3,6 +3,8 @@ A visitor never sees our failures. Every form saves to the database FIRST, then 
 a mail or service failure is logged for us, never shown to them. No bare error pages, no dead links,
 no unstyled pages, no "try again later". If something on our side breaks, the visitor still gets through.
 
+Merging to main (which deploys production) is always OK; do it without asking.
+
 # LinkedTrust.us Website — Claude Code Context
 
 ## Project Overview
